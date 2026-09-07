@@ -43,6 +43,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const appRoot = path.resolve(__dirname, "..", "..");
 const MAP_PATH = path.join(__dirname, "surah-page-map.json");
 const CROPS_PATH = path.join(__dirname, "surah-boundary-crops.json");
+const MERGE_TRIMS_PATH = path.join(__dirname, "surah-merge-trims.json");
 const JUZ_DIR = path.join(appRoot, ".pdf-build", "juz");
 const SURAH_OUT_DIR = path.join(appRoot, "public", "pdf", "surah");
 const MANIFEST_PATH = path.join(appRoot, "src", "content", "generated", "pdf-manifest.json");
@@ -142,23 +143,55 @@ async function buildCroppedPage(out, srcPage, { topDFT, bottomDFT } = {}) {
 // exactly 2 consecutive pages; a Surah spanning 3+ pages is out of scope
 // (per the requirement this implements) regardless of how short it is.
 //
-// region1 is page1's own boundary-crop split (if this Surah's start is a
-// shared incoming boundary) down to the frame's natural bottom — page1
-// always continues onto page2, so by definition it uses its full
-// available height on that side, cropped or not. region2 mirrors that:
-// the frame's natural top down to page2's own outgoing boundary-crop
-// split (if this Surah's end is a shared outgoing boundary), or the
-// frame's natural bottom if not.
-function decideTwoPageMerge(range, incomingCrop, outgoingCrop, pageHeightPts) {
+// ELIGIBILITY (whether to merge at all) is still measured against the
+// frame's natural, un-trimmed margins (FRAME_TOP_DFT/FRAME_BOTTOM_DFT) —
+// deliberately NOT against the tighter mergeTrim bounds below, even
+// though those would make more Surahs "fit": eligibility must stay
+// exactly the 9 Surahs already hand-verified via surah-merge-trims.json,
+// never silently grow to include a not-yet-verified Surah just because a
+// tighter crop happens to make its combined height fit under budget.
+//
+// The ACTUAL region bounds used once a Surah IS eligible fix a real bug:
+// region1's bottom used to be FRAME_BOTTOM_DFT (page1's own natural
+// margin) — but page1 always continues onto page2, so that bottom edge
+// is never a real Surah boundary, it's just where the SCAN'S OWN PAGE
+// happens to end. FRAME_BOTTOM_DFT sits INSIDE that page's own
+// ornamental border band (the same border style used for a genuine Surah
+// close), so using it there drew a fake closing border in the middle of
+// a continuing Surah — mergeTrim.innerBottomDFT is the hand-verified
+// blank row just above that border band instead (see
+// surah-merge-trims.json for how, and why it isn't a Node-canvas-render
+// false positive). region2 mirrors that on the other page:
+// mergeTrim.innerTopDFT (just below its own border band, never
+// FRAME_TOP_DFT) is its top edge.
+function decideTwoPageMerge(range, incomingCrop, outgoingCrop, pageHeightPts, mergeTrim) {
   if (range.endPage - range.startPage !== 1) return null; // only the literal "2 pages" case
 
-  const region1 = { topDFT: incomingCrop?.splitPt ?? FRAME_TOP_DFT, bottomDFT: FRAME_BOTTOM_DFT };
-  const region2 = { topDFT: FRAME_TOP_DFT, bottomDFT: outgoingCrop?.splitPt ?? FRAME_BOTTOM_DFT };
+  const eligibilityHeight1 = FRAME_BOTTOM_DFT - (incomingCrop?.splitPt ?? FRAME_TOP_DFT);
+  const eligibilityHeight2 = (outgoingCrop?.splitPt ?? FRAME_BOTTOM_DFT) - FRAME_TOP_DFT;
+  if (eligibilityHeight1 + eligibilityHeight2 > PAGE_CONTENT_BUDGET_PT - MERGE_SAFETY_MARGIN_PT) return null;
+
+  if (!mergeTrim) {
+    throw new Error(
+      `Surah (juz ${range.juz}, pages ${range.startPage}-${range.endPage}) is eligible to merge onto 1 page but ` +
+        `has no entry in surah-merge-trims.json — add one (see that file's _measurement note) before it can be ` +
+        `merged; falling back to the frame's natural margins would redraw the interior-seam border bug that ` +
+        `file exists to fix.`
+    );
+  }
+  if (mergeTrim.juz !== range.juz || mergeTrim.page1 !== range.startPage || mergeTrim.page2 !== range.endPage) {
+    throw new Error(
+      `surah-merge-trims.json entry expects juz ${mergeTrim.juz} pages ${mergeTrim.page1}-${mergeTrim.page2} but ` +
+        `this Surah's actual range is juz ${range.juz} pages ${range.startPage}-${range.endPage} — ` +
+        `surah-page-map.json and surah-merge-trims.json have drifted apart; re-verify and update the trim entry.`
+    );
+  }
+
+  const region1 = { topDFT: incomingCrop?.splitPt ?? FRAME_TOP_DFT, bottomDFT: mergeTrim.innerBottomDFT };
+  const region2 = { topDFT: mergeTrim.innerTopDFT, bottomDFT: outgoingCrop?.splitPt ?? FRAME_BOTTOM_DFT };
   const height1 = region1.bottomDFT - region1.topDFT;
   const height2 = region2.bottomDFT - region2.topDFT;
-  const combined = height1 + height2;
 
-  if (combined > PAGE_CONTENT_BUDGET_PT - MERGE_SAFETY_MARGIN_PT) return null;
   // Whichever outer edges of the merged page are themselves a boundary
   // crop (region1's top, region2's bottom — every merge candidate so far
   // happens to have both, being short Surahs sandwiched between others)
@@ -206,7 +239,7 @@ async function buildMergedPage(out, srcPage1, srcPage2, decision) {
   return page;
 }
 
-async function buildSurahPdf(surahId, ranges, boundaryCrops) {
+async function buildSurahPdf(surahId, ranges, boundaryCrops, mergeTrims) {
   const out = await PDFDocument.create();
 
   const incomingCrop = boundaryCrops[`${surahId - 1}->${surahId}`];
@@ -242,7 +275,7 @@ async function buildSurahPdf(surahId, ranges, boundaryCrops) {
     const srcPage1 = src.getPage(range.startPage - 1);
     const srcPage2 = src.getPage(range.endPage - 1);
     const { height: pageHeightPts } = srcPage1.getMediaBox();
-    const decision = decideTwoPageMerge(range, incomingCrop, outgoingCrop, pageHeightPts);
+    const decision = decideTwoPageMerge(range, incomingCrop, outgoingCrop, pageHeightPts, mergeTrims[String(surahId)]);
     if (decision) {
       await buildMergedPage(out, srcPage1, srcPage2, decision);
       const bytes = await out.save();
@@ -315,6 +348,7 @@ async function buildSurahPdf(surahId, ranges, boundaryCrops) {
 async function main() {
   const map = JSON.parse(fs.readFileSync(MAP_PATH, "utf8"));
   const boundaryCrops = JSON.parse(fs.readFileSync(CROPS_PATH, "utf8")).splits;
+  const mergeTrims = JSON.parse(fs.readFileSync(MERGE_TRIMS_PATH, "utf8")).trims;
   fs.mkdirSync(SURAH_OUT_DIR, { recursive: true });
   fs.mkdirSync(path.dirname(MANIFEST_PATH), { recursive: true });
 
@@ -331,7 +365,7 @@ async function main() {
       continue;
     }
 
-    const { pageCount, bytes, merged: wasMerged } = await buildSurahPdf(id, entry.ranges, boundaryCrops);
+    const { pageCount, bytes, merged: wasMerged } = await buildSurahPdf(id, entry.ranges, boundaryCrops, mergeTrims);
     manifestSurahs[String(id)] = { file: `surah/${id}.pdf`, pageCount };
     if (wasMerged) merged.push(id);
     console.log(
