@@ -7,9 +7,10 @@ import { supabase } from "@/lib/supabaseClient";
 import { getLessonChannel, type HighlightState } from "@/lib/realtime";
 import { getLatestHighlight } from "@/lib/sharing";
 import { getSurah, type SurahContent } from "@/lib/quranContent";
+import { quranSurahUrl } from "@/lib/quranLink";
 import { getLessonMaterial, getSignedMaterialUrl } from "@/lib/storage";
 import type { Lesson, LessonPlanItem, Meeting } from "@/lib/types";
-import { Button } from "@/components/ui/Button";
+import { Button, buttonClassName } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { PdfViewer } from "@/components/pdf/PdfViewer";
 
@@ -147,9 +148,22 @@ export function ShareClient({ lessonId }: { lessonId: string }) {
           </div>
         ) : surah ? (
           <div className="rounded-[var(--radius-l)] border border-line bg-surface p-6">
-            <span className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-success-tint px-2.5 py-1 text-xs font-bold text-success">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-success" /> Tutor is explaining this section
-            </span>
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-success-tint px-2.5 py-1 text-xs font-bold text-success">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-success" /> Tutor is explaining this section
+              </span>
+              {/* Continue studying this exact ayah in the full Quran Reader
+                  (apps/quran) — new tab, so following the live session here
+                  keeps working untouched. */}
+              <a
+                href={quranSurahUrl(surah.number, shared.ayah)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={buttonClassName("outline", "sm")}
+              >
+                📖 Read in Quran
+              </a>
+            </div>
             {ayahsOnPage.map((a) => (
               <div
                 key={a.number}

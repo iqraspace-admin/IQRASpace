@@ -1,0 +1,54 @@
+/**
+ * Links from the Learning App into the full Quran Reader (`apps/quran`) —
+ * a separate, independently-deployed app joined to this one only via a
+ * Multi-Zones domain-level rewrite (apps/quran/ARCHITECTURE.md §8), not an
+ * in-app route. There is no shared router or client-side navigation
+ * between them, so every link built here is a plain `<a>`, opened in a new
+ * tab by its caller — that's also *why* it's a new tab: the learner's
+ * place in the Learning App is never disturbed, so "returning" is just
+ * switching back to (or closing) the Quran tab, with no return-URL
+ * plumbing needed inside apps/quran itself.
+ *
+ * Defaults to the same-origin "/quran" prefix, which resolves correctly in
+ * production through apps/landing's rewrite (iqraspace.org/quran/* ->
+ * apps/quran, and the same for its iqraspace-landing.vercel.app alias).
+ * Local dev has no such rewrite — apps/quran's own dev server runs
+ * unprefixed on its own port (see apps/quran/package.json's `dev` script,
+ * `next dev -p 3001`) — so set NEXT_PUBLIC_QURAN_URL=http://localhost:3001
+ * in `.env.local` to make these links work locally too (see
+ * .env.local.example).
+ */
+const QURAN_BASE = process.env.NEXT_PUBLIC_QURAN_URL || "/quran";
+
+/** The Quran Reader's home — used by the always-visible "Open Quran" nav
+ * entry, with no particular Surah/Ayah in mind. */
+export function quranHomeUrl(): string {
+  return QURAN_BASE;
+}
+
+/**
+ * Deep-links to a specific Surah and, if given, an Ayah within it.
+ * apps/quran's reader already supports `?verse=S:A` to scroll straight to
+ * an ayah on load (its AyahList component, built for Continue Reading
+ * deep links) — reused as-is here, no changes to apps/quran needed.
+ */
+export function quranSurahUrl(surahNumber: number, ayahNumber?: number | null): string {
+  const path = `${QURAN_BASE}/surah/${surahNumber}`;
+  return ayahNumber ? `${path}?verse=${surahNumber}:${ayahNumber}` : path;
+}
+
+/**
+ * Parses a tutor-typed free-text reference such as "18:1-10" or "2:255"
+ * (LessonProgress.surah_ayah_range — see lib/types.ts) into a Quran Reader
+ * link at the first ayah of that range. Returns null for anything that
+ * doesn't look like a real "surah:ayah" reference, since this field is
+ * free text a tutor types, never a validated structured value.
+ */
+export function quranUrlFromRange(range: string | null | undefined): string | null {
+  const match = range?.match(/^\s*(\d{1,3})\s*:\s*(\d{1,3})/);
+  if (!match) return null;
+  const surahNumber = Number(match[1]);
+  const ayahNumber = Number(match[2]);
+  if (surahNumber < 1 || surahNumber > 114 || ayahNumber < 1) return null;
+  return quranSurahUrl(surahNumber, ayahNumber);
+}

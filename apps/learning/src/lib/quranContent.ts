@@ -20,6 +20,10 @@ export type SurahContent = {
   key: string;
   name: string;
   nameArabic: string;
+  /** Canonical Quran Surah number (1-114) — matches apps/quran's own
+   * numbering (`/surah/[surahNumber]`), so a lesson can link straight into
+   * the full Quran Reader there. See lib/quranLink.ts. */
+  number: number;
   totalAyahs: number;
   ayahs: QuranAyah[];
 };
@@ -29,6 +33,7 @@ export const QURAN_SURAHS: SurahContent[] = [
     key: "al-fatiha",
     name: "Al-Fatiha",
     nameArabic: "الفاتحة",
+    number: 1,
     totalAyahs: 7,
     ayahs: [
       { number: 1, arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", page: 1 },
@@ -49,6 +54,7 @@ export const QURAN_SURAHS: SurahContent[] = [
     key: "al-ikhlas",
     name: "Al-Ikhlas",
     nameArabic: "الإخلاص",
+    number: 112,
     totalAyahs: 4,
     ayahs: [
       { number: 1, arabic: "قُلْ هُوَ اللَّهُ أَحَدٌ", page: 1 },
@@ -61,6 +67,7 @@ export const QURAN_SURAHS: SurahContent[] = [
     key: "al-falaq",
     name: "Al-Falaq",
     nameArabic: "الفلق",
+    number: 113,
     totalAyahs: 5,
     ayahs: [
       { number: 1, arabic: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ", page: 1 },
@@ -74,6 +81,7 @@ export const QURAN_SURAHS: SurahContent[] = [
     key: "an-nas",
     name: "An-Nas",
     nameArabic: "الناس",
+    number: 114,
     totalAyahs: 6,
     ayahs: [
       { number: 1, arabic: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ", page: 1 },
@@ -88,6 +96,7 @@ export const QURAN_SURAHS: SurahContent[] = [
     key: "al-asr",
     name: "Al-Asr",
     nameArabic: "العصر",
+    number: 103,
     totalAyahs: 3,
     ayahs: [
       { number: 1, arabic: "وَالْعَصْرِ", page: 1 },

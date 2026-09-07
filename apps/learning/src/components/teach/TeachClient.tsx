@@ -6,11 +6,12 @@ import { supabase } from "@/lib/supabaseClient";
 import { getLessonChannel, type HighlightState } from "@/lib/realtime";
 import { getOrCreateActiveSession, recordHighlight } from "@/lib/sharing";
 import { getSurah, surahPageCount } from "@/lib/quranContent";
+import { quranSurahUrl } from "@/lib/quranLink";
 import { getLessonMaterial, getSignedMaterialUrl } from "@/lib/storage";
 import type { AppUser, ClassRow, Lesson, LessonMaterial, LessonPlanItem, Meeting } from "@/lib/types";
 import { isAdminRole } from "@/lib/roles";
 import { Card, Eyebrow } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
+import { Button, buttonClassName } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Field";
 import { ViewToggle } from "@/components/ui/Tabs";
 import { Badge } from "@/components/ui/Badge";
@@ -383,6 +384,17 @@ export function TeachClient({ lessonId }: { lessonId: string }) {
             {className} · Page {currentPage} of {pageCount}
           </div>
         </div>
+        {/* Full Quran Reader for this surah (apps/quran) — opens straight at
+            whichever ayah is currently highlighted/selected here, in a new
+            tab, so the live Teach session keeps running untouched. */}
+        <a
+          href={quranSurahUrl(surah.number, highlightedAyah ?? selectedAyah)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={buttonClassName("outline", "sm")}
+        >
+          📖 Read in Quran
+        </a>
         <ViewToggle
           options={[
             { value: "split", label: "Split View" },

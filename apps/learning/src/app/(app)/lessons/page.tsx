@@ -4,6 +4,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "@/lib/authContext";
 import { supabase } from "@/lib/supabaseClient";
 import { getSignedMaterialUrl } from "@/lib/storage";
+import { getSurah } from "@/lib/quranContent";
+import { quranSurahUrl } from "@/lib/quranLink";
 import type { ClassLessonPlan, ClassRow, LessonPlan, LessonPlanItem } from "@/lib/types";
 import { isAdminRole } from "@/lib/roles";
 import { Card, Eyebrow, SectionHead } from "@/components/ui/Card";
@@ -310,7 +312,27 @@ export default function LessonsPage() {
                               {item.material_page_start && ` (p.${item.material_page_start}${item.material_page_end && item.material_page_end !== item.material_page_start ? `–${item.material_page_end}` : ""})`}
                             </button>
                           ) : item.quran_surah_key ? (
-                            <span className="text-ink-soft">Qur&apos;an: {item.quran_surah_key}</span>
+                            (() => {
+                              const surah = getSurah(item.quran_surah_key);
+                              return (
+                                <span className="text-ink-soft">
+                                  Qur&apos;an: {surah?.name ?? item.quran_surah_key}
+                                  {surah && (
+                                    <>
+                                      {" · "}
+                                      <a
+                                        href={quranSurahUrl(surah.number)}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="font-semibold text-primary hover:underline"
+                                      >
+                                        Read in Quran
+                                      </a>
+                                    </>
+                                  )}
+                                </span>
+                              );
+                            })()
                           ) : (
                             "—"
                           )}

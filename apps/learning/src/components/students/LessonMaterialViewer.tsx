@@ -3,14 +3,16 @@
 import { useState } from "react";
 import { getSignedMaterialUrl } from "@/lib/storage";
 import { getSurah } from "@/lib/quranContent";
+import { quranSurahUrl } from "@/lib/quranLink";
 import type { LessonPlanItem } from "@/lib/types";
 import { Modal } from "@/components/ui/Modal";
 import { PdfViewer } from "@/components/pdf/PdfViewer";
+import { buttonClassName } from "@/components/ui/Button";
 import { useToast } from "@/components/ui/Toast";
 
 type ViewerState =
   | { kind: "pdf"; url: string; page: number; title: string }
-  | { kind: "surah"; title: string; surahName: string; objective: string | null };
+  | { kind: "surah"; title: string; surahName: string; objective: string | null; surahNumber: number | null };
 
 /**
  * Opens a student's current Universal Lesson Plan item as a standalone
@@ -40,6 +42,7 @@ export function useLessonMaterialViewer() {
         title: item.title,
         surahName: surah?.name ?? item.quran_surah_key,
         objective: item.objective,
+        surahNumber: surah?.number ?? null,
       });
       return;
     }
@@ -57,6 +60,16 @@ export function useLessonMaterialViewer() {
           <p className="mt-3 text-xs text-muted">
             Live Ayah highlighting for students is available from a scheduled session&rsquo;s Teach screen.
           </p>
+          {state.surahNumber && (
+            <a
+              href={quranSurahUrl(state.surahNumber)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonClassName("outline", "sm", "mt-3")}
+            >
+              📖 Read {state.surahName} in Quran
+            </a>
+          )}
         </div>
       )}
     </Modal>

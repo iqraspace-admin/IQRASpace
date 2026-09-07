@@ -6,6 +6,7 @@ import { useAuth } from "@/lib/authContext";
 import { supabase } from "@/lib/supabaseClient";
 import { Avatar } from "@/components/ui/Avatar";
 import { isAdminRole } from "@/lib/roles";
+import { quranHomeUrl } from "@/lib/quranLink";
 import { ADMIN_NAV_ITEMS, NAV_ITEMS } from "./navConfig";
 
 // The brand icon is served from app/icon.tsx, a generated route under
@@ -54,6 +55,25 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
             <b className="block font-display text-[1.05rem] font-semibold text-white">IQRASpace</b>
             <small className="block text-[0.72rem] tracking-wide text-[#afc9c2]">Online teaching workspace</small>
           </div>
+        </div>
+
+        <div className="px-2.5 pt-2.5">
+          {/* Always-visible, prominent — the Learning App's entry point into
+              the full Quran Reader (apps/quran, a separate app; see
+              lib/quranLink.ts). Opens in a new tab so a learner's place in
+              a lesson here is never disturbed. */}
+          <a
+            href={quranHomeUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2.5 rounded-[10px] bg-accent px-3 py-2.5 text-[0.86rem] font-bold text-white shadow-[var(--shadow-s)] hover:bg-accent-deep"
+          >
+            <span className="w-5 text-center text-base">📖</span>
+            <span>Open Quran</span>
+            <span className="ml-auto text-xs opacity-80" aria-hidden="true">
+              ↗
+            </span>
+          </a>
         </div>
 
         <nav className="flex-1 overflow-y-auto p-2.5">

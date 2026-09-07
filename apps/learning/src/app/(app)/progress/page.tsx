@@ -14,6 +14,7 @@ import { Field, Input, Select, Textarea } from "@/components/ui/Field";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { useToast } from "@/components/ui/Toast";
 import { StudentLessonManager } from "@/components/students/StudentLessonManager";
+import { quranUrlFromRange } from "@/lib/quranLink";
 
 export default function ProgressPage() {
   const { profile } = useAuth();
@@ -149,7 +150,19 @@ export default function ProgressPage() {
 
           {latest ? (
             <>
-              <h4 className="mb-2 text-xs font-bold uppercase tracking-wide text-muted">Current Focus</h4>
+              <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+                <h4 className="text-xs font-bold uppercase tracking-wide text-muted">Current Focus</h4>
+                {quranUrlFromRange(latest.surah_ayah_range) && (
+                  <a
+                    href={quranUrlFromRange(latest.surah_ayah_range)!}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-semibold text-primary hover:underline"
+                  >
+                    📖 Read {latest.surah_ayah_range} in Quran
+                  </a>
+                )}
+              </div>
               {scores.map(
                 ([label, value]) => value !== null && <ProgressBar key={label} label={label} value={value} />
               )}
