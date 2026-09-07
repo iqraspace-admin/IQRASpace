@@ -12,6 +12,13 @@ import { canonicalUrl } from "@/lib/site";
  * itself has to live at the true domain root, which this app doesn't own
  * (ARCHITECTURE.md §8).
  */
+// See src/app/icon.tsx's comment — required for the mobile/Capacitor
+// static export build, a no-op for the regular Vercel build. (The
+// sitemap itself is meaningless inside the native shell — no crawler
+// ever sees it there — but every route must resolve statically for
+// `output: "export"` to succeed at all.)
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     { url: canonicalUrl("/"), changeFrequency: "monthly", priority: 1 },

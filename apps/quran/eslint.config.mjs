@@ -21,6 +21,14 @@ const eslintConfig = defineConfig([
     // from node_modules — a minified third-party build artifact, not
     // source code (see .gitignore's /public/pdf-worker/ note).
     "public/pdf-worker/**",
+    // Capacitor-generated native project (MOBILE.md) — Gradle project
+    // files, plus a copy of the static-exported web bundle
+    // (android/app/src/main/assets/public) that ESLint would otherwise try
+    // to parse as source and choke on (same "huge minified-looking file"
+    // problem as src/content/generated above). Android-only for now
+    // (mobile/android branch) — add "ios/**" back here once the iOS
+    // branch introduces that folder.
+    "android/**",
   ]),
 ]);
 

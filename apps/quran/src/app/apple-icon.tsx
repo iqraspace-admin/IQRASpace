@@ -6,6 +6,9 @@ import { renderCroppedIcon } from "@/lib/branding/renderCroppedIcon";
 // itself, so a plain white background here is correct.
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
+// See icon.tsx's comment — required for the mobile/Capacitor static
+// export build, a no-op for the regular Vercel build.
+export const dynamic = "force-static";
 
 export default function AppleIcon() {
   return renderCroppedIcon(LOGO_ICON_CROP, size);

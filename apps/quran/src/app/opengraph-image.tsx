@@ -6,6 +6,9 @@ import { renderCroppedIcon } from "@/lib/branding/renderCroppedIcon";
 // legibility problem at this size, so the "crop" is just the whole image.
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+// See icon.tsx's comment — required for the mobile/Capacitor static
+// export build, a no-op for the regular Vercel build.
+export const dynamic = "force-static";
 
 // Matches globals.css's --color-bg (light theme) — OG images are static
 // files with no access to CSS custom properties, so this is duplicated

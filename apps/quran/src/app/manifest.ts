@@ -12,6 +12,10 @@ import { basePath } from "@/lib/site";
  * auto-emitted by the root layout) but the *values inside* it still need
  * building by hand — hence basePath() here.
  */
+// See src/app/icon.tsx's comment — required for the mobile/Capacitor
+// static export build, a no-op for the regular Vercel build.
+export const dynamic = "force-static";
+
 export default function manifest(): MetadataRoute.Manifest {
   const base = basePath();
 
