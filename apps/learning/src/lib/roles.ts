@@ -18,3 +18,10 @@ export function isSuperAdminRole(role: Role | undefined | null): boolean {
 }
 
 export const ADMIN_ROLES: Role[] = ["admin", "super_admin"];
+
+/** Where a signed-in user lands by default — tutors/students/guardians go
+ * to /dashboard, admin/super_admin to /admin. Single source of truth so the
+ * login page, the home page, and any future entry point all agree. */
+export function landingPathForRole(role: Role | undefined | null): string {
+  return isAdminRole(role) ? "/admin" : "/dashboard";
+}

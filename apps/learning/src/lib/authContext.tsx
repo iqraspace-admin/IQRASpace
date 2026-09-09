@@ -41,14 +41,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (active) setProfile((data as AppUser) ?? null);
     }
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (!active) return;
-      setSession(session);
-      if (session?.user) {
-        loadProfile(session.user.id).finally(() => active && setLoading(false));
-      } else {
+      if (!session) {
         setLoading(false);
+        return;
       }
+      // Validate the stored session against the server rather than just
+      // trusting whatever's sitting in localStorage — closes the window
+      // where a revoked session (password changed, admin-forced sign-out)
+      // would otherwise still "look" authenticated purely from a
+      // locally-cached, not-yet-expired access token.
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+      if (!active) return;
+      if (userError || !userData.user) {
+        await supabase.auth.signOut();
+        if (active) setLoading(false);
+        return;
+      }
+      setSession(session);
+      await loadProfile(session.user.id);
+      if (active) setLoading(false);
     });
 
     const {

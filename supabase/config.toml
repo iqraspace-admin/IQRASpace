@@ -162,7 +162,11 @@ site_url = "https://iqraspace.vercel.app"
 # Pilot deploy (Vercel, temporary URL) added alongside localhost — see docs/DEPLOYMENT.md.
 additional_redirect_urls = ["http://localhost:3000", "http://127.0.0.1:3000", "https://iqraspace.vercel.app"]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 (1 week).
-jwt_expiry = 3600
+# Raised to 86400 (24h) so a tutor's session survives longer between visits
+# (e.g. reopening the app from a Zoom-shared link) without re-logging in —
+# autoRefreshToken already keeps an *open* session alive indefinitely; this
+# only widens the exposure window for an already-issued access token.
+jwt_expiry = 86400
 # JWT issuer URL. If not set, defaults to auth.external_url.
 # jwt_issuer = ""
 # Path to JWT signing key. DO NOT commit your signing keys file to git.

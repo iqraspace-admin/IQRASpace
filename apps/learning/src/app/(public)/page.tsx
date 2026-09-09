@@ -1,6 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/authContext";
+import { landingPathForRole } from "@/lib/roles";
 import { LinkButton } from "@/components/ui/Button";
 import { Card, Eyebrow } from "@/components/ui/Card";
 
@@ -30,7 +33,19 @@ const PILLARS = [
 const FLOW = ["Tutor", "Lesson", "Qur'an Material", "Share", "Student", "Google Meet", "Attendance", "Progress"];
 
 export default function Home() {
-  const { loading } = useAuth();
+  const { session, profile, loading } = useAuth();
+  const router = useRouter();
+
+  // Already logged in (e.g. reopening the app's link from Zoom, still
+  // signed in from before) — skip the marketing page and go straight to
+  // the dashboard instead of making the tutor click through again.
+  useEffect(() => {
+    if (!loading && session) router.replace(landingPathForRole(profile?.role));
+  }, [loading, session, profile, router]);
+
+  if (loading || session) {
+    return <p className="p-8 text-sm text-muted">Loading…</p>;
+  }
 
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-14">
@@ -44,16 +59,14 @@ export default function Home() {
           you&rsquo;re explaining it, and keep every Google Meet, attendance record and progress note in one
           calm place — built around how you already teach.
         </p>
-        {!loading && (
-          <div className="mt-6 flex flex-wrap gap-3">
-            <LinkButton href="/signup" variant="primary">
-              Get started
-            </LinkButton>
-            <LinkButton href="/login" variant="outline">
-              I already have an account
-            </LinkButton>
-          </div>
-        )}
+        <div className="mt-6 flex flex-wrap gap-3">
+          <LinkButton href="/signup" variant="primary">
+            Get started
+          </LinkButton>
+          <LinkButton href="/login" variant="outline">
+            I already have an account
+          </LinkButton>
+        </div>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {PILLARS.map((p) => (

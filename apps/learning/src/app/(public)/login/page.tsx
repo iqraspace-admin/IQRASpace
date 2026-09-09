@@ -1,19 +1,32 @@
 "use client";
 
-import { useState, type SubmitEvent } from "react";
+import { useEffect, useState, type SubmitEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
-import { isAdminRole } from "@/lib/roles";
+import { landingPathForRole } from "@/lib/roles";
+import { useAuth } from "@/lib/authContext";
 import { Button } from "@/components/ui/Button";
 import { Field, Input } from "@/components/ui/Field";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { session, profile, loading } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+
+  // Already have a valid session (e.g. reopening the app's link from Zoom,
+  // still logged in from before) — skip the form entirely and go straight
+  // to the dashboard instead of making the tutor log in again.
+  useEffect(() => {
+    if (!loading && session) router.replace(landingPathForRole(profile?.role));
+  }, [loading, session, profile, router]);
+
+  if (loading || session) {
+    return <p className="p-8 text-sm text-muted">Loading…</p>;
+  }
 
   async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -55,7 +68,7 @@ export default function LoginPage() {
       .eq("id", data.user!.id)
       .single();
     setSubmitting(false);
-    router.push(isAdminRole(profileRow?.role) ? "/admin" : "/dashboard");
+    router.push(landingPathForRole(profileRow?.role));
   }
 
   return (
