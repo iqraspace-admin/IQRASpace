@@ -104,6 +104,15 @@ export function PdfViewer({ url, className, initialPage, page, onPageChange, rea
   // ---- Annotations (per-viewer-session only — see docs/PROGRESS.md scope note) ----
   const [activeTool, setActiveTool] = useState<AnnotationTool>("select");
   const [color, setColor] = useState<string>(TOOL_COLORS[0]);
+  // "Freeze while highlighting": true for exactly the span of an in-progress
+  // drag-to-draw gesture (highlight and the other box/freehand tools), set by
+  // AnnotationLayer's onDraftActiveChange. On a touchscreen, a highlight
+  // stroke and a scroll/pan gesture look identical to the browser until it's
+  // too late — the viewport can lurch mid-stroke, which is exactly what
+  // makes free-drawn highlights unreliable on phones/tablets. Freezing the
+  // scroll container for the gesture's duration (see scrollRef below) removes
+  // the ambiguity: a finger down while drawing always draws, never scrolls.
+  const [isDrawGestureActive, setIsDrawGestureActive] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [annotationsByPage, setAnnotationsByPage] = useState<AnnotationsByPage>({});
   const historyRef = useRef<{ stack: AnnotationsByPage[]; index: number }>({ stack: [{}], index: 0 });
@@ -119,6 +128,14 @@ export function PdfViewer({ url, className, initialPage, page, onPageChange, rea
     setHistoryMeta({ index: trimmed.length - 1, length: trimmed.length });
     setAnnotationsByPage(next);
   }, []);
+
+  // Defensive unfreeze: a missed pointerup (browser eats the event, page
+  // navigates mid-drag, etc.) must never leave the viewport permanently
+  // frozen — switching tools or pages always clears it.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsDrawGestureActive(false);
+  }, [activeTool, pageNum]);
 
   // Controlled mode: an external page (e.g. a live broadcast) always wins.
   useEffect(() => {
@@ -577,7 +594,12 @@ export function PdfViewer({ url, className, initialPage, page, onPageChange, rea
         </div>
       </div>
 
-      <div ref={scrollRef} className={`relative flex-1 overflow-auto bg-paper-alt p-4 ${fullscreen ? "" : "max-h-[75vh]"}`}>
+      <div
+        ref={scrollRef}
+        className={`relative flex-1 bg-paper-alt p-4 ${fullscreen ? "" : "max-h-[75vh]"} ${
+          isDrawGestureActive ? "touch-none overflow-hidden overscroll-none" : "overflow-auto"
+        }`}
+      >
         {loading && (
           <div className="flex h-full min-h-[240px] flex-col items-center justify-center gap-2 text-sm text-muted">
             <span className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
@@ -603,6 +625,7 @@ export function PdfViewer({ url, className, initialPage, page, onPageChange, rea
               onSelect={setSelectedId}
               onErase={eraseAnnotation}
               onTextCommit={commitText}
+              onDraftActiveChange={setIsDrawGestureActive}
             />
           )}
         </div>

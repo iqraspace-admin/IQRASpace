@@ -31,6 +31,7 @@ export function AnnotationLayer({
   onSelect,
   onErase,
   onTextCommit,
+  onDraftActiveChange,
 }: {
   pageSize: { width: number; height: number };
   renderSize: { width: number; height: number };
@@ -43,6 +44,17 @@ export function AnnotationLayer({
   onSelect: (id: string | null) => void;
   onErase: (id: string) => void;
   onTextCommit: (point: Point, text: string) => void;
+  /**
+   * Fires true the instant a drag-to-draw gesture starts (box tools or
+   * freehand) and false once it ends — lets the caller freeze the PDF's own
+   * scroll container for exactly the gesture's duration. `touchAction: "none"`
+   * on the svg below already stops the browser's native touch-scroll for a
+   * drag that starts on it, but that alone isn't watertight on every mobile
+   * browser (e.g. momentum scroll already in flight from a moment ago can
+   * keep coasting), so PdfViewer belt-and-suspenders it with an explicit
+   * overflow/touch-action freeze on the scroll container while this is true.
+   */
+  onDraftActiveChange?: (active: boolean) => void;
 }) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [dragStart, setDragStart] = useState<Point | null>(null);
@@ -71,9 +83,11 @@ export function AnnotationLayer({
       return;
     }
     if (activeTool === "freehand") {
+      onDraftActiveChange?.(true);
       setDraftPoints([p]);
       return;
     }
+    onDraftActiveChange?.(true);
     setDragStart(p);
     setDraftEnd(p);
   }
@@ -132,6 +146,7 @@ export function AnnotationLayer({
     }
     setDragStart(null);
     setDraftEnd(null);
+    onDraftActiveChange?.(false);
   }
 
   function commitText() {
@@ -166,6 +181,7 @@ export function AnnotationLayer({
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerLeave={handlePointerUp}
+        onPointerCancel={handlePointerUp}
       >
         <defs>
           <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
