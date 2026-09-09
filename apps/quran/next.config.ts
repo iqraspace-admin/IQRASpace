@@ -72,6 +72,18 @@ const nextConfig: NextConfig = {
   async headers() {
     const isDev = process.env.NODE_ENV === "development";
     return [
+      // The per-Surah PDFs are already-public, freely-readable static
+      // files with no auth of their own — the Learning App's PdfViewer
+      // fetches them directly (pdf.js's getDocument does a real
+      // fetch/XHR, unlike the plain <a target="_blank"> "Read in Quran"
+      // links elsewhere, which have no CORS concern). Same-origin in
+      // production via apps/landing's Multi-Zones rewrite, but genuinely
+      // cross-origin in local dev (NEXT_PUBLIC_QURAN_URL pointing at this
+      // app's own dev port) — allow any origin to fetch them.
+      {
+        source: "/pdf/:path*",
+        headers: [{ key: "Access-Control-Allow-Origin", value: "*" }],
+      },
       {
         source: "/:path*",
         headers: [

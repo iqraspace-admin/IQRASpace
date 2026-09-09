@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { getSignedMaterialUrl } from "@/lib/storage";
+import { resolveMaterialUrl } from "@/lib/lessonMaterial";
 import { getSurah } from "@/lib/quranContent";
 import { quranSurahUrl } from "@/lib/quranLink";
 import type { LessonPlanItem } from "@/lib/types";
@@ -27,9 +27,9 @@ export function useLessonMaterialViewer() {
 
   async function openItem(item: LessonPlanItem) {
     if (item.material_storage_path) {
-      const { url, error } = await getSignedMaterialUrl(item.material_storage_path);
+      const { url, error } = await resolveMaterialUrl(item.material_storage_path);
       if (error || !url) {
-        showToast(error?.message ?? "Could not open material");
+        showToast(error ?? "Could not open material");
         return;
       }
       setState({ kind: "pdf", url, page: item.material_page_start ?? 1, title: item.title });

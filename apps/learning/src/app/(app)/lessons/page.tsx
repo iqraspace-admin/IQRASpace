@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "@/lib/authContext";
 import { supabase } from "@/lib/supabaseClient";
-import { getSignedMaterialUrl } from "@/lib/storage";
+import { resolveMaterialUrl } from "@/lib/lessonMaterial";
 import { getSurah } from "@/lib/quranContent";
 import { quranSurahUrl } from "@/lib/quranLink";
 import type { ClassLessonPlan, ClassRow, LessonPlan, LessonPlanItem } from "@/lib/types";
@@ -156,9 +156,9 @@ export default function LessonsPage() {
 
   async function openMaterial(item: LessonPlanItem) {
     if (!item.material_storage_path) return;
-    const { url, error } = await getSignedMaterialUrl(item.material_storage_path);
+    const { url, error } = await resolveMaterialUrl(item.material_storage_path);
     if (error || !url) {
-      showToast(error?.message ?? "Could not open material");
+      showToast(error ?? "Could not open material");
       return;
     }
     setMaterialModal({ url, page: item.material_page_start ?? 1 });

@@ -13,7 +13,8 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "seed:admins": "node --env-file=.env.local scripts/seed-admin-accounts.mjs"
+    "seed:admins": "node --env-file=.env.local scripts/seed-admin-accounts.mjs",
+    "seed:surah-lessons": "node --env-file=.env.local scripts/seed-surah-lessons.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.4",
