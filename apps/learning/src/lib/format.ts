@@ -2,6 +2,19 @@ export function todayISO() {
   return new Date().toISOString().slice(0, 10);
 }
 
+/** The current Sun–Sat week (relative to `date`, default today) as 7 ISO
+ * date strings. Shared by the weekly Schedule grid and the Attendance
+ * page's Weekly view so both browse the same week boundaries. */
+export function weekDates(date: Date = new Date()): string[] {
+  const sunday = new Date(date);
+  sunday.setDate(date.getDate() - date.getDay());
+  return Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(sunday);
+    d.setDate(sunday.getDate() + i);
+    return d.toISOString().slice(0, 10);
+  });
+}
+
 /** "14:30:00" (Postgres TIME) -> "2:30 PM" */
 export function formatTime(time: string | null | undefined) {
   if (!time) return null;

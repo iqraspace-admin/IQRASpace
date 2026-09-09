@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/authContext";
 import { supabase } from "@/lib/supabaseClient";
 import type { AppUser, AttendanceRecord, ClassMember, ClassRow, Lesson, LessonNote, LessonProgress } from "@/lib/types";
@@ -11,6 +12,7 @@ import {
   type CurrentLessonInfo,
   type CurriculumRow,
 } from "@/lib/curriculum";
+import { getBulkTodayAttendance, markAttendance, startAdHocLesson, type LessonAttendance } from "@/lib/attendance";
 import { formatDate, todayISO } from "@/lib/format";
 import { Card } from "@/components/ui/Card";
 import { Avatar } from "@/components/ui/Avatar";
@@ -21,16 +23,28 @@ import { ProgressBar, StatCard } from "@/components/ui/ProgressBar";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { StudentLessonManager } from "@/components/students/StudentLessonManager";
 import { useLessonMaterialViewer } from "@/components/students/LessonMaterialViewer";
+import { AttendanceControl } from "@/components/attendance/AttendanceControl";
+import { useToast } from "@/components/ui/Toast";
 
 type StudentRow = {
   user: AppUser;
   classNames: string[];
   nextLesson: Lesson | null;
   currentLesson: CurrentLessonInfo | null;
+  /** Today's lesson + attendance for this student, if they have one — the
+   * Student Card's "Mark Attendance" action is scoped to this. */
+  todayAttendance: LessonAttendance | null;
+  /** The student's first class + that class's tutor — resolved from data
+   * already loaded here, so the ad-hoc "Start" action can supply the
+   * `lessons` row's required class_id/tutor_id without another query. */
+  primaryClassId: string | null;
+  primaryTutorId: string | null;
 };
 
 export default function StudentsPage() {
   const { profile } = useAuth();
+  const { showToast } = useToast();
+  const router = useRouter();
   const isTutor = profile?.role === "tutor";
   // Admin/super_admin get the platform-wide roster (all tutors' students),
   // not just "their own" (0018_admin_full_access.sql).
@@ -41,6 +55,7 @@ export default function StudentsPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [openStudent, setOpenStudent] = useState<AppUser | null>(null);
+  const [startingId, setStartingId] = useState<string | null>(null);
   const { openItem, modal: materialModal } = useLessonMaterialViewer();
 
   useEffect(() => {
@@ -84,19 +99,26 @@ export default function StudentsPage() {
       const { data: userRows } = await supabase.from("users").select("*").in("id", studentIds);
       const users = (userRows ?? []) as AppUser[];
       const today = todayISO();
-      const currentLessons = await getBulkCurrentLessonItems(studentIds);
+      const [currentLessons, todayAttendance] = await Promise.all([
+        getBulkCurrentLessonItems(studentIds),
+        getBulkTodayAttendance(studentIds),
+      ]);
 
       const built: StudentRow[] = users.map((u) => {
         const studentClassIds = members.filter((m) => m.student_id === u.id).map((m) => m.class_id);
-        const classNames = classes.filter((c) => studentClassIds.includes(c.id)).map((c) => c.name);
+        const studentClasses = classes.filter((c) => studentClassIds.includes(c.id));
+        const primaryClass = studentClasses[0] ?? null;
         const upcoming = lessonList
           .filter((l) => studentClassIds.includes(l.class_id) && l.lesson_date >= today)
           .sort((a, b) => a.lesson_date.localeCompare(b.lesson_date));
         return {
           user: u,
-          classNames,
+          classNames: studentClasses.map((c) => c.name),
           nextLesson: upcoming[0] ?? null,
           currentLesson: currentLessons.get(u.id) ?? null,
+          todayAttendance: todayAttendance.get(u.id) ?? null,
+          primaryClassId: primaryClass?.id ?? null,
+          primaryTutorId: primaryClass?.tutor_id ?? null,
         };
       });
 
@@ -110,6 +132,48 @@ export default function StudentsPage() {
       active = false;
     };
   }, [profile, isTutor, canManage]);
+
+  async function handleMarkAttendance(row: StudentRow, status: AttendanceRecord["status"]) {
+    const today = row.todayAttendance;
+    if (!today) return;
+    const { record, error } = await markAttendance({
+      lessonId: today.lesson.id,
+      studentId: row.user.id,
+      status,
+      lessonTitle: today.lesson.title,
+    });
+    if (error) {
+      showToast(error);
+      return;
+    }
+    setRows((prev) =>
+      prev.map((r) => (r.user.id === row.user.id ? { ...r, todayAttendance: { ...today, record } } : r))
+    );
+    showToast("Attendance updated");
+  }
+
+  async function handleStartLesson(row: StudentRow) {
+    if (!row.primaryClassId || !row.primaryTutorId) {
+      showToast("This student isn't in a class yet.");
+      return;
+    }
+    setStartingId(row.user.id);
+    const { lesson, error } = await startAdHocLesson({
+      studentId: row.user.id,
+      classId: row.primaryClassId,
+      tutorId: row.primaryTutorId,
+      // So Teach opens straight into whatever this student is currently up
+      // to, instead of an empty "no content attached" screen.
+      lessonPlanItemId: row.currentLesson?.item?.id ?? null,
+      quranSurahKey: row.currentLesson?.item?.quran_surah_key ?? null,
+    });
+    setStartingId(null);
+    if (error || !lesson) {
+      showToast(error ?? "Couldn't start the lesson.");
+      return;
+    }
+    router.push(`/teach/${lesson.id}`);
+  }
 
   if (!canManage) {
     return (
@@ -156,6 +220,34 @@ export default function StudentsPage() {
                 <span>Next lesson</span>
                 <span className="text-ink">{r.nextLesson ? `${formatDate(r.nextLesson.lesson_date)}` : "—"}</span>
               </div>
+              {r.todayAttendance ? (
+                <div className="mb-3 flex items-center justify-between text-[0.76rem] text-muted" onClick={(e) => e.stopPropagation()}>
+                  <span>Today&rsquo;s lesson</span>
+                  <AttendanceControl
+                    status={r.todayAttendance.record?.status ?? null}
+                    onChange={(status) => handleMarkAttendance(r, status)}
+                    density="compact"
+                  />
+                </div>
+              ) : (
+                // No lesson today yet — the Scheduler hasn't touched this
+                // student, but attendance shouldn't depend on that. "Start"
+                // creates today's lesson on the spot and jumps into Teach,
+                // same as the Schedule page's "Start Session" does for a
+                // pre-scheduled one.
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="mb-3 w-full"
+                  disabled={startingId === r.user.id}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleStartLesson(r);
+                  }}
+                >
+                  {startingId === r.user.id ? "Starting…" : "▶ Start"}
+                </Button>
+              )}
               {r.currentLesson?.item ? (
                 <Button
                   size="sm"

@@ -7,9 +7,11 @@ import { getLessonChannel, type HighlightState } from "@/lib/realtime";
 import { getOrCreateActiveSession, recordHighlight } from "@/lib/sharing";
 import { getSurah, surahPageCount } from "@/lib/quranContent";
 import { quranSurahUrl } from "@/lib/quranLink";
-import { getLessonMaterial, getSignedMaterialUrl } from "@/lib/storage";
-import type { AppUser, ClassRow, Lesson, LessonMaterial, LessonPlanItem, Meeting } from "@/lib/types";
+import { getLessonMaterial } from "@/lib/storage";
+import { resolveMaterialUrl } from "@/lib/lessonMaterial";
+import type { AppUser, AttendanceStatus, ClassRow, Lesson, LessonMaterial, LessonPlanItem, Meeting } from "@/lib/types";
 import { isAdminRole } from "@/lib/roles";
+import { getLessonAttendance, markAttendance } from "@/lib/attendance";
 import { Card, Eyebrow } from "@/components/ui/Card";
 import { Button, buttonClassName } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Field";
@@ -19,6 +21,7 @@ import { Modal } from "@/components/ui/Modal";
 import { useToast } from "@/components/ui/Toast";
 import { PdfViewer } from "@/components/pdf/PdfViewer";
 import { ConfirmLessonCompletion } from "@/components/lessons/ConfirmLessonCompletionModal";
+import { AttendanceControl } from "@/components/attendance/AttendanceControl";
 
 type ViewMode = "split" | "tutor" | "student";
 
@@ -31,6 +34,10 @@ export function TeachClient({ lessonId }: { lessonId: string }) {
   const [meeting, setMeeting] = useState<Meeting | null>(null);
   const [participants, setParticipants] = useState<AppUser[]>([]);
   const [presentIds, setPresentIds] = useState<Set<string>>(new Set());
+  // Persisted attendance for this lesson (distinct from `presentIds` above,
+  // which is ephemeral Realtime presence, not the `attendance` table) — lets
+  // a tutor mark it right here without leaving Teach for /attendance.
+  const [attendanceStatus, setAttendanceStatus] = useState<AttendanceStatus | null>(null);
 
   // Ayah-mode (bundled Qur'an content) state.
   const [currentPage, setCurrentPage] = useState(1);
@@ -78,6 +85,9 @@ export function TeachClient({ lessonId }: { lessonId: string }) {
       const { data: studentRow } = await supabase.from("users").select("*").eq("id", loadedLesson.student_id).maybeSingle();
       if (studentRow) setParticipants([studentRow as AppUser]);
 
+      const attendanceRecord = await getLessonAttendance(lessonId);
+      setAttendanceStatus(attendanceRecord?.status ?? null);
+
       let loadedPlanItem: LessonPlanItem | null = null;
       if (loadedLesson.lesson_plan_item_id) {
         const { data: itemRow } = await supabase
@@ -98,7 +108,7 @@ export function TeachClient({ lessonId }: { lessonId: string }) {
         if (mat?.storage_path) {
           setMaterial(mat);
           setPdfPage(mat.page_start ?? 1);
-          const { url } = await getSignedMaterialUrl(mat.storage_path);
+          const { url } = await resolveMaterialUrl(mat.storage_path);
           setMaterialUrl(url);
         } else if (loadedPlanItem?.material_storage_path) {
           setMaterial({
@@ -111,7 +121,7 @@ export function TeachClient({ lessonId }: { lessonId: string }) {
             page_end: loadedPlanItem.material_page_end,
           });
           setPdfPage(loadedPlanItem.material_page_start ?? 1);
-          const { url } = await getSignedMaterialUrl(loadedPlanItem.material_storage_path);
+          const { url } = await resolveMaterialUrl(loadedPlanItem.material_storage_path);
           setMaterialUrl(url);
         }
       }
@@ -185,6 +195,17 @@ export function TeachClient({ lessonId }: { lessonId: string }) {
     await supabase.from("lesson_notes").insert({ lesson_id: lessonId, note });
     setNote("");
     showToast("Note saved to this lesson");
+  }
+
+  async function handleMarkAttendance(status: AttendanceStatus) {
+    if (!lesson) return;
+    const { error } = await markAttendance({ lessonId, studentId: lesson.student_id, status, lessonTitle: lesson.title });
+    if (error) {
+      showToast(error);
+      return;
+    }
+    setAttendanceStatus(status);
+    showToast("Attendance updated");
   }
 
   // ============ PDF mode (attached material — e.g. Qaida curriculum) ============
@@ -283,6 +304,9 @@ export function TeachClient({ lessonId }: { lessonId: string }) {
               saveNote={saveNote}
               canConfirm={canManage && !!planItem}
               onConfirm={() => setConfirmOpen(true)}
+              canManage={canManage}
+              attendanceStatus={attendanceStatus}
+              onMarkAttendance={handleMarkAttendance}
             />
           </div>
         </div>
@@ -538,6 +562,9 @@ function SideCards({
   saveNote,
   canConfirm,
   onConfirm,
+  canManage,
+  attendanceStatus,
+  onMarkAttendance,
 }: {
   participants: AppUser[];
   presentIds: Set<string>;
@@ -548,6 +575,9 @@ function SideCards({
   saveNote: () => void;
   canConfirm?: boolean;
   onConfirm?: () => void;
+  canManage?: boolean;
+  attendanceStatus?: AttendanceStatus | null;
+  onMarkAttendance?: (status: AttendanceStatus) => void;
 }): ReactNode {
   return (
     <>
@@ -567,6 +597,12 @@ function SideCards({
           🎥 {meeting ? "Start Google Meet" : "No Meet link yet"}
         </Button>
       </Card>
+      {canManage && onMarkAttendance && (
+        <Card>
+          <h4 className="mb-2 text-xs font-bold uppercase tracking-wide text-muted">Attendance</h4>
+          <AttendanceControl status={attendanceStatus ?? null} onChange={onMarkAttendance} density="compact" />
+        </Card>
+      )}
       {canConfirm && (
         <Card>
           <h4 className="mb-2 text-xs font-bold uppercase tracking-wide text-muted">Curriculum Progress</h4>

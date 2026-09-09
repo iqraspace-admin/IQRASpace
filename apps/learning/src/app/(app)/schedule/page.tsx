@@ -7,7 +7,7 @@ import { supabase } from "@/lib/supabaseClient";
 import type { AppUser, Lesson, LessonStatus, RecurringSessionRule } from "@/lib/types";
 import { getBulkCurrentLessonItems, type CurrentLessonInfo } from "@/lib/curriculum";
 import { generateSessionsForRule } from "@/lib/recurringSessions";
-import { formatTime, computeEndTime, todayISO } from "@/lib/format";
+import { formatTime, computeEndTime, todayISO, weekDates } from "@/lib/format";
 import { Card, Eyebrow, SectionHead } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge, type BadgeTone } from "@/components/ui/Badge";
@@ -25,17 +25,6 @@ const STATUS_TONE: Record<LessonStatus, BadgeTone> = {
   completed: "muted",
   cancelled: "red",
 };
-
-function weekDates(): string[] {
-  const now = new Date();
-  const sunday = new Date(now);
-  sunday.setDate(now.getDate() - now.getDay());
-  return Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(sunday);
-    d.setDate(sunday.getDate() + i);
-    return d.toISOString().slice(0, 10);
-  });
-}
 
 export default function SchedulePage() {
   const { profile } = useAuth();
