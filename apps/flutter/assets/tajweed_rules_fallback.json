@@ -1,0 +1,88 @@
+{
+  "_source": "alquran-tools (github.com/islamic-network/alquran-tools) src/AlQuranCloud/Tools/Parser/Tajweed.php — the library Al Quran Cloud's own developer guide (alquran.cloud/tajweed-guide) cites for this exact bracket markup.",
+  "h": {
+    "ruleKey": "ham_wasl",
+    "name": "Hamzat ul Wasl",
+    "description": "Silent connecting hamza at the start of a word."
+  },
+  "s": {
+    "ruleKey": "slnt",
+    "name": "Silent",
+    "description": "A silent letter or vowel mark."
+  },
+  "l": {
+    "ruleKey": "slnt",
+    "name": "Lam Shamsiyyah",
+    "description": "Solar lam, assimilated into (silent before) the following letter."
+  },
+  "n": {
+    "ruleKey": "madda_normal",
+    "name": "Madda Normal",
+    "description": "Normal prolongation: 2 vowel counts."
+  },
+  "p": {
+    "ruleKey": "madda_permissible",
+    "name": "Madda Permissible",
+    "description": "Permissible prolongation: 2, 4, or 6 vowel counts."
+  },
+  "m": {
+    "ruleKey": "madda_necessary",
+    "name": "Madda Necessary",
+    "description": "Necessary prolongation: 6 vowel counts."
+  },
+  "q": {
+    "ruleKey": "qlq",
+    "name": "Qalqalah",
+    "description": "Echoing/bouncing sound on ق ط ب ج د when sakin."
+  },
+  "o": {
+    "ruleKey": "madda_obligatory",
+    "name": "Madda Obligatory",
+    "description": "Obligatory prolongation: 4-5 vowel counts."
+  },
+  "c": {
+    "ruleKey": "ikhf_shfw",
+    "name": "Ikhafa Shafawi",
+    "description": "Labial concealment, with meem."
+  },
+  "f": {
+    "ruleKey": "ikhf",
+    "name": "Ikhafa",
+    "description": "Hidden nasalization of noon sakinah/tanween before certain letters."
+  },
+  "w": {
+    "ruleKey": "idghm_shfw",
+    "name": "Idgham Shafawi",
+    "description": "Labial merging, with meem."
+  },
+  "i": {
+    "ruleKey": "iqlb",
+    "name": "Iqlab",
+    "description": "Conversion of noon sakinah/tanween into a hidden meem before ب."
+  },
+  "a": {
+    "ruleKey": "idgh_ghn",
+    "name": "Idgham With Ghunnah",
+    "description": "Merging noon sakinah/tanween into a following letter, with nasalization."
+  },
+  "u": {
+    "ruleKey": "idgh_w_ghn",
+    "name": "Idgham Without Ghunnah",
+    "description": "Merging noon sakinah/tanween into ل or ر, without nasalization."
+  },
+  "b": {
+    "ruleKey": "idgh_mus",
+    "name": "Idgham Mutaqaribayn",
+    "description": "Merging of two letters with close articulation points."
+  },
+  "d": {
+    "ruleKey": "idgh_mus",
+    "name": "Idgham Mutajanisayn",
+    "description": "Merging of two letters sharing the same articulation point."
+  },
+  "g": {
+    "ruleKey": "ghn",
+    "name": "Ghunnah",
+    "description": "Obligatory nasalization on نّ and مّ (noon/meem with shaddah)."
+  }
+}

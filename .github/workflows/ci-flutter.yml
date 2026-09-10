@@ -1,0 +1,60 @@
+name: CI (Flutter)
+
+# apps/flutter is a fully independent Flutter app — separate from every
+# other lane in this directory (Next.js/Vercel and Capacitor/Android
+# lanes for apps/quran, apps/learning, apps/landing). Its path filter
+# doesn't overlap any of theirs, so no other workflow needed edits to
+# accommodate this one.
+#
+# Debug-only lane for now: pub get / analyze / test. Deliberately no
+# `flutter build apk` job in this pass — mirrors this repo's own
+# precedent of landing a native mobile wrap before its CI build lane in
+# a separate follow-up (see ci-quran-mobile.yml's history).
+
+on:
+  push:
+    branches: [mobile/android]
+    paths:
+      - "apps/flutter/**"
+      - ".github/workflows/ci-flutter.yml"
+  pull_request:
+    branches: [mobile/android]
+    paths:
+      - "apps/flutter/**"
+      - ".github/workflows/ci-flutter.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: apps/flutter
+
+jobs:
+  validate:
+    name: Analyze & test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          # Pinned to the version installed and verified locally
+          # (flutter doctor) on 2026-09-10 — avoid floating on "stable"
+          # indefinitely; bump deliberately when upgrading.
+          flutter-version: "3.47.3"
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Test
+        run: flutter test
