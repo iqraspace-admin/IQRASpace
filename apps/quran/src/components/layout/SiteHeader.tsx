@@ -1,34 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { useReaderPreferences } from "@/lib/preferences/ReaderPreferencesProvider";
 import { ReaderSettingsPanel } from "@/components/reader/ReaderSettingsPanel";
 import { BrandWordmark } from "./BrandWordmark";
-import type { Theme } from "@/lib/preferences/types";
-
-// Matches /surah/1, /page/23 — an open Surah/Page — but not the bare list
-// pages (/surah, /page), which show no Ayah text and so have nothing for
-// Settings' font/translation/bookmark controls to visibly affect.
-const READER_PAGE_PATTERN = /^\/(surah|page)\/[^/]+/;
-
-const THEME_CYCLE: Record<Theme, Theme> = {
-  system: "light",
-  light: "dark",
-  dark: "system",
-};
-
-const THEME_LABEL: Record<Theme, string> = {
-  system: "System",
-  light: "Light",
-  dark: "Dark",
-};
 
 /**
  * Persistent, minimal header (Readme.md §11 — "do not overcrowd").
  * Reading/navigation never requires an account, so there is deliberately
  * no sign-in control here yet — that's Phase 5.
+ *
+ * Deliberately just two things: the brand (wordmark + tagline) and
+ * Settings. Surahs/Pages/Bookmarks navigation and the Theme control used
+ * to live here too — they now live inside Settings' own "Browse" and
+ * "Appearance" sections (ReaderSettingsPanel.tsx), which is why Settings
+ * is no longer gated to reader pages only (it used to only render on an
+ * open Surah/Page, back when it was purely reading-preference controls
+ * with nothing to affect elsewhere) — it's reachable from every page now,
+ * same as the features it now contains.
  *
  * Sticky (not `position: fixed`) so it stays visible while scrolling: a
  * sticky element still reserves its own space in normal document flow,
@@ -40,10 +29,7 @@ const THEME_LABEL: Record<Theme, string> = {
  * one, offset by --site-header-height (measured below).
  */
 export function SiteHeader() {
-  const { preferences, setPreference } = useReaderPreferences();
-  const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
-  const isReaderPage = READER_PAGE_PATTERN.test(pathname ?? "");
 
   // Keeps --site-header-height (globals.css) in sync with this header's
   // REAL rendered height, not a guessed constant — it can change (its nav
@@ -73,7 +59,7 @@ export function SiteHeader() {
     >
       <div
         style={{
-          maxWidth: "64rem",
+          maxWidth: "var(--content-max-width)",
           margin: "0 auto",
           padding: "0.75rem 1rem",
           display: "flex",
@@ -82,39 +68,28 @@ export function SiteHeader() {
           gap: "1rem",
         }}
       >
-        <Link href="/" style={{ textDecoration: "none" }} aria-label="IqraSpace Quran — home">
-          <BrandWordmark />
+        <Link
+          href="/"
+          style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", minWidth: 0, textDecoration: "none" }}
+          aria-label="IqraSpace Quran — home"
+        >
+          <span style={{ flexShrink: 0 }}>
+            {/* No product label here (showProductLabel=false) — the
+                tagline right next to it already answers "what is this",
+                so showing both would be redundant in an already-tight row. */}
+            <BrandWordmark showProductLabel={false} />
+          </span>
+          {/* A separate CSS class (not just overflow/ellipsis) rather than
+              letting this truncate down to one or two stray characters on
+              a narrow phone — that reads as a rendering glitch, not a
+              graceful degrade. Below 480px it's hidden outright instead;
+              same breakpoint ReaderNavBar's edge-Surah-name labels use. */}
+          <span className="header-tagline" style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>
+            Read. Listen. Learn. Reflect.
+          </span>
         </Link>
 
-        <nav aria-label="Primary" style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
-          <Link href="/surah" style={{ color: "var(--color-text)", textDecoration: "none" }}>
-            Surahs
-          </Link>
-          <Link href="/page" style={{ color: "var(--color-text)", textDecoration: "none" }}>
-            Pages
-          </Link>
-          <button
-            type="button"
-            onClick={() => setPreference("theme", THEME_CYCLE[preferences.theme])}
-            aria-label={`Theme: ${THEME_LABEL[preferences.theme]}. Activate to change.`}
-            style={{
-              background: "transparent",
-              border: "1px solid var(--color-border)",
-              borderRadius: "0.375rem",
-              padding: "0.35rem 0.65rem",
-              color: "var(--color-text)",
-              cursor: "pointer",
-              fontSize: "0.85rem",
-            }}
-          >
-            {THEME_LABEL[preferences.theme]}
-          </button>
-          {/* Only on an open Surah/Page — see READER_PAGE_PATTERN.
-              Was previously duplicated inline on each reader page; now
-              one place, reachable without scrolling back up past the
-              Ayah list. */}
-          {isReaderPage && <ReaderSettingsPanel />}
-        </nav>
+        <ReaderSettingsPanel />
       </div>
     </header>
   );

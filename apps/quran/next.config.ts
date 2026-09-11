@@ -99,6 +99,14 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data:",
               "font-src 'self'",
+              // Per-Ayah/whole-Surah recitation audio streams directly
+              // from this CDN (lib/content/reciters.ts) — without this,
+              // `default-src 'self'` blocks every <audio> load with a CSP
+              // violation (confirmed live: "Loading media from
+              // '...cdn.islamic.network...' violates ... default-src
+              // 'self'", the browser's exact wording for a missing
+              // media-src).
+              "media-src 'self' https://cdn.islamic.network",
               "connect-src 'self'",
               "frame-ancestors 'none'",
               "base-uri 'self'",

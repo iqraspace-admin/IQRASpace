@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Amiri, Amiri_Quran, Fraunces, Inter, Lateef, Noto_Naskh_Arabic, Scheherazade_New } from "next/font/google";
 import { ReaderPreferencesProvider } from "@/lib/preferences/ReaderPreferencesProvider";
+import { AudioProvider } from "@/lib/audio/AudioProvider";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { canonicalUrl } from "@/lib/site";
@@ -91,17 +92,32 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" dir="ltr">
-      <body
-        className={`${amiri.variable} ${amiriQuran.variable} ${scheherazade.variable} ${lateef.variable} ${notoNaskh.variable} ${inter.variable} ${fraunces.variable}`}
-      >
+    <html
+      lang="en"
+      dir="ltr"
+      // These next/font `variable` classes must live on the SAME element
+      // as (or a descendant of) globals.css's `:root` rules that alias
+      // them (--font-arabic-amiriquran: var(--font-amiri-quran), etc.) —
+      // custom properties don't inherit upward, so putting this className
+      // on <body> instead left every one of those :root-declared aliases
+      // referencing a variable that didn't exist yet at that point in the
+      // tree, invalid-at-computed-value-time, silently falling back to
+      // the browser's default UI font everywhere (confirmed live: a real
+      // browser's getComputedStyle showed `--font-arabic` computing to
+      // an empty string, and every styled font-family with it). `:root`
+      // in CSS IS this <html> element, so the className belongs right here.
+      className={`${amiri.variable} ${amiriQuran.variable} ${scheherazade.variable} ${lateef.variable} ${notoNaskh.variable} ${inter.variable} ${fraunces.variable}`}
+    >
+      <body>
         <ReaderPreferencesProvider>
-          <a href="#main-content" className="skip-link">
-            Skip to content
-          </a>
-          <SiteHeader />
-          <main id="main-content">{children}</main>
-          <SiteFooter />
+          <AudioProvider>
+            <a href="#main-content" className="skip-link">
+              Skip to content
+            </a>
+            <SiteHeader />
+            <main id="main-content">{children}</main>
+            <SiteFooter />
+          </AudioProvider>
         </ReaderPreferencesProvider>
       </body>
     </html>

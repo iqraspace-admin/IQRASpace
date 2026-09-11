@@ -25,13 +25,22 @@ export function PageReader({ pageNumber, verses, previous, next }: Props) {
 
   return (
     <div style={{ maxWidth: "var(--reader-max-width)", margin: "0 auto", padding: "1.5rem 1rem" }}>
-      <ReaderNavBar previous={navPrevious} next={navNext} variant="top" current={`Page ${pageNumber}`} />
+      <ReaderNavBar
+        previous={navPrevious}
+        next={navNext}
+        variant="top"
+        current={`Page ${pageNumber}`}
+        previousBoundaryLabel={!previous ? "First Page" : undefined}
+        nextBoundaryLabel={!next ? "Last Page" : undefined}
+      />
 
       <header style={{ textAlign: "center", marginBottom: "2rem" }}>
         <p style={{ color: "var(--color-text-muted)", margin: 0, fontSize: "0.85rem" }}>
           {verses.length} Ayahs
         </p>
-        <h1 style={{ margin: "0.25rem 0", color: "var(--color-primary)" }}>Page {pageNumber}</h1>
+        <h1 style={{ margin: "0.25rem 0", color: "var(--color-primary)", fontFamily: "var(--font-display)", fontWeight: 600 }}>
+          Page {pageNumber}
+        </h1>
       </header>
 
       <AyahList
@@ -42,7 +51,13 @@ export function PageReader({ pageNumber, verses, previous, next }: Props) {
         ariaLabel={`Ayahs on page ${pageNumber}`}
       />
 
-      <ReaderNavBar previous={navPrevious} next={navNext} variant="bottom" />
+      <ReaderNavBar
+        previous={navPrevious}
+        next={navNext}
+        variant="bottom"
+        previousBoundaryLabel={!previous ? "First Page" : undefined}
+        nextBoundaryLabel={!next ? "Last Page" : undefined}
+      />
     </div>
   );
 }

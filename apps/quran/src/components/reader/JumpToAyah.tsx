@@ -6,6 +6,11 @@ import { ayahElementId } from "@/lib/reader/ayahDom";
 type Props = {
   surahId: number;
   versesCount: number;
+  /** Called after a successful jump — lets a caller that shows this
+      inside a popover/dialog (ReaderNavBar's Go-to-Ayah button) close
+      itself once the jump actually happens, without this component
+      needing to know anything about being inside a popover. */
+  onJump?: () => void;
 };
 
 /**
@@ -19,7 +24,7 @@ type Props = {
  * scrolls to it directly — no dependency on AyahList's internal ref map,
  * so this stays a self-contained control.
  */
-export function JumpToAyah({ surahId, versesCount }: Props) {
+export function JumpToAyah({ surahId, versesCount, onJump }: Props) {
   const inputId = useId();
   const [value, setValue] = useState("");
   const [notFound, setNotFound] = useState(false);
@@ -39,6 +44,7 @@ export function JumpToAyah({ surahId, versesCount }: Props) {
     setNotFound(false);
     target.scrollIntoView({ behavior: "smooth", block: "start" });
     target.focus({ preventScroll: true });
+    onJump?.();
   }
 
   return (
