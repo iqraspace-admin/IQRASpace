@@ -4,10 +4,16 @@ import { useEffect, useState } from "react";
 import { loadBookmarks, toggleBookmark } from "@/lib/preferences/storage";
 import { ayahElementId } from "@/lib/reader/ayahDom";
 import { TRANSLATION_LANGUAGES, type TranslationLanguageId } from "@/lib/content/translations";
-import type { Verse } from "@/lib/content/types";
+import { ayahAudioUrl } from "@/lib/content/reciters";
+import { useAudio } from "@/lib/audio/AudioProvider";
+import { useReaderPreferences } from "@/lib/preferences/ReaderPreferencesProvider";
+import type { VerseWithSurah } from "@/lib/content/types";
 
 type Props = {
-  verse: Verse;
+  /** Needs `surahId` (not just a bare Verse) to identify this Ayah for
+      audio playback/highlighting — every AyahBlock caller (AyahList) is
+      already working from a VerseWithSurah, so this costs nothing. */
+  verse: VerseWithSurah;
   /** Which translation language(s) to render, if any are present on this
       verse — empty means "Arabic only" (the default; Readme.md §7's
       "never show a translation the reader didn't ask for"). */
@@ -32,6 +38,18 @@ type Props = {
 export function AyahBlock({ verse, enabledTranslations, showBookmarks, registerRef, surahHeading }: Props) {
   const bookmarkKey = verse.verse_key;
   const [bookmarked, setBookmarked] = useState(false);
+  const { preferences } = useReaderPreferences();
+  const audio = useAudio();
+  const isPlaying = audio.isActive(verse.surahId, verse.verse_number);
+  const isLoading = isPlaying && audio.state.isLoading;
+
+  function togglePlay() {
+    if (isPlaying) {
+      audio.stop();
+    } else {
+      audio.playAyah(verse.surahId, verse.verse_number, ayahAudioUrl(preferences.reciter, verse.id));
+    }
+  }
 
   // Hydration-safe, same pattern as ReaderPreferencesProvider: default to
   // "not bookmarked" during SSR, correct it after mount.
@@ -54,8 +72,19 @@ export function AyahBlock({ verse, enabledTranslations, showBookmarks, registerR
         display: "flex",
         flexDirection: "column",
         gap: "0.5rem",
-        padding: "1.25rem 0",
+        padding: isPlaying ? "1.25rem 0.75rem" : "1.25rem 0",
         borderBottom: "1px solid var(--color-border)",
+        // "Now playing" highlight (Focus mode while listening) — an
+        // outline, not a border, so it doesn't reflow surrounding Ayahs;
+        // matches the IqraSpace Flutter app's teal now-playing outline.
+        ...(isPlaying
+          ? {
+              outline: "2px solid var(--color-primary)",
+              outlineOffset: "-2px",
+              borderRadius: "0.5rem",
+              background: "var(--color-bg)",
+            }
+          : {}),
       }}
     >
       {surahHeading && (
@@ -96,7 +125,9 @@ export function AyahBlock({ verse, enabledTranslations, showBookmarks, registerR
             lang="ar"
             style={{
               fontFamily: "var(--font-arabic)",
-              fontSize: "calc(1.6rem * var(--reader-arabic-scale))",
+              // 26px base — matches the IqraSpace Flutter app's default
+              // Arabic ayah size exactly (fontSizeProvider's initial 26).
+              fontSize: "calc(1.625rem * var(--reader-arabic-scale))",
               lineHeight: "calc(2 * var(--reader-line-spacing))",
               margin: 0,
               color: "var(--color-text)",
@@ -129,27 +160,51 @@ export function AyahBlock({ verse, enabledTranslations, showBookmarks, registerR
             );
           })}
 
-          {showBookmarks && (
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginTop: "0.5rem" }}>
             <button
               type="button"
-              onClick={() => setBookmarked(toggleBookmark(bookmarkKey).includes(bookmarkKey))}
-              aria-pressed={bookmarked}
+              onClick={togglePlay}
+              aria-pressed={isPlaying}
               aria-label={
-                bookmarked ? `Remove bookmark for ayah ${verse.verse_key}` : `Bookmark ayah ${verse.verse_key}`
+                isLoading
+                  ? `Loading recitation for ayah ${verse.verse_key}`
+                  : isPlaying
+                    ? `Pause recitation for ayah ${verse.verse_key}`
+                    : `Play recitation for ayah ${verse.verse_key}`
               }
               style={{
-                marginTop: "0.5rem",
                 background: "none",
                 border: "none",
                 padding: 0,
                 fontSize: "0.8rem",
-                color: bookmarked ? "var(--color-accent-text)" : "var(--color-text-muted)",
+                color: isPlaying ? "var(--color-primary)" : "var(--color-text-muted)",
                 cursor: "pointer",
               }}
             >
-              {bookmarked ? "★ Bookmarked" : "☆ Bookmark"}
+              {isLoading ? "⏳ Loading…" : isPlaying ? "⏸ Playing" : "▶ Play"}
             </button>
-          )}
+
+            {showBookmarks && (
+              <button
+                type="button"
+                onClick={() => setBookmarked(toggleBookmark(bookmarkKey).includes(bookmarkKey))}
+                aria-pressed={bookmarked}
+                aria-label={
+                  bookmarked ? `Remove bookmark for ayah ${verse.verse_key}` : `Bookmark ayah ${verse.verse_key}`
+                }
+                style={{
+                  background: "none",
+                  border: "none",
+                  padding: 0,
+                  fontSize: "0.8rem",
+                  color: bookmarked ? "var(--color-accent-text)" : "var(--color-text-muted)",
+                  cursor: "pointer",
+                }}
+              >
+                {bookmarked ? "★ Bookmarked" : "☆ Bookmark"}
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </li>

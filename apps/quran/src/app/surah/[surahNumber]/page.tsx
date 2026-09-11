@@ -39,8 +39,16 @@ export default async function SurahPage({ params }: Props) {
 
   const { previous, next } = getAdjacentSurahs(number);
   const pdfInfo = getSurahPdfInfo(number);
+  const allChapters = getAllChapters();
 
   return (
-    <SurahReader chapter={content.chapter} verses={content.verses} previous={previous} next={next} pdfInfo={pdfInfo} />
+    <SurahReader
+      chapter={content.chapter}
+      verses={content.verses}
+      previous={previous}
+      next={next}
+      pdfInfo={pdfInfo}
+      allChapters={allChapters}
+    />
   );
 }

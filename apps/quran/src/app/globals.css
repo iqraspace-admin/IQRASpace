@@ -45,7 +45,11 @@
   --font-arabic-scheherazade: var(--font-scheherazade), "Traditional Arabic", serif;
   --font-arabic-lateef: var(--font-lateef), "Traditional Arabic", serif;
   --font-arabic-notonaskh: var(--font-noto-naskh), "Traditional Arabic", serif;
-  --font-arabic: var(--font-arabic-amiri);
+  /* Default/pre-hydration fallback matches DEFAULT_PREFERENCES.arabicFont
+     (amiriQuran) — the IqraSpace Flutter app's own default Quran
+     typeface too, so a first paint before ReaderPreferencesProvider sets
+     data-arabic-font never flashes the wrong font for a new reader. */
+  --font-arabic: var(--font-arabic-amiriquran);
   --font-body: var(--font-inter), system-ui, -apple-system, sans-serif;
   --font-display: var(--font-fraunces), Georgia, serif; /* wordmark + headings only */
 
@@ -56,6 +60,16 @@
   --reader-translation-scale: 1;
   --reader-line-spacing: 1;
   --reader-max-width: 42rem;
+  /* The site's general "content" column — header/list pages/home
+     sections all share this one value now (previously each hardcoded
+     its own: 40/48/64rem, an inconsistency that left home/list pages
+     needlessly narrow on a wide desktop). Matches what SiteHeader's own
+     container already used, so the header needed no change — everything
+     else grew to match it instead. Deliberately NOT used for
+     --reader-max-width/--pdf-reader-max-width above: prose reading width
+     and a scanned-page image's width are each their own, narrower,
+     already-justified exception, not an oversight. */
+  --content-max-width: 64rem;
   /* PDF Mode's own container width — deliberately NOT tied to
      --reader-max-width/data-reading-width: that preference sets a
      comfortable *text line length*, which has nothing to do with how
@@ -143,8 +157,14 @@
   --reader-max-width: 52rem;
 }
 
+/* amiriQuran is the base default above, so this rule only matters for
+   the moment ReaderPreferencesProvider explicitly re-asserts it (e.g.
+   after switching away and back) — harmless no-op otherwise. */
 :root[data-arabic-font="amiriQuran"] {
   --font-arabic: var(--font-arabic-amiriquran);
+}
+:root[data-arabic-font="amiri"] {
+  --font-arabic: var(--font-arabic-amiri);
 }
 :root[data-arabic-font="scheherazade"] {
   --font-arabic: var(--font-arabic-scheherazade);
@@ -286,5 +306,45 @@ body {
 @keyframes settings-slide-in {
   from {
     transform: translateX(100%);
+  }
+}
+
+/* Home page entry tiles (Read Quran / Learning) — a bit more breathing
+   room once there's room to give it, same 640px breakpoint the settings
+   panel above already established as this file's convention. */
+.entry-tile {
+  padding: 1.25rem;
+}
+@media (min-width: 640px) {
+  .entry-tile {
+    padding: 1.5rem;
+  }
+}
+
+/* SiteHeader's tagline, next to the wordmark — hidden below 480px rather
+   than left to truncate down to one or two stray characters (which reads
+   as a glitch, not a graceful degrade) once the Settings trigger and a
+   narrow viewport leave it no real room. */
+.header-tagline {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (max-width: 480px) {
+  .header-tagline {
+    display: none;
+  }
+}
+
+/* Surah reader nav row: Previous/Next Surah names drop to arrow-only
+   under 480px — the tightest, most targeted fix for a ~360-400px phone,
+   where the merged nav row (Play/Stop, Surah name, Go-to-Ayah, Auto-
+   scroll, all between the two edges) needs every spare pixel. The arrow
+   glyph itself is a sibling element, never hidden by this class — only
+   the text label next to it is. */
+@media (max-width: 480px) {
+  .reader-nav-edge-label {
+    display: none;
   }
 }

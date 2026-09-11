@@ -12,7 +12,13 @@ import { DEFAULT_PREFERENCES, type ReaderPreferences } from "./types";
 
 const PREFERENCES_KEY = "iqraspace-quran:preferences";
 const LAST_POSITION_KEY = "iqraspace-quran:last-position";
+const LAST_READS_KEY = "iqraspace-quran:last-reads";
 const BOOKMARKS_KEY = "iqraspace-quran:bookmarks";
+
+/** Most-recent-first reading history, capped at this many surahs — mirrors
+    the IqraSpace Flutter app's LastReadNotifier so both platforms "feel
+    like the same product" on this feature too. */
+const MAX_LAST_READS = 8;
 
 export function loadPreferences(): ReaderPreferences {
   if (typeof window === "undefined") return DEFAULT_PREFERENCES;
@@ -35,29 +41,47 @@ export function savePreferences(prefs: ReaderPreferences): void {
   }
 }
 
-export type ReadingPosition = {
+export type ReadingHistoryEntry = {
   surahNumber: number;
   ayahNumber: number;
   updatedAt: string;
 };
 
-export function loadLastPosition(): ReadingPosition | null {
-  if (typeof window === "undefined") return null;
+/**
+ * Recent reading history — most-recent-first, at most one entry per Surah
+ * (re-reading a Surah moves it back to the front rather than adding a
+ * duplicate), capped at MAX_LAST_READS. Powers both the home page's
+ * single "Continue Reading" card (the first entry) and its plural "Last
+ * Reads" row (the rest) — see ContinueReadingCard/LastReadsRow.
+ */
+export function loadLastReads(): ReadingHistoryEntry[] {
+  if (typeof window === "undefined") return [];
   try {
-    const raw = window.localStorage.getItem(LAST_POSITION_KEY);
-    return raw ? (JSON.parse(raw) as ReadingPosition) : null;
+    const raw = window.localStorage.getItem(LAST_READS_KEY);
+    if (raw) return JSON.parse(raw) as ReadingHistoryEntry[];
+    // One-time migration: readers who already had a single last position
+    // (this key's shape before it became a history) shouldn't see "Start
+    // Reading" the first time this ships — seed the list from it. The old
+    // key itself is left alone; harmless if it's never read again.
+    const legacyRaw = window.localStorage.getItem(LAST_POSITION_KEY);
+    return legacyRaw ? [JSON.parse(legacyRaw) as ReadingHistoryEntry] : [];
   } catch {
-    return null;
+    return [];
   }
 }
 
-export function saveLastPosition(position: Omit<ReadingPosition, "updatedAt">): void {
-  if (typeof window === "undefined") return;
+/** Removes any existing entry for this Surah, then prepends a fresh one —
+    most-recent-first, one entry per Surah, capped at MAX_LAST_READS. */
+export function recordLastRead(position: Omit<ReadingHistoryEntry, "updatedAt">): ReadingHistoryEntry[] {
+  if (typeof window === "undefined") return [];
   try {
-    const value: ReadingPosition = { ...position, updatedAt: new Date().toISOString() };
-    window.localStorage.setItem(LAST_POSITION_KEY, JSON.stringify(value));
+    const rest = loadLastReads().filter((entry) => entry.surahNumber !== position.surahNumber);
+    const next = [{ ...position, updatedAt: new Date().toISOString() }, ...rest].slice(0, MAX_LAST_READS);
+    window.localStorage.setItem(LAST_READS_KEY, JSON.stringify(next));
+    return next;
   } catch {
     // Same as savePreferences — non-fatal.
+    return [];
   }
 }
 

@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { saveLastPosition } from "@/lib/preferences/storage";
+import { recordLastRead } from "@/lib/preferences/storage";
+import { useAudio } from "@/lib/audio/AudioProvider";
 import { AyahBlock } from "./AyahBlock";
 import type { TranslationLanguageId } from "@/lib/content/translations";
 import type { VerseWithSurah } from "@/lib/content/types";
@@ -26,6 +27,7 @@ type Props = {
 export function AyahList({ verses, enabledTranslations, showBookmarks, showSurahHeadings, ariaLabel }: Props) {
   const ayahRefs = useRef(new Map<string, HTMLElement>());
   const saveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { surahNumber: playingSurah, ayahNumber: playingAyah } = useAudio().state;
 
   // Continue Reading (Readme.md §16): track whichever ayah is topmost in
   // the viewport while scrolling, debounced, so "return to exactly where
@@ -44,7 +46,7 @@ export function AyahList({ verses, enabledTranslations, showBookmarks, showSurah
 
         if (saveTimeout.current) clearTimeout(saveTimeout.current);
         saveTimeout.current = setTimeout(() => {
-          saveLastPosition({ surahNumber, ayahNumber });
+          recordLastRead({ surahNumber, ayahNumber });
         }, 800);
       },
       { rootMargin: "-10% 0px -70% 0px", threshold: 0 }
@@ -69,6 +71,20 @@ export function AyahList({ verses, enabledTranslations, showBookmarks, showSurah
     const target = ayahRefs.current.get(verseParam);
     target?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [verses]);
+
+  // Focus mode while listening: keep whichever Ayah is currently
+  // playing (single-Ayah tap or a whole-Surah queue auto-advancing)
+  // scrolled into view — the web equivalent of the IqraSpace Flutter
+  // app's audio-follow-scroll. Depending on the specific surah/ayah
+  // numbers (not the whole audio state object) means this only fires on
+  // a genuine change of *which* Ayah is playing, not on every
+  // loading/playing state flicker of the same one. `prefers-reduced-
+  // motion` degrades "smooth" to instant already, sitewide (globals.css).
+  useEffect(() => {
+    if (playingSurah == null || playingAyah == null) return;
+    const target = ayahRefs.current.get(`${playingSurah}:${playingAyah}`);
+    target?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [playingSurah, playingAyah]);
 
   return (
     <ol aria-label={ariaLabel} style={{ listStyle: "none", margin: 0, padding: 0 }}>

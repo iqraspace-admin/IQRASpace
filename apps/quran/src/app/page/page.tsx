@@ -18,8 +18,8 @@ export default function PageListPage() {
   const pageNumbers = getPageNumbers();
 
   return (
-    <div style={{ maxWidth: "40rem", margin: "0 auto", padding: "2rem 1rem" }}>
-      <h1 style={{ marginBottom: "0.25rem" }}>Mushaf Pages</h1>
+    <div style={{ maxWidth: "var(--content-max-width)", margin: "0 auto", padding: "2rem 1rem" }}>
+      <h1 style={{ marginBottom: "0.25rem", fontFamily: "var(--font-display)", fontWeight: 600 }}>Mushaf Pages</h1>
       <p style={{ color: "var(--color-text-muted)", marginTop: 0 }}>{pageNumbers.length} pages available.</p>
 
       <div
