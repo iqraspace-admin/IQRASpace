@@ -1,9 +1,13 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useId, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { createPortal } from "react-dom";
+import Link from "next/link";
 import { useReaderPreferences } from "@/lib/preferences/ReaderPreferencesProvider";
 import {
+  AUTO_SCROLL_SPEED_MAX,
+  AUTO_SCROLL_SPEED_MIN,
+  AUTO_SCROLL_SPEED_STEP,
   FONT_SCALE_MAX,
   FONT_SCALE_MIN,
   FONT_SCALE_STEP,
@@ -11,15 +15,24 @@ import {
   LINE_SPACING_MIN,
   LINE_SPACING_STEP,
   type ReadingWidth,
+  type Theme,
 } from "@/lib/preferences/types";
 import { TRANSLATION_LANGUAGES } from "@/lib/content/translations";
 import { ARABIC_FONTS, ARABIC_FONT_GROUPS, arabicFontLabel, type ArabicFontId } from "@/lib/content/arabicFonts";
 import { STOP_SYMBOLS, TAJWEED_RULES } from "@/lib/content/tajweedRules";
+import { RECITERS } from "@/lib/content/reciters";
+import { useModalA11y } from "@/lib/reader/useModalA11y";
 
 const READING_WIDTHS: { value: ReadingWidth; label: string }[] = [
   { value: "narrow", label: "Narrow" },
   { value: "comfortable", label: "Comfortable" },
   { value: "wide", label: "Wide" },
+];
+
+const THEMES: { value: Theme; label: string }[] = [
+  { value: "system", label: "System" },
+  { value: "light", label: "Light" },
+  { value: "dark", label: "Dark" },
 ];
 
 const ARABIC_FONT_CSS_VAR: Record<ArabicFontId, string> = {
@@ -29,8 +42,6 @@ const ARABIC_FONT_CSS_VAR: Record<ArabicFontId, string> = {
   lateef: "var(--font-arabic-lateef)",
   notoNaskh: "var(--font-arabic-notonaskh)",
 };
-
-const FOCUSABLE_SELECTOR = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
 type View = "main" | "arabicFont" | "tajweedRules";
 
@@ -53,10 +64,39 @@ type View = "main" | "arabicFont" | "tajweedRules";
  * opening it never navigates away from the Surah/Page reader
  * underneath.
  */
-export function ReaderSettingsPanel() {
+type Props = {
+  /** Which sub-view the panel opens into, e.g. "tajweedRules" for a
+      "Tajweed Rules" entry point (Quick Links) that should land readers
+      straight on that reference instead of the main settings list.
+      Defaults to "main" — SiteHeader's plain Settings trigger is
+      unaffected. */
+  initialView?: View;
+  /** Trigger button label/icon — lets the same self-contained component
+      be mounted more than once with a different presentation (e.g. Quick
+      Links' "Tajweed Rules" tile) without duplicating its dialog/state
+      logic. Defaults to the gear icon + "Settings", unchanged from
+      before these props existed. */
+  triggerLabel?: string;
+  triggerIcon?: ReactNode;
+  /** Lets a caller restyle the trigger entirely (e.g. Home's Quick Links
+      tile grid, where this needs to look like a square tile, not the
+      default pill) without this component needing to know anything
+      about where it's being rendered. Replaces `triggerStyle` outright
+      rather than merging, since the two look nothing alike. */
+  triggerClassName?: string;
+  triggerStyleOverride?: CSSProperties;
+};
+
+export function ReaderSettingsPanel({
+  initialView = "main",
+  triggerLabel = "Settings",
+  triggerIcon,
+  triggerClassName,
+  triggerStyleOverride,
+}: Props = {}) {
   const { preferences, setPreference } = useReaderPreferences();
   const [open, setOpen] = useState(false);
-  const [view, setView] = useState<View>("main");
+  const [view, setView] = useState<View>(initialView);
   const [draftFont, setDraftFont] = useState<ArabicFontId>(preferences.arabicFont);
   const [showFontHelp, setShowFontHelp] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -65,7 +105,7 @@ export function ReaderSettingsPanel() {
 
   function close() {
     setOpen(false);
-    setView("main");
+    setView(initialView);
     triggerRef.current?.focus();
   }
 
@@ -84,53 +124,33 @@ export function ReaderSettingsPanel() {
     setView("tajweedRules");
   }
 
-  // Escape-to-close, a lightweight Tab focus trap while the panel is open,
-  // and a body-scroll lock (the panel can be taller than the viewport on
-  // phones, where it's a bottom sheet rather than a side panel).
-  useEffect(() => {
-    if (!open) return;
-
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") {
-        close();
-        return;
-      }
-      if (e.key !== "Tab") return;
-      const focusable = panelRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
-      if (!focusable || focusable.length === 0) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    }
-
-    panelRef.current?.focus();
-    document.addEventListener("keydown", onKeyDown);
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [open]);
+  useModalA11y(open, panelRef, close);
 
   return (
     <>
       <button
         ref={triggerRef}
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setView(initialView);
+          setOpen(true);
+        }}
         aria-haspopup="dialog"
-        aria-label="Reading settings"
-        style={triggerStyle}
+        aria-label={triggerLabel === "Settings" ? "Reading settings" : triggerLabel}
+        className={triggerClassName}
+        style={triggerStyleOverride ?? triggerStyle}
       >
-        <GearIcon />
-        <span>Settings</span>
+        {triggerStyleOverride ? (
+          <>
+            <span style={tileBadgeStyle}>{triggerIcon ?? <GearIcon />}</span>
+            <span style={tileLabelStyle}>{triggerLabel}</span>
+          </>
+        ) : (
+          <>
+            {triggerIcon ?? <GearIcon />}
+            <span>{triggerLabel}</span>
+          </>
+        )}
       </button>
 
       {open &&
@@ -157,6 +177,9 @@ export function ReaderSettingsPanel() {
                   </div>
 
                   <div className="settings-panel-body">
+                    <BrowseSection close={close} />
+                    <AppearanceSection />
+
                     <button type="button" onClick={openTajweedRules} style={{ ...navRowStyle, marginTop: "1rem" }}>
                       <span>Tajweed Rules</span>
                       <span style={navRowValueStyle}>
@@ -180,6 +203,8 @@ export function ReaderSettingsPanel() {
                     <LayoutSection />
                     <TranslationSection />
                     <BookmarksSection />
+                    <ReciterSection />
+                    <AutoScrollSection />
                     <PdfModeSection />
                   </div>
 
@@ -387,6 +412,70 @@ function TranslationSection() {
   );
 }
 
+/** Browse — site navigation that used to live in SiteHeader.tsx's own nav
+    row; moved here so the header can stay down to just the brand + this
+    trigger. Each row closes the panel on navigation (`close`, passed in
+    from the parent) since a Link click doesn't otherwise dismiss it. */
+function BrowseSection({ close }: { close: () => void }) {
+  return (
+    <section>
+      <SectionLabel>Browse</SectionLabel>
+      <Link href="/surah" onClick={close} style={navRowStyle}>
+        <span>Surahs</span>
+        <span style={navRowValueStyle}>
+          <ChevronIcon />
+        </span>
+      </Link>
+      <Link href="/page" onClick={close} style={navRowStyle}>
+        <span>Pages</span>
+        <span style={navRowValueStyle}>
+          <ChevronIcon />
+        </span>
+      </Link>
+      <Link href="/bookmarks" onClick={close} style={navRowStyle}>
+        <span>Bookmarks</span>
+        <span style={navRowValueStyle}>
+          <ChevronIcon />
+        </span>
+      </Link>
+    </section>
+  );
+}
+
+/** Appearance — Theme, moved here from SiteHeader.tsx's old cycle-button
+    (System → Light → Dark → System). A 3-way segmented control (same
+    pattern as LayoutSection's Page width below) is more discoverable
+    than a single button that silently cycles through hidden states. */
+function AppearanceSection() {
+  const { preferences, setPreference } = useReaderPreferences();
+
+  return (
+    <section>
+      <SectionLabel>Appearance</SectionLabel>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem", padding: "0.5rem 0" }}>
+        <span>Theme</span>
+        <div role="radiogroup" aria-label="Theme" style={{ display: "flex", gap: "0.35rem" }}>
+          {THEMES.map((t) => {
+            const selected = preferences.theme === t.value;
+            return (
+              <button
+                key={t.value}
+                type="button"
+                role="radio"
+                aria-checked={selected}
+                onClick={() => setPreference("theme", t.value)}
+                style={segmentButtonStyle(selected)}
+              >
+                {t.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function BookmarksSection() {
   const { preferences, setPreference } = useReaderPreferences();
 
@@ -398,6 +487,69 @@ function BookmarksSection() {
         checked={preferences.showBookmarks}
         onChange={(checked) => setPreference("showBookmarks", checked)}
       />
+    </section>
+  );
+}
+
+/** Auto-scroll while reading — matches the IqraSpace Flutter app's own
+    feature: a constant-speed scroll, independent of audio playback (see
+    AyahList's separate audio-follow-scroll effect, which jumps to
+    whichever Ayah is playing rather than scrolling at a steady rate).
+    `enabled` is intentionally NOT a reader preference — see
+    ReaderPreferencesProvider's own comment on `autoScrollEnabled` for
+    why — only the speed persists. Toggling it here works the same as
+    the Surah reader's own nav-row button: the reader is still visible
+    (and, once this panel closes, active) underneath this dialog. */
+function AutoScrollSection() {
+  const { preferences, setPreference, autoScrollEnabled, setAutoScrollEnabled } = useReaderPreferences();
+
+  return (
+    <section>
+      <SectionLabel>Auto-scroll</SectionLabel>
+      <ToggleRow label="Auto-scroll while reading" checked={autoScrollEnabled} onChange={setAutoScrollEnabled} />
+      <SliderControl
+        label="Speed"
+        value={preferences.autoScrollSpeed}
+        min={AUTO_SCROLL_SPEED_MIN}
+        max={AUTO_SCROLL_SPEED_MAX}
+        step={AUTO_SCROLL_SPEED_STEP}
+        formatValue={(v) => `${Math.round(v)} px/s`}
+        onChange={(v) => setPreference("autoScrollSpeed", v)}
+      />
+    </section>
+  );
+}
+
+/** Which reciter's audio plays for per-Ayah/whole-Surah playback.
+    Deliberately doesn't touch any in-progress audio when changed —
+    matching the IqraSpace Flutter app's own Reciter setting, which
+    likewise only takes effect on the *next* play, never interrupting
+    what's already playing (see AudioProvider/AyahBlock, which only ever
+    build a URL with the current reciter at the moment a play button is
+    pressed). */
+function ReciterSection() {
+  const { preferences, setPreference } = useReaderPreferences();
+
+  return (
+    <section>
+      <SectionLabel>Reciter</SectionLabel>
+      <div role="radiogroup" aria-label="Reciter">
+        {RECITERS.map((reciter) => (
+          <label key={reciter.id} style={fontRowStyle}>
+            <span style={{ fontSize: "0.9rem" }}>{reciter.label}</span>
+            <input
+              type="radio"
+              name="reciter"
+              value={reciter.id}
+              checked={preferences.reciter === reciter.id}
+              onChange={() => setPreference("reciter", reciter.id)}
+            />
+          </label>
+        ))}
+      </div>
+      <p style={{ margin: "0.5rem 0 0", fontSize: "0.75rem", color: "var(--color-text-muted)" }}>
+        Recitation audio courtesy of Al Quran Cloud (alquran.cloud).
+      </p>
     </section>
   );
 }
@@ -629,6 +781,30 @@ const triggerStyle: CSSProperties = {
   color: "var(--color-text)",
   cursor: "pointer",
   fontSize: "0.85rem",
+};
+
+// Matches QuickLinks.tsx's own tile badge/label styling (not imported —
+// that constant isn't exported, and duplicating a couple of style
+// values here is simpler than exporting internal styling across files)
+// so this trigger is visually indistinguishable from its sibling tiles
+// when `triggerStyleOverride` puts it in a tile grid.
+const tileBadgeStyle: CSSProperties = {
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: "2.5rem",
+  height: "2.5rem",
+  borderRadius: "9999px",
+  background: "color-mix(in srgb, var(--color-primary) 12%, var(--color-surface))",
+  color: "var(--color-primary)",
+};
+
+const tileLabelStyle: CSSProperties = {
+  marginTop: "0.5rem",
+  fontWeight: 600,
+  fontSize: "0.85rem",
+  textAlign: "center",
+  color: "var(--color-text)",
 };
 
 const iconButtonStyle: CSSProperties = {

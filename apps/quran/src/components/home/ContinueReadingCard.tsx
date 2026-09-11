@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
-import { loadLastPosition, type ReadingPosition } from "@/lib/preferences/storage";
+import { loadLastReads, type ReadingHistoryEntry } from "@/lib/preferences/storage";
 import type { Chapter } from "@/lib/content/types";
 
 type Props = {
@@ -10,17 +10,19 @@ type Props = {
 };
 
 /**
- * Home page's "Continue Reading" (Readme.md §16). Client component — the
- * last position lives in localStorage, so this can't be a Server
- * Component. `chapters` is passed down from the server page instead of
- * fetched again here, since content loading is server-only (lib/content).
+ * Home page's "Continue Reading" (Readme.md §16) — the most recent entry
+ * of the reading history (see LastReadsRow for the rest of it). Client
+ * component — reading history lives in localStorage, so this can't be a
+ * Server Component. `chapters` is passed down from the server page
+ * instead of fetched again here, since content loading is server-only
+ * (lib/content).
  */
 export function ContinueReadingCard({ chapters }: Props) {
-  const [position, setPosition] = useState<ReadingPosition | null>(null);
+  const [position, setPosition] = useState<ReadingHistoryEntry | null>(null);
 
   useEffect(() => {
     async function hydrate() {
-      const loaded = loadLastPosition();
+      const loaded = loadLastReads()[0] ?? null;
       await Promise.resolve(); // satisfies react-hooks/set-state-in-effect
       setPosition(loaded);
     }
@@ -39,7 +41,8 @@ export function ContinueReadingCard({ chapters }: Props) {
     const first = chapters[0];
     return (
       <Link href={first ? `/surah/${first.id}` : "/surah"} style={ctaStyle}>
-        Start Reading →
+        <span>Begin with {chapters[0]?.name_simple ?? "Al-Fatihah"}</span>
+        <ArrowIcon />
       </Link>
     );
   }
@@ -50,17 +53,47 @@ export function ContinueReadingCard({ chapters }: Props) {
       href={`/surah/${position.surahNumber}?verse=${position.surahNumber}:${position.ayahNumber}`}
       style={ctaStyle}
     >
-      Continue Reading{chapter ? ` — ${chapter.name_simple}, Ayah ${position.ayahNumber}` : ""} →
+      <span>Continue Reading{chapter ? ` — ${chapter.name_simple}, Ayah ${position.ayahNumber}` : ""}</span>
+      <ArrowIcon />
     </Link>
   );
 }
 
+function ArrowIcon() {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      style={{ flexShrink: 0 }}
+    >
+      <line x1="5" y1="12" x2="19" y2="12" />
+      <polyline points="12 5 19 12 12 19" />
+    </svg>
+  );
+}
+
+// Full-width, bold pill — the site's one big "do this next" moment,
+// matching the IqraSpace Flutter app's Home CTA exactly (a big rounded
+// button, bold text, trailing arrow) rather than the small inline link
+// this used to be.
 const ctaStyle: CSSProperties = {
-  display: "inline-block",
-  padding: "0.75rem 1.5rem",
-  borderRadius: "0.5rem",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: "1rem",
+  width: "100%",
+  padding: "1.1rem 1.5rem",
+  borderRadius: "1.25rem",
   background: "var(--color-primary)",
   color: "var(--color-primary-contrast)",
   textDecoration: "none",
-  fontWeight: 600,
+  fontWeight: 700,
+  fontSize: "1.05rem",
 };

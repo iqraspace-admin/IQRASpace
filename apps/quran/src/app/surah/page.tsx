@@ -12,16 +12,18 @@ export const metadata: Metadata = {
 /**
  * Surah list (Readme.md §10). Server Component: reads the synced content
  * directly, no client fetch. Renders however many Surahs are actually
- * synced (see lib/content/quran.ts's header note) — currently 2 of 114,
- * a real constraint of the registered pre-live project, not a bug in
- * this page (QURAN-CONTENT.md §4a).
+ * synced (see lib/content/quran.ts's header note) — all 114 as of
+ * production API access (QURAN-CONTENT.md §4b); the count below stays
+ * driven by `chapters.length` rather than a hardcoded 114 so this page
+ * degrades gracefully if that ever isn't the case again (e.g. testing
+ * against pre-live).
  */
 export default function SurahListPage() {
   const chapters = getAllChapters();
 
   return (
-    <div style={{ maxWidth: "48rem", margin: "0 auto", padding: "2rem 1rem" }}>
-      <h1 style={{ marginBottom: "0.25rem" }}>Surahs</h1>
+    <div style={{ maxWidth: "var(--content-max-width)", margin: "0 auto", padding: "2rem 1rem" }}>
+      <h1 style={{ marginBottom: "0.25rem", fontFamily: "var(--font-display)", fontWeight: 600 }}>Surahs</h1>
       <p style={{ color: "var(--color-text-muted)", marginTop: 0 }}>
         {chapters.length} of 114 Surahs available right now.
       </p>

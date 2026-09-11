@@ -1,11 +1,13 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { useReaderPreferences } from "@/lib/preferences/ReaderPreferencesProvider";
+import { useAudio } from "@/lib/audio/AudioProvider";
+import { ayahAudioUrl } from "@/lib/content/reciters";
 import { ReaderNavBar } from "./ReaderNavBar";
 import { AyahList } from "./AyahList";
-import { JumpToAyah } from "./JumpToAyah";
+import { JumpToSurah } from "./JumpToSurah";
 import type { Chapter, Verse } from "@/lib/content/types";
 import type { SurahPdfInfo } from "@/lib/content/pdf";
 
@@ -25,6 +27,8 @@ type Props = {
       then silently falls back to the normal text view below, never a
       broken page (see lib/content/pdf.ts). */
   pdfInfo: SurahPdfInfo | undefined;
+  /** Every synced Surah — powers the "Jump to Surah" dialog's search. */
+  allChapters: Chapter[];
 };
 
 /**
@@ -33,14 +37,57 @@ type Props = {
  * prev/next Surah navigation. Ayah-list rendering and Continue Reading
  * tracking live in the shared AyahList (also used by the Page reader).
  */
-export function SurahReader({ chapter, verses, previous, next, pdfInfo }: Props) {
-  const { preferences } = useReaderPreferences();
+export function SurahReader({ chapter, verses, previous, next, pdfInfo, allChapters }: Props) {
+  const { preferences, autoScrollEnabled, setAutoScrollEnabled } = useReaderPreferences();
   const showPdf = preferences.pdfMode && pdfInfo !== undefined;
+  const [jumpOpen, setJumpOpen] = useState(false);
+  const audio = useAudio();
+
+  // Auto-scroll while reading (matches the IqraSpace Flutter app's own
+  // feature) — a constant-speed nudge every 100ms, same tick rate. Off
+  // entirely under prefers-reduced-motion, matching this app's existing
+  // sitewide reduced-motion posture. Distinct from AyahList's audio-
+  // follow-scroll (which jumps to whichever Ayah is playing) — this one
+  // runs independent of audio, and stops itself at the bottom of the page.
+  useEffect(() => {
+    if (!autoScrollEnabled) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const pixelsPerTick = preferences.autoScrollSpeed * 0.1;
+    const interval = setInterval(() => {
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1;
+      if (atBottom) {
+        setAutoScrollEnabled(false);
+        return;
+      }
+      window.scrollBy({ top: pixelsPerTick });
+    }, 100);
+    return () => clearInterval(interval);
+  }, [autoScrollEnabled, preferences.autoScrollSpeed, setAutoScrollEnabled]);
 
   const versesWithSurah = useMemo(
     () => verses.map((v) => ({ ...v, surahId: chapter.id, surahName: chapter.name_simple })),
     [verses, chapter.id, chapter.name_simple]
   );
+
+  // "Play Surah" is active whenever the globally-playing Ayah belongs to
+  // THIS Surah — true whether that came from this button (a queue) or a
+  // reader tapping a single Ayah's own play button, matching how the
+  // IqraSpace Flutter app's whole-Surah action and per-Ayah buttons both
+  // share one AudioController's state.
+  const surahPlaying = audio.state.surahNumber === chapter.id && audio.state.ayahNumber !== null;
+  const surahLoading = surahPlaying && audio.state.isLoading;
+
+  function togglePlaySurah() {
+    if (surahPlaying) {
+      audio.stop();
+      return;
+    }
+    const items = versesWithSurah.map((v) => ({
+      ayahNumber: v.verse_number,
+      url: ayahAudioUrl(preferences.reciter, v.id),
+    }));
+    audio.playSurah(chapter.id, items);
+  }
 
   const navPrevious = previous ? { href: `/surah/${previous.id}`, label: previous.name_simple } : undefined;
   const navNext = next ? { href: `/surah/${next.id}`, label: next.name_simple } : undefined;
@@ -65,7 +112,22 @@ export function SurahReader({ chapter, verses, previous, next, pdfInfo }: Props)
         ...(showPdf ? { boxSizing: "border-box" as const } : {}),
       }}
     >
-      <ReaderNavBar previous={navPrevious} next={navNext} variant="top" current={chapter.name_simple} />
+      <ReaderNavBar
+        previous={navPrevious}
+        next={navNext}
+        variant="top"
+        current={chapter.name_simple}
+        currentArabic={chapter.name_arabic}
+        onCurrentClick={() => setJumpOpen(true)}
+        previousBoundaryLabel={!previous ? "First Surah" : undefined}
+        nextBoundaryLabel={!next ? "Last Surah" : undefined}
+        onPlayClick={showPdf ? undefined : togglePlaySurah}
+        isPlaying={showPdf ? undefined : surahPlaying}
+        isLoading={showPdf ? undefined : surahLoading}
+        onAutoScrollClick={showPdf ? undefined : () => setAutoScrollEnabled(!autoScrollEnabled)}
+        isAutoScrolling={showPdf ? undefined : autoScrollEnabled}
+        goToAyah={showPdf ? undefined : { surahId: chapter.id, versesCount: chapter.verses_count }}
+      />
 
       <header style={{ textAlign: "center", marginBottom: "2rem" }}>
         <p style={{ color: "var(--color-text-muted)", margin: 0, fontSize: "0.85rem" }}>
@@ -104,12 +166,6 @@ export function SurahReader({ chapter, verses, previous, next, pdfInfo }: Props)
         </p>
       )}
 
-      {!showPdf && (
-        <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "0.75rem" }}>
-          <JumpToAyah surahId={chapter.id} versesCount={chapter.verses_count} />
-        </div>
-      )}
-
       {showPdf ? (
         <PdfViewer file={pdfInfo.file} />
       ) : (
@@ -122,7 +178,15 @@ export function SurahReader({ chapter, verses, previous, next, pdfInfo }: Props)
         />
       )}
 
-      <ReaderNavBar previous={navPrevious} next={navNext} variant="bottom" />
+      <ReaderNavBar
+        previous={navPrevious}
+        next={navNext}
+        variant="bottom"
+        previousBoundaryLabel={!previous ? "First Surah" : undefined}
+        nextBoundaryLabel={!next ? "Last Surah" : undefined}
+      />
+
+      <JumpToSurah open={jumpOpen} onClose={() => setJumpOpen(false)} chapters={allChapters} currentSurahId={chapter.id} />
     </div>
   );
 }

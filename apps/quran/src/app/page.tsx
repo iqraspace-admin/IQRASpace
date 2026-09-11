@@ -1,7 +1,9 @@
-import Image from "next/image";
-import Link from "next/link";
 import { getAllChapters } from "@/lib/content/quran";
 import { ContinueReadingCard } from "@/components/home/ContinueReadingCard";
+import { EntryTiles } from "@/components/home/EntryTiles";
+import { QuickLinks } from "@/components/home/QuickLinks";
+import { LastReadsRow } from "@/components/home/LastReadsRow";
+import { BookmarksPreview } from "@/components/home/BookmarksPreview";
 
 /**
  * Home page. Reading requires no account (Readme.md §9) — the primary
@@ -9,13 +11,13 @@ import { ContinueReadingCard } from "@/components/home/ContinueReadingCard";
  * (first visit) or "continue reading" (returning visitor, tracked
  * locally — see ContinueReadingCard).
  *
- * The full logo (public/brand/logo.png) already bakes in the "IQRA
- * SPACE" wordmark and the "Read. Listen. Learn. Reflect." tagline — so
- * showing it prominently here replaces the separate text wordmark this
- * page used to render below it (that would just be repeating the same
- * words as plain text right under an image already saying them). Per the
- * user's own reference screenshot: no Bismillah line and no feature-card
- * section here — kept deliberately minimal.
+ * Structure mirrors the IqraSpace Flutter app's own Home screen: the big
+ * Continue-Reading CTA, an entry-tile row (Read Quran / Learning), Quick
+ * Links, Last Reads, then a Bookmarks preview. No separate big logo/
+ * tagline hero above all this any more — SiteHeader now carries the
+ * wordmark + tagline persistently on every page, so repeating a full
+ * logo image here was pure duplication that pushed real content down
+ * the page for no reason.
  */
 export default function Home() {
   const chapters = getAllChapters();
@@ -23,34 +25,19 @@ export default function Home() {
   return (
     <div
       style={{
-        minHeight: "70dvh",
+        maxWidth: "var(--content-max-width)",
+        margin: "0 auto",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "1.5rem",
-        padding: "2.5rem 1rem",
-        textAlign: "center",
+        gap: "2rem",
+        padding: "2rem 1rem 3rem",
       }}
     >
-      <Image
-        src="/brand/logo.png"
-        alt="IqraSpace Quran — Read. Listen. Learn. Reflect."
-        width={1254}
-        height={1254}
-        priority
-        style={{ width: "min(260px, 55vw)", height: "auto" }}
-      />
-
-      <p style={{ color: "var(--color-text-muted)", maxWidth: "32rem", margin: 0 }}>
-        Free, fast, and accessible to everyone, everywhere.
-      </p>
-
       <ContinueReadingCard chapters={chapters} />
-
-      <Link href="/surah" style={{ color: "var(--color-text-muted)", fontSize: "0.9rem" }}>
-        Browse all Surahs →
-      </Link>
+      <EntryTiles />
+      <QuickLinks chapters={chapters} />
+      <LastReadsRow chapters={chapters} />
+      <BookmarksPreview chapters={chapters} />
     </div>
   );
 }

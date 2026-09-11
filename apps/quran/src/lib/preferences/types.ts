@@ -1,5 +1,6 @@
 import type { TranslationLanguageId } from "@/lib/content/translations";
 import type { ArabicFontId } from "@/lib/content/arabicFonts";
+import { DEFAULT_RECITER, type ReciterId } from "@/lib/content/reciters";
 
 /**
  * Reader preferences (Readme.md §10/§11) — deliberately the same shape as
@@ -12,9 +13,11 @@ export type ReadingWidth = "narrow" | "comfortable" | "wide";
 
 export type ReaderPreferences = {
   theme: Theme;
-  /** Which Arabic Quran typeface to render Ayahs in. Defaults to "amiri" —
-      the only font this app shipped before Settings gained a font picker,
-      so existing readers see no change until they pick something else. */
+  /** Which Arabic Quran typeface to render Ayahs in. Defaults to
+      "amiriQuran" — the Uthmani-cut Amiri Quran face, matching the
+      IqraSpace Flutter app's own default (`defaultArabicFontFamily` in
+      its arabic_fonts.dart) so a first-time reader sees the same Quran
+      typeface on either platform. */
   arabicFont: ArabicFontId;
   arabicFontScale: number;
   translationFontScale: number;
@@ -37,11 +40,21 @@ export type ReaderPreferences = {
       view. Only affects the Surah reader — see PDF-CONTENT.md for why a
       Juz-level or Mushaf-page PDF view isn't offered. */
   pdfMode: boolean;
+  /** Which reciter's audio to play for per-Ayah/whole-Surah playback
+      (lib/audio/AudioProvider.tsx). Defaults to the same reciter the
+      IqraSpace Flutter app defaults to. */
+  reciter: ReciterId;
+  /** Constant-speed auto-scroll rate in px/second while reading a Surah
+      silently — matches the IqraSpace Flutter app's own auto-scroll
+      speed range/default exactly. Persisted, unlike whether auto-scroll
+      is currently ON (that's ReaderPreferencesProvider's separate,
+      non-persisted `autoScrollEnabled` — see its own comment for why). */
+  autoScrollSpeed: number;
 };
 
 export const DEFAULT_PREFERENCES: ReaderPreferences = {
   theme: "system",
-  arabicFont: "amiri",
+  arabicFont: "amiriQuran",
   arabicFontScale: 1,
   translationFontScale: 1,
   lineSpacing: 1,
@@ -49,6 +62,8 @@ export const DEFAULT_PREFERENCES: ReaderPreferences = {
   enabledTranslations: [],
   showBookmarks: true,
   pdfMode: false,
+  reciter: DEFAULT_RECITER,
+  autoScrollSpeed: 30,
 };
 
 export const FONT_SCALE_MIN = 0.75;
@@ -58,3 +73,7 @@ export const FONT_SCALE_STEP = 0.125;
 export const LINE_SPACING_MIN = 0.85;
 export const LINE_SPACING_MAX = 1.5;
 export const LINE_SPACING_STEP = 0.125;
+
+export const AUTO_SCROLL_SPEED_MIN = 10;
+export const AUTO_SCROLL_SPEED_MAX = 120;
+export const AUTO_SCROLL_SPEED_STEP = 5;
