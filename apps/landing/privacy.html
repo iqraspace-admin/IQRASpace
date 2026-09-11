@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy — IqraSpace</title>
+  <meta name="description" content="IqraSpace Privacy Policy — how the IqraSpace Quran Reader handles information.">
+  <link rel="canonical" href="https://iqraspace.org/privacy">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Open Graph / social preview -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="IqraSpace">
+  <meta property="og:title" content="Privacy Policy — IqraSpace">
+  <meta property="og:description" content="How the IqraSpace Quran Reader handles information.">
+  <meta property="og:url" content="https://iqraspace.org/privacy">
+  <meta property="og:image" content="https://iqraspace.org/logo.png">
+  <meta name="twitter:card" content="summary">
+
+  <style>
+    :root {
+      --color-bg: #faf7f0;
+      --color-surface: #ffffff;
+      --color-text: #1f2a24;
+      --color-text-muted: #5b6b62;
+      --color-primary: #0f5c4f;
+      --color-primary-contrast: #ffffff;
+      --color-accent-text: #8a6420;
+      --color-border: #e4ddcc;
+      --color-focus-ring: #0f5c4f;
+      color-scheme: light;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-bg: #101512;
+        --color-surface: #17201b;
+        --color-text: #eef1ee;
+        --color-text-muted: #a3b0a8;
+        --color-primary: #3ba98e;
+        --color-primary-contrast: #0a1210;
+        --color-accent-text: #d3a55c;
+        --color-border: #2a352e;
+        --color-focus-ring: #3ba98e;
+        color-scheme: dark;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      min-height: 100%;
+    }
+
+    body {
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    .page {
+      max-width: 42rem;
+      margin: 0 auto;
+    }
+
+    header.top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: var(--color-text);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .brand img {
+      width: 32px;
+      height: 32px;
+      display: block;
+    }
+    .brand:focus-visible {
+      outline: 3px solid var(--color-focus-ring);
+      outline-offset: 2px;
+    }
+
+    .back {
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .back:hover { text-decoration: underline; }
+    .back:focus-visible {
+      outline: 3px solid var(--color-focus-ring);
+      outline-offset: 2px;
+    }
+
+    article {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 0.85rem;
+      padding: clamp(1.25rem, 4vw, 2.5rem);
+    }
+
+    h1 {
+      margin: 0 0 0.35rem;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+    }
+
+    .updated {
+      margin: 0 0 1.75rem;
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+    }
+
+    .lede {
+      color: var(--color-text-muted);
+    }
+
+    h2 {
+      margin: 2rem 0 0.75rem;
+      font-size: 1.15rem;
+      color: var(--color-accent-text);
+      border-top: 1px solid var(--color-border);
+      padding-top: 1.5rem;
+    }
+    article > h2:first-of-type {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    h3 {
+      margin: 1.25rem 0 0.5rem;
+      font-size: 1rem;
+    }
+
+    p { line-height: 1.65; margin: 0.75rem 0; }
+
+    ul { line-height: 1.65; padding-inline-start: 1.25rem; }
+    li { margin: 0.35rem 0; }
+
+    a { color: var(--color-primary); }
+
+    .contact-block {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 0.6rem;
+      padding: 1rem 1.25rem;
+      margin-top: 0.75rem;
+    }
+    .contact-block p { margin: 0.35rem 0; }
+
+    footer.site {
+      margin-top: 2.5rem;
+      text-align: center;
+      color: var(--color-text-muted);
+      font-size: 0.85rem;
+    }
+    footer.site p { margin: 0.35rem 0; }
+    footer.site em {
+      display: block;
+      margin-top: 0.35rem;
+      font-style: italic;
+      color: var(--color-accent-text);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="top">
+      <a class="brand" href="/">
+        <img src="/favicon.png" alt="" width="32" height="32">
+        IqraSpace
+      </a>
+      <a class="back" href="/">&larr; Back home</a>
+    </header>
+
+    <article>
+      <h1>IqraSpace Privacy Policy</h1>
+      <p class="updated">Last Updated: September 11, 2026</p>
+
+      <p class="lede">
+        IqraSpace ("IqraSpace", "we", "us", or "our") respects your privacy and is
+        committed to protecting your information.
+      </p>
+      <p class="lede">
+        This Privacy Policy explains how the IqraSpace mobile application ("App")
+        handles information when you use the IqraSpace Quran Reader.
+      </p>
+      <p class="lede">
+        IqraSpace is designed to provide a simple, peaceful, and accessible
+        experience for reading and connecting with the Quran.
+      </p>
+
+      <h2>1. Information We Collect</h2>
+
+      <h3>Personal Information</h3>
+      <p>
+        The current version of IqraSpace does not require you to create an
+        account or provide personal information such as your name, email
+        address, phone number, address, or password in order to read the
+        Quran.
+      </p>
+      <p>We do not intentionally collect personal information through the Quran Reader.</p>
+
+      <h3>Reading Preferences and Local App Data</h3>
+      <p>
+        IqraSpace may store certain reading preferences and app-related
+        information locally on your device to provide features such as:
+      </p>
+      <ul>
+        <li>Your last reading position</li>
+        <li>Bookmarked Ayahs</li>
+        <li>Reading preferences</li>
+        <li>Display and font preferences</li>
+        <li>Other settings necessary to provide the Quran reading experience</li>
+      </ul>
+      <p>
+        Where these features are stored locally on your device, this
+        information is not intentionally transmitted to IqraSpace.
+      </p>
+      <p>
+        You can remove locally stored app data by clearing the application's
+        data or uninstalling the App, subject to your device's operating
+        system behavior.
+      </p>
+
+      <h2>2. Quran Content</h2>
+      <p>
+        IqraSpace provides Quran text and related Quran content from an
+        authenticated and trusted Quran data source.
+      </p>
+      <p>
+        The Quran content is provided to support reading and reference within
+        the App. IqraSpace does not claim ownership of the original Quranic
+        text.
+      </p>
+      <p>
+        Where translations or other supplementary content are provided, such
+        content remains subject to the rights and terms applicable to their
+        respective sources or publishers.
+      </p>
+
+      <h2>3. Advertising</h2>
+      <p>The current version of IqraSpace does not display advertising.</p>
+      <p>
+        IqraSpace does not use advertising services to deliver advertisements
+        within the App.
+      </p>
+
+      <h2>4. Advertising ID</h2>
+      <p>
+        The current version of IqraSpace does not use the Android Advertising
+        ID for advertising, advertising personalization, or advertising
+        measurement.
+      </p>
+
+      <h2>5. Analytics and Tracking</h2>
+      <p>
+        The current version of IqraSpace is not designed to intentionally
+        track users across applications or websites for advertising purposes.
+      </p>
+      <p>
+        If analytics, crash reporting, or other third-party services are
+        introduced in a future version, this Privacy Policy will be updated
+        to describe the relevant data practices before or when those
+        services are introduced, as applicable.
+      </p>
+
+      <h2>6. Third-Party Services</h2>
+      <p>
+        The App may rely on operating-system services, content delivery
+        services, or third-party libraries necessary to operate and
+        distribute the App.
+      </p>
+      <p>
+        Third-party services may process limited technical information as
+        required for their services, subject to their own privacy policies
+        and terms.
+      </p>
+      <p>IqraSpace does not sell personal or sensitive user information.</p>
+      <p>
+        We will update this Privacy Policy if the App begins using
+        third-party services that materially change how personal or
+        sensitive information is collected, used, or shared.
+      </p>
+
+      <h2>7. Device Permissions</h2>
+      <p>
+        The current Quran Reader is designed to operate without requesting
+        unnecessary sensitive device permissions.
+      </p>
+      <p>
+        IqraSpace does not require access to contacts, SMS, phone calls,
+        microphone, camera, or precise location for the core Quran reading
+        experience.
+      </p>
+      <p>
+        If a future feature requires additional permissions, those
+        permissions will be requested only when necessary for the relevant
+        functionality and handled in accordance with applicable laws and
+        Google Play policies.
+      </p>
+
+      <h2>8. Data Security</h2>
+      <p>We take reasonable measures to protect information handled by the App.</p>
+      <p>
+        Where information is stored locally on your device, its security is
+        also dependent on the security of your device and operating system.
+      </p>
+      <p>
+        No method of electronic storage or transmission can be guaranteed to
+        be completely secure. We therefore cannot guarantee absolute
+        security.
+      </p>
+
+      <h2>9. Data Retention and Deletion</h2>
+      <p>
+        Because the current version of IqraSpace does not require an online
+        user account, we do not maintain a personal user account database for
+        Quran reading.
+      </p>
+      <p>
+        Information stored locally by the App remains on your device until it
+        is removed by you, cleared through your device's application
+        settings, or removed when the App is uninstalled, subject to the
+        behavior of your operating system.
+      </p>
+      <p>
+        If future versions introduce online accounts or server-side personal
+        data, we will provide appropriate mechanisms for accessing and
+        deleting that information and update this Privacy Policy accordingly.
+      </p>
+
+      <h2>10. Children's Privacy</h2>
+      <p>IqraSpace is a Quran reading application intended for a general audience.</p>
+      <p>The current version does not intentionally collect personal information from children.</p>
+      <p>
+        Parents and guardians are encouraged to supervise children's use of
+        applications and devices as appropriate.
+      </p>
+      <p>
+        If our services or target audience change in a way that introduces
+        additional requirements concerning children, we will update our
+        practices and this Privacy Policy accordingly.
+      </p>
+
+      <h2>11. International Users</h2>
+      <p>IqraSpace is intended to be available to users worldwide.</p>
+      <p>
+        Depending on where you live, privacy laws may provide you with
+        additional rights regarding your personal information.
+      </p>
+      <p>
+        We aim to handle information responsibly and transparently and to
+        comply with applicable privacy and data protection requirements.
+      </p>
+
+      <h2>12. Changes to This Privacy Policy</h2>
+      <p>
+        We may update this Privacy Policy from time to time to reflect
+        changes to the App, our services, technology, legal requirements, or
+        privacy practices.
+      </p>
+      <p>
+        When we make changes, we will update the "Last Updated" date at the
+        beginning of this policy.
+      </p>
+      <p>We encourage you to review this Privacy Policy periodically.</p>
+
+      <h2>13. Contact Us</h2>
+      <p>
+        If you have questions, concerns, or requests regarding this Privacy
+        Policy or the privacy practices of IqraSpace, please reach out
+        through the channel below:
+      </p>
+      <div class="contact-block">
+        <p><strong>IqraSpace</strong></p>
+        <p>Website: <a href="https://iqraspace.org">https://iqraspace.org</a></p>
+        <p>Privacy Policy: <a href="https://iqraspace.org/privacy">https://iqraspace.org/privacy</a></p>
+      </div>
+    </article>
+
+    <footer class="site">
+      <p>&copy; IqraSpace. A Sadaqah Jariyah project — free, ad-free, always.</p>
+      <em>Read. Reflect. Connect.</em>
+    </footer>
+  </div>
+</body>
+</html>
