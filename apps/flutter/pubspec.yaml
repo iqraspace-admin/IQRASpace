@@ -5,7 +5,7 @@ description: >
   search, bookmarks, offline-first caching, Light/TrueBlack-Dark/Sepia
   themes. Android + Web only for this pass.
 publish_to: "none"
-version: 0.2.0+2
+version: 0.3.0+6
 
 environment:
   # Verified locally via `flutter --version`: Flutter 3.47.3, Dart
@@ -15,6 +15,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
   flutter_riverpod: ^2.6.1
   dio: ^5.7.0
   hive: ^2.2.3
@@ -25,11 +28,22 @@ dependencies:
   cupertino_icons: ^1.0.8
   # Per-ayah recitation playback. Works on both Android and web.
   just_audio: ^0.9.42
+  # Background/lock-screen playback (Android only — see
+  # lib/core/audio/iqra_audio_handler.dart): MediaSession + notification
+  # transport controls (Play/Pause/Previous-Surah/Next-Surah) so audio
+  # survives the screen locking or the app backgrounding. Not meaningfully
+  # supported on Flutter Web (no OS lock screen there); web keeps the
+  # plain just_audio-only path, guarded by kIsWeb.
+  audio_service: ^0.18.19
   # Deep-linking to a specific ayah (from search results / bookmarks) in
   # a lazily-built list needs real scroll-to-index — plain ListView's
   # jumpTo only estimates an offset, which drifts badly on long surahs
   # (e.g. Al-Baqarah's 286 ayat).
   scrollable_positioned_list: ^0.3.8
+  # Reach Us (About screen): opens X/Instagram/the website in an external
+  # browser or app — the official Flutter-team plugin, the standard way
+  # to open a URL since core Flutter has no built-in API for it.
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:
@@ -59,9 +73,19 @@ flutter_launcher_icons:
 flutter:
   uses-material-design: true
 
+  # English/Telugu/Urdu UI strings — see l10n.yaml and lib/l10n/*.arb.
+  # Never used for Quran Arabic text, translations, or Surah names
+  # sourced from the Quran API (see lib/core/constants/surah_transliterations.dart
+  # for the one Surah-name exception, which is authored app data, not
+  # Quran content itself).
+  generate: true
+
   assets:
     - assets/tajweed_rules_fallback.json
     - assets/branding/icon.png
+    # Screenshots for the in-app User Guide (Reading Settings → User
+    # Guide) — captured/annotated via docs/user_guide/, see its README.
+    - assets/user_guide/
 
   fonts:
     # All from the Amiri family (SIL OFL 1.1) by Khaled Hosny — see

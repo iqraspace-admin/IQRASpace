@@ -18,7 +18,7 @@ class SurahRepositoryImpl implements SurahRepository {
     final cached = local.getSurah(surahNumber, reciterEdition);
     if (cached != null) return cached;
 
-    final fresh = await remote.fetchSurah(surahNumber, reciterEdition: reciterEdition);
+    final fresh = await _withRetry(() => remote.fetchSurah(surahNumber, reciterEdition: reciterEdition));
     await local.cacheSurah(surahNumber, reciterEdition, fresh);
     return fresh;
   }
@@ -28,8 +28,23 @@ class SurahRepositoryImpl implements SurahRepository {
     final cached = local.getSurahList();
     if (cached != null) return cached;
 
-    final fresh = await remote.fetchSurahList();
+    final fresh = await _withRetry(() => remote.fetchSurahList());
     await local.cacheSurahList(fresh);
     return fresh;
+  }
+
+  /// One retry after a short pause before giving up — a dropped packet
+  /// or a momentary DNS/proxy hiccup (the kind that shows up as a single
+  /// failed request, not a genuinely offline device) shouldn't need the
+  /// reader to tap "Retry" by hand. A second real failure still surfaces
+  /// to the UI's own error + Retry state as before; this only smooths
+  /// over the transient case.
+  Future<T> _withRetry<T>(Future<T> Function() attempt) async {
+    try {
+      return await attempt();
+    } catch (_) {
+      await Future<void>.delayed(const Duration(milliseconds: 800));
+      return attempt();
+    }
   }
 }

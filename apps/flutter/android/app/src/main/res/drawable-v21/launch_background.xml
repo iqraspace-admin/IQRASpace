@@ -3,10 +3,12 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="?android:colorBackground" />
 
-    <!-- You can insert your own image assets here -->
-    <!-- <item>
+    <!-- The IqraSpace brand mark (same source as the launcher icon —
+         see assets/branding/NOTE.md), centered, so app launch shows the
+         real brand instead of a blank screen while Flutter boots. -->
+    <item>
         <bitmap
             android:gravity="center"
-            android:src="@mipmap/launch_image" />
-    </item> -->
+            android:src="@mipmap/ic_launcher" />
+    </item>
 </layer-list>

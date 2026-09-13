@@ -1,6 +1,26 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- This app fetches Quran text/translations/audio from Al Quran
+         Cloud and Quran.com over HTTPS (see core/network/dio_client.dart)
+         on every build variant, not just debug — the Flutter template's
+         default INTERNET permission (android/app/src/debug and
+         .../profile/AndroidManifest.xml) only covers debug/profile
+         builds (it exists there for the VM service/hot reload), so a
+         release build without this line silently has no network access
+         at all: every Surah fetch fails with a connection error. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Listening / Reading+Listening modes: audio keeps playing with
+         the screen locked or the app backgrounded, via a foreground
+         "media playback" service (audio_service — see
+         lib/core/audio/iqra_audio_handler.dart). -->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
+    <!-- The lock-screen/notification transport controls are themselves a
+         notification (Android 13+ requires explicit opt-in to show any). -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <application
-        android:label="IqraSpace Quran (Flutter)"
+        android:label="IqraSpace"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -25,6 +45,27 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <!-- audio_service's standard install snippet (see its README) —
+             the foreground service that keeps IqraAudioHandler's player
+             alive and shows the lock-screen/notification transport
+             controls, plus the receiver that routes hardware/Bluetooth
+             media-button presses (headset play/pause, etc.) to it. -->
+        <service
+            android:name="com.ryanheise.audioservice.AudioService"
+            android:foregroundServiceType="mediaPlayback"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService"/>
+            </intent-filter>
+        </service>
+        <receiver
+            android:name="com.ryanheise.audioservice.MediaButtonReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON"/>
+            </intent-filter>
+        </receiver>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
@@ -40,6 +81,14 @@
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
+        </intent>
+        <!-- url_launcher (About > Reach Us) needs this to open X/
+             Instagram/the website in an external browser on Android 11+,
+             which hides other apps' launch capability by default unless
+             declared here — see https://pub.dev/packages/url_launcher. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="https"/>
         </intent>
     </queries>
 </manifest>

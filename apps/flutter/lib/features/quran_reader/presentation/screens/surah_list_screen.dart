@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_flutter/core/theme/app_theme.dart';
-import 'package:quran_flutter/features/bookmarks/presentation/screens/bookmarks_screen.dart';
+import 'package:quran_flutter/core/widgets/brand_mark.dart';
+import 'package:quran_flutter/core/widgets/iqra_bottom_nav.dart';
+import 'package:quran_flutter/core/widgets/surah_name_label.dart';
 import 'package:quran_flutter/features/quran_reader/presentation/providers/surah_providers.dart';
 import 'package:quran_flutter/features/quran_reader/presentation/screens/surah_reader_screen.dart';
 import 'package:quran_flutter/features/search/presentation/screens/search_screen.dart';
-import 'package:quran_flutter/features/settings/presentation/screens/settings_screen.dart';
+import 'package:quran_flutter/l10n/app_localizations.dart';
 
-/// Home screen: all 114 surahs, with entry points to Search, Bookmarks,
-/// and Settings.
+/// The Quran tab: all 114 surahs, with an entry point to Search.
+/// Bookmarks and Settings live on the persistent bottom nav instead of
+/// this AppBar now.
 class SurahListScreen extends ConsumerWidget {
   const SurahListScreen({super.key});
 
@@ -17,29 +20,24 @@ class SurahListScreen extends ConsumerWidget {
     final surahsAsync = ref.watch(surahListProvider);
     final themeMode = ref.watch(readerThemeModeProvider);
     final colors = ReaderColors.forMode(themeMode);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: colors.background,
       appBar: AppBar(
-        title: const Text('IqraSpace Quran'),
+        title: Row(
+          children: [
+            const BrandMark(size: 24),
+            const SizedBox(width: 10),
+            Text(l10n.quranTitle),
+          ],
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
-            tooltip: 'Search',
+            tooltip: l10n.homeSearch,
             onPressed: () => Navigator.of(context)
                 .push(MaterialPageRoute(builder: (_) => const SearchScreen())),
-          ),
-          IconButton(
-            icon: const Icon(Icons.bookmark_outline),
-            tooltip: 'Bookmarks',
-            onPressed: () => Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => const BookmarksScreen())),
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings_outlined),
-            tooltip: 'Settings',
-            onPressed: () => Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => const SettingsScreen())),
           ),
         ],
       ),
@@ -51,9 +49,9 @@ class SurahListScreen extends ConsumerWidget {
             final s = surahs[index];
             return ListTile(
               leading: CircleAvatar(child: Text('${s.number}')),
-              title: Text('${s.englishName} — ${s.name}'),
+              title: SurahNameLabel(surahNumber: s.number, arabicName: s.name),
               subtitle: Text(
-                '${s.englishNameTranslation} · ${s.numberOfAyahs} ayahs · ${s.revelationType}',
+                '${s.englishNameTranslation} · ${l10n.commonAyahsCount(s.numberOfAyahs)} · ${s.revelationType}',
               ),
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(builder: (_) => SurahReaderScreen(surahNumber: s.number)),
@@ -61,24 +59,36 @@ class SurahListScreen extends ConsumerWidget {
             );
           },
         ),
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const BrandedLoadingIndicator(),
         error: (error, stackTrace) => Center(
           child: Padding(
             padding: const EdgeInsets.all(24),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Could not load the surah list.\n$error', textAlign: TextAlign.center),
+                const BrandMark(size: 40),
+                const SizedBox(height: 14),
+                Text(
+                  l10n.commonCouldNotReachReader,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '$error',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 11, color: Colors.grey),
+                ),
                 const SizedBox(height: 12),
                 ElevatedButton(
                   onPressed: () => ref.refresh(surahListProvider),
-                  child: const Text('Retry'),
+                  child: Text(l10n.commonRetry),
                 ),
               ],
             ),
           ),
         ),
       ),
+      bottomNavigationBar: const IqraBottomNav(currentIndex: 1),
     );
   }
 }

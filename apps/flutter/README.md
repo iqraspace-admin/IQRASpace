@@ -10,11 +10,15 @@ exist.
 
 ## Decisions on record
 
-- **applicationId**: `org.iqraspace.mobile` — distinct from
-  `apps/quran`'s Capacitor Android `appId` (`org.iqraspace.quran`) so the
-  two never look like the same app in a store listing side-by-side. Like
-  any Android `applicationId`, treat this as effectively permanent once
-  published.
+- **applicationId**: `org.iqraspace.app` — matches the Play Console app
+  listing, which was created with this package name (package names can't
+  be changed in Play Console after app creation). Was `org.iqraspace.mobile`
+  until 2026-09-11; changed before any release was ever uploaded, so no
+  live listing was affected. Distinct from `apps/quran`'s Capacitor
+  Android `appId` (`org.iqraspace.quran`) so the two never look like the
+  same app in a store listing side-by-side. Like any Android
+  `applicationId`, treat this as effectively permanent now that it
+  matches a real listing.
 - **Platforms**: Android + Web only for now, matching this branch's
   (`mobile/android`) Android-only discipline. iOS can be added later with
   `flutter create --platforms ios .` — a low-cost addition, not a rewrite.

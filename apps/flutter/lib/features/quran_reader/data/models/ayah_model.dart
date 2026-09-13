@@ -3,7 +3,7 @@ import 'package:quran_flutter/features/quran_reader/domain/entities/ayah.dart';
 import 'package:quran_flutter/features/quran_reader/domain/entities/tajweed_span.dart';
 
 /// Data-layer representation of an ayah, with JSON (de)serialization for
-/// both the Al Quran Cloud API response shape and this app's own Hive
+/// both the two remote API response shapes and this app's own Hive
 /// cache format.
 ///
 /// No Hive TypeAdapter/codegen is used in this first pass — the local
@@ -14,20 +14,21 @@ class AyahModel extends Ayah {
     required super.numberInSurah,
     required super.plainText,
     required super.tajweedSpans,
-    super.translationText,
+    super.translationTextEn,
+    super.translationTextRomanUrdu,
     super.audioUrl,
   });
 
-  /// Builds from one ayah of the combined
-  /// `/v1/surah/{n}/editions/quran-tajweed,en.sahih,ar.alafasy` response.
-  /// [tajweedJson] carries the `[code[text]` bracket markup;
-  /// [translationJson] and [audioJson] are the same ayah from the other
-  /// two editions in that call, matched by array index (all three
-  /// editions return ayahs in the same order) — see
-  /// SurahRemoteDataSource.fetchSurah for how these are zipped together.
+  /// Builds from one ayah of Al Quran Cloud's combined
+  /// `/v1/surah/{n}/editions/quran-tajweed,en.sahih,ar.alafasy` response,
+  /// plus the matching ayah (by array index) from Quran.com's separate
+  /// `/api/v4/quran/translations/831` (Roman Urdu) response — see
+  /// SurahRemoteDataSource.fetchSurah for how these three/four sources
+  /// are zipped together.
   factory AyahModel.fromApiJson({
     required Map<String, dynamic> tajweedJson,
     Map<String, dynamic>? translationJson,
+    Map<String, dynamic>? romanUrduJson,
     Map<String, dynamic>? audioJson,
   }) {
     final spans = TajweedParser.parse(tajweedJson['text'] as String);
@@ -35,7 +36,8 @@ class AyahModel extends Ayah {
       numberInSurah: tajweedJson['numberInSurah'] as int,
       plainText: spans.map((s) => s.text).join(),
       tajweedSpans: spans,
-      translationText: translationJson?['text'] as String?,
+      translationTextEn: translationJson?['text'] as String?,
+      translationTextRomanUrdu: romanUrduJson?['text'] as String?,
       audioUrl: audioJson?['audio'] as String?,
     );
   }
@@ -48,7 +50,13 @@ class AyahModel extends Ayah {
         tajweedSpans: (json['tajweedSpans'] as List)
             .map((s) => TajweedSpan.fromJson(s as Map<String, dynamic>))
             .toList(),
-        translationText: json['translationText'] as String?,
+        // 'translationText' is the pre-Roman-Urdu cache key name — read as
+        // a fallback so an already-cached surah (fetched before this app
+        // update) still shows its English translation instead of silently
+        // losing it until the next network refetch.
+        translationTextEn:
+            (json['translationTextEn'] ?? json['translationText']) as String?,
+        translationTextRomanUrdu: json['translationTextRomanUrdu'] as String?,
         audioUrl: json['audioUrl'] as String?,
       );
 
@@ -56,7 +64,8 @@ class AyahModel extends Ayah {
         'numberInSurah': numberInSurah,
         'plainText': plainText,
         'tajweedSpans': tajweedSpans.map((s) => s.toJson()).toList(),
-        'translationText': translationText,
+        'translationTextEn': translationTextEn,
+        'translationTextRomanUrdu': translationTextRomanUrdu,
         'audioUrl': audioUrl,
       };
 }

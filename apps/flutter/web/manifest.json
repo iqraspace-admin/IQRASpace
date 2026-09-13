@@ -1,6 +1,6 @@
 {
-    "name": "IqraSpace Quran (Flutter)",
-    "short_name": "IqraSpace Quran",
+    "name": "IqraSpace",
+    "short_name": "IqraSpace",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0F5C4F",

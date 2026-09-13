@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_flutter/core/theme/app_theme.dart';
+import 'package:quran_flutter/core/widgets/surah_name_label.dart';
 import 'package:quran_flutter/features/quran_reader/presentation/providers/surah_providers.dart';
 import 'package:quran_flutter/features/quran_reader/presentation/screens/surah_reader_screen.dart';
 import 'package:quran_flutter/features/search/presentation/providers/search_providers.dart';
+import 'package:quran_flutter/l10n/app_localizations.dart';
 
 /// Searches the English translation text (Sahih International) across
 /// all 114 surahs. Search runs on submit, not per-keystroke, to avoid a
@@ -29,6 +31,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     final resultsAsync = ref.watch(searchResultsProvider);
     final themeMode = ref.watch(readerThemeModeProvider);
     final colors = ReaderColors.forMode(themeMode);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: colors.background,
@@ -37,8 +40,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
           controller: _controller,
           autofocus: true,
           textInputAction: TextInputAction.search,
-          decoration: const InputDecoration(
-            hintText: 'Search translation (e.g. mercy, patience)…',
+          decoration: InputDecoration(
+            hintText: l10n.searchHint,
             border: InputBorder.none,
           ),
           onSubmitted: (value) => ref.read(searchQueryProvider.notifier).state = value,
@@ -48,10 +51,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         data: (results) {
           final query = ref.watch(searchQueryProvider);
           if (query.trim().isEmpty) {
-            return const Center(child: Text('Type a word and press search.'));
+            return Center(child: Text(l10n.searchPrompt));
           }
           if (results.isEmpty) {
-            return const Center(child: Text('No matches found.'));
+            return Center(child: Text(l10n.searchNoMatches));
           }
           return ListView.separated(
             itemCount: results.length,
@@ -60,7 +63,14 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
               final r = results[index];
               return ListTile(
                 title: Text(r.matchedText, maxLines: 3, overflow: TextOverflow.ellipsis),
-                subtitle: Text('${r.surahEnglishName} ${r.surahNumber}:${r.numberInSurah}'),
+                subtitle: Row(
+                  children: [
+                    Flexible(
+                      child: SurahNameLabel(surahNumber: r.surahNumber, overflow: TextOverflow.ellipsis, maxLines: 1),
+                    ),
+                    Text(' ${r.surahNumber}:${r.numberInSurah}'),
+                  ],
+                ),
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) => SurahReaderScreen(
@@ -74,7 +84,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(child: Text('Search failed.\n$error')),
+        error: (error, stackTrace) => Center(child: Text(l10n.searchFailed(error))),
       ),
     );
   }
