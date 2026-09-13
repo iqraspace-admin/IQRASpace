@@ -14,6 +14,11 @@ supabase/.env.*.local
 # (e.g. Supabase Storage) separately, per that pipeline's own plan.
 /resources/
 
+# Docs/design working material — not app code or its dependencies, kept
+# local rather than pushed.
+/docs/
+/design/
+
 # OS
 .DS_Store
 Thumbs.db
