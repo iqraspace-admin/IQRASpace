@@ -12,6 +12,7 @@ class HiveBoxes {
   static const surahBoxName = 'surah_cache';
   static const settingsBoxName = 'reader_settings';
   static const bookmarksBoxName = 'bookmarks';
+  static const audioFileCacheBoxName = 'audio_file_cache';
 
   static bool _initialized = false;
 
@@ -29,6 +30,7 @@ class HiveBoxes {
       Hive.openBox<String>(surahBoxName),
       Hive.openBox(settingsBoxName),
       Hive.openBox<String>(bookmarksBoxName),
+      Hive.openBox<String>(audioFileCacheBoxName),
     ]);
 
     _initialized = true;
@@ -46,4 +48,12 @@ class HiveBoxes {
 
   /// Bookmarked ayat: key `"{surah}_{ayah}"` -> JSON-encoded Bookmark.
   static Box<String> get bookmarksBox => Hive.box<String>(bookmarksBoxName);
+
+  /// Listening Mode's whole-Surah audio cache metadata: key
+  /// `"arabic_{n}"`/`"urdu_{n}"` -> absolute local file path of the
+  /// already-downloaded audio file. Native only — see
+  /// `core/audio/audio_cache_manager.dart`, which is the only reader/
+  /// writer of this box; the binary bytes themselves live on disk, not
+  /// in Hive.
+  static Box<String> get audioFileCacheBox => Hive.box<String>(audioFileCacheBoxName);
 }

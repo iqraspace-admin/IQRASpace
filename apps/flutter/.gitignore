@@ -46,3 +46,11 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# scripts/ (Node content-prep scripts, e.g. upload-audio-to-r2.mjs)
+# — never commit the R2 API credentials, and the manifest/deps are
+# regenerable local output, not source of truth (copy manifest values
+# into the Dart constants files, then discard).
+scripts/node_modules/
+scripts/.env.local
+scripts/audio-manifest.json

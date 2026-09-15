@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_flutter/core/constants/reader_mode.dart';
 import 'package:quran_flutter/core/constants/surah_transliterations.dart';
-import 'package:quran_flutter/core/constants/urdu_surah_audio.dart';
 import 'package:quran_flutter/core/theme/app_theme.dart';
 import 'package:quran_flutter/core/widgets/brand_mark.dart';
 import 'package:quran_flutter/core/widgets/surah_name_label.dart';
@@ -36,12 +35,19 @@ class SurahReaderScreen extends ConsumerStatefulWidget {
   ConsumerState<SurahReaderScreen> createState() => _SurahReaderScreenState();
 }
 
-class _SurahReaderScreenState extends ConsumerState<SurahReaderScreen> {
+class _SurahReaderScreenState extends ConsumerState<SurahReaderScreen> with WidgetsBindingObserver {
   final _itemScrollController = ItemScrollController();
   final _scrollOffsetController = ScrollOffsetController();
   final _itemPositionsListener = ItemPositionsListener.create();
   Timer? _autoScrollTimer;
   double? _autoScrollSpeedApplied;
+
+  // Captured fresh every build (cheap — both are already computed there)
+  // so `didChangeAppLifecycleState`/`dispose` can check them without
+  // `ref`, which dispose() specifically can't safely use — see
+  // `_lastReadNotifier`'s own comment below for why.
+  ReaderMode? _readerModeSnapshot;
+  bool _isPlayingThisSurahSnapshot = false;
 
   // Captured as the reader scrolls (see _onPositionsChanged) and written
   // to lastReadProvider on dispose — "where they left off" only needs to
@@ -60,14 +66,37 @@ class _SurahReaderScreenState extends ConsumerState<SurahReaderScreen> {
   // object needs no `ref` lookup.
   LastReadNotifier? _lastReadNotifier;
 
+  // Same capture-ahead-of-time reasoning as [_lastReadNotifier] — needed
+  // by [dispose]'s Reading + Listening pause-on-leave, which can't call
+  // `ref.read(...)` directly (see that field's own comment for why).
+  AudioController? _audioController;
+
   static const _autoScrollTick = Duration(milliseconds: 100);
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _surahEnglishName = 'Surah ${widget.surahNumber}';
     _itemPositionsListener.itemPositions.addListener(_onPositionsChanged);
     _pauseAudioIfReadingListeningElsewhere();
+  }
+
+  /// Reading + Listening Mode is never a background/lock-screen mode
+  /// (see `IqraAudioHandler`'s per-ayah "in-app only" session design) —
+  /// the app itself must proactively pause the moment this screen isn't
+  /// the active one any more, on both of the ways that can happen:
+  /// backgrounding while still on it ([didChangeAppLifecycleState]) and
+  /// navigating away from it ([dispose]). `paused`/`hidden` are the
+  /// states that actually mean "not visible any more" — `inactive` also
+  /// fires for transient things like the notification shade, which
+  /// shouldn't interrupt playback.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state != AppLifecycleState.paused && state != AppLifecycleState.hidden) return;
+    if (_readerModeSnapshot != ReaderMode.readingListening) return;
+    if (!_isPlayingThisSurahSnapshot) return;
+    ref.read(audioControllerProvider.notifier).pause();
   }
 
   /// Reading + Listening Mode's "manual navigation pauses (not stops)
@@ -88,24 +117,6 @@ class _SurahReaderScreenState extends ConsumerState<SurahReaderScreen> {
     if (!samePosition) {
       ref.read(audioControllerProvider.notifier).pause();
     }
-  }
-
-  /// Listening Mode's "Recitation + Urdu Translation" track: once the
-  /// Arabic ayah queue for [surahNumber] finishes on its own (audio
-  /// state resets to inactive), play that Surah's Urdu-translation audio
-  /// (see `lib/core/constants/urdu_surah_audio.dart`) right after — never
-  /// interleaved with the Arabic ayahs. A no-op today until Urdu audio
-  /// URLs are filled in (see that file).
-  void _armUrduFollowUp(int surahNumber) {
-    final url = urduSurahAudioUrl(surahNumber);
-    if (url == null) return;
-    late final ProviderSubscription<AudioPlaybackState> sub;
-    sub = ref.listenManual<AudioPlaybackState>(audioControllerProvider, (previous, next) {
-      final arabicQueueJustFinished = previous?.surahNumber == surahNumber && next.surahNumber == null;
-      if (!arabicQueueJustFinished) return;
-      sub.close();
-      ref.read(audioControllerProvider.notifier).playUrduTranslation(surahNumber, url);
-    });
   }
 
   void _onPositionsChanged() {
@@ -162,8 +173,20 @@ class _SurahReaderScreenState extends ConsumerState<SurahReaderScreen> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _autoScrollTimer?.cancel();
     _itemPositionsListener.itemPositions.removeListener(_onPositionsChanged);
+    // Reading + Listening Mode: leaving this Surah's screen — Back,
+    // Home/bottom-nav, or any other navigation away — pauses its audio
+    // immediately, same rule and same ref-after-dispose workaround as
+    // the lastRead persistence below (capture ahead of time in build(),
+    // defer the actual mutation a tick past this teardown).
+    if (_readerModeSnapshot == ReaderMode.readingListening && _isPlayingThisSurahSnapshot) {
+      final audioNotifier = _audioController;
+      Future(() {
+        audioNotifier?.pause();
+      });
+    }
     final ayahNumber = _visibleAyahNumber;
     if (ayahNumber != null && _totalAyahs > 0) {
       final notifier = _lastReadNotifier;
@@ -192,6 +215,7 @@ class _SurahReaderScreenState extends ConsumerState<SurahReaderScreen> {
   @override
   Widget build(BuildContext context) {
     _lastReadNotifier = ref.read(lastReadProvider.notifier);
+    _audioController = ref.read(audioControllerProvider.notifier);
     final reciterEdition = ref.watch(reciterEditionProvider);
     final surahRequest = (surahNumber: widget.surahNumber, reciterEdition: reciterEdition);
     final ayahsAsync = ref.watch(surahProvider(surahRequest));
@@ -203,7 +227,6 @@ class _SurahReaderScreenState extends ConsumerState<SurahReaderScreen> {
     final autoScrollOn = ref.watch(autoScrollEnabledProvider);
     final autoScrollSpeed = ref.watch(autoScrollSpeedProvider);
     final readerMode = ref.watch(readerModeProvider);
-    final listeningTrack = ref.watch(listeningTrackProvider);
 
     // Keep the currently-playing ayah in view as playback (single-ayah or
     // whole-surah sequential) advances, so the reader can follow along
@@ -211,7 +234,14 @@ class _SurahReaderScreenState extends ConsumerState<SurahReaderScreen> {
     // for Listening/Reading+Listening Modes — see the manual-auto-scroll
     // reconciliation below.
     ref.listen<AudioPlaybackState>(audioControllerProvider, (previous, next) {
-      if (next.surahNumber != widget.surahNumber || next.ayahNumber == null) return;
+      // `next.ayahNumber` is `-1` (not null) for Listening Mode's
+      // whole-Surah local playback — a deliberate sentinel meaning "no
+      // specific ayah" (see IqraAudioHandler.playSurahLocal), which
+      // `AudioPlaybackState.isActive` already accounts for. This listener
+      // must reject it too: `-1 - 1 = -2` passed to `scrollTo(index:)`
+      // crashes ScrollablePositionedList's itemBuilder with a negative
+      // index.
+      if (next.surahNumber != widget.surahNumber || next.ayahNumber == null || next.ayahNumber! < 1) return;
       final samePosition =
           previous?.surahNumber == next.surahNumber && previous?.ayahNumber == next.ayahNumber;
       if (samePosition || !_itemScrollController.isAttached) return;
@@ -268,6 +298,8 @@ class _SurahReaderScreenState extends ConsumerState<SurahReaderScreen> {
 
     final isPlayingThisSurah =
         audioState.surahNumber == widget.surahNumber && audioState.ayahNumber != null;
+    _readerModeSnapshot = readerMode;
+    _isPlayingThisSurahSnapshot = isPlayingThisSurah;
 
     return Scaffold(
       backgroundColor: colors.background,
@@ -305,21 +337,56 @@ class _SurahReaderScreenState extends ConsumerState<SurahReaderScreen> {
         actions: [
           if (!readMode && readerMode != ReaderMode.reading)
             ayahsAsync.maybeWhen(
-              data: (ayahs) => IconButton(
-                icon: Icon(isPlayingThisSurah ? Icons.stop_circle : Icons.play_circle_outline),
-                tooltip: isPlayingThisSurah ? l10n.readerStop : l10n.readerPlayWholeSurah,
-                onPressed: () {
-                  final controller = ref.read(audioControllerProvider.notifier);
-                  if (isPlayingThisSurah) {
-                    controller.stop();
-                  } else {
-                    controller.playSurah(widget.surahNumber, ayahs);
-                    if (readerMode == ReaderMode.listening && listeningTrack == ListeningTrack.arabicPlusUrdu) {
-                      _armUrduFollowUp(widget.surahNumber);
-                    }
-                  }
-                },
-              ),
+              data: (ayahs) {
+                // Both flags only mean something while THIS Surah is the
+                // active one (isPlayingThisSurah) — audioState itself is
+                // one global, app-wide value.
+                final isLoadingThisSurah = isPlayingThisSurah && audioState.isLoading;
+                final hasErrorThisSurah = isPlayingThisSurah && audioState.hasError;
+                return IconButton(
+                  icon: isLoadingThisSurah
+                      ? const SizedBox(
+                          width: 22,
+                          height: 22,
+                          child: CircularProgressIndicator(strokeWidth: 2.4),
+                        )
+                      : Icon(
+                          hasErrorThisSurah
+                              ? Icons.refresh
+                              : isPlayingThisSurah
+                                  ? Icons.stop_circle
+                                  : Icons.play_circle_outline,
+                        ),
+                  tooltip: isLoadingThisSurah
+                      ? l10n.readerLoadingAudio
+                      : hasErrorThisSurah
+                          ? l10n.commonRetry
+                          : isPlayingThisSurah
+                              ? l10n.readerStop
+                              : l10n.readerPlayWholeSurah,
+                  // "While Buffering action in Progress dont take other
+                  // actions" — the button is inert until loading settles
+                  // one way or the other (playing or errored), instead of
+                  // accepting a second tap mid-load that could start a
+                  // conflicting second download/playback attempt.
+                  onPressed: isLoadingThisSurah
+                      ? null
+                      : () {
+                          final controller = ref.read(audioControllerProvider.notifier);
+                          if (isPlayingThisSurah && !hasErrorThisSurah) {
+                            controller.stop();
+                          } else if (readerMode == ReaderMode.listening) {
+                            // Also covers retry-after-error: hasErrorThisSurah
+                            // still leaves isPlayingThisSurah true, so this
+                            // branch (not "stop") is exactly what a tap on
+                            // the retry icon reaches.
+                            controller.playSurahLocal(widget.surahNumber);
+                          } else {
+                            controller.playSurah(widget.surahNumber, ayahs);
+                          }
+                        },
+                );
+              },
               orElse: () => const SizedBox.shrink(),
             ),
           IconButton(

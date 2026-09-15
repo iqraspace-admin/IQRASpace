@@ -15,6 +15,7 @@ class AudioPlaybackState {
   final int? ayahNumber;
   final bool isLoading;
   final bool isPlaying;
+  final bool hasError;
   final Duration position;
   final Duration? duration;
 
@@ -23,6 +24,7 @@ class AudioPlaybackState {
     this.ayahNumber,
     this.isLoading = false,
     this.isPlaying = false,
+    this.hasError = false,
     this.position = Duration.zero,
     this.duration,
   });
@@ -40,10 +42,23 @@ class AudioController extends StateNotifier<AudioPlaybackState> {
   final IqraAudioHandler _handler;
   StreamSubscription<MediaItem?>? _mediaItemSub;
   StreamSubscription<PlaybackState>? _playbackStateSub;
+  StreamSubscription<MediaItem?>? _inAppMediaItemSub;
+  StreamSubscription<PlaybackState>? _inAppPlaybackStateSub;
 
+  /// Listens to both the OS-facing pair (Listening Mode — `mediaItem`/
+  /// `playbackState`, what the Android lock screen reads) and the
+  /// in-app-only pair (Reading + Listening Mode — `inAppMediaItem`/
+  /// `inAppPlaybackState`), feeding both into the same two handlers
+  /// below. Only one of the two is ever actually active at a time (see
+  /// `IqraAudioHandler`'s `_enterPerAyahSession`/`_enterOsFacingSession`,
+  /// which clear whichever pair *isn't* current whenever playback
+  /// switches modes), so this UI-facing state is correct regardless of
+  /// which pair the update came from.
   AudioController(this._handler) : super(const AudioPlaybackState()) {
     _mediaItemSub = _handler.mediaItem.listen(_onMediaItemChanged);
     _playbackStateSub = _handler.playbackState.listen(_onPlaybackStateChanged);
+    _inAppMediaItemSub = _handler.inAppMediaItem.listen(_onMediaItemChanged);
+    _inAppPlaybackStateSub = _handler.inAppPlaybackState.listen(_onPlaybackStateChanged);
   }
 
   void _onMediaItemChanged(MediaItem? item) {
@@ -56,6 +71,7 @@ class AudioController extends StateNotifier<AudioPlaybackState> {
       ayahNumber: item.extras?[MediaItemExtra.ayahNumber] as int?,
       isLoading: state.isLoading,
       isPlaying: state.isPlaying,
+      hasError: state.hasError,
       position: Duration.zero,
       duration: item.duration,
     );
@@ -68,6 +84,7 @@ class AudioController extends StateNotifier<AudioPlaybackState> {
       isLoading: playback.processingState == AudioProcessingState.loading ||
           playback.processingState == AudioProcessingState.buffering,
       isPlaying: playback.playing,
+      hasError: playback.processingState == AudioProcessingState.error,
       position: playback.updatePosition,
       duration: state.duration,
     );
@@ -79,16 +96,19 @@ class AudioController extends StateNotifier<AudioPlaybackState> {
       _handler.playAyah(surahNumber: surahNumber, ayahNumber: ayahNumber, url: url);
 
   /// Plays every ayah in [ayahs] that has audio, in order, advancing
-  /// automatically as each one finishes.
+  /// automatically as each one finishes. Reading + Listening Mode only —
+  /// see [playSurahLocal] for Listening Mode.
   Future<void> playSurah(int surahNumber, List<Ayah> ayahs) => _handler.playSurahAyahs(surahNumber, ayahs);
 
-  /// Listening Mode's "Recitation + Urdu Translation" follow-up track —
-  /// see `surah_reader_screen.dart`'s `_armUrduFollowUp`.
-  Future<void> playUrduTranslation(int surahNumber, String url) => _handler.playSupplementaryTrack(
-        surahNumber: surahNumber,
-        url: url,
-        title: 'Urdu Translation',
-      );
+  /// Listening Mode's whole-Surah Al-Afasy recitation — a single
+  /// local/cached file, not a per-ayah queue. See
+  /// `IqraAudioHandler.playSurahLocal`. Its Urdu-translation follow-up
+  /// (when selected) is armed automatically by the handler itself once
+  /// the Arabic portion finishes — see
+  /// `IqraAudioHandler._advanceQueueOrStop` — rather than by a call from
+  /// here, since that decision needs to re-check the live setting at the
+  /// moment the Arabic portion actually ends, not once at Play-time.
+  Future<void> playSurahLocal(int surahNumber) => _handler.playSurahLocal(surahNumber);
 
   /// Pauses in place — playback resumes from here via [resume], unlike
   /// [stop] which forgets the current position entirely. Reading +
@@ -109,6 +129,8 @@ class AudioController extends StateNotifier<AudioPlaybackState> {
   void dispose() {
     _mediaItemSub?.cancel();
     _playbackStateSub?.cancel();
+    _inAppMediaItemSub?.cancel();
+    _inAppPlaybackStateSub?.cancel();
     super.dispose();
   }
 }
