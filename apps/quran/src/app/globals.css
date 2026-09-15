@@ -284,6 +284,43 @@ body {
   padding: 0 1.25rem 1.25rem;
 }
 
+/* A label + segmented-control row (Theme, Page width) inside the settings
+   panel. Without this, a label and 3 buttons squeezed into one
+   unconstrained flex row can overflow/clip on narrow phones instead of
+   wrapping cleanly — below 380px the control drops to its own full-width
+   row under the label instead of fighting it for horizontal space. */
+.settings-segmented-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  flex-wrap: wrap;
+}
+
+.settings-segmented-row > span:first-child {
+  flex-shrink: 0;
+}
+
+.settings-segmented-row [role="radiogroup"] {
+  display: flex;
+  gap: 0.35rem;
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: flex-end;
+}
+
+@media (max-width: 380px) {
+  .settings-segmented-row [role="radiogroup"] {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .settings-segmented-row [role="radiogroup"] button {
+    flex: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .settings-backdrop,
   .settings-panel {

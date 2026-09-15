@@ -20,7 +20,7 @@ import {
 import { TRANSLATION_LANGUAGES } from "@/lib/content/translations";
 import { ARABIC_FONTS, ARABIC_FONT_GROUPS, arabicFontLabel, type ArabicFontId } from "@/lib/content/arabicFonts";
 import { STOP_SYMBOLS, TAJWEED_RULES } from "@/lib/content/tajweedRules";
-import { RECITERS } from "@/lib/content/reciters";
+import { RECITERS, reciterLabel } from "@/lib/content/reciters";
 import { useModalA11y } from "@/lib/reader/useModalA11y";
 
 const READING_WIDTHS: { value: ReadingWidth; label: string }[] = [
@@ -35,6 +35,10 @@ const THEMES: { value: Theme; label: string }[] = [
   { value: "dark", label: "Dark" },
 ];
 
+function readingWidthLabel(value: ReadingWidth): string {
+  return READING_WIDTHS.find((w) => w.value === value)?.label ?? "";
+}
+
 const ARABIC_FONT_CSS_VAR: Record<ArabicFontId, string> = {
   amiri: "var(--font-arabic-amiri)",
   amiriQuran: "var(--font-arabic-amiriquran)",
@@ -43,7 +47,7 @@ const ARABIC_FONT_CSS_VAR: Record<ArabicFontId, string> = {
   notoNaskh: "var(--font-arabic-notonaskh)",
 };
 
-type View = "main" | "arabicFont" | "tajweedRules";
+type View = "main" | "arabicFont" | "tajweedRules" | "textLayout" | "translations" | "reciter";
 
 /**
  * Settings entry point + panel for the reading surface (Prompt: "Separate
@@ -178,40 +182,119 @@ export function ReaderSettingsPanel({
 
                   <div className="settings-panel-body">
                     <BrowseSection close={close} />
-                    <AppearanceSection />
 
-                    <button type="button" onClick={openTajweedRules} style={{ ...navRowStyle, marginTop: "1rem" }}>
-                      <span>Tajweed Rules</span>
-                      <span style={navRowValueStyle}>
-                        Stop signs, pronunciation rules
-                        <ChevronIcon />
-                      </span>
-                    </button>
+                    <AppearanceSection onOpenFont={openFontPicker} fontLabel={arabicFontLabel(preferences.arabicFont)} />
 
                     <section>
-                      <SectionLabel>Font</SectionLabel>
-                      <button type="button" onClick={openFontPicker} style={navRowStyle}>
-                        <span>Arabic Font</span>
+                      <SectionLabel>Text</SectionLabel>
+                      <ArabicTextSizeControl />
+                      <button type="button" onClick={() => setView("textLayout")} style={navRowStyle}>
+                        <span>Text & Layout</span>
                         <span style={navRowValueStyle}>
-                          {arabicFontLabel(preferences.arabicFont)}
+                          {readingWidthLabel(preferences.readingWidth)}
                           <ChevronIcon />
                         </span>
                       </button>
                     </section>
 
-                    <TextSizeSection />
-                    <LayoutSection />
-                    <TranslationSection />
-                    <BookmarksSection />
-                    <ReciterSection />
-                    <AutoScrollSection />
-                    <PdfModeSection />
+                    <section>
+                      <SectionLabel>Translations</SectionLabel>
+                      <button type="button" onClick={() => setView("translations")} style={navRowStyle}>
+                        <span>Languages</span>
+                        <span style={navRowValueStyle}>
+                          {preferences.enabledTranslations.length} of {TRANSLATION_LANGUAGES.length} on
+                          <ChevronIcon />
+                        </span>
+                      </button>
+                    </section>
+
+                    <section>
+                      <SectionLabel>Audio</SectionLabel>
+                      <button type="button" onClick={() => setView("reciter")} style={navRowStyle}>
+                        <span>Reciter</span>
+                        <span style={navRowValueStyle}>
+                          {reciterLabel(preferences.reciter)}
+                          <ChevronIcon />
+                        </span>
+                      </button>
+                      <AutoScrollSection />
+                    </section>
+
+                    <section>
+                      <SectionLabel>View</SectionLabel>
+                      <ToggleRow
+                        label="Show Bookmarks"
+                        checked={preferences.showBookmarks}
+                        onChange={(checked) => setPreference("showBookmarks", checked)}
+                      />
+                      <ToggleRow
+                        label="PDF Mode"
+                        checked={preferences.pdfMode}
+                        onChange={(checked) => setPreference("pdfMode", checked)}
+                      />
+                    </section>
+
+                    <button type="button" onClick={openTajweedRules} style={{ ...navRowStyle, marginTop: "1rem" }}>
+                      <span>Tajweed Rules</span>
+                      <span style={navRowValueStyle}>
+                        <ChevronIcon />
+                      </span>
+                    </button>
                   </div>
 
                   <div style={panelFooterStyle}>
                     <button type="button" onClick={close} style={doneButtonStyle}>
                       Done
                     </button>
+                  </div>
+                </>
+              ) : view === "textLayout" ? (
+                <>
+                  <div style={panelHeaderStyle}>
+                    <button type="button" onClick={() => setView("main")} aria-label="Back to settings" style={iconButtonStyle}>
+                      <BackIcon />
+                    </button>
+                    <h2 id={headingId} style={{ margin: 0, fontSize: "1.05rem" }}>
+                      Text & Layout
+                    </h2>
+                    <span aria-hidden="true" style={{ width: "2.25rem", flexShrink: 0 }} />
+                  </div>
+
+                  <div className="settings-panel-body">
+                    <TranslationSizeSection />
+                    <LayoutSection />
+                  </div>
+                </>
+              ) : view === "translations" ? (
+                <>
+                  <div style={panelHeaderStyle}>
+                    <button type="button" onClick={() => setView("main")} aria-label="Back to settings" style={iconButtonStyle}>
+                      <BackIcon />
+                    </button>
+                    <h2 id={headingId} style={{ margin: 0, fontSize: "1.05rem" }}>
+                      Translations
+                    </h2>
+                    <span aria-hidden="true" style={{ width: "2.25rem", flexShrink: 0 }} />
+                  </div>
+
+                  <div className="settings-panel-body">
+                    <TranslationSection />
+                  </div>
+                </>
+              ) : view === "reciter" ? (
+                <>
+                  <div style={panelHeaderStyle}>
+                    <button type="button" onClick={() => setView("main")} aria-label="Back to settings" style={iconButtonStyle}>
+                      <BackIcon />
+                    </button>
+                    <h2 id={headingId} style={{ margin: 0, fontSize: "1.05rem" }}>
+                      Reciter
+                    </h2>
+                    <span aria-hidden="true" style={{ width: "2.25rem", flexShrink: 0 }} />
+                  </div>
+
+                  <div className="settings-panel-body">
+                    <ReciterSection />
                   </div>
                 </>
               ) : view === "arabicFont" ? (
@@ -318,22 +401,32 @@ function SectionLabel({ children }: { children: ReactNode }) {
   return <h3 style={sectionLabelStyle}>{children}</h3>;
 }
 
-function TextSizeSection() {
+/** Kept inline on the main settings page (unlike Translation text size /
+    Line spacing, which moved into the Text & Layout drill-down) since
+    Arabic text size is the single most-adjusted reading control. */
+function ArabicTextSizeControl() {
+  const { preferences, setPreference } = useReaderPreferences();
+
+  return (
+    <SliderControl
+      label="Arabic text size"
+      value={preferences.arabicFontScale}
+      min={FONT_SCALE_MIN}
+      max={FONT_SCALE_MAX}
+      step={FONT_SCALE_STEP}
+      formatValue={(v) => `${Math.round(v * 100)}%`}
+      onChange={(v) => setPreference("arabicFontScale", v)}
+    />
+  );
+}
+
+function TranslationSizeSection() {
   const { preferences, setPreference } = useReaderPreferences();
   const percent = (v: number) => `${Math.round(v * 100)}%`;
 
   return (
     <section>
-      <SectionLabel>Text</SectionLabel>
-      <SliderControl
-        label="Arabic text size"
-        value={preferences.arabicFontScale}
-        min={FONT_SCALE_MIN}
-        max={FONT_SCALE_MAX}
-        step={FONT_SCALE_STEP}
-        formatValue={percent}
-        onChange={(v) => setPreference("arabicFontScale", v)}
-      />
+      <SectionLabel>Text size</SectionLabel>
       <SliderControl
         label="Translation text size"
         value={preferences.translationFontScale}
@@ -362,9 +455,9 @@ function LayoutSection() {
   return (
     <section>
       <SectionLabel>Layout</SectionLabel>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem", padding: "0.5rem 0" }}>
+      <div className="settings-segmented-row">
         <span>Page width</span>
-        <div role="radiogroup" aria-label="Page width" style={{ display: "flex", gap: "0.35rem" }}>
+        <div role="radiogroup" aria-label="Page width">
           {READING_WIDTHS.map((w) => {
             const selected = preferences.readingWidth === w.value;
             return (
@@ -444,17 +537,19 @@ function BrowseSection({ close }: { close: () => void }) {
 
 /** Appearance — Theme, moved here from SiteHeader.tsx's old cycle-button
     (System → Light → Dark → System). A 3-way segmented control (same
-    pattern as LayoutSection's Page width below) is more discoverable
-    than a single button that silently cycles through hidden states. */
-function AppearanceSection() {
+    pattern as LayoutSection's Page width) is more discoverable than a
+    single button that silently cycles through hidden states. Arabic Font
+    lives in this same section (both are "how the page looks") rather than
+    its own separate "Font" heading, to keep the main list shorter. */
+function AppearanceSection({ onOpenFont, fontLabel }: { onOpenFont: () => void; fontLabel: string }) {
   const { preferences, setPreference } = useReaderPreferences();
 
   return (
     <section>
       <SectionLabel>Appearance</SectionLabel>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem", padding: "0.5rem 0" }}>
+      <div className="settings-segmented-row">
         <span>Theme</span>
-        <div role="radiogroup" aria-label="Theme" style={{ display: "flex", gap: "0.35rem" }}>
+        <div role="radiogroup" aria-label="Theme">
           {THEMES.map((t) => {
             const selected = preferences.theme === t.value;
             return (
@@ -472,21 +567,13 @@ function AppearanceSection() {
           })}
         </div>
       </div>
-    </section>
-  );
-}
-
-function BookmarksSection() {
-  const { preferences, setPreference } = useReaderPreferences();
-
-  return (
-    <section>
-      <SectionLabel>Bookmarks</SectionLabel>
-      <ToggleRow
-        label="Show Bookmarks"
-        checked={preferences.showBookmarks}
-        onChange={(checked) => setPreference("showBookmarks", checked)}
-      />
+      <button type="button" onClick={onOpenFont} style={navRowStyle}>
+        <span>Arabic Font</span>
+        <span style={navRowValueStyle}>
+          {fontLabel}
+          <ChevronIcon />
+        </span>
+      </button>
     </section>
   );
 }
@@ -499,24 +586,29 @@ function BookmarksSection() {
     ReaderPreferencesProvider's own comment on `autoScrollEnabled` for
     why — only the speed persists. Toggling it here works the same as
     the Surah reader's own nav-row button: the reader is still visible
-    (and, once this panel closes, active) underneath this dialog. */
+    (and, once this panel closes, active) underneath this dialog.
+
+    Nested inside the main page's "Audio" section (no SectionLabel of its
+    own) — the Speed slider only renders once auto-scroll is on, so it
+    isn't dead space for readers who never use the feature. */
 function AutoScrollSection() {
   const { preferences, setPreference, autoScrollEnabled, setAutoScrollEnabled } = useReaderPreferences();
 
   return (
-    <section>
-      <SectionLabel>Auto-scroll</SectionLabel>
+    <>
       <ToggleRow label="Auto-scroll while reading" checked={autoScrollEnabled} onChange={setAutoScrollEnabled} />
-      <SliderControl
-        label="Speed"
-        value={preferences.autoScrollSpeed}
-        min={AUTO_SCROLL_SPEED_MIN}
-        max={AUTO_SCROLL_SPEED_MAX}
-        step={AUTO_SCROLL_SPEED_STEP}
-        formatValue={(v) => `${Math.round(v)} px/s`}
-        onChange={(v) => setPreference("autoScrollSpeed", v)}
-      />
-    </section>
+      {autoScrollEnabled && (
+        <SliderControl
+          label="Speed"
+          value={preferences.autoScrollSpeed}
+          min={AUTO_SCROLL_SPEED_MIN}
+          max={AUTO_SCROLL_SPEED_MAX}
+          step={AUTO_SCROLL_SPEED_STEP}
+          formatValue={(v) => `${Math.round(v)} px/s`}
+          onChange={(v) => setPreference("autoScrollSpeed", v)}
+        />
+      )}
+    </>
   );
 }
 
@@ -549,24 +641,6 @@ function ReciterSection() {
       </div>
       <p style={{ margin: "0.5rem 0 0", fontSize: "0.75rem", color: "var(--color-text-muted)" }}>
         Recitation audio courtesy of Al Quran Cloud (alquran.cloud).
-      </p>
-    </section>
-  );
-}
-
-function PdfModeSection() {
-  const { preferences, setPreference } = useReaderPreferences();
-
-  return (
-    <section>
-      <SectionLabel>Reading View</SectionLabel>
-      <ToggleRow
-        label="PDF Mode"
-        checked={preferences.pdfMode}
-        onChange={(checked) => setPreference("pdfMode", checked)}
-      />
-      <p style={{ margin: "0.25rem 0 0", fontSize: "0.8rem", color: "var(--color-text-muted)" }}>
-        Shows the original scanned Mushaf pages instead of typeset text. Applies to Surah view only.
       </p>
     </section>
   );
@@ -923,6 +997,7 @@ function segmentButtonStyle(selected: boolean): CSSProperties {
     padding: "0.3rem 0.6rem",
     fontSize: "0.8rem",
     cursor: "pointer",
+    whiteSpace: "nowrap",
   };
 }
 
