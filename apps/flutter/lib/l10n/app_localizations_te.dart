@@ -136,6 +136,9 @@ class AppLocalizationsTe extends AppLocalizations {
   String get readerPlayWholeSurah => 'మొత్తం సూరా ప్లే చేయండి';
 
   @override
+  String get readerLoadingAudio => 'ఆడియో లోడ్ అవుతోంది…';
+
+  @override
   String get readerReadingSettings => 'పఠన సెట్టింగ్‌లు';
 
   @override
@@ -272,7 +275,23 @@ class AppLocalizationsTe extends AppLocalizations {
   String get settingsReciter => 'పారాయణకర్త';
 
   @override
+  String get settingsReciterModeNote =>
+      'రీడింగ్ + లిజనింగ్ మోడ్‌కు మాత్రమే వర్తిస్తుంది. లిజనింగ్ మోడ్ ఎల్లప్పుడూ అంతర్నిర్మిత అల్-అఫాసీ పారాయణాన్ని ఉపయోగిస్తుంది.';
+
+  @override
+  String get settingsAudioCache => 'డౌన్‌లోడ్ చేసిన ఆడియో కాష్';
+
+  @override
+  String get settingsClearAudioCache => 'క్లియర్ చేయి';
+
+  @override
+  String get settingsAudioRecitation => 'Audio & Recitation';
+
+  @override
   String get settingsReading => 'పఠనం';
+
+  @override
+  String get settingsReadingExperience => 'Reading Experience';
 
   @override
   String get settingsReadMode => 'రీడ్ మోడ్';

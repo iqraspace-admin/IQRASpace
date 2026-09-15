@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:quran_flutter/core/constants/translation_languages.dart';
 import 'package:quran_flutter/core/storage/hive_boxes.dart';
 import 'package:quran_flutter/features/settings/presentation/widgets/reader_settings_sheet.dart';
 import 'package:quran_flutter/l10n/app_localizations.dart';
@@ -57,21 +58,40 @@ void main() {
     expect(find.text('Translation'), findsOneWidget);
     expect(find.text('Tajweed'), findsOneWidget);
     expect(find.text('Reciter'), findsOneWidget);
-    expect(find.text('Reading'), findsOneWidget);
+    expect(find.text('Reading Experience'), findsOneWidget);
     expect(find.text('Tajweed Rules'), findsOneWidget);
   });
 
   testWidgets('lists Off, English, and Roman Urdu translation options', (tester) async {
     await pumpAndOpenSheet(tester);
 
-    expect(find.text('Off'), findsOneWidget);
-    expect(find.text('English (Sahih International)'), findsOneWidget);
-    expect(find.text('Roman Urdu (Abul Ala Maududi)'), findsOneWidget);
+    // Translation language now lives in its own picker sheet, opened by
+    // tapping the "Translation" nav row on the main sheet — see
+    // translation_picker_sheet.dart.
+    await tester.tap(find.text('Translation'));
+    await tester.pumpAndSettle();
+
+    // Scoped to the picker's RadioListTiles — the main sheet (still
+    // mounted underneath this popup) also shows "Off" as the Translation
+    // row's current-value summary, so a bare find.text('Off') matches
+    // both.
+    expect(find.widgetWithText(RadioListTile<TranslationLanguage>, 'Off'), findsOneWidget);
+    expect(
+      find.widgetWithText(RadioListTile<TranslationLanguage>, 'English (Sahih International)'),
+      findsOneWidget,
+    );
+    expect(
+      find.widgetWithText(RadioListTile<TranslationLanguage>, 'Roman Urdu (Abul Ala Maududi)'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('selecting Roman Urdu persists translationLanguage=romanUrdu', (tester) async {
     await pumpAndOpenSheet(tester);
     expect(HiveBoxes.settingsBox.get('translationLanguage'), isNull);
+
+    await tester.tap(find.text('Translation'));
+    await tester.pumpAndSettle();
 
     // The tap synchronously calls into Hive (a real, disk-backed box in
     // this test env) — that write needs the real event loop, which the
@@ -140,10 +160,9 @@ void main() {
   testWidgets('tapping "User Guide" opens the screenshot walkthrough', (tester) async {
     await pumpAndOpenSheet(tester);
 
-    // The new Language section (added above Arabic Font) pushes "User
-    // Guide" further down than the oversized test viewport's initial
-    // layout reaches — same off-screen-row situation as the Done button
-    // test above.
+    // "User Guide" sits well down the list, below the oversized test
+    // viewport's initial layout reach — same off-screen-row situation as
+    // the Done button test above.
     await tester.dragUntilVisible(
       find.text('User Guide'),
       find.byType(ListView),

@@ -328,6 +328,12 @@ abstract class AppLocalizations {
   /// **'Play whole surah'**
   String get readerPlayWholeSurah;
 
+  /// No description provided for @readerLoadingAudio.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading audio…'**
+  String get readerLoadingAudio;
+
   /// No description provided for @readerReadingSettings.
   ///
   /// In en, this message translates to:
@@ -592,11 +598,41 @@ abstract class AppLocalizations {
   /// **'Reciter'**
   String get settingsReciter;
 
+  /// No description provided for @settingsReciterModeNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Applies to Reading + Listening Mode. Listening Mode always uses the built-in Al-Afasy recitation.'**
+  String get settingsReciterModeNote;
+
+  /// No description provided for @settingsAudioCache.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloaded audio cache'**
+  String get settingsAudioCache;
+
+  /// No description provided for @settingsClearAudioCache.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get settingsClearAudioCache;
+
+  /// No description provided for @settingsAudioRecitation.
+  ///
+  /// In en, this message translates to:
+  /// **'Audio & Recitation'**
+  String get settingsAudioRecitation;
+
   /// No description provided for @settingsReading.
   ///
   /// In en, this message translates to:
   /// **'Reading'**
   String get settingsReading;
+
+  /// No description provided for @settingsReadingExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Experience'**
+  String get settingsReadingExperience;
 
   /// No description provided for @settingsReadMode.
   ///

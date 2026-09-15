@@ -5,7 +5,7 @@ description: >
   search, bookmarks, offline-first caching, Light/TrueBlack-Dark/Sepia
   themes. Android + Web only for this pass.
 publish_to: "none"
-version: 0.3.0+6
+version: 0.3.0+8
 
 environment:
   # Verified locally via `flutter --version`: Flutter 3.47.3, Dart

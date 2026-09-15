@@ -136,6 +136,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get readerPlayWholeSurah => 'Play whole surah';
 
   @override
+  String get readerLoadingAudio => 'Loading audio…';
+
+  @override
   String get readerReadingSettings => 'Reading Settings';
 
   @override
@@ -272,7 +275,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsReciter => 'Reciter';
 
   @override
+  String get settingsReciterModeNote =>
+      'Applies to Reading + Listening Mode. Listening Mode always uses the built-in Al-Afasy recitation.';
+
+  @override
+  String get settingsAudioCache => 'Downloaded audio cache';
+
+  @override
+  String get settingsClearAudioCache => 'Clear';
+
+  @override
+  String get settingsAudioRecitation => 'Audio & Recitation';
+
+  @override
   String get settingsReading => 'Reading';
+
+  @override
+  String get settingsReadingExperience => 'Reading Experience';
 
   @override
   String get settingsReadMode => 'Read Mode';

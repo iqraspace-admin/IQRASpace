@@ -136,6 +136,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get readerPlayWholeSurah => 'پوری سورت چلائیں';
 
   @override
+  String get readerLoadingAudio => 'آڈیو لوڈ ہو رہی ہے…';
+
+  @override
   String get readerReadingSettings => 'پڑھنے کی ترتیبات';
 
   @override
@@ -272,7 +275,23 @@ class AppLocalizationsUr extends AppLocalizations {
   String get settingsReciter => 'قاری';
 
   @override
+  String get settingsReciterModeNote =>
+      'یہ صرف ریڈنگ + لسننگ موڈ پر لاگو ہوتا ہے۔ لسننگ موڈ ہمیشہ بلٹ اِن الافاسی تلاوت استعمال کرتا ہے۔';
+
+  @override
+  String get settingsAudioCache => 'ڈاؤن لوڈ شدہ آڈیو کیشے';
+
+  @override
+  String get settingsClearAudioCache => 'صاف کریں';
+
+  @override
+  String get settingsAudioRecitation => 'Audio & Recitation';
+
+  @override
   String get settingsReading => 'مطالعہ';
+
+  @override
+  String get settingsReadingExperience => 'Reading Experience';
 
   @override
   String get settingsReadMode => 'ریڈ موڈ';

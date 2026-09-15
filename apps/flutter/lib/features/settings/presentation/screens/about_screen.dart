@@ -164,6 +164,11 @@ class AboutScreen extends ConsumerWidget {
               ),
             ],
           ),
+          const SizedBox(height: 18),
+          Text(
+            l10n.settingsAttribution,
+            style: TextStyle(fontSize: 12, color: mutedColor),
+          ),
         ],
       ),
     );
