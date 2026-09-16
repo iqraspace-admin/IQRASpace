@@ -54,3 +54,9 @@ app.*.map.json
 scripts/node_modules/
 scripts/.env.local
 scripts/audio-manifest.json
+
+# scripts/deploy/ (iqs-deploy skill's Play Console upload script) —
+# never commit the Play service-account credentials. See DEPLOYMENT.md §9.
+scripts/deploy/node_modules/
+scripts/deploy/.env.local
+**/*play-service-account*.json

@@ -200,3 +200,38 @@ the first Play Console submission, not after:
   new listing, not an update to this one.
 - The upload keystore (§3) — back it up somewhere durable outside git the
   moment it's generated.
+
+## 9. Automated internal-testing uploads — the `iqs-deploy` skill
+
+A Claude Code skill (`.claude/skills/iqs-deploy/SKILL.md`) automates the
+mechanical parts of a release: `flutter analyze`/`flutter test`, bumping
+the `pubspec.yaml` build number, building the signed `.aab` (§4),
+verifying it, and uploading it to Play Console's **internal testing**
+track via the Android Publisher API
+(`apps/flutter/scripts/deploy/upload-to-play.mjs`).
+
+It is hardcoded to the internal track only and will never touch closed
+testing or production — promoting a build past internal testing stays
+the manual, owner-driven process in §6 above (20 testers / 14 days for
+closed testing, pre-launch report review, etc.).
+
+### One-time owner setup (cannot be done from inside a coding session)
+
+Same category as §3's signing keystore — needs your own Google account:
+
+1. In Google Cloud Console, create (or reuse) a project, enable the
+   **Google Play Android Developer API**, and create a service account.
+   Download its JSON key and treat it like `upload-keystore.jks` (§3):
+   store it **outside this repo**, never commit it.
+2. In Play Console → **Users and permissions**, invite the service
+   account's email and grant it access to `org.iqraspace.app` with at
+   least **"Release to testing tracks"** permission (production-release
+   and financial permissions aren't needed).
+3. Copy `apps/flutter/scripts/deploy/.env.local.example` to
+   `apps/flutter/scripts/deploy/.env.local` and set
+   `PLAY_SERVICE_ACCOUNT_JSON_PATH` to the JSON key's absolute path.
+4. `npm install --prefix apps/flutter/scripts/deploy` once.
+
+Until this is done, the skill's validate/build/verify steps still work —
+only the Play Console upload step fails, with a clear "missing
+credentials" error rather than silently skipping it.

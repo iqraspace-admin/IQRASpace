@@ -26,3 +26,12 @@ for a version bump or the changes are a genuine user-visible release
 
 See [DEPLOYMENT.md](DEPLOYMENT.md) for the rest of the release checklist
 (signing, Play Console setup, Privacy Policy requirement).
+
+## The `iqs-deploy` skill
+
+Saying "iqs-deploy" runs `.claude/skills/iqs-deploy/SKILL.md`, which
+automates validate → bump build number → build the signed `.aab` →
+verify → upload to Play Console's **internal testing** track (never
+closed testing or production — see DEPLOYMENT.md §9). It needs one-time
+owner-only credential setup (DEPLOYMENT.md §9) before the upload step
+will work.
