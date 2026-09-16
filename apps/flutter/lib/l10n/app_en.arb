@@ -65,6 +65,7 @@
   "listeningTrackArabicOnly": "Recitation Only",
   "listeningTrackArabicPlusUrdu": "Recitation + Urdu Translation",
   "listeningTrackComingSoon": "Urdu translation audio is coming soon for this Surah.",
+  "listeningTrackRetry": "Couldn't load the Urdu translation audio. Tap to retry.",
   "playbackPlay": "Play",
   "playbackPause": "Pause",
   "playbackPreviousSurah": "Previous Surah",

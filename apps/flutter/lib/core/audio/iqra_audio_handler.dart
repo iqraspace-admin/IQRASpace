@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:io' show File;
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/foundation.dart' show debugPrint, kIsWeb;
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:just_audio/just_audio.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:quran_flutter/core/audio/audio_cache_manager.dart';
 import 'package:quran_flutter/core/constants/app_language.dart';
 import 'package:quran_flutter/core/constants/arabic_surah_audio.dart';
@@ -32,9 +35,10 @@ class MediaItemExtra {
 /// `just_audio` `AudioPlayer` behind two playback styles:
 /// [playAyah]/[playSurahAyahs] keep this app's original manual
 /// ayah-to-ayah `setUrl` chaining (Reading + Listening Mode's per-ayah
-/// sync); [playSurahLocal]/[playSupplementaryTrack] instead load one
-/// continuous whole-Surah audio source (Listening Mode) — for the
-/// handful of Surahs split into several files as a Storage
+/// sync); [playSurahLocal] instead loads one continuous whole-Surah audio
+/// source (Listening Mode only — see that method's doc comment for how it
+/// picks between the plain Arabic recitation and the Arabic+Urdu file) —
+/// for the handful of Surahs split into several files as a Storage
 /// size workaround, that's a `ConcatenatingAudioSource`, gapless on
 /// Android (see its own doc comment), with the resulting
 /// current-part-relative `position`/`duration` reassembled into one
@@ -69,24 +73,6 @@ class IqraAudioHandler extends BaseAudioHandler with SeekHandler {
   /// per-ayah queue. `false` after [playAyah]/[playSurahAyahs].
   bool _lastPlayWasLocalSurah = false;
 
-  /// True only while [playSurahLocal]'s *Arabic* portion is the active
-  /// source — as opposed to its Urdu follow-up ([playSupplementaryTrack])
-  /// or a per-ayah queue. [_advanceQueueOrStop] checks this, at the
-  /// moment the Arabic portion actually finishes, against the live
-  /// `listeningTrack` preference in Hive to decide whether to chain into
-  /// the Urdu track — reading the preference fresh right then (not
-  /// captured once when Play was tapped) is what makes this correct even
-  /// if the reader screen that started playback was long since closed,
-  /// or the preference changed mid-playback. This replaces a previous
-  /// design where the calling widget armed a one-shot `ref.listenManual`
-  /// subscription tied to its own lifetime — which silently never fired
-  /// if the reader navigated away (Next/Previous/Jump-to-Surah) before
-  /// the Arabic portion finished, since that subscription died with the
-  /// widget. That was the actual cause of "Recitation + Urdu Translation"
-  /// silently behaving like "Recitation Only" for a Surah, despite the
-  /// setting still showing Urdu Translation selected.
-  bool _isPlayingLocalSurahArabic = false;
-
   /// True during a per-ayah queue session ([playAyah]/[playSurahAyahs] —
   /// Reading + Listening Mode). Routes every broadcast this class would
   /// otherwise publish through the OS-facing [mediaItem]/[playbackState]
@@ -96,8 +82,8 @@ class IqraAudioHandler extends BaseAudioHandler with SeekHandler {
   /// reach `audio_service`, so Reading + Listening Mode never shows a
   /// lock-screen/notification player, while `AudioController` still gets
   /// every field it needs for ayah-highlighting by listening to both
-  /// pairs. Only [playSurahLocal]/[playSupplementaryTrack] (Listening
-  /// Mode) are allowed to reach the real, OS-facing fields — see
+  /// pairs. Only [playSurahLocal] (Listening Mode) is allowed to reach
+  /// the real, OS-facing fields — see
   /// [_enterPerAyahSession]/[_enterOsFacingSession].
   bool _perAyahSession = false;
 
@@ -113,7 +99,7 @@ class IqraAudioHandler extends BaseAudioHandler with SeekHandler {
   Stream<PlaybackState> get inAppPlaybackState => _inAppPlaybackStateController.stream;
 
   /// Per-part durations for whichever whole-Surah track is currently
-  /// loaded via [playSurahLocal]/[playSupplementaryTrack] — empty
+  /// loaded via [playSurahLocal] — empty
   /// (`[]`) whenever a per-ayah queue ([playAyah]/[playSurahAyahs]) is
   /// playing instead, which is what makes [_priorPartsDuration] and
   /// [seek] no-ops (correctly unchanged behavior) for that case. A
@@ -128,6 +114,43 @@ class IqraAudioHandler extends BaseAudioHandler with SeekHandler {
   /// updated) while [_partDurations] is non-empty.
   int _currentPartIndex = 0;
 
+  /// Cached lock-screen/notification artwork — resolved once per app run
+  /// by [_resolveArtUri]. `null` before that finishes (a `MediaItem`
+  /// published before then simply has no `artUri`; the next one will).
+  Uri? _artUri;
+  Future<Uri?>? _artUriResolution;
+
+  /// The app's branding artwork as a `file://` URI, for [MediaItem.artUri]
+  /// — the Android lock screen/notification only accepts a `content://`
+  /// or local-file URI for art (confirmed against `audio_service`'s
+  /// Android `loadArtBitmap`, which calls `BitmapFactory.decodeFile` on
+  /// anything that isn't `content:`), never a bundled Flutter asset or a
+  /// remote URL directly. `assets/branding/icon.png` is copied to a real
+  /// file on first use (idempotent — skipped if already there from a
+  /// previous run) since that's the one Flutter asset this app already
+  /// ships named for exactly this purpose. `null` on web (no persistent
+  /// app-writable filesystem — same reasoning as [AudioCacheManager]) or
+  /// if anything about loading/writing it fails, in which case the lock
+  /// screen simply shows no artwork rather than this being fatal to
+  /// playback.
+  Future<Uri?> _resolveArtUri() {
+    if (kIsWeb) return Future.value(null);
+    if (_artUri != null) return Future.value(_artUri);
+    return _artUriResolution ??= () async {
+      try {
+        final dir = await getApplicationSupportDirectory();
+        final file = File('${dir.path}/notification_art.png');
+        if (!await file.exists()) {
+          final data = await rootBundle.load('assets/branding/icon.png');
+          await file.writeAsBytes(data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+        }
+        return _artUri = Uri.file(file.path);
+      } catch (_) {
+        return null;
+      }
+    }();
+  }
+
   IqraAudioHandler() {
     _player.playbackEventStream.listen(_broadcastState, onError: (Object e, StackTrace st) {
       // A stream error here would otherwise crash the isolate silently
@@ -136,7 +159,15 @@ class IqraAudioHandler extends BaseAudioHandler with SeekHandler {
       // try/catch philosophy.
     });
     _player.processingStateStream.listen((s) {
-      if (s == ProcessingState.completed) _advanceQueueOrStop();
+      if (s != ProcessingState.completed) return;
+      // For a split Surah's `ConcatenatingAudioSource` (see
+      // [playSurahLocal]), only the *final* part completing means the
+      // whole Surah is done — [_currentPartIndex] is kept in sync by the
+      // `currentIndexStream` listener below. Guards against stopping on
+      // an intermediate part's completion, should the platform ever
+      // report one before gapless playback has moved on to the next part.
+      if (_partDurations.length > 1 && _currentPartIndex < _partDurations.length - 1) return;
+      _advanceQueueOrStop();
     });
     // Together, these two keep [_currentPartIndex]/[_partDurations] in
     // sync with whichever part of a multi-part `ConcatenatingAudioSource`
@@ -249,10 +280,10 @@ class IqraAudioHandler extends BaseAudioHandler with SeekHandler {
     playbackState.add(playbackState.value.copyWith(playing: false, processingState: AudioProcessingState.idle));
   }
 
-  /// Enters a Listening Mode session ([playSurahLocal]/
-  /// [playSupplementaryTrack]). If a per-ayah queue session was active,
-  /// its in-app-only state is cleared so no stale "now playing" ayah
-  /// lingers once Listening Mode's own state takes over.
+  /// Enters a Listening Mode session ([playSurahLocal]). If a per-ayah
+  /// queue session was active, its in-app-only state is cleared so no
+  /// stale "now playing" ayah lingers once Listening Mode's own state
+  /// takes over.
   void _enterOsFacingSession() {
     if (!_perAyahSession) return;
     _perAyahSession = false;
@@ -296,7 +327,6 @@ class IqraAudioHandler extends BaseAudioHandler with SeekHandler {
     _queue = null;
     _queueSurahNumber = surahNumber;
     _lastPlayWasLocalSurah = false;
-    _isPlayingLocalSurahArabic = false;
     _partDurations = [];
     _currentPartIndex = 0;
     _enterPerAyahSession();
@@ -316,7 +346,6 @@ class IqraAudioHandler extends BaseAudioHandler with SeekHandler {
     _queueSurahNumber = surahNumber;
     _queueIndex = 0;
     _lastPlayWasLocalSurah = false;
-    _isPlayingLocalSurahArabic = false;
     _partDurations = [];
     _currentPartIndex = 0;
     _enterPerAyahSession();
@@ -352,84 +381,89 @@ class IqraAudioHandler extends BaseAudioHandler with SeekHandler {
     }
   }
 
-  /// Plays a single supplementary, whole-Surah track that isn't itself
-  /// an ayah — today, a Surah's Urdu-translation audio (Listening Mode's
-  /// "Recitation + Urdu Translation" track, played after the Arabic
-  /// queue finishes; see `urdu_surah_audio.dart`). Tagged with
-  /// `ayahNumber: -1` so `AudioPlaybackState.isActive(surah, ayah)` (ayah
-  /// &gt;= 1 always) never matches it — the ayah-highlight border in
-  /// `surah_reader_screen.dart` correctly shows nothing highlighted
-  /// while this plays. Cached on-device after first play, same as
-  /// [playSurahLocal] — see [_audioSourceFor]. Never split (every Urdu
-  /// track is under the 50MiB Storage limit), so this is always exactly
-  /// one part — [_partDurations] here is really just "unlock the same
-  /// duration-tracking machinery [playSurahLocal] uses", not multi-part
-  /// handling.
-  Future<void> playSupplementaryTrack({required int surahNumber, required String url, required String title}) async {
-    _queue = null;
-    _queueSurahNumber = surahNumber;
-    _isPlayingLocalSurahArabic = false;
-    _partDurations = [null];
-    _currentPartIndex = 0;
-    _enterOsFacingSession();
-    _setMediaItem(
-      MediaItem(
-        id: url,
-        title: title,
-        artist: 'IqraSpace',
-        extras: {MediaItemExtra.surahNumber: surahNumber, MediaItemExtra.ayahNumber: -1},
-      ),
-    );
-    _publishLoading();
-    try {
-      await _player.setAudioSource(await _audioSourceFor(cacheKey: 'urdu_$surahNumber', remoteUrl: url));
-      await _player.play();
-    } catch (_) {
-      _publishError();
-    }
+  /// Retries after a playback error on the reader screen's retry icon —
+  /// re-reads the current `listeningTrack` preference and starts over via
+  /// [playSurahLocal], same as a fresh Play tap.
+  Future<void> retryListening(int surahNumber) => playSurahLocal(surahNumber);
+
+  String _urduTitleFor(int surahNumber) =>
+      '${surahTransliterationFor(surahNumber, currentAppLanguageFromHive())} — Urdu Translation';
+
+  /// The single Urdu-translation file for [surahNumber] as a one-part
+  /// list, so [playSurahLocal] can treat it with exactly the same
+  /// part-based machinery as the plain-Arabic case — see that method.
+  /// Every Urdu track is one whole file (never split; see
+  /// `urdu_surah_audio.dart`), so this is always zero or one entries,
+  /// never more.
+  List<ArabicSurahAudioPart> _urduPartsFor(int surahNumber) {
+    final url = urduSurahAudioUrl(surahNumber);
+    return url == null ? const [] : [ArabicSurahAudioPart(url, null)];
   }
 
-  /// Plays Listening Mode's whole-Surah Al-Afasy recitation for
-  /// [surahNumber] (see `arabic_surah_audio.dart`), replacing that
-  /// mode's old per-ayah Quran-API-streamed queue. That old approach is
-  /// the most likely cause of audio dropping when the phone locks: a
-  /// mid-queue network fetch for the *next* ayah stalling once Android
-  /// throttles a backgrounded/doze process silently broke the chain. One
-  /// continuous audio source removes that failure mode entirely for this
-  /// mode. No-ops if no part has been uploaded yet for this Surah.
+  /// Plays Listening Mode's whole-Surah audio for [surahNumber], sourced
+  /// from **exactly one** of two files depending on the current
+  /// `listeningTrack` preference in Hive (see `reader_mode.dart`'s
+  /// `ListeningTrack`) — read fresh on every call (including a
+  /// lock-screen Next/Previous via [_jumpToSurah], or a retry via
+  /// [retryListening]), so it always reflects whatever is *currently*
+  /// selected, not whatever was selected when the reader screen that
+  /// originally started playback was still open:
+  /// - [ListeningTrack.arabicOnly]: the plain Al-Afasy recitation (see
+  ///   `arabic_surah_audio.dart`).
+  /// - [ListeningTrack.arabicPlusUrdu]: the Urdu-translation file (see
+  ///   `urdu_surah_audio.dart` / [_urduPartsFor]) — which already
+  ///   contains that Surah's Arabic recitation interleaved with its Urdu
+  ///   translation, ayah by ayah. Played **on its own**, never after the
+  ///   plain-Arabic file above — chaining the two used to recite every
+  ///   ayah's Arabic twice (once from the Arabic-only file, once again
+  ///   from inside the Urdu file), which is what "Urdu Translation"
+  ///   actually meant to a listener despite the code intending it as an
+  ///   add-on rather than a replacement.
   ///
-  /// Almost every Surah is exactly one part; a handful were split into
-  /// several purely as a since-migrated storage backend's size workaround (see
-  /// `arabic_surah_audio.dart`'s doc comment) — those play back through
-  /// one `ConcatenatingAudioSource`, which is gapless on Android (see
-  /// that class's own `just_audio` doc comment), so it's inaudible as
-  /// anything other than one continuous Surah; a single part skips the
+  /// Replaces Listening Mode's old per-ayah Quran-API-streamed queue,
+  /// which was the most likely cause of audio dropping when the phone
+  /// locked: a mid-queue network fetch for the *next* ayah stalling once
+  /// Android throttles a backgrounded/doze process silently broke the
+  /// chain. One continuous audio source removes that failure mode
+  /// entirely for this mode. No-ops if the selected track has no audio
+  /// uploaded yet for this Surah.
+  ///
+  /// Almost every Surah's Arabic recitation is exactly one part; a
+  /// handful were split into several purely as a since-migrated storage
+  /// backend's size workaround (see `arabic_surah_audio.dart`'s doc
+  /// comment) — those play back through one `ConcatenatingAudioSource`,
+  /// which is gapless on Android (see that class's own `just_audio` doc
+  /// comment), so it's inaudible as anything other than one continuous
+  /// Surah; a single part (always true for the Urdu file) skips the
   /// wrapper entirely, since a `ConcatenatingAudioSource` of one child
   /// would behave identically but isn't needed to.
   ///
-  /// Tagged `ayahNumber: -1`, same as [playSupplementaryTrack] — Listening
-  /// Mode doesn't highlight a per-ayah position (only Reading + Listening
-  /// Mode does, via [playSurahAyahs]).
+  /// Tagged `ayahNumber: -1` — Listening Mode doesn't highlight a
+  /// per-ayah position (only Reading + Listening Mode does, via
+  /// [playSurahAyahs]).
   Future<void> playSurahLocal(int surahNumber) async {
-    final parts = arabicSurahAudioParts(surahNumber);
+    final useUrdu = (HiveBoxes.settingsBox.get('listeningTrack') as String?) == ListeningTrack.arabicPlusUrdu.name;
+    final parts = useUrdu ? _urduPartsFor(surahNumber) : arabicSurahAudioParts(surahNumber);
     if (parts.isEmpty) return;
     _queue = null;
     _queueSurahNumber = surahNumber;
     _lastPlayWasLocalSurah = true;
-    _isPlayingLocalSurahArabic = true;
     _partDurations = [for (final part in parts) part.duration];
     _currentPartIndex = 0;
     _enterOsFacingSession();
-    final surahName = surahTransliterationFor(surahNumber, currentAppLanguageFromHive());
+    final title = useUrdu
+        ? _urduTitleFor(surahNumber)
+        : surahTransliterationFor(surahNumber, currentAppLanguageFromHive());
     final knownTotal = _partDurations.any((d) => d == null)
         ? null
         : _partDurations.fold<Duration>(Duration.zero, (sum, d) => sum + d!);
     _setMediaItem(
       MediaItem(
         id: parts.first.url,
-        title: surahName,
+        title: title,
         artist: 'IqraSpace',
         duration: knownTotal,
+        artUri: await _resolveArtUri(),
         extras: {MediaItemExtra.surahNumber: surahNumber, MediaItemExtra.ayahNumber: -1},
       ),
     );
@@ -440,7 +474,14 @@ class IqraAudioHandler extends BaseAudioHandler with SeekHandler {
     try {
       final children = <AudioSource>[
         for (var i = 0; i < parts.length; i++)
-          await _audioSourceFor(cacheKey: 'arabic_${surahNumber}_p$i', remoteUrl: parts[i].url),
+          await _audioSourceFor(
+            // The Urdu cache key deliberately omits a `_p$i` suffix
+            // (unlike Arabic's) since it's always exactly one part —
+            // matches the key this app has always used for it, so
+            // anything already cached under it stays valid.
+            cacheKey: useUrdu ? 'urdu_$surahNumber' : 'arabic_${surahNumber}_p$i',
+            remoteUrl: parts[i].url,
+          ),
       ];
       await _player.setAudioSource(
         children.length == 1
@@ -454,7 +495,6 @@ class IqraAudioHandler extends BaseAudioHandler with SeekHandler {
       );
       await _player.play();
     } catch (_) {
-      _isPlayingLocalSurahArabic = false;
       _publishError();
     }
   }
@@ -480,29 +520,14 @@ class IqraAudioHandler extends BaseAudioHandler with SeekHandler {
     );
   }
 
-  /// When a per-ayah queue finishes, just stops (unchanged). When
-  /// [playSurahLocal]'s Arabic portion finishes, reads the *live*
-  /// `listeningTrack` preference from Hive — not one captured back when
-  /// Play was tapped — and chains into the Urdu-translation track if
-  /// that's currently selected and available; see
-  /// [_isPlayingLocalSurahArabic]'s doc comment for why this replaced a
-  /// widget-owned listener that silently died on navigation.
+  /// When a per-ayah queue finishes, advances to the next ayah;
+  /// otherwise (including [playSurahLocal]'s single whole-Surah track
+  /// finishing) just stops — there is no further track to chain into,
+  /// see [playSurahLocal]'s doc comment.
   void _advanceQueueOrStop() {
     if (_queue != null) {
       _playQueueAt(_queueIndex + 1);
       return;
-    }
-    if (_isPlayingLocalSurahArabic) {
-      _isPlayingLocalSurahArabic = false;
-      final surahNumber = _queueSurahNumber;
-      final trackName = HiveBoxes.settingsBox.get('listeningTrack') as String?;
-      final url = (surahNumber != null && trackName == ListeningTrack.arabicPlusUrdu.name)
-          ? urduSurahAudioUrl(surahNumber)
-          : null;
-      if (url != null) {
-        playSupplementaryTrack(surahNumber: surahNumber!, url: url, title: 'Urdu Translation');
-        return;
-      }
     }
     _clear();
   }
@@ -510,7 +535,6 @@ class IqraAudioHandler extends BaseAudioHandler with SeekHandler {
   Future<void> _clear() async {
     _partDurations = [];
     _currentPartIndex = 0;
-    _isPlayingLocalSurahArabic = false;
     _setMediaItem(null);
     _publishPlaybackState(playbackState.value.copyWith(playing: false, processingState: AudioProcessingState.idle));
   }
@@ -625,6 +649,13 @@ Future<void> registerAudioService() async {
         // the notification be dismissed then, which is what
         // `androidNotificationOngoing` requires (see its own assert).
         androidNotificationOngoing: true,
+        // Downscales the branding artwork (see `_resolveArtUri`, a
+        // 1024x1024 PNG) before handing it to the OS — the lock
+        // screen/notification never needs it at full resolution, and
+        // repeatedly decoding a multi-hundred-KB bitmap at native size on
+        // every Surah/track change is wasted work and memory.
+        artDownscaleWidth: 512,
+        artDownscaleHeight: 512,
       ),
     );
   } catch (e) {

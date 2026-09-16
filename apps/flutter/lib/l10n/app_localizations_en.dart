@@ -194,6 +194,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Urdu translation audio is coming soon for this Surah.';
 
   @override
+  String get listeningTrackRetry =>
+      'Couldn\'t load the Urdu translation audio. Tap to retry.';
+
+  @override
   String get playbackPlay => 'Play';
 
   @override

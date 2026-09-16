@@ -380,7 +380,7 @@ class _SurahReaderScreenState extends ConsumerState<SurahReaderScreen> with Widg
                             // still leaves isPlayingThisSurah true, so this
                             // branch (not "stop") is exactly what a tap on
                             // the retry icon reaches.
-                            controller.playSurahLocal(widget.surahNumber);
+                            controller.retryListening(widget.surahNumber);
                           } else {
                             controller.playSurah(widget.surahNumber, ayahs);
                           }

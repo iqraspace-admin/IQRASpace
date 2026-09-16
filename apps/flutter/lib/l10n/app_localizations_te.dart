@@ -194,6 +194,10 @@ class AppLocalizationsTe extends AppLocalizations {
       'ఈ సూరా కోసం ఉర్దూ అనువాద ఆడియో త్వరలో అందుబాటులోకి వస్తుంది.';
 
   @override
+  String get listeningTrackRetry =>
+      'ఉర్దూ అనువాద ఆడియో లోడ్ కాలేదు. మళ్లీ ప్రయత్నించడానికి నొక్కండి.';
+
+  @override
   String get playbackPlay => 'ప్లే';
 
   @override

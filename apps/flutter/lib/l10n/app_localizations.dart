@@ -442,6 +442,12 @@ abstract class AppLocalizations {
   /// **'Urdu translation audio is coming soon for this Surah.'**
   String get listeningTrackComingSoon;
 
+  /// No description provided for @listeningTrackRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the Urdu translation audio. Tap to retry.'**
+  String get listeningTrackRetry;
+
   /// No description provided for @playbackPlay.
   ///
   /// In en, this message translates to:

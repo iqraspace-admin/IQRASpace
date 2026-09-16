@@ -100,15 +100,16 @@ class AudioController extends StateNotifier<AudioPlaybackState> {
   /// see [playSurahLocal] for Listening Mode.
   Future<void> playSurah(int surahNumber, List<Ayah> ayahs) => _handler.playSurahAyahs(surahNumber, ayahs);
 
-  /// Listening Mode's whole-Surah Al-Afasy recitation — a single
-  /// local/cached file, not a per-ayah queue. See
-  /// `IqraAudioHandler.playSurahLocal`. Its Urdu-translation follow-up
-  /// (when selected) is armed automatically by the handler itself once
-  /// the Arabic portion finishes — see
-  /// `IqraAudioHandler._advanceQueueOrStop` — rather than by a call from
-  /// here, since that decision needs to re-check the live setting at the
-  /// moment the Arabic portion actually ends, not once at Play-time.
+  /// Listening Mode's whole-Surah audio — a single local/cached file, not
+  /// a per-ayah queue. Which file (plain Arabic recitation, or the
+  /// Arabic+Urdu file) is picked fresh inside the handler from the
+  /// current `listeningTrack` setting — see
+  /// `IqraAudioHandler.playSurahLocal`.
   Future<void> playSurahLocal(int surahNumber) => _handler.playSurahLocal(surahNumber);
+
+  /// Retries after a Listening Mode playback error — a fresh
+  /// [playSurahLocal]. See `IqraAudioHandler.retryListening`.
+  Future<void> retryListening(int surahNumber) => _handler.retryListening(surahNumber);
 
   /// Pauses in place — playback resumes from here via [resume], unlike
   /// [stop] which forgets the current position entirely. Reading +

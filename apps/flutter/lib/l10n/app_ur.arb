@@ -65,6 +65,7 @@
   "listeningTrackArabicOnly": "صرف تلاوت",
   "listeningTrackArabicPlusUrdu": "تلاوت + اردو ترجمہ",
   "listeningTrackComingSoon": "اس سورت کے لیے اردو ترجمہ آڈیو جلد آ رہی ہے۔",
+  "listeningTrackRetry": "اردو ترجمہ آڈیو لوڈ نہیں ہو سکی۔ دوبارہ کوشش کرنے کے لیے تھپتھپائیں۔",
   "playbackPlay": "چلائیں",
   "playbackPause": "وقفہ",
   "playbackPreviousSurah": "پچھلی سورت",

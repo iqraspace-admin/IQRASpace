@@ -76,11 +76,18 @@ directory) before running `upload-audio-to-r2.mjs`.
 
 Public-read Cloudflare R2 bucket `quran-audio`, exposed via the custom
 domain `audio.iqraspace.org`:
-- `arabic/{surahNumber3digit}.mp3` — Al-Afasy recitation
+- `arabic/{surahNumber3digit}.mp3` — Al-Afasy recitation, Arabic only
 - `arabic/{surahNumber3digit}_part{i}.mp3` — for a Surah split into
   sequential parts (see "Splitting oversized Surahs" below), instead of
   the plain path above
-- `urdu/{surahNumber3digit}.mp3` — Urdu translation
+- `urdu/{surahNumber3digit}.mp3` — **not** Urdu-only: this recording
+  interleaves the Arabic recitation with its Urdu translation ayah by
+  ayah (a standard "tarjuma" style release), so it's a complete,
+  self-contained track on its own. This is why `IqraAudioHandler`
+  ([playSurahLocal] in `iqra_audio_handler.dart`) treats the `arabic/`
+  and `urdu/` files as **mutually exclusive** alternatives picked by the
+  `listeningTrack` setting, never chaining `arabic/` into `urdu/` —
+  doing that used to recite every ayah's Arabic twice.
 
 This layout is unchanged from the original Supabase-hosted version — the
 R2 migration was a lift-and-shift of bytes to a new backend, not a data
@@ -178,8 +185,8 @@ must pause immediately once it isn't (leaving the screen, or the app
 backgrounding). Both modes share the one `AudioPlayer`/`IqraAudioHandler`
 (no second player), so `IqraAudioHandler` splits its *broadcasts* instead:
 
-- `playSurahLocal`/`playSupplementaryTrack` (Listening Mode) publish
-  through the real, OS-facing `mediaItem`/`playbackState` —
+- `playSurahLocal` (Listening Mode) publishes through the real, OS-facing
+  `mediaItem`/`playbackState` —
   `audio_service`'s Android notification/foreground service is driven
   directly by these, so this is the only path that can ever put a player
   on the lock screen.
@@ -217,17 +224,28 @@ killed). `surah_reader_screen.dart`'s Play button shows a spinner while
 loading (disabled — no second tap can start a conflicting attempt) and a
 retry icon on error.
 
-Selecting "Recitation + Urdu Translation" used to silently stop applying
-after navigating to another Surah before the first one's Arabic portion
-finished. The cause: the Urdu follow-up was armed by a `ref.listenManual`
-subscription owned by the reader screen's widget — which Riverpod
-disposes the moment that screen is replaced (Next/Previous/Jump-to-Surah
-all do this immediately), silently killing the pending follow-up before
-it could ever fire. `IqraAudioHandler._advanceQueueOrStop` now decides
-this itself, reading the `listeningTrack` preference fresh from Hive at
-the exact moment the Arabic portion finishes — independent of any
-screen's lifetime, and always reflecting whatever is *currently*
-selected, even if it changed mid-playback.
+### "Recitation" vs. "Recitation + Urdu Translation" pick one file, never both
+
+`playSurahLocal` reads the `listeningTrack` setting fresh from Hive at
+the top of every call (Play, a retry, or a lock-screen Next/Previous —
+see `_jumpToSurah`) and plays **exactly one** of `arabic/{NNN}.mp3` or
+`urdu/{NNN}.mp3` for the whole session — never both, and never one after
+the other. This matters because `urdu/{NNN}.mp3` already contains that
+Surah's Arabic recitation interleaved with the Urdu translation (see
+"Storage layout" above) — an earlier version of this feature always
+played the plain `arabic/` file first and then chained into `urdu/` once
+it finished, which recited every ayah's Arabic twice back-to-back.
+
+That earlier chained design also went through an intermediate bug of its
+own worth remembering if this area regresses again: the Urdu follow-up
+was originally armed by a `ref.listenManual` subscription owned by the
+reader screen's widget, which Riverpod disposes the moment that screen
+is replaced (Next/Previous/Jump-to-Surah all do this immediately) —
+silently killing the pending follow-up before it could ever fire if the
+listener navigated away before the Arabic portion finished. Reading the
+preference fresh inside the handler itself (rather than a call from a
+widget that might not outlive playback) is what fixed that specific
+symptom, independent of the separate double-Arabic issue above.
 
 ## On-device cache
 

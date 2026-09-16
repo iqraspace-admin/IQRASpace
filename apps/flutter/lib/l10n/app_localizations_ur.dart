@@ -194,6 +194,10 @@ class AppLocalizationsUr extends AppLocalizations {
       'اس سورت کے لیے اردو ترجمہ آڈیو جلد آ رہی ہے۔';
 
   @override
+  String get listeningTrackRetry =>
+      'اردو ترجمہ آڈیو لوڈ نہیں ہو سکی۔ دوبارہ کوشش کرنے کے لیے تھپتھپائیں۔';
+
+  @override
   String get playbackPlay => 'چلائیں';
 
   @override
