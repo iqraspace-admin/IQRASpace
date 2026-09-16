@@ -12,11 +12,11 @@ void main() {
 
   testWidgets('shows the reserved-for-later placeholder copy, not a broken/empty screen', (tester) async {
     await tester.pumpWidget(
-      ProviderScope(
+      const ProviderScope(
         child: MaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          home: const LearnComingSoonScreen(),
+          home: LearnComingSoonScreen(),
         ),
       ),
     );

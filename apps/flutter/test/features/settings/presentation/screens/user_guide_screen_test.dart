@@ -8,11 +8,11 @@ import '../../../../test_helpers/hive_test_env.dart';
 
 Future<void> pumpGuide(WidgetTester tester) async {
   await tester.pumpWidget(
-    ProviderScope(
+    const ProviderScope(
       child: MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: const UserGuideScreen(),
+        home: UserGuideScreen(),
       ),
     ),
   );
