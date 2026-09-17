@@ -35,6 +35,13 @@ dependencies:
   # supported on Flutter Web (no OS lock screen there); web keeps the
   # plain just_audio-only path, guarded by kIsWeb.
   audio_service: ^0.18.19
+  # Android 13+ (API 33+) makes POST_NOTIFICATIONS a runtime permission
+  # that defaults to denied — without an explicit request, audio_service's
+  # notification/lock-screen transport controls silently never appear
+  # even though playback itself keeps working (see
+  # IqraAudioHandler._ensureNotificationPermission). Web-unused, guarded
+  # behind kIsWeb/Platform.isAndroid like the other native-only deps here.
+  permission_handler: ^11.3.1
   # Deep-linking to a specific ayah (from search results / bookmarks) in
   # a lazily-built list needs real scroll-to-index — plain ListView's
   # jumpTo only estimates an offset, which drifts badly on long surahs

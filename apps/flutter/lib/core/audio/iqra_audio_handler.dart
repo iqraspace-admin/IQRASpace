@@ -1,11 +1,12 @@
 import 'dart:async';
-import 'dart:io' show File;
+import 'dart:io' show File, Platform;
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/foundation.dart' show debugPrint, kIsWeb;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:quran_flutter/core/audio/audio_cache_manager.dart';
 import 'package:quran_flutter/core/constants/app_language.dart';
 import 'package:quran_flutter/core/constants/arabic_surah_audio.dart';
@@ -293,6 +294,25 @@ class IqraAudioHandler extends BaseAudioHandler with SeekHandler {
     );
   }
 
+  /// Android 13+ (API 33+) treats `POST_NOTIFICATIONS` as a runtime
+  /// permission that defaults to denied — the manifest's
+  /// `<uses-permission>` only declares intent, it doesn't grant it.
+  /// Without this, `AudioService`'s notification (and therefore the
+  /// lock-screen transport controls, which the OS renders from that same
+  /// notification) silently never appears on a fresh install, even
+  /// though playback itself is unaffected: starting the foreground
+  /// service doesn't require the permission, only *displaying* its
+  /// notification does. A no-op if already granted, already permanently
+  /// denied (Android won't re-prompt either way), or on any platform
+  /// other than Android.
+  Future<void> _ensureNotificationPermission() async {
+    if (kIsWeb || !Platform.isAndroid) return;
+    final status = await Permission.notification.status;
+    if (!status.isGranted) {
+      await Permission.notification.request();
+    }
+  }
+
   /// Sum of every *already-finished* part's duration (parts before
   /// [_currentPartIndex]) — the offset that turns just_audio's
   /// current-part-relative position into this Surah's true, continuous
@@ -450,6 +470,7 @@ class IqraAudioHandler extends BaseAudioHandler with SeekHandler {
     _lastPlayWasLocalSurah = true;
     _partDurations = [for (final part in parts) part.duration];
     _currentPartIndex = 0;
+    await _ensureNotificationPermission();
     _enterOsFacingSession();
     final title = useUrdu
         ? _urduTitleFor(surahNumber)
