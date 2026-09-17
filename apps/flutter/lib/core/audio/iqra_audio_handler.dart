@@ -472,7 +472,10 @@ class IqraAudioHandler extends BaseAudioHandler with SeekHandler {
     // The lock-screen/notification title is the Surah name ONLY, in the
     // user's current app language — regardless of `useUrdu` above, which
     // is purely an audio-source choice and must never change what's
-    // displayed here (see the module doc comment's acceptance test).
+    // displayed here (see the module doc comment's acceptance test). No
+    // `artist` — the OS renders that alongside the title (lock screen/
+    // lists it right after), and this display must show nothing else at
+    // all, not even the app's own name.
     final title = surahTransliterationFor(surahNumber, currentAppLanguageFromHive());
     final knownTotal = _partDurations.any((d) => d == null)
         ? null
@@ -481,7 +484,6 @@ class IqraAudioHandler extends BaseAudioHandler with SeekHandler {
       MediaItem(
         id: parts.first.url,
         title: title,
-        artist: 'IqraSpace',
         duration: knownTotal,
         artUri: await _resolveArtUri(),
         extras: {MediaItemExtra.surahNumber: surahNumber, MediaItemExtra.ayahNumber: -1},
