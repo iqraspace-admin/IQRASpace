@@ -406,9 +406,6 @@ class IqraAudioHandler extends BaseAudioHandler with SeekHandler {
   /// [playSurahLocal], same as a fresh Play tap.
   Future<void> retryListening(int surahNumber) => playSurahLocal(surahNumber);
 
-  String _urduTitleFor(int surahNumber) =>
-      '${surahTransliterationFor(surahNumber, currentAppLanguageFromHive())} — Urdu Translation';
-
   /// The single Urdu-translation file for [surahNumber] as a one-part
   /// list, so [playSurahLocal] can treat it with exactly the same
   /// part-based machinery as the plain-Arabic case — see that method.
@@ -472,9 +469,11 @@ class IqraAudioHandler extends BaseAudioHandler with SeekHandler {
     _currentPartIndex = 0;
     await _ensureNotificationPermission();
     _enterOsFacingSession();
-    final title = useUrdu
-        ? _urduTitleFor(surahNumber)
-        : surahTransliterationFor(surahNumber, currentAppLanguageFromHive());
+    // The lock-screen/notification title is the Surah name ONLY, in the
+    // user's current app language — regardless of `useUrdu` above, which
+    // is purely an audio-source choice and must never change what's
+    // displayed here (see the module doc comment's acceptance test).
+    final title = surahTransliterationFor(surahNumber, currentAppLanguageFromHive());
     final knownTotal = _partDurations.any((d) => d == null)
         ? null
         : _partDurations.fold<Duration>(Duration.zero, (sum, d) => sum + d!);
