@@ -1,0 +1,122 @@
+name: quran_flutter
+description: >
+  IqraSpace Quran — Flutter reader (fully isolated from apps/quran).
+  All 114 surahs with colored Tajweed, translation, per-ayah audio,
+  search, bookmarks, offline-first caching, Light/TrueBlack-Dark/Sepia
+  themes. Android + Web only for this pass.
+publish_to: "none"
+version: 0.3.0+10
+
+environment:
+  # Verified locally via `flutter --version`: Flutter 3.47.3, Dart
+  # 3.13.3 — this lower bound is comfortably satisfied.
+  sdk: ">=3.5.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+  flutter_riverpod: ^2.6.1
+  dio: ^5.7.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  # Native-only usage (getApplicationDocumentsDirectory) — guarded behind
+  # kIsWeb in lib/core/storage/hive_boxes.dart. Never called on web.
+  path_provider: ^2.1.5
+  cupertino_icons: ^1.0.8
+  # Per-ayah recitation playback. Works on both Android and web.
+  just_audio: ^0.9.42
+  # Background/lock-screen playback (Android only — see
+  # lib/core/audio/iqra_audio_handler.dart): MediaSession + notification
+  # transport controls (Play/Pause/Previous-Surah/Next-Surah) so audio
+  # survives the screen locking or the app backgrounding. Not meaningfully
+  # supported on Flutter Web (no OS lock screen there); web keeps the
+  # plain just_audio-only path, guarded by kIsWeb.
+  audio_service: ^0.18.19
+  # Android 13+ (API 33+) makes POST_NOTIFICATIONS a runtime permission
+  # that defaults to denied — without an explicit request, audio_service's
+  # notification/lock-screen transport controls silently never appear
+  # even though playback itself keeps working (see
+  # IqraAudioHandler._ensureNotificationPermission). Web-unused, guarded
+  # behind kIsWeb/Platform.isAndroid like the other native-only deps here.
+  permission_handler: ^11.3.1
+  # Deep-linking to a specific ayah (from search results / bookmarks) in
+  # a lazily-built list needs real scroll-to-index — plain ListView's
+  # jumpTo only estimates an offset, which drifts badly on long surahs
+  # (e.g. Al-Baqarah's 286 ayat).
+  scrollable_positioned_list: ^0.3.8
+  # Reach Us (About screen): opens X/Instagram/the website in an external
+  # browser or app — the official Flutter-team plugin, the standard way
+  # to open a URL since core Flutter has no built-in API for it.
+  url_launcher: ^6.3.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  # No codegen (build_runner/mocktail's generator, freezed,
+  # json_serializable) in this first pass — mocktail's plain Mock class
+  # needs none of that.
+  mocktail: ^1.0.4
+  # Generates the Android launcher icon + web favicon/PWA icons from one
+  # source image (assets/branding/icon.png) — run via
+  # `dart run flutter_launcher_icons`, not needed at app runtime.
+  flutter_launcher_icons: ^0.14.3
+
+# Config for the flutter_launcher_icons dev tool above — generates from
+# the IqraSpace brand mark shared with apps/quran (see
+# assets/branding/NOTE.md for provenance/colors).
+flutter_launcher_icons:
+  image_path: "assets/branding/icon.png"
+  android: true
+  min_sdk_android: 21
+  web:
+    generate: true
+    background_color: "#0F5C4F"
+    theme_color: "#0F5C4F"
+
+flutter:
+  uses-material-design: true
+
+  # English/Telugu/Urdu UI strings — see l10n.yaml and lib/l10n/*.arb.
+  # Never used for Quran Arabic text, translations, or Surah names
+  # sourced from the Quran API (see lib/core/constants/surah_transliterations.dart
+  # for the one Surah-name exception, which is authored app data, not
+  # Quran content itself).
+  generate: true
+
+  assets:
+    - assets/tajweed_rules_fallback.json
+    - assets/branding/icon.png
+    # Screenshots for the in-app User Guide (Reading Settings → User
+    # Guide) — captured/annotated via docs/user_guide/, see its README.
+    - assets/user_guide/
+
+  fonts:
+    # All from the Amiri family (SIL OFL 1.1) by Khaled Hosny — see
+    # assets/fonts/OFL.txt. Selectable in Settings via
+    # lib/core/theme/arabic_fonts.dart; AyahRichText reads the chosen
+    # family from arabicFontFamilyProvider instead of a hardcoded name.
+    - family: AmiriQuran
+      fonts:
+        - asset: assets/fonts/AmiriQuran.ttf
+    - family: Amiri
+      fonts:
+        - asset: assets/fonts/Amiri-Regular.ttf
+        - asset: assets/fonts/Amiri-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Amiri-Italic.ttf
+          style: italic
+        - asset: assets/fonts/Amiri-BoldItalic.ttf
+          weight: 700
+          style: italic
+    # A COLR/CPAL variant with color baked into the glyphs themselves —
+    # renders its own built-in colors regardless of the Tajweed TextStyle
+    # color applied on top, so picking this makes the app's own Tajweed
+    # coloring invisible. Offered anyway since it was supplied; Settings
+    # notes the caveat.
+    - family: AmiriQuranColored
+      fonts:
+        - asset: assets/fonts/AmiriQuranColored.ttf

@@ -8,6 +8,17 @@ supabase/.env.keys
 supabase/.env.local
 supabase/.env.*.local
 
+# Local resource/asset prep (Urdu audio-splitting pipeline and any other
+# raw/large working material under resources/) — never pushed; not part
+# of any app's build. Large outputs get uploaded straight to hosting
+# (e.g. Supabase Storage) separately, per that pipeline's own plan.
+/resources/
+
+# Docs/design working material — not app code or its dependencies, kept
+# local rather than pushed.
+/docs/
+/design/
+
 # OS
 .DS_Store
 Thumbs.db
