@@ -1,6 +1,6 @@
 ---
 name: iqs-deploy
-description: Run IqraSpace's Flutter (apps/flutter) Android production deployment workflow — validate, bump the build number, build a signed release .aab, verify it, upload it to Play Console's internal testing track, and report. Trigger when the user says "iqs-deploy".
+description: Run IqraSpace's Flutter (apps/flutter) Android production deployment workflow — validate, bump the build number, build a signed release .aab, verify it, upload it to Play Console's closed testing track, and report. Trigger when the user says "iqs-deploy".
 ---
 
 # iqs-deploy
@@ -9,14 +9,17 @@ Runs the full release pipeline for `apps/flutter` (IqraSpace Quran
 Flutter reader, `org.iqraspace.app`): **Inspect → Validate → Build →
 Generate .aab → Deploy → Verify → Report**.
 
-**Hard rule: Deploy always means uploading to Play Console's internal
-testing track, and nothing else.** Never target closed testing or
-production — those are manual, owner-driven decisions per
-`apps/flutter/DEPLOYMENT.md` §6 (20-tester/14-day closed testing
-requirement, pre-launch report review). The upload script
-(`apps/flutter/scripts/deploy/upload-to-play.mjs`) hardcodes the
-`internal` track for this reason — do not edit it to take a track
-argument or point it anywhere else as part of running this skill.
+**Hard rule: Deploy always means uploading to Play Console's closed
+testing track (`alpha`), and nothing else.** Never target production —
+promoting past closed testing is a manual, owner-driven decision per
+`apps/flutter/DEPLOYMENT.md` §6, made once the 20-tester/14-day
+closed-testing bar and pre-launch report review are satisfied. The
+upload script (`apps/flutter/scripts/deploy/upload-to-play.mjs`)
+hardcodes the `alpha` track for this reason — do not edit it to take a
+track argument or point it anywhere else as part of running this skill.
+That track must already have its own tester list configured in Play
+Console (owner-only, one-time) — this skill only uploads a build to it,
+it never creates the track or manages testers.
 
 Every invocation must produce a real signed `.aab` and verify it exists
 on disk before claiming success. If `.aab` generation fails, the overall
@@ -89,7 +92,7 @@ do not report AAB or overall success.
   `pubspec.yaml`, so this is mostly a sanity check that step 2's edit
   didn't get reverted/overwritten).
 
-## 5. Deploy (Play Console internal testing track)
+## 5. Deploy (Play Console closed testing track)
 
 Check `apps/flutter/scripts/deploy/.env.local` exists and
 `PLAY_SERVICE_ACCOUNT_JSON_PATH` is set:
@@ -106,8 +109,9 @@ Check `apps/flutter/scripts/deploy/.env.local` exists and
   ```
   node --env-file=.env.local upload-to-play.mjs ../../build/app/outputs/bundle/release/app-release.aab
   ```
-- The script only ever uploads to the `internal` track (hardcoded — see
-  the hard rule above). Capture the `versionCode` it reports uploading.
+- The script only ever uploads to the `alpha` (closed testing) track
+  (hardcoded — see the hard rule above). Capture the `versionCode` it
+  reports uploading.
 
 ## 6. Verify (post-deploy)
 
@@ -136,11 +140,14 @@ Changes:
 
 Verification:
 - <brief summary — what was actually checked: analyze/test results, file
-  existence+size, uploaded versionCode, internal-track link>
+  existence+size, uploaded versionCode, closed-track link>
 ```
 
 `iqs-deploy: SUCCESS` requires validate + build + AAB verification +
-Play internal-track upload to all have actually succeeded. If the
-Deploy step failed only due to missing owner credentials (step 5), mark
+Play closed-track upload to all have actually succeeded. If the Deploy
+step failed only due to missing owner credentials (step 5), mark
 `AAB: SUCCESS` but `iqs-deploy: FAILED`, and say exactly what's needed
-(point at DEPLOYMENT.md §9) rather than guessing.
+(point at DEPLOYMENT.md §9) rather than guessing. If it failed because
+the `alpha` track itself doesn't exist yet or has no testers configured
+in Play Console, report that distinctly too — that's also owner-only
+Play Console setup, separate from the API credentials in §9.

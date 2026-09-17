@@ -201,19 +201,20 @@ the first Play Console submission, not after:
 - The upload keystore (§3) — back it up somewhere durable outside git the
   moment it's generated.
 
-## 9. Automated internal-testing uploads — the `iqs-deploy` skill
+## 9. Automated closed-testing uploads — the `iqs-deploy` skill
 
 A Claude Code skill (`.claude/skills/iqs-deploy/SKILL.md`) automates the
 mechanical parts of a release: `flutter analyze`/`flutter test`, bumping
 the `pubspec.yaml` build number, building the signed `.aab` (§4),
-verifying it, and uploading it to Play Console's **internal testing**
-track via the Android Publisher API
-(`apps/flutter/scripts/deploy/upload-to-play.mjs`).
+verifying it, and uploading it to Play Console's **closed testing**
+track (the Android Publisher API's `alpha` track id) via
+`apps/flutter/scripts/deploy/upload-to-play.mjs`.
 
-It is hardcoded to the internal track only and will never touch closed
-testing or production — promoting a build past internal testing stays
-the manual, owner-driven process in §6 above (20 testers / 14 days for
-closed testing, pre-launch report review, etc.).
+It is hardcoded to that track only and will never touch production —
+promoting a build past closed testing stays the manual, owner-driven
+process in §6 above (20 testers / 14 days, pre-launch report review,
+etc.). The credentials below only grant "release to testing tracks", so
+even a compromised or misused key can't push to production.
 
 ### One-time owner setup (cannot be done from inside a coding session)
 
@@ -227,11 +228,18 @@ Same category as §3's signing keystore — needs your own Google account:
    account's email and grant it access to `org.iqraspace.app` with at
    least **"Release to testing tracks"** permission (production-release
    and financial permissions aren't needed).
-3. Copy `apps/flutter/scripts/deploy/.env.local.example` to
+3. In Play Console → **Release → Testing → Closed testing**, create the
+   closed track (if it doesn't already exist yet) and add its tester
+   list/opt-in URL. The upload script only uploads a build to this
+   track — it doesn't create the track or manage testers, and the very
+   first automated upload will fail if this hasn't been done first.
+4. Copy `apps/flutter/scripts/deploy/.env.local.example` to
    `apps/flutter/scripts/deploy/.env.local` and set
    `PLAY_SERVICE_ACCOUNT_JSON_PATH` to the JSON key's absolute path.
-4. `npm install --prefix apps/flutter/scripts/deploy` once.
+5. `npm install --prefix apps/flutter/scripts/deploy` once.
 
 Until this is done, the skill's validate/build/verify steps still work —
 only the Play Console upload step fails, with a clear "missing
-credentials" error rather than silently skipping it.
+credentials" error (or, once credentials exist, a clear "track not
+found" error if step 3 above hasn't been done) rather than silently
+skipping it.

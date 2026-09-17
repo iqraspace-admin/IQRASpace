@@ -4,12 +4,22 @@
  * Console via the Android Publisher API, used by the `iqs-deploy` skill
  * (.claude/skills/iqs-deploy/SKILL.md) as its Deploy step.
  *
- * Hardcoded to the "internal" testing track ONLY — this is deliberate,
- * not configurable via env var. Promoting a build to closed testing or
- * production is a manual, owner-driven Play Console decision (20
- * testers / 14 days closed-testing requirement, pre-launch report
- * review, etc. — see apps/flutter/DEPLOYMENT.md §6), never something an
- * automated skill should do unattended.
+ * Hardcoded to the "alpha" (Closed testing) track ONLY — this is
+ * deliberate, not configurable via env var. Promoting a build to
+ * production is a manual, owner-driven Play Console decision (the
+ * 20-tester/14-day closed-testing bar and pre-launch report review
+ * still apply before Play grants production access — see
+ * apps/flutter/DEPLOYMENT.md §6), never something an automated skill
+ * should do unattended.
+ *
+ * "alpha" is the Android Publisher API's fixed track id for the
+ * default Closed testing track. That track must already exist with its
+ * own tester list configured in Play Console (Release > Testing >
+ * Closed testing) before the first upload — this script only uploads
+ * to it, it doesn't create it or manage testers. If this app ever adds
+ * a second, custom-named closed track instead of using the default one,
+ * find its real track id with `edits.tracks.list` and update this
+ * constant to match — a custom track's id is not "alpha".
  *
  * Requires one-time owner setup (GCP service account + Play Console
  * permission grant) that cannot be done from inside a coding session —
@@ -24,7 +34,7 @@ import { createReadStream, existsSync, statSync } from "node:fs";
 import { google } from "googleapis";
 
 const PACKAGE_NAME = "org.iqraspace.app";
-const TRACK = "internal";
+const TRACK = "alpha";
 
 const keyPath = process.env.PLAY_SERVICE_ACCOUNT_JSON_PATH;
 const aabPath = process.argv[2];
@@ -92,4 +102,4 @@ await androidpublisher.edits.commit({
 });
 
 console.log(`Uploaded versionCode ${bundle.versionCode} to Play Console track "${TRACK}" for ${PACKAGE_NAME}.`);
-console.log("Verify at: https://play.google.com/console -> IqraSpace -> Testing -> Internal testing");
+console.log("Verify at: https://play.google.com/console -> IqraSpace -> Testing -> Closed testing");
