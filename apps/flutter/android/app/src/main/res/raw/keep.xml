@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  R8's resource shrinker (forced on for release by Flutter's own Gradle
+  plugin — FlutterPlugin.kt sets isMinifyEnabled/isShrinkResources
+  unconditionally for an app module, regardless of this project's own
+  android/app/build.gradle.kts, which sets neither) can't see that
+  audio_service (com.ryanheise.audioservice.AudioService) resolves its
+  transport-control icons by resource *name* at runtime
+  (Resources.getIdentifier("audio_service_play_arrow", "drawable", ...)),
+  not through a static R.drawable.* reference it can trace. Without this
+  file, release marks all of them "not reachable" and strips them —
+  confirmed via build/app/outputs/mapping/release/resources.txt and, on
+  a real device, IllegalArgumentException("You must specify an icon
+  resource id to build a CustomAction") thrown on every playback-state
+  update, which silently kept MediaSessionCompat.setPlaybackState (and
+  therefore startForeground/the notification) from ever succeeding —
+  audio itself kept playing since that's independent of the session.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@drawable/audio_service_*" />
