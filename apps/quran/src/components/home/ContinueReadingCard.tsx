@@ -3,6 +3,7 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { loadLastReads, type ReadingHistoryEntry } from "@/lib/preferences/storage";
+import { useT } from "@/lib/i18n/useT";
 import type { Chapter } from "@/lib/content/types";
 
 type Props = {
@@ -19,6 +20,7 @@ type Props = {
  */
 export function ContinueReadingCard({ chapters }: Props) {
   const [position, setPosition] = useState<ReadingHistoryEntry | null>(null);
+  const { t } = useT();
 
   useEffect(() => {
     async function hydrate() {
@@ -41,7 +43,7 @@ export function ContinueReadingCard({ chapters }: Props) {
     const first = chapters[0];
     return (
       <Link href={first ? `/surah/${first.id}` : "/surah"} style={ctaStyle}>
-        <span>Begin with {chapters[0]?.name_simple ?? "Al-Fatihah"}</span>
+        <span>{t("homeBeginWith", { name: chapters[0]?.name_simple ?? "Al-Fatihah" })}</span>
         <ArrowIcon />
       </Link>
     );
@@ -53,7 +55,10 @@ export function ContinueReadingCard({ chapters }: Props) {
       href={`/surah/${position.surahNumber}?verse=${position.surahNumber}:${position.ayahNumber}`}
       style={ctaStyle}
     >
-      <span>Continue Reading{chapter ? ` — ${chapter.name_simple}, Ayah ${position.ayahNumber}` : ""}</span>
+      <span>
+        {t("homeContinueReading")}
+        {chapter ? ` — ${chapter.name_simple}, ${t("homeAyah", { n: position.ayahNumber })}` : ""}
+      </span>
       <ArrowIcon />
     </Link>
   );

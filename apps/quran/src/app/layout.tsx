@@ -1,7 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Amiri, Amiri_Quran, Fraunces, Inter, Lateef, Noto_Naskh_Arabic, Scheherazade_New } from "next/font/google";
+import {
+  Amiri,
+  Amiri_Quran,
+  Fraunces,
+  Inter,
+  Lateef,
+  Noto_Naskh_Arabic,
+  Noto_Nastaliq_Urdu,
+  Noto_Sans_Telugu,
+  Scheherazade_New,
+} from "next/font/google";
 import { ReaderPreferencesProvider } from "@/lib/preferences/ReaderPreferencesProvider";
 import { AudioProvider } from "@/lib/audio/AudioProvider";
+import { MiniPlayerBar } from "@/components/audio/MiniPlayerBar";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { canonicalUrl } from "@/lib/site";
@@ -48,6 +59,20 @@ const notoNaskh = Noto_Naskh_Arabic({
   variable: "--font-noto-naskh",
   subsets: ["arabic"],
   weight: ["400", "700"],
+  display: "swap",
+});
+
+const notoSansTelugu = Noto_Sans_Telugu({
+  variable: "--font-noto-telugu",
+  subsets: ["telugu"],
+  weight: ["400", "600"],
+  display: "swap",
+});
+
+const notoNastaliqUrdu = Noto_Nastaliq_Urdu({
+  variable: "--font-noto-nastaliq",
+  subsets: ["arabic"],
+  weight: ["400", "600"],
   display: "swap",
 });
 
@@ -106,7 +131,7 @@ export default function RootLayout({
       // browser's getComputedStyle showed `--font-arabic` computing to
       // an empty string, and every styled font-family with it). `:root`
       // in CSS IS this <html> element, so the className belongs right here.
-      className={`${amiri.variable} ${amiriQuran.variable} ${scheherazade.variable} ${lateef.variable} ${notoNaskh.variable} ${inter.variable} ${fraunces.variable}`}
+      className={`${amiri.variable} ${amiriQuran.variable} ${scheherazade.variable} ${lateef.variable} ${notoNaskh.variable} ${notoSansTelugu.variable} ${notoNastaliqUrdu.variable} ${inter.variable} ${fraunces.variable}`}
     >
       <body>
         <ReaderPreferencesProvider>
@@ -115,6 +140,7 @@ export default function RootLayout({
               Skip to content
             </a>
             <SiteHeader />
+            <MiniPlayerBar />
             <main id="main-content">{children}</main>
             <SiteFooter />
           </AudioProvider>

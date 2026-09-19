@@ -17,23 +17,51 @@ import {
   type ReadingWidth,
   type Theme,
 } from "@/lib/preferences/types";
+import type { ListeningTrack } from "@/lib/content/listeningAudio";
 import { TRANSLATION_LANGUAGES } from "@/lib/content/translations";
 import { ARABIC_FONTS, ARABIC_FONT_GROUPS, arabicFontLabel, type ArabicFontId } from "@/lib/content/arabicFonts";
 import { STOP_SYMBOLS, TAJWEED_RULES } from "@/lib/content/tajweedRules";
 import { RECITERS } from "@/lib/content/reciters";
 import { useModalA11y } from "@/lib/reader/useModalA11y";
+import { useT } from "@/lib/i18n/useT";
+import { UI_LANGUAGES, type StringKey } from "@/lib/i18n/strings";
 
-const READING_WIDTHS: { value: ReadingWidth; label: string }[] = [
-  { value: "narrow", label: "Narrow" },
-  { value: "comfortable", label: "Comfortable" },
-  { value: "wide", label: "Wide" },
+const READING_WIDTHS: { value: ReadingWidth; labelKey: StringKey }[] = [
+  { value: "narrow", labelKey: "settingsWidthNarrow" },
+  { value: "comfortable", labelKey: "settingsWidthComfortable" },
+  { value: "wide", labelKey: "settingsWidthWide" },
 ];
 
-const THEMES: { value: Theme; label: string }[] = [
-  { value: "system", label: "System" },
-  { value: "light", label: "Light" },
-  { value: "dark", label: "Dark" },
+const THEMES: { value: Theme; labelKey: StringKey }[] = [
+  { value: "system", labelKey: "settingsThemeSystem" },
+  { value: "light", labelKey: "settingsThemeLight" },
+  { value: "dark", labelKey: "settingsThemeDark" },
+  { value: "sepia", labelKey: "settingsThemeSepia" },
 ];
+
+const FONT_GROUP_LABEL_KEY: Record<string, StringKey> = {
+  "Uthmani / Madani": "fontGroupUthmaniMadani",
+  "Naskh Styles": "fontGroupNaskhStyles",
+};
+
+const STOP_SYMBOL_LABEL_KEY: Record<string, StringKey> = {
+  "Must Stop": "stopMustStop",
+  "Better to stop": "stopBetterToStop",
+  "Pause at one": "stopPauseAtOne",
+  "A slight pause": "stopSlightPause",
+  "Stop or Continue": "stopStopOrContinue",
+  "Better to continue": "stopBetterToContinue",
+  "Don't Stop": "stopDontStop",
+};
+
+const TAJWEED_RULE_LABEL_KEY: Record<string, { name: StringKey; desc: StringKey }> = {
+  ghunna: { name: "ruleGhunnaName", desc: "ruleGhunnaDesc" },
+  ikhfa: { name: "ruleIkhfaName", desc: "ruleIkhfaDesc" },
+  idgham: { name: "ruleIdghamName", desc: "ruleIdghamDesc" },
+  "idgham-no-ghunna": { name: "ruleIdghamNoGhunnaName", desc: "ruleIdghamNoGhunnaDesc" },
+  iqlab: { name: "ruleIqlabName", desc: "ruleIqlabDesc" },
+  qalqala: { name: "ruleQalqalaName", desc: "ruleQalqalaDesc" },
+};
 
 const ARABIC_FONT_CSS_VAR: Record<ArabicFontId, string> = {
   amiri: "var(--font-arabic-amiri)",
@@ -89,12 +117,14 @@ type Props = {
 
 export function ReaderSettingsPanel({
   initialView = "main",
-  triggerLabel = "Settings",
+  triggerLabel,
   triggerIcon,
   triggerClassName,
   triggerStyleOverride,
 }: Props = {}) {
   const { preferences, setPreference } = useReaderPreferences();
+  const { t } = useT();
+  const resolvedTriggerLabel = triggerLabel ?? t("quickLinkSettings");
   const [open, setOpen] = useState(false);
   const [view, setView] = useState<View>(initialView);
   const [draftFont, setDraftFont] = useState<ArabicFontId>(preferences.arabicFont);
@@ -136,19 +166,19 @@ export function ReaderSettingsPanel({
           setOpen(true);
         }}
         aria-haspopup="dialog"
-        aria-label={triggerLabel === "Settings" ? "Reading settings" : triggerLabel}
+        aria-label={triggerLabel ? triggerLabel : t("settingsReadingSettings")}
         className={triggerClassName}
         style={triggerStyleOverride ?? triggerStyle}
       >
         {triggerStyleOverride ? (
           <>
             <span style={tileBadgeStyle}>{triggerIcon ?? <GearIcon />}</span>
-            <span style={tileLabelStyle}>{triggerLabel}</span>
+            <span style={tileLabelStyle}>{resolvedTriggerLabel}</span>
           </>
         ) : (
           <>
             {triggerIcon ?? <GearIcon />}
-            <span>{triggerLabel}</span>
+            <span>{resolvedTriggerLabel}</span>
           </>
         )}
       </button>
@@ -169,9 +199,9 @@ export function ReaderSettingsPanel({
                 <>
                   <div style={panelHeaderStyle}>
                     <h2 id={headingId} style={{ margin: 0, fontSize: "1.05rem" }}>
-                      Reading Settings
+                      {t("settingsReadingSettings")}
                     </h2>
-                    <button type="button" onClick={close} aria-label="Close settings" style={iconButtonStyle}>
+                    <button type="button" onClick={close} aria-label={t("settingsClose")} style={iconButtonStyle}>
                       <CloseIcon />
                     </button>
                   </div>
@@ -180,18 +210,29 @@ export function ReaderSettingsPanel({
                     <BrowseSection close={close} />
                     <AppearanceSection />
 
-                    <button type="button" onClick={openTajweedRules} style={{ ...navRowStyle, marginTop: "1rem" }}>
-                      <span>Tajweed Rules</span>
-                      <span style={navRowValueStyle}>
-                        Stop signs, pronunciation rules
-                        <ChevronIcon />
-                      </span>
-                    </button>
+                    <section>
+                      <SectionLabel>{t("settingsTajweed")}</SectionLabel>
+                      <ToggleRow
+                        label={t("settingsTajweedColoring")}
+                        checked={preferences.tajweedEnabled}
+                        onChange={(checked) => setPreference("tajweedEnabled", checked)}
+                      />
+                      <p style={{ margin: "0.25rem 0 0.5rem", fontSize: "0.8rem", color: "var(--color-text-muted)" }}>
+                        {t("settingsTajweedColoringDesc")}
+                      </p>
+                      <button type="button" onClick={openTajweedRules} style={navRowStyle}>
+                        <span>{t("settingsTajweedRules")}</span>
+                        <span style={navRowValueStyle}>
+                          {t("settingsTajweedRulesDesc")}
+                          <ChevronIcon />
+                        </span>
+                      </button>
+                    </section>
 
                     <section>
-                      <SectionLabel>Font</SectionLabel>
+                      <SectionLabel>{t("settingsFont")}</SectionLabel>
                       <button type="button" onClick={openFontPicker} style={navRowStyle}>
-                        <span>Arabic Font</span>
+                        <span>{t("settingsArabicFont")}</span>
                         <span style={navRowValueStyle}>
                           {arabicFontLabel(preferences.arabicFont)}
                           <ChevronIcon />
@@ -204,24 +245,27 @@ export function ReaderSettingsPanel({
                     <TranslationSection />
                     <BookmarksSection />
                     <ReciterSection />
+                    <ListeningTrackSection />
+                    <ReadingExperienceSection />
                     <AutoScrollSection />
                     <PdfModeSection />
+                    <LanguageSection />
                   </div>
 
                   <div style={panelFooterStyle}>
                     <button type="button" onClick={close} style={doneButtonStyle}>
-                      Done
+                      {t("settingsDone")}
                     </button>
                   </div>
                 </>
               ) : view === "arabicFont" ? (
                 <>
                   <div style={panelHeaderStyle}>
-                    <button type="button" onClick={() => setView("main")} aria-label="Back to settings" style={iconButtonStyle}>
+                    <button type="button" onClick={() => setView("main")} aria-label={t("settingsBack")} style={iconButtonStyle}>
                       <BackIcon />
                     </button>
                     <h2 id={headingId} style={{ margin: 0, fontSize: "1.05rem" }}>
-                      Arabic Font
+                      {t("settingsArabicFont")}
                     </h2>
                     <button
                       type="button"
@@ -234,18 +278,13 @@ export function ReaderSettingsPanel({
                     </button>
                   </div>
 
-                  {showFontHelp && (
-                    <p style={fontHelpStyle}>
-                      Uthmani / Madani faces follow classical Mushaf calligraphy. Naskh styles favor everyday
-                      legibility over calligraphic exactness.
-                    </p>
-                  )}
+                  {showFontHelp && <p style={fontHelpStyle}>{t("fontHelpText")}</p>}
 
                   <div className="settings-panel-body">
                     {ARABIC_FONT_GROUPS.map((group) => (
                       <section key={group}>
-                        <SectionLabel>{group}</SectionLabel>
-                        <div role="radiogroup" aria-label={group}>
+                        <SectionLabel>{t(FONT_GROUP_LABEL_KEY[group])}</SectionLabel>
+                        <div role="radiogroup" aria-label={t(FONT_GROUP_LABEL_KEY[group])}>
                           {ARABIC_FONTS.filter((font) => font.group === group).map((font) => {
                             const selected = draftFont === font.id;
                             return (
@@ -282,21 +321,21 @@ export function ReaderSettingsPanel({
 
                   <div style={{ ...panelFooterStyle, display: "flex", justifyContent: "flex-end", gap: "0.75rem" }}>
                     <button type="button" onClick={() => setView("main")} style={cancelButtonStyle}>
-                      Cancel
+                      {t("settingsCancel")}
                     </button>
                     <button type="button" onClick={saveFontPicker} style={saveButtonStyle}>
-                      Save
+                      {t("settingsSave")}
                     </button>
                   </div>
                 </>
               ) : (
                 <>
                   <div style={panelHeaderStyle}>
-                    <button type="button" onClick={() => setView("main")} aria-label="Back to settings" style={iconButtonStyle}>
+                    <button type="button" onClick={() => setView("main")} aria-label={t("settingsBack")} style={iconButtonStyle}>
                       <BackIcon />
                     </button>
                     <h2 id={headingId} style={{ margin: 0, fontSize: "1.05rem" }}>
-                      Tajweed Rules
+                      {t("settingsTajweedRules")}
                     </h2>
                     <span aria-hidden="true" style={{ width: "2.25rem", flexShrink: 0 }} />
                   </div>
@@ -320,13 +359,14 @@ function SectionLabel({ children }: { children: ReactNode }) {
 
 function TextSizeSection() {
   const { preferences, setPreference } = useReaderPreferences();
+  const { t } = useT();
   const percent = (v: number) => `${Math.round(v * 100)}%`;
 
   return (
     <section>
-      <SectionLabel>Text</SectionLabel>
+      <SectionLabel>{t("settingsText")}</SectionLabel>
       <SliderControl
-        label="Arabic text size"
+        label={t("settingsArabicTextSize")}
         value={preferences.arabicFontScale}
         min={FONT_SCALE_MIN}
         max={FONT_SCALE_MAX}
@@ -335,7 +375,7 @@ function TextSizeSection() {
         onChange={(v) => setPreference("arabicFontScale", v)}
       />
       <SliderControl
-        label="Translation text size"
+        label={t("settingsTranslationTextSize")}
         value={preferences.translationFontScale}
         min={FONT_SCALE_MIN}
         max={FONT_SCALE_MAX}
@@ -344,7 +384,7 @@ function TextSizeSection() {
         onChange={(v) => setPreference("translationFontScale", v)}
       />
       <SliderControl
-        label="Line spacing"
+        label={t("settingsLineSpacing")}
         value={preferences.lineSpacing}
         min={LINE_SPACING_MIN}
         max={LINE_SPACING_MAX}
@@ -358,13 +398,14 @@ function TextSizeSection() {
 
 function LayoutSection() {
   const { preferences, setPreference } = useReaderPreferences();
+  const { t } = useT();
 
   return (
     <section>
-      <SectionLabel>Layout</SectionLabel>
+      <SectionLabel>{t("settingsLayout")}</SectionLabel>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem", padding: "0.5rem 0" }}>
-        <span>Page width</span>
-        <div role="radiogroup" aria-label="Page width" style={{ display: "flex", gap: "0.35rem" }}>
+        <span>{t("settingsPageWidth")}</span>
+        <div role="radiogroup" aria-label={t("settingsPageWidth")} style={{ display: "flex", gap: "0.35rem" }}>
           {READING_WIDTHS.map((w) => {
             const selected = preferences.readingWidth === w.value;
             return (
@@ -376,7 +417,7 @@ function LayoutSection() {
                 onClick={() => setPreference("readingWidth", w.value)}
                 style={segmentButtonStyle(selected)}
               >
-                {w.label}
+                {t(w.labelKey)}
               </button>
             );
           })}
@@ -386,19 +427,25 @@ function LayoutSection() {
   );
 }
 
+const TRANSLATION_LABEL_KEY: Record<string, StringKey> = {
+  english: "settingsLangEnglish",
+  "roman-urdu": "settingsLangRomanUrdu",
+};
+
 function TranslationSection() {
   const { preferences, setPreference } = useReaderPreferences();
+  const { t } = useT();
 
   return (
     <section>
-      <SectionLabel>Translation</SectionLabel>
+      <SectionLabel>{t("settingsTranslation")}</SectionLabel>
       <p style={{ margin: "0 0 0.5rem", fontSize: "0.8rem", color: "var(--color-text-muted)" }}>
-        Hidden by default — turn on a language to show it under each Ayah.
+        {t("settingsTranslationHint")}
       </p>
       {TRANSLATION_LANGUAGES.map((lang) => (
         <ToggleRow
           key={lang.id}
-          label={lang.label}
+          label={t(TRANSLATION_LABEL_KEY[lang.id] ?? "settingsLangEnglish")}
           checked={preferences.enabledTranslations.includes(lang.id)}
           onChange={(checked) => {
             const next = checked
@@ -417,23 +464,36 @@ function TranslationSection() {
     trigger. Each row closes the panel on navigation (`close`, passed in
     from the parent) since a Link click doesn't otherwise dismiss it. */
 function BrowseSection({ close }: { close: () => void }) {
+  const { t } = useT();
   return (
     <section>
-      <SectionLabel>Browse</SectionLabel>
+      <SectionLabel>{t("settingsBrowse")}</SectionLabel>
       <Link href="/surah" onClick={close} style={navRowStyle}>
-        <span>Surahs</span>
+        <span>{t("browseSurahs")}</span>
         <span style={navRowValueStyle}>
           <ChevronIcon />
         </span>
       </Link>
       <Link href="/page" onClick={close} style={navRowStyle}>
-        <span>Pages</span>
+        <span>{t("browsePages")}</span>
         <span style={navRowValueStyle}>
           <ChevronIcon />
         </span>
       </Link>
       <Link href="/bookmarks" onClick={close} style={navRowStyle}>
-        <span>Bookmarks</span>
+        <span>{t("browseBookmarks")}</span>
+        <span style={navRowValueStyle}>
+          <ChevronIcon />
+        </span>
+      </Link>
+      <Link href="/search" onClick={close} style={navRowStyle}>
+        <span>{t("browseSearch")}</span>
+        <span style={navRowValueStyle}>
+          <ChevronIcon />
+        </span>
+      </Link>
+      <Link href="/supplications" onClick={close} style={navRowStyle}>
+        <span>{t("browseSupplications")}</span>
         <span style={navRowValueStyle}>
           <ChevronIcon />
         </span>
@@ -448,25 +508,26 @@ function BrowseSection({ close }: { close: () => void }) {
     than a single button that silently cycles through hidden states. */
 function AppearanceSection() {
   const { preferences, setPreference } = useReaderPreferences();
+  const { t } = useT();
 
   return (
     <section>
-      <SectionLabel>Appearance</SectionLabel>
+      <SectionLabel>{t("settingsAppearance")}</SectionLabel>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem", padding: "0.5rem 0" }}>
-        <span>Theme</span>
-        <div role="radiogroup" aria-label="Theme" style={{ display: "flex", gap: "0.35rem" }}>
-          {THEMES.map((t) => {
-            const selected = preferences.theme === t.value;
+        <span>{t("settingsTheme")}</span>
+        <div role="radiogroup" aria-label={t("settingsTheme")} style={{ display: "flex", gap: "0.35rem" }}>
+          {THEMES.map((theme) => {
+            const selected = preferences.theme === theme.value;
             return (
               <button
-                key={t.value}
+                key={theme.value}
                 type="button"
                 role="radio"
                 aria-checked={selected}
-                onClick={() => setPreference("theme", t.value)}
+                onClick={() => setPreference("theme", theme.value)}
                 style={segmentButtonStyle(selected)}
               >
-                {t.label}
+                {t(theme.labelKey)}
               </button>
             );
           })}
@@ -478,12 +539,13 @@ function AppearanceSection() {
 
 function BookmarksSection() {
   const { preferences, setPreference } = useReaderPreferences();
+  const { t } = useT();
 
   return (
     <section>
-      <SectionLabel>Bookmarks</SectionLabel>
+      <SectionLabel>{t("settingsBookmarksSection")}</SectionLabel>
       <ToggleRow
-        label="Show Bookmarks"
+        label={t("settingsShowBookmarks")}
         checked={preferences.showBookmarks}
         onChange={(checked) => setPreference("showBookmarks", checked)}
       />
@@ -500,15 +562,36 @@ function BookmarksSection() {
     why — only the speed persists. Toggling it here works the same as
     the Surah reader's own nav-row button: the reader is still visible
     (and, once this panel closes, active) underneath this dialog. */
-function AutoScrollSection() {
-  const { preferences, setPreference, autoScrollEnabled, setAutoScrollEnabled } = useReaderPreferences();
+/** Distraction-free reading (matches the IqraSpace Flutter app's Read
+    Mode): hides per-Ayah chrome (play/bookmark buttons, translation,
+    the verse-number badge) so only colored Arabic text shows — see
+    AyahBlock.tsx. */
+function ReadingExperienceSection() {
+  const { preferences, setPreference } = useReaderPreferences();
+  const { t } = useT();
 
   return (
     <section>
-      <SectionLabel>Auto-scroll</SectionLabel>
-      <ToggleRow label="Auto-scroll while reading" checked={autoScrollEnabled} onChange={setAutoScrollEnabled} />
+      <SectionLabel>{t("settingsReadingExperience")}</SectionLabel>
+      <ToggleRow
+        label={t("settingsReadMode")}
+        checked={preferences.readModeEnabled}
+        onChange={(checked) => setPreference("readModeEnabled", checked)}
+      />
+    </section>
+  );
+}
+
+function AutoScrollSection() {
+  const { preferences, setPreference, autoScrollEnabled, setAutoScrollEnabled } = useReaderPreferences();
+  const { t } = useT();
+
+  return (
+    <section>
+      <SectionLabel>{t("settingsAutoScroll")}</SectionLabel>
+      <ToggleRow label={t("settingsAutoScrollWhileReading")} checked={autoScrollEnabled} onChange={setAutoScrollEnabled} />
       <SliderControl
-        label="Speed"
+        label={t("settingsSpeed")}
         value={preferences.autoScrollSpeed}
         min={AUTO_SCROLL_SPEED_MIN}
         max={AUTO_SCROLL_SPEED_MAX}
@@ -529,11 +612,12 @@ function AutoScrollSection() {
     pressed). */
 function ReciterSection() {
   const { preferences, setPreference } = useReaderPreferences();
+  const { t } = useT();
 
   return (
     <section>
-      <SectionLabel>Reciter</SectionLabel>
-      <div role="radiogroup" aria-label="Reciter">
+      <SectionLabel>{t("settingsReciter")}</SectionLabel>
+      <div role="radiogroup" aria-label={t("settingsReciter")}>
         {RECITERS.map((reciter) => (
           <label key={reciter.id} style={fontRowStyle}>
             <span style={{ fontSize: "0.9rem" }}>{reciter.label}</span>
@@ -548,7 +632,51 @@ function ReciterSection() {
         ))}
       </div>
       <p style={{ margin: "0.5rem 0 0", fontSize: "0.75rem", color: "var(--color-text-muted)" }}>
-        Recitation audio courtesy of Al Quran Cloud (alquran.cloud).
+        {t("settingsReciterModeNote")}
+      </p>
+      <p style={{ margin: "0.25rem 0 0", fontSize: "0.75rem", color: "var(--color-text-muted)" }}>
+        {t("settingsReciterAttribution")}
+      </p>
+    </section>
+  );
+}
+
+const LISTENING_TRACKS: { value: ListeningTrack; labelKey: StringKey }[] = [
+  { value: "arabicOnly", labelKey: "listeningTrackArabicOnly" },
+  { value: "arabicPlusUrdu", labelKey: "listeningTrackArabicPlusUrdu" },
+];
+
+/** Listening Mode's whole-Surah audio source — streamed directly from
+    Cloudflare R2 (lib/content/listeningAudio.ts), never the per-ayah
+    Quran API the Reciter picker above governs. Reading a fresh value on
+    every Play tap (SurahReader's togglePlaySurah) rather than caching it
+    anywhere, matching Flutter's `playSurahLocal`, so switching this here
+    while Listening Mode is already playing takes effect the next time
+    Play is pressed, not mid-playback (same non-interrupting behavior as
+    the Reciter picker above). */
+function ListeningTrackSection() {
+  const { preferences, setPreference } = useReaderPreferences();
+  const { t } = useT();
+
+  return (
+    <section>
+      <SectionLabel>{t("settingsListeningTrack")}</SectionLabel>
+      <div role="radiogroup" aria-label={t("settingsListeningTrack")}>
+        {LISTENING_TRACKS.map((track) => (
+          <label key={track.value} style={fontRowStyle}>
+            <span style={{ fontSize: "0.9rem" }}>{t(track.labelKey)}</span>
+            <input
+              type="radio"
+              name="listening-track"
+              value={track.value}
+              checked={preferences.listeningTrack === track.value}
+              onChange={() => setPreference("listeningTrack", track.value)}
+            />
+          </label>
+        ))}
+      </div>
+      <p style={{ margin: "0.5rem 0 0", fontSize: "0.75rem", color: "var(--color-text-muted)" }}>
+        {t("settingsListeningTrackNote")}
       </p>
     </section>
   );
@@ -556,18 +684,51 @@ function ReciterSection() {
 
 function PdfModeSection() {
   const { preferences, setPreference } = useReaderPreferences();
+  const { t } = useT();
 
   return (
     <section>
-      <SectionLabel>Reading View</SectionLabel>
+      <SectionLabel>{t("settingsReadingView")}</SectionLabel>
       <ToggleRow
-        label="PDF Mode"
+        label={t("settingsPdfMode")}
         checked={preferences.pdfMode}
         onChange={(checked) => setPreference("pdfMode", checked)}
       />
       <p style={{ margin: "0.25rem 0 0", fontSize: "0.8rem", color: "var(--color-text-muted)" }}>
-        Shows the original scanned Mushaf pages instead of typeset text. Applies to Surah view only.
+        {t("settingsPdfModeDesc")}
       </p>
+    </section>
+  );
+}
+
+/** UI chrome language (English/Telugu/Urdu) — new for web, matching the
+    IqraSpace Flutter app's own Settings > Language. Each option always
+    shows its own native-script name regardless of the currently active
+    language (UI_LANGUAGES.nativeName), same as Flutter's languageEnglish/
+    Telugu/Urdu values. Placed last in the main list since it's the one
+    control that visibly re-renders every other label the instant it
+    changes. */
+function LanguageSection() {
+  const { preferences, setPreference } = useReaderPreferences();
+  const { t } = useT();
+
+  return (
+    <section>
+      <SectionLabel>{t("settingsLanguage")}</SectionLabel>
+      <div role="radiogroup" aria-label={t("settingsLanguage")}>
+        {UI_LANGUAGES.map((language) => (
+          <label key={language.id} style={fontRowStyle}>
+            <span style={{ fontSize: "0.9rem" }}>{language.nativeName}</span>
+            <input
+              type="radio"
+              name="ui-language"
+              value={language.id}
+              checked={preferences.uiLanguage === language.id}
+              onChange={() => setPreference("uiLanguage", language.id)}
+            />
+          </label>
+        ))}
+      </div>
     </section>
   );
 }
@@ -581,19 +742,20 @@ function PdfModeSection() {
  * (PRODUCT-ROADMAP.md).
  */
 function TajweedRulesList() {
+  const { t } = useT();
   return (
     <>
       <section>
-        <SectionLabel>Stop Symbols</SectionLabel>
+        <SectionLabel>{t("tajweedStopSymbols")}</SectionLabel>
         <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
           {STOP_SYMBOLS.map((s) => (
             <li key={s.label} style={stopRowStyle}>
               <span aria-hidden="true" style={badgeStyle(s.color)}>
                 {s.symbol}
               </span>
-              <span style={{ flex: 1, fontWeight: 600 }}>{s.label}</span>
+              <span style={{ flex: 1, fontWeight: 600 }}>{t(STOP_SYMBOL_LABEL_KEY[s.label] ?? "stopMustStop")}</span>
               <span style={{ color: "var(--color-text-muted)", fontSize: "0.85rem" }}>
-                found {s.count.toLocaleString("en-US")} times
+                {t("tajweedFoundTimes", { n: s.count.toLocaleString("en-US") })}
               </span>
             </li>
           ))}
@@ -601,25 +763,30 @@ function TajweedRulesList() {
       </section>
 
       <section style={{ marginTop: "1.5rem" }}>
-        <SectionLabel>Tajweed Rules</SectionLabel>
+        <SectionLabel>{t("settingsTajweedRules")}</SectionLabel>
         <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
-          {TAJWEED_RULES.map((rule) => (
-            <li key={rule.id} style={ruleCardStyle}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-                <span aria-hidden="true" style={swatchStyle(rule.color)} />
-                <h4 style={{ margin: 0, fontSize: "0.95rem", flex: 1 }}>{rule.name}</h4>
-                <PlayGlyph color={rule.color} />
-              </div>
-              <p style={descriptionStyle}>{rule.description}</p>
-              <p dir="rtl" lang="ar" style={exampleStyle}>
-                {rule.example.map((segment, i) => (
-                  <span key={i} style={segment.highlighted ? { color: rule.color, fontWeight: 700 } : undefined}>
-                    {segment.text}
-                  </span>
-                ))}
-              </p>
-            </li>
-          ))}
+          {TAJWEED_RULES.map((rule) => {
+            const labelKeys = TAJWEED_RULE_LABEL_KEY[rule.id];
+            return (
+              <li key={rule.id} style={ruleCardStyle}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                  <span aria-hidden="true" style={swatchStyle(rule.color)} />
+                  <h4 style={{ margin: 0, fontSize: "0.95rem", flex: 1 }}>
+                    {labelKeys ? t(labelKeys.name) : rule.name}
+                  </h4>
+                  <PlayGlyph color={rule.color} />
+                </div>
+                <p style={descriptionStyle}>{labelKeys ? t(labelKeys.desc) : rule.description}</p>
+                <p dir="rtl" lang="ar" style={exampleStyle}>
+                  {rule.example.map((segment, i) => (
+                    <span key={i} style={segment.highlighted ? { color: rule.color, fontWeight: 700 } : undefined}>
+                      {segment.text}
+                    </span>
+                  ))}
+                </p>
+              </li>
+            );
+          })}
         </ul>
       </section>
     </>

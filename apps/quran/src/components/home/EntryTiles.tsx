@@ -1,41 +1,57 @@
+"use client";
+
 import type { CSSProperties } from "react";
 import Link from "next/link";
+import { useT } from "@/lib/i18n/useT";
 
 /**
- * The two-column "Read Quran" / "Learning" entry-tile row from the
- * IqraSpace Flutter app's Home screen — reproduced here for visual
- * parity, not functional parity: "Learning" is a plain, non-interactive
- * placeholder card (no `<Link>`, no destination) with a small "Coming
- * soon" badge, since Learning stays a future phase on the website (per
- * the redesign brief) — only its *presence*, matching what the Flutter
- * reference actually shows, is in scope here.
+ * The entry-tile row from the IqraSpace Flutter app's Home screen —
+ * "Read Quran" and "Learning" reproduced for visual parity, plus a third
+ * "Supplications" tile (this app's own addition, alongside — not instead
+ * of — Learning, per the redesign brief).
+ *
+ * "Learning" now links to the real, live apps/learning tutoring LMS at
+ * `/learning` — a plain `<a>`, not next/link's `<Link>`: apps/learning is
+ * a separate Vercel project/Next.js "zone" stitched under the same
+ * iqraspace.org domain only by apps/landing's Multi-Zones rewrite (root
+ * CLAUDE.md), so this is a real cross-zone navigation (a full page load),
+ * not an in-app route `<Link>` would try to resolve within this app's own
+ * basePath and 404 on.
  */
 export function EntryTiles() {
+  const { t } = useT();
   return (
     <div style={gridStyle}>
       <Link href="/surah" className="entry-tile" style={tileStyle}>
         <span style={badgeStyle("var(--color-primary)")}>
           <BookIcon />
         </span>
-        <span style={titleStyle}>Read Quran</span>
-        <span style={subtitleStyle}>114 Surahs, Tajweed &amp; translation</span>
+        <span style={titleStyle}>{t("entryReadQuranTitle")}</span>
+        <span style={subtitleStyle}>{t("entryReadQuranSubtitle")}</span>
       </Link>
 
-      <div className="entry-tile" style={{ ...tileStyle, cursor: "default", position: "relative" }} aria-disabled="true">
-        <span style={comingSoonBadgeStyle}>Coming soon</span>
+      <a href="/learning" className="entry-tile" style={tileStyle}>
         <span style={badgeStyle("var(--color-accent)")}>
           <CapIcon />
         </span>
-        <span style={titleStyle}>Learning</span>
-        <span style={subtitleStyle}>Courses &amp; guided lessons</span>
-      </div>
+        <span style={titleStyle}>{t("entryLearningTitle")}</span>
+        <span style={subtitleStyle}>{t("entryLearningSubtitle")}</span>
+      </a>
+
+      <Link href="/supplications" className="entry-tile" style={tileStyle}>
+        <span style={badgeStyle("var(--color-primary)")}>
+          <HandsIcon />
+        </span>
+        <span style={titleStyle}>{t("entrySupplicationsTitle")}</span>
+        <span style={subtitleStyle}>{t("entrySupplicationsSubtitle")}</span>
+      </Link>
     </div>
   );
 }
 
 const gridStyle: CSSProperties = {
   display: "grid",
-  gridTemplateColumns: "repeat(2, 1fr)",
+  gridTemplateColumns: "repeat(auto-fit, minmax(9.5rem, 1fr))",
   gap: "0.75rem",
   width: "100%",
 };
@@ -77,19 +93,6 @@ const subtitleStyle: CSSProperties = {
   color: "var(--color-text-muted)",
 };
 
-const comingSoonBadgeStyle: CSSProperties = {
-  position: "absolute",
-  top: "0.75rem",
-  right: "0.75rem",
-  fontSize: "0.7rem",
-  fontWeight: 600,
-  color: "var(--color-text-muted)",
-  background: "var(--color-bg)",
-  border: "1px solid var(--color-border)",
-  borderRadius: "9999px",
-  padding: "0.15rem 0.55rem",
-};
-
 function BookIcon() {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -104,6 +107,17 @@ function CapIcon() {
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M22 10 12 5 2 10l10 5 10-5Z" />
       <path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5" />
+    </svg>
+  );
+}
+
+function HandsIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M8 13V6a1.5 1.5 0 0 1 3 0v5" />
+      <path d="M11 11V4a1.5 1.5 0 0 1 3 0v7" />
+      <path d="M14 11V5.5a1.5 1.5 0 0 1 3 0V13" />
+      <path d="M17 8.5a1.5 1.5 0 0 1 3 0V15a7 7 0 0 1-7 7h-1a7 7 0 0 1-6-3.4L4 15" />
     </svg>
   );
 }

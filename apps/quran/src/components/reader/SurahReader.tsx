@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { useReaderPreferences } from "@/lib/preferences/ReaderPreferencesProvider";
 import { useAudio } from "@/lib/audio/AudioProvider";
 import { ayahAudioUrl } from "@/lib/content/reciters";
+import { getListeningParts } from "@/lib/content/listeningAudio";
 import { ReaderNavBar } from "./ReaderNavBar";
+import { ReaderModeSwitch } from "./ReaderModeSwitch";
 import { AyahList } from "./AyahList";
 import { JumpToSurah } from "./JumpToSurah";
 import type { Chapter, Verse } from "@/lib/content/types";
@@ -40,8 +42,32 @@ type Props = {
 export function SurahReader({ chapter, verses, previous, next, pdfInfo, allChapters }: Props) {
   const { preferences, autoScrollEnabled, setAutoScrollEnabled } = useReaderPreferences();
   const showPdf = preferences.pdfMode && pdfInfo !== undefined;
+  // Reading Mode has no audio at all (matches the IqraSpace Flutter app
+  // exactly) — gates both the whole-Surah play button below and each
+  // Ayah's own play button (AyahBlock, via AyahList's readerMode prop).
+  const audioEnabled = preferences.readerMode !== "reading";
   const [jumpOpen, setJumpOpen] = useState(false);
   const audio = useAudio();
+
+  // Switching to a DIFFERENT Reader Mode stops any in-progress audio —
+  // each mode has its own audio semantics (Reading: none; Listening: one
+  // R2 file, no highlight; Reading+Listening: a per-Ayah queue with
+  // highlight), so silently leaving one mode's playback running under
+  // another mode's UI would be confusing (e.g. Listening's R2 file still
+  // playing in the background while Reading+Listening's UI shows
+  // nothing active). Skipped on this reader's very first mount — a
+  // reader arriving here after starting playback elsewhere (the
+  // MiniPlayerBar's own now-playing Surah, from before this navigation)
+  // must NOT have that stopped out from under them just for opening a
+  // new Surah at whatever mode was last selected.
+  const previousModeRef = useRef(preferences.readerMode);
+  useEffect(() => {
+    if (previousModeRef.current !== preferences.readerMode) {
+      previousModeRef.current = preferences.readerMode;
+      audio.stop();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [preferences.readerMode]);
 
   // Auto-scroll while reading (matches the IqraSpace Flutter app's own
   // feature) — a constant-speed nudge every 100ms, same tick rate. Off
@@ -69,17 +95,31 @@ export function SurahReader({ chapter, verses, previous, next, pdfInfo, allChapt
     [verses, chapter.id, chapter.name_simple]
   );
 
-  // "Play Surah" is active whenever the globally-playing Ayah belongs to
-  // THIS Surah — true whether that came from this button (a queue) or a
-  // reader tapping a single Ayah's own play button, matching how the
-  // IqraSpace Flutter app's whole-Surah action and per-Ayah buttons both
-  // share one AudioController's state.
-  const surahPlaying = audio.state.surahNumber === chapter.id && audio.state.ayahNumber !== null;
+  const isListeningMode = preferences.readerMode === "listening";
+
+  // Listening Mode: the whole-Surah Play button streams one continuous
+  // file straight from Cloudflare R2 (never the per-ayah Quran API) —
+  // matches Flutter's `IqraAudioHandler.playSurahLocal` exactly, and is
+  // why AudioProvider tracks it as a distinct `isListening` state (no
+  // per-ayah highlight — see that state's own doc comment).
+  //
+  // Reading + Listening Mode: unchanged from this app's original
+  // behavior — a queue of per-Ayah Quran-API audio, which is what
+  // drives the now-playing highlight/auto-scroll.
+  const surahPlaying = isListeningMode
+    ? audio.isListeningActive(chapter.id)
+    : audio.state.surahNumber === chapter.id && audio.state.ayahNumber !== null;
   const surahLoading = surahPlaying && audio.state.isLoading;
 
   function togglePlaySurah() {
     if (surahPlaying) {
       audio.stop();
+      return;
+    }
+    if (isListeningMode) {
+      const parts = getListeningParts(chapter.id, preferences.listeningTrack);
+      if (parts.length === 0) return;
+      audio.playListeningSurah(chapter.id, parts);
       return;
     }
     const items = versesWithSurah.map((v) => ({
@@ -121,13 +161,15 @@ export function SurahReader({ chapter, verses, previous, next, pdfInfo, allChapt
         onCurrentClick={() => setJumpOpen(true)}
         previousBoundaryLabel={!previous ? "First Surah" : undefined}
         nextBoundaryLabel={!next ? "Last Surah" : undefined}
-        onPlayClick={showPdf ? undefined : togglePlaySurah}
-        isPlaying={showPdf ? undefined : surahPlaying}
-        isLoading={showPdf ? undefined : surahLoading}
+        onPlayClick={showPdf || !audioEnabled ? undefined : togglePlaySurah}
+        isPlaying={showPdf || !audioEnabled ? undefined : surahPlaying}
+        isLoading={showPdf || !audioEnabled ? undefined : surahLoading}
         onAutoScrollClick={showPdf ? undefined : () => setAutoScrollEnabled(!autoScrollEnabled)}
         isAutoScrolling={showPdf ? undefined : autoScrollEnabled}
         goToAyah={showPdf ? undefined : { surahId: chapter.id, versesCount: chapter.verses_count }}
       />
+
+      {!showPdf && <ReaderModeSwitch />}
 
       <header style={{ textAlign: "center", marginBottom: "2rem" }}>
         <p style={{ color: "var(--color-text-muted)", margin: 0, fontSize: "0.85rem" }}>
@@ -173,6 +215,7 @@ export function SurahReader({ chapter, verses, previous, next, pdfInfo, allChapt
           verses={versesWithSurah}
           enabledTranslations={preferences.enabledTranslations}
           showBookmarks={preferences.showBookmarks}
+          audioEnabled={audioEnabled}
           showSurahHeadings={false}
           ariaLabel={`Ayahs of ${chapter.name_simple}`}
         />

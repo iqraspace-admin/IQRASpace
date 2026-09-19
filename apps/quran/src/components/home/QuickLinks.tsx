@@ -4,6 +4,7 @@ import { useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { JumpToSurah } from "@/components/reader/JumpToSurah";
 import { ReaderSettingsPanel } from "@/components/reader/ReaderSettingsPanel";
+import { useT } from "@/lib/i18n/useT";
 import type { Chapter } from "@/lib/content/types";
 
 type Props = {
@@ -16,10 +17,8 @@ type Props = {
  * (Search / Tajweed Rules / Reader Settings). The web set is wider than
  * Flutter's three chips: this app already has standalone features
  * Flutter doesn't (a Mushaf Page view, a Bookmarks list) that deserve
- * equal one-click discoverability, while "Search" is left out since no
- * search feature exists on web yet (a future phase). "Browse Surahs" is
- * covered by the entry-tile row above this section, so it's not repeated
- * here.
+ * equal one-click discoverability. "Browse Surahs" is covered by the
+ * entry-tile row above this section, so it's not repeated here.
  *
  * Tiles are a responsive square grid (icon badge on top, label below,
  * `aspectRatio:1`) rather than the small inline pill chips this used to
@@ -33,37 +32,48 @@ type Props = {
  */
 export function QuickLinks({ chapters }: Props) {
   const [jumpOpen, setJumpOpen] = useState(false);
+  const { t } = useT();
 
   return (
     <section style={{ width: "100%" }}>
-      <h2 style={headingStyle}>Quick Links</h2>
+      <h2 style={headingStyle}>{t("homeQuickLinks")}</h2>
       <div style={gridStyle}>
+        <Link href="/search" className="quick-link-tile" style={tileStyle}>
+          <span style={badgeStyle}>
+            <SearchIcon />
+          </span>
+          <span style={labelStyle}>{t("quickLinkSearch")}</span>
+        </Link>
         <Link href="/page" className="quick-link-tile" style={tileStyle}>
           <span style={badgeStyle}>
             <PagesIcon />
           </span>
-          <span style={labelStyle}>Browse Pages</span>
+          <span style={labelStyle}>{t("quickLinkBrowsePages")}</span>
         </Link>
         <button type="button" onClick={() => setJumpOpen(true)} className="quick-link-tile" style={tileStyle}>
           <span style={badgeStyle}>
             <CompassIcon />
           </span>
-          <span style={labelStyle}>Jump to Surah</span>
+          <span style={labelStyle}>{t("quickLinkJumpToSurah")}</span>
         </button>
         <Link href="/bookmarks" className="quick-link-tile" style={tileStyle}>
           <span style={badgeStyle}>
             <StarIcon />
           </span>
-          <span style={labelStyle}>Bookmarks</span>
+          <span style={labelStyle}>{t("quickLinkBookmarks")}</span>
         </Link>
         <ReaderSettingsPanel
           initialView="tajweedRules"
-          triggerLabel="Tajweed Rules"
+          triggerLabel={t("quickLinkTajweedRules")}
           triggerIcon={<DropletIcon />}
           triggerClassName="quick-link-tile"
           triggerStyleOverride={tileStyle}
         />
-        <ReaderSettingsPanel triggerClassName="quick-link-tile" triggerStyleOverride={tileStyle} />
+        <ReaderSettingsPanel
+          triggerLabel={t("quickLinkSettings")}
+          triggerClassName="quick-link-tile"
+          triggerStyleOverride={tileStyle}
+        />
       </div>
 
       <JumpToSurah open={jumpOpen} onClose={() => setJumpOpen(false)} chapters={chapters} />
@@ -118,6 +128,15 @@ const labelStyle: CSSProperties = {
   textAlign: "center",
   color: "var(--color-text)",
 };
+
+function SearchIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+    </svg>
+  );
+}
 
 function PagesIcon() {
   return (

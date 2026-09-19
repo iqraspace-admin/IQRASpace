@@ -106,8 +106,17 @@ const nextConfig: NextConfig = {
               // '...cdn.islamic.network...' violates ... default-src
               // 'self'", the browser's exact wording for a missing
               // media-src).
-              "media-src 'self' https://cdn.islamic.network",
-              "connect-src 'self'",
+              // audio.iqraspace.org: Listening Mode's whole-Surah files,
+              // streamed directly from the IqraSpace Flutter app's own
+              // dedicated Cloudflare R2 bucket (lib/content/listeningAudio.ts,
+              // apps/flutter/AUDIO.md) — a separate host from the per-ayah
+              // CDN above; Listening Mode never uses that one.
+              "media-src 'self' https://cdn.islamic.network https://audio.iqraspace.org",
+              // api.alquran.cloud: opt-in live Tajweed coloring fetch
+              // (lib/content/tajweedApi.ts) — only called when a reader
+              // turns Tajweed on in Settings, same host the IqraSpace
+              // Flutter app's own Tajweed feature uses.
+              "connect-src 'self' https://api.alquran.cloud",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self'",

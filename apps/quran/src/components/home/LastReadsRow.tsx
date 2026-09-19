@@ -3,6 +3,7 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { loadLastReads, type ReadingHistoryEntry } from "@/lib/preferences/storage";
+import { useT } from "@/lib/i18n/useT";
 import type { Chapter } from "@/lib/content/types";
 
 type Props = {
@@ -19,6 +20,7 @@ type Props = {
  */
 export function LastReadsRow({ chapters }: Props) {
   const [entries, setEntries] = useState<ReadingHistoryEntry[]>([]);
+  const { t } = useT();
 
   useEffect(() => {
     async function hydrate() {
@@ -34,7 +36,7 @@ export function LastReadsRow({ chapters }: Props) {
 
   return (
     <section style={{ width: "100%" }}>
-      <h2 style={headingStyle}>Last Reads</h2>
+      <h2 style={headingStyle}>{t("homeLastReads")}</h2>
       <div style={rowStyle}>
         {rest.map((entry) => {
           const chapter = chapters.find((c) => c.id === entry.surahNumber);
@@ -47,7 +49,9 @@ export function LastReadsRow({ chapters }: Props) {
               <span style={{ fontWeight: 600, color: "var(--color-text)" }}>
                 {chapter?.name_simple ?? `Surah ${entry.surahNumber}`}
               </span>
-              <span style={{ color: "var(--color-text-muted)", fontSize: "0.8rem" }}>Ayah {entry.ayahNumber}</span>
+              <span style={{ color: "var(--color-text-muted)", fontSize: "0.8rem" }}>
+                {t("homeAyah", { n: entry.ayahNumber })}
+              </span>
             </Link>
           );
         })}

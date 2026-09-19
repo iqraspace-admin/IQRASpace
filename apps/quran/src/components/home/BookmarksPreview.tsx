@@ -3,6 +3,7 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { loadBookmarks, type BookmarkKey } from "@/lib/preferences/storage";
+import { useT } from "@/lib/i18n/useT";
 import type { Chapter } from "@/lib/content/types";
 
 type Props = {
@@ -22,6 +23,7 @@ const MAX_PREVIEW = 5;
  */
 export function BookmarksPreview({ chapters }: Props) {
   const [keys, setKeys] = useState<BookmarkKey[] | null>(null);
+  const { t } = useT();
 
   useEffect(() => {
     async function hydrate() {
@@ -37,16 +39,14 @@ export function BookmarksPreview({ chapters }: Props) {
   return (
     <section style={{ width: "100%" }}>
       <div style={headingRowStyle}>
-        <h2 style={headingStyle}>Bookmarks</h2>
+        <h2 style={headingStyle}>{t("homeBookmarks")}</h2>
         <Link href="/bookmarks" style={seeAllStyle}>
-          See all
+          {t("homeSeeAll")}
         </Link>
       </div>
 
       {keys.length === 0 ? (
-        <p style={{ color: "var(--color-text-muted)", margin: 0 }}>
-          No bookmarks yet — tap the star icon while reading to save an Ayah.
-        </p>
+        <p style={{ color: "var(--color-text-muted)", margin: 0 }}>{t("homeNoBookmarksYet")}</p>
       ) : (
         <div style={rowStyle}>
           {keys
@@ -61,7 +61,9 @@ export function BookmarksPreview({ chapters }: Props) {
                 <span style={{ fontWeight: 600, color: "var(--color-text)" }}>
                   {chapter?.name_simple ?? `Surah ${surahNumber}`}
                 </span>
-                <span style={{ color: "var(--color-text-muted)", fontSize: "0.8rem" }}>Ayah {ayahNumber}</span>
+                <span style={{ color: "var(--color-text-muted)", fontSize: "0.8rem" }}>
+                  {t("homeAyah", { n: ayahNumber })}
+                </span>
               </Link>
             ))}
         </div>

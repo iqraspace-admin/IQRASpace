@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getAllChapters } from "@/lib/content/quran";
 import { canonicalUrl } from "@/lib/site";
-import { BookmarksList } from "@/components/bookmarks/BookmarksList";
+import { BookmarksHeader, BookmarksList } from "@/components/bookmarks/BookmarksList";
 
 export const metadata: Metadata = {
   title: "Bookmarks — IqraSpace Quran",
@@ -19,8 +19,7 @@ export default function BookmarksPage() {
   const chapters = getAllChapters();
   return (
     <div style={{ maxWidth: "var(--content-max-width)", margin: "0 auto", padding: "2rem 1rem" }}>
-      <h1 style={{ marginBottom: "0.25rem", fontFamily: "var(--font-display)", fontWeight: 600 }}>Bookmarks</h1>
-      <p style={{ color: "var(--color-text-muted)", marginTop: 0 }}>Every Ayah you&apos;ve bookmarked while reading.</p>
+      <BookmarksHeader />
       <BookmarksList chapters={chapters} />
     </div>
   );

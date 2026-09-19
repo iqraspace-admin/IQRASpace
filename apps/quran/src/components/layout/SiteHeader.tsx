@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { ReaderSettingsPanel } from "@/components/reader/ReaderSettingsPanel";
+import { useT } from "@/lib/i18n/useT";
 import { BrandWordmark } from "./BrandWordmark";
 
 /**
@@ -30,6 +31,7 @@ import { BrandWordmark } from "./BrandWordmark";
  */
 export function SiteHeader() {
   const headerRef = useRef<HTMLElement>(null);
+  const { t } = useT();
 
   // Keeps --site-header-height (globals.css) in sync with this header's
   // REAL rendered height, not a guessed constant — it can change (its nav
@@ -85,7 +87,7 @@ export function SiteHeader() {
               graceful degrade. Below 480px it's hidden outright instead;
               same breakpoint ReaderNavBar's edge-Surah-name labels use. */}
           <span className="header-tagline" style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>
-            Read. Listen. Learn. Reflect.
+            {t("headerTagline")}
           </span>
         </Link>
 

@@ -53,6 +53,12 @@
   --font-body: var(--font-inter), system-ui, -apple-system, sans-serif;
   --font-display: var(--font-fraunces), Georgia, serif; /* wordmark + headings only */
 
+  /* Supplications' transliteration-script fonts (lib/preferences/types.ts's
+     TransliterationScript) — Latin reuses --font-body (plain Latin text
+     needs no embedded font), Telugu/Urdu need their own. */
+  --font-transliteration-telugu: var(--font-noto-telugu), sans-serif;
+  --font-transliteration-urdu: var(--font-noto-nastaliq), "Traditional Arabic", serif;
+
   /* Reader controls (Readme.md §11) — set on <html> at runtime by
      ReaderPreferencesProvider, defaulted here so a page never renders
      without them (e.g. before hydration, or with JS disabled). */
@@ -148,6 +154,25 @@
   --color-focus-ring: #3ba98e;
 
   color-scheme: dark;
+}
+
+/* Sepia — a warm "paper" reading mode, matching the IqraSpace Flutter
+   app's Sepia theme colors exactly (core/theme/app_theme.dart's
+   ReaderColors.sepia). Light-brightness (color-scheme: light), so it
+   reuses the light theme's brand teal/gold rather than dark's. */
+:root[data-theme="sepia"] {
+  --color-bg: #f4ecd8;
+  --color-surface: #e9dfc4;
+  --color-text: #3b2f1e;
+  --color-text-muted: #6b5c42;
+  --color-primary: #0f5c4f;
+  --color-primary-contrast: #ffffff;
+  --color-accent: #b8873a;
+  --color-accent-text: #8a6420;
+  --color-border: #d9cba6;
+  --color-focus-ring: #0f5c4f;
+
+  color-scheme: light;
 }
 
 :root[data-reading-width="narrow"] {

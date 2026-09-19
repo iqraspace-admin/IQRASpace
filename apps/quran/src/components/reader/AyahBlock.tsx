@@ -7,6 +7,8 @@ import { TRANSLATION_LANGUAGES, type TranslationLanguageId } from "@/lib/content
 import { ayahAudioUrl } from "@/lib/content/reciters";
 import { useAudio } from "@/lib/audio/AudioProvider";
 import { useReaderPreferences } from "@/lib/preferences/ReaderPreferencesProvider";
+import { useTajweedSpans } from "@/lib/content/tajweedApi";
+import { colorForTajweedCode } from "@/lib/content/tajweed";
 import type { VerseWithSurah } from "@/lib/content/types";
 
 type Props = {
@@ -23,6 +25,13 @@ type Props = {
       so toggling this back on doesn't lose anything — it only hides the
       control. */
   showBookmarks: boolean;
+  /** Reading Mode has no audio at all (ReaderMode, SurahReader.tsx) —
+      hides this Ayah's own play button when false; the bookmark button
+      is unaffected (Reading Mode still allows bookmarking, matching the
+      IqraSpace Flutter app's own AyahRichText, which only gates its
+      audio icon on Reader Mode). Defaults to true so PageReader (no
+      Reader Mode concept) is unaffected. */
+  audioEnabled?: boolean;
   registerRef: (el: HTMLElement | null) => void;
   /** Rendered as a heading directly above this ayah — used by Page
       views to mark where a new Surah begins mid-list (a Surah reader
@@ -35,13 +44,22 @@ type Props = {
  * bookmark toggle. Bookmarking works with no account (Readme.md §15) —
  * see lib/preferences/storage.ts.
  */
-export function AyahBlock({ verse, enabledTranslations, showBookmarks, registerRef, surahHeading }: Props) {
+export function AyahBlock({
+  verse,
+  enabledTranslations,
+  showBookmarks,
+  audioEnabled = true,
+  registerRef,
+  surahHeading,
+}: Props) {
   const bookmarkKey = verse.verse_key;
   const [bookmarked, setBookmarked] = useState(false);
   const { preferences } = useReaderPreferences();
   const audio = useAudio();
   const isPlaying = audio.isActive(verse.surahId, verse.verse_number);
   const isLoading = isPlaying && audio.state.isLoading;
+  const readMode = preferences.readModeEnabled;
+  const tajweedSpans = useTajweedSpans(verse.surahId, verse.verse_number, preferences.tajweedEnabled);
 
   function togglePlay() {
     if (isPlaying) {
@@ -100,24 +118,26 @@ export function AyahBlock({ verse, enabledTranslations, showBookmarks, registerR
         </h2>
       )}
       <div style={{ display: "flex", gap: "0.75rem", alignItems: "flex-start" }}>
-        <span
-          aria-hidden="true"
-          style={{
-            flexShrink: 0,
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "1.75rem",
-            height: "1.75rem",
-            borderRadius: "9999px",
-            border: "1px solid var(--color-border)",
-            color: "var(--color-text-muted)",
-            fontSize: "0.75rem",
-            marginTop: "0.25rem",
-          }}
-        >
-          {verse.verse_number}
-        </span>
+        {!readMode && (
+          <span
+            aria-hidden="true"
+            style={{
+              flexShrink: 0,
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "1.75rem",
+              height: "1.75rem",
+              borderRadius: "9999px",
+              border: "1px solid var(--color-border)",
+              color: "var(--color-text-muted)",
+              fontSize: "0.75rem",
+              marginTop: "0.25rem",
+            }}
+          >
+            {verse.verse_number}
+          </span>
+        )}
 
         <div style={{ flex: 1, minWidth: 0 }}>
           <p
@@ -133,10 +153,17 @@ export function AyahBlock({ verse, enabledTranslations, showBookmarks, registerR
               color: "var(--color-text)",
             }}
           >
-            {verse.text_uthmani}
+            {tajweedSpans
+              ? tajweedSpans.map((span, i) => (
+                  <span key={i} style={span.ruleKey ? { color: colorForTajweedCode(span.ruleKey) } : undefined}>
+                    {span.text}
+                  </span>
+                ))
+              : verse.text_uthmani}
+            {readMode && <> ﴿{verse.verse_number}﴾</>}
           </p>
 
-          {enabledTranslations.map((languageId) => {
+          {!readMode && enabledTranslations.map((languageId) => {
             const language = TRANSLATION_LANGUAGES.find((l) => l.id === languageId);
             const translation = verse.translations.find((t) => t.resource_id === language?.resourceId);
             if (!translation) return null;
@@ -160,7 +187,9 @@ export function AyahBlock({ verse, enabledTranslations, showBookmarks, registerR
             );
           })}
 
+          {!readMode && (audioEnabled || showBookmarks) && (
           <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginTop: "0.5rem" }}>
+            {audioEnabled && (
             <button
               type="button"
               onClick={togglePlay}
@@ -183,6 +212,7 @@ export function AyahBlock({ verse, enabledTranslations, showBookmarks, registerR
             >
               {isLoading ? "⏳ Loading…" : isPlaying ? "⏸ Playing" : "▶ Play"}
             </button>
+            )}
 
             {showBookmarks && (
               <button
@@ -205,6 +235,7 @@ export function AyahBlock({ verse, enabledTranslations, showBookmarks, registerR
               </button>
             )}
           </div>
+          )}
         </div>
       </div>
     </li>

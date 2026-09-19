@@ -11,6 +11,10 @@ type Props = {
   verses: VerseWithSurah[];
   enabledTranslations: TranslationLanguageId[];
   showBookmarks: boolean;
+  /** Reading Mode has no audio at all (ReaderMode, SurahReader.tsx) —
+      hides every Ayah's own play button when false. Defaults to true so
+      PageReader (which has no Reader Mode concept) is unaffected. */
+  audioEnabled?: boolean;
   /** Show a Surah-name heading whenever the Surah changes mid-list — for
       Page views, which cross Surah boundaries. A single-Surah reader
       already names the Surah in its own page header, so passes false. */
@@ -24,7 +28,14 @@ type Props = {
  * the IntersectionObserver/scroll-restore logic instead of three
  * near-identical copies.
  */
-export function AyahList({ verses, enabledTranslations, showBookmarks, showSurahHeadings, ariaLabel }: Props) {
+export function AyahList({
+  verses,
+  enabledTranslations,
+  showBookmarks,
+  audioEnabled = true,
+  showSurahHeadings,
+  ariaLabel,
+}: Props) {
   const ayahRefs = useRef(new Map<string, HTMLElement>());
   const saveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { surahNumber: playingSurah, ayahNumber: playingAyah } = useAudio().state;
@@ -97,6 +108,7 @@ export function AyahList({ verses, enabledTranslations, showBookmarks, showSurah
             verse={verse}
             enabledTranslations={enabledTranslations}
             showBookmarks={showBookmarks}
+            audioEnabled={audioEnabled}
             surahHeading={isNewSurah ? verse.surahName : undefined}
             registerRef={(el) => {
               if (el) ayahRefs.current.set(verse.verse_key, el);

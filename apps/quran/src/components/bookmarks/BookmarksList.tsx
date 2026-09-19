@@ -3,6 +3,7 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { loadBookmarks, toggleBookmark, type BookmarkKey } from "@/lib/preferences/storage";
+import { useT } from "@/lib/i18n/useT";
 import type { Chapter } from "@/lib/content/types";
 
 type Props = {
@@ -17,8 +18,25 @@ type Props = {
  * Deliberately doesn't change the bookmark storage format (no snippet/
  * name caching) — see the implementation plan for why.
  */
+/** Page heading/subtitle — a tiny client component (not the Server
+    Component page itself) purely so it can call useT(); split out rather
+    than making the whole /bookmarks page client-side, which would lose
+    its server-side chapters lookup. */
+export function BookmarksHeader() {
+  const { t } = useT();
+  return (
+    <>
+      <h1 style={{ marginBottom: "0.25rem", fontFamily: "var(--font-display)", fontWeight: 600 }}>
+        {t("bookmarksTitle")}
+      </h1>
+      <p style={{ color: "var(--color-text-muted)", marginTop: 0 }}>{t("bookmarksSubtitle")}</p>
+    </>
+  );
+}
+
 export function BookmarksList({ chapters }: Props) {
   const [keys, setKeys] = useState<BookmarkKey[] | null>(null);
+  const { t } = useT();
 
   useEffect(() => {
     async function hydrate() {
@@ -32,11 +50,7 @@ export function BookmarksList({ chapters }: Props) {
   if (keys === null) return null; // avoid a first-render "no bookmarks" flash before hydration
 
   if (keys.length === 0) {
-    return (
-      <p style={{ color: "var(--color-text-muted)" }}>
-        No bookmarks yet — tap the star on any Ayah while reading to save it here.
-      </p>
-    );
+    return <p style={{ color: "var(--color-text-muted)" }}>{t("bookmarksEmpty")}</p>;
   }
 
   const entries = keys
@@ -71,7 +85,7 @@ export function BookmarksList({ chapters }: Props) {
             aria-label={`Remove bookmark for ${chapter?.name_simple ?? `Surah ${surahNumber}`}, Ayah ${ayahNumber}`}
             style={removeButtonStyle}
           >
-            Remove
+            {t("bookmarksRemove")}
           </button>
         </li>
       ))}
