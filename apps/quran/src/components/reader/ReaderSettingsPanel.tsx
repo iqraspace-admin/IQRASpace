@@ -1120,6 +1120,10 @@ const exampleStyle: CSSProperties = {
   fontSize: "1.3rem",
   lineHeight: 1.9,
   color: "var(--color-text)",
+  // Explicit — see AyahBlock.tsx's own comment: WebKit (Safari/iPadOS)
+  // doesn't default text-align to follow `direction: rtl` the way
+  // Chromium/Firefox do, so an unset value renders left-aligned there.
+  textAlign: "right",
 };
 
 function badgeStyle(color: string): CSSProperties {

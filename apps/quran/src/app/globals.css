@@ -217,6 +217,20 @@ body {
   font-family: var(--font-body);
 }
 
+/* Safety net for every `dir="rtl"` element (Arabic/Urdu-script text) —
+   WebKit (Safari/iPadOS) resolves an unset `text-align` to a literal
+   "left" regardless of `direction: rtl`, unlike Chromium/Firefox, which
+   correctly default it to follow direction. Confirmed live on iPad: an
+   Ayah's computed `direction` was correctly "rtl" (glyph/character order
+   fine) but its computed `text-align` was "left", visually left-aligning
+   the whole line — reading as if the page were LTR. Low specificity (a
+   bare attribute selector), so any element that already sets its own
+   text-align (e.g. a centered Bismillah/heading) is unaffected — this
+   only fills in the gap for elements that don't. */
+[dir="rtl"] {
+  text-align: right;
+}
+
 /* Accessible, visible focus indicator everywhere (Readme.md §18) — never
    rely on the browser default alone, but never suppress it either. */
 :focus-visible {

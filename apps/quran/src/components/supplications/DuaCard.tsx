@@ -66,6 +66,10 @@ const arabicStyle: CSSProperties = {
   lineHeight: 2,
   margin: "0 0 0.6rem",
   color: "var(--color-text)",
+  // Explicit — see AyahBlock.tsx's own comment: WebKit (Safari/iPadOS)
+  // doesn't default text-align to follow `direction: rtl` the way
+  // Chromium/Firefox do, so an unset value renders left-aligned there.
+  textAlign: "right",
 };
 
 const transliterationStyle: CSSProperties = {

@@ -151,6 +151,19 @@ export function AyahBlock({
               lineHeight: "calc(2 * var(--reader-line-spacing))",
               margin: 0,
               color: "var(--color-text)",
+              // Explicit, not left to the initial/inherited default:
+              // WebKit (Safari/iPadOS) resolves an unset text-align to a
+              // literal "left" regardless of `direction: rtl` — only
+              // `direction` itself (glyph/character order) follows `dir`
+              // there, not paragraph alignment — while Chromium/Firefox
+              // correctly default it to "right" for an RTL block.
+              // Confirmed live in WebKit: computed direction was "rtl"
+              // but computed textAlign was "left", visually left-aligning
+              // every Ayah against its number badge instead of the
+              // reading surface's right edge. Hardcoding "right" (rather
+              // than the logical "start" keyword) sidesteps relying on
+              // any engine's start/direction resolution at all.
+              textAlign: "right",
             }}
           >
             {tajweedSpans
