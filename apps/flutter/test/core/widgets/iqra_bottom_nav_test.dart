@@ -31,7 +31,9 @@ void main() {
 
     expect(find.text('Home'), findsOneWidget);
     expect(find.text('Quran'), findsOneWidget);
-    expect(find.text('Learn'), findsOneWidget);
+    // Nav label is the short "Duas", not the full "Supplications" —
+    // keeps five destinations from crowding the bottom bar.
+    expect(find.text('Duas'), findsOneWidget);
     expect(find.text('Bookmarks'), findsOneWidget);
     expect(find.text('Settings'), findsOneWidget);
   });
@@ -48,13 +50,19 @@ void main() {
     expect(find.text('Screen body'), findsOneWidget);
   });
 
-  testWidgets('tapping Learn navigates to the Learn placeholder screen', (tester) async {
+  testWidgets('tapping Duas navigates to the Supplications categories screen', (tester) async {
     await pumpHost(tester, currentIndex: 0);
 
-    await tester.tap(find.text('Learn'));
-    await tester.pumpAndSettle();
+    await tester.tap(find.text('Duas'));
+    // Deliberately not pumpAndSettle: the categories screen's loading
+    // state renders a CircularProgressIndicator, which schedules frames
+    // forever and never "settles" on its own. One pump lets
+    // assets/supplications.json (a fast rootBundle read) resolve; the
+    // second rebuilds with the data.
+    await tester.pump();
+    await tester.pump();
 
-    expect(find.text('IqraSpace Learning'), findsOneWidget);
+    expect(find.widgetWithText(AppBar, 'Supplications'), findsOneWidget);
   });
 
   testWidgets('a null currentIndex does not crash (defaults to Home selected)', (tester) async {

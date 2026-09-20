@@ -15,7 +15,7 @@ class AppLocalizationsTe extends AppLocalizations {
   String get navQuran => 'ఖురాన్';
 
   @override
-  String get navLearn => 'నేర్చుకోండి';
+  String get navSupplications => 'దుఆలు';
 
   @override
   String get navBookmarks => 'బుక్‌మార్క్‌లు';
@@ -27,16 +27,17 @@ class AppLocalizationsTe extends AppLocalizations {
   String get homeTagline => 'చదవండి. వినండి. నేర్చుకోండి. ఆలోచించండి.';
 
   @override
-  String get homeReadQuranTitle => 'ఖురాన్ చదవండి';
+  String get homeReadQuranTitle => 'ఖురాన్';
 
   @override
   String get homeReadQuranSubtitle => '114 సూరాలు, తజ్వీద్ & అనువాదం';
 
   @override
-  String get homeLearningTitle => 'అభ్యాసం';
+  String get homeSupplicationsTitle => 'దుఆలు';
 
   @override
-  String get homeLearningSubtitle => 'కోర్సులు & మార్గదర్శక పాఠాలు';
+  String get homeSupplicationsSubtitle =>
+      'రోజువారీ జీవితం కోసం దుఆలు & అజ్కార్';
 
   @override
   String get homeLastReads => 'ఇటీవలి పఠనాలు';
@@ -102,14 +103,32 @@ class AppLocalizationsTe extends AppLocalizations {
   }
 
   @override
-  String get learnTitle => 'నేర్చుకోండి';
+  String get supplicationsScreenTitle => 'దుఆలు';
 
   @override
-  String get learnHeading => 'ఇక్రాస్పేస్ అభ్యాసం';
+  String get supplicationsInfoTitle => 'ఈ కంటెంట్ గురించి';
 
   @override
-  String get learnBody =>
-      'కోర్సులు మరియు మార్గదర్శక పాఠాలు రాబోయే అప్‌డేట్‌లో వస్తాయి. ప్రస్తుతానికి, ఖురాన్ రీడర్‌లో మునిగిపోండి.';
+  String get supplicationsSourcesHeading => 'మూలాలు';
+
+  @override
+  String supplicationsCategoryDuaSummary(
+      Object categoryCount, Object duaCount) {
+    return '$categoryCount వర్గాలు, $duaCount దుఆలు';
+  }
+
+  @override
+  String get supplicationsLoadFailed =>
+      'దుఆల కంటెంట్‌ను లోడ్ చేయడం సాధ్యపడలేదు.';
+
+  @override
+  String get scriptLatin => 'లాటిన్';
+
+  @override
+  String get scriptTelugu => 'తెలుగు';
+
+  @override
+  String get scriptUrdu => 'ఉర్దూ';
 
   @override
   String get quranTitle => 'ఖురాన్';
@@ -486,7 +505,7 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get guideHomeCaption =>
-      'చదవడం ప్రారంభించడానికి \"ఖురాన్ చదవండి\", ఒక సూరాను తిరిగి కొనసాగించడానికి \"ఇటీవలి పఠనాలు\", లేదా నేరుగా శోధన, తజ్వీద్ నియమాలు, లేదా పఠన సెట్టింగ్‌లకు వెళ్లడానికి త్వరిత లింక్‌ను తట్టండి.';
+      'చదవడం ప్రారంభించడానికి \"ఖురాన్\", ఒక సూరాను తిరిగి కొనసాగించడానికి \"ఇటీవలి పఠనాలు\", లేదా నేరుగా శోధన, తజ్వీద్ నియమాలు, లేదా పఠన సెట్టింగ్‌లకు వెళ్లడానికి త్వరిత లింక్‌ను తట్టండి.';
 
   @override
   String get guideSurahNavTitle => 'సూరా స్క్రీన్';

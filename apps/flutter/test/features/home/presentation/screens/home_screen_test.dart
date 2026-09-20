@@ -144,19 +144,30 @@ void main() {
     expect(find.textContaining('No bookmarks yet'), findsOneWidget);
   });
 
-  testWidgets('shows both the Read Quran and Learning entry tiles', (tester) async {
+  testWidgets('shows both the Quran and Supplications entry tiles', (tester) async {
     await pumpHome(tester);
 
-    expect(find.text('Read Quran'), findsOneWidget);
-    expect(find.text('Learning'), findsOneWidget);
+    // 'Quran' also appears as the bottom nav's own label, so there are
+    // two matches: the entry tile plus that nav item.
+    expect(find.text('Quran'), findsNWidgets(2));
+    // The entry tile spells out the full "Supplications", while the
+    // bottom nav uses the shorter "Duas" label (see iqra_bottom_nav.dart)
+    // to keep five destinations from crowding the bar — so this one is
+    // unique, unlike Quran/Bookmarks above/below.
+    expect(find.text('Supplications'), findsOneWidget);
   });
 
   testWidgets('bottom nav highlights Home and lists all five destinations', (tester) async {
     await pumpHome(tester);
 
     expect(find.text('Home'), findsOneWidget);
-    expect(find.text('Quran'), findsOneWidget);
-    expect(find.text('Learn'), findsOneWidget);
+    // 'Quran' also appears as this screen's own entry tile, so there
+    // are two matches: the bottom-nav label plus that tile.
+    expect(find.text('Quran'), findsNWidgets(2));
+    // The bottom nav's Supplications destination uses the shorter "Duas"
+    // label (see iqra_bottom_nav.dart), distinct from the entry tile's
+    // full "Supplications" text checked above.
+    expect(find.text('Duas'), findsOneWidget);
     // 'Bookmarks' also appears as this screen's own section header, so
     // there are two matches: the bottom-nav label plus that header.
     expect(find.text('Bookmarks'), findsNWidgets(2));

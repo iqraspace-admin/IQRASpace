@@ -89,6 +89,7 @@ flutter:
 
   assets:
     - assets/tajweed_rules_fallback.json
+    - assets/supplications.json
     - assets/branding/icon.png
     # Screenshots for the in-app User Guide (Reading Settings → User
     # Guide) — captured/annotated via docs/user_guide/, see its README.
@@ -120,3 +121,18 @@ flutter:
     - family: AmiriQuranColored
       fonts:
         - asset: assets/fonts/AmiriQuranColored.ttf
+
+    # Supplications feature only (see lib/features/supplications) — the
+    # Amiri family above is cut for Quranic Mushaf text specifically, not
+    # general Arabic prose, and doesn't cover Telugu/Urdu-Nastaliq script
+    # at all. All three from the Noto Fonts project (SIL OFL 1.1) — see
+    # assets/fonts/NOTE.md.
+    - family: NotoNaskhArabic
+      fonts:
+        - asset: assets/fonts/NotoNaskhArabic.ttf
+    - family: NotoSansTelugu
+      fonts:
+        - asset: assets/fonts/NotoSansTelugu.ttf
+    - family: NotoNastaliqUrdu
+      fonts:
+        - asset: assets/fonts/NotoNastaliqUrdu.ttf

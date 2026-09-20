@@ -112,11 +112,11 @@ abstract class AppLocalizations {
   /// **'Quran'**
   String get navQuran;
 
-  /// No description provided for @navLearn.
+  /// No description provided for @navSupplications.
   ///
   /// In en, this message translates to:
-  /// **'Learn'**
-  String get navLearn;
+  /// **'Duas'**
+  String get navSupplications;
 
   /// No description provided for @navBookmarks.
   ///
@@ -139,7 +139,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeReadQuranTitle.
   ///
   /// In en, this message translates to:
-  /// **'Read Quran'**
+  /// **'Quran'**
   String get homeReadQuranTitle;
 
   /// No description provided for @homeReadQuranSubtitle.
@@ -148,17 +148,17 @@ abstract class AppLocalizations {
   /// **'114 Surahs, Tajweed & translation'**
   String get homeReadQuranSubtitle;
 
-  /// No description provided for @homeLearningTitle.
+  /// No description provided for @homeSupplicationsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Learning'**
-  String get homeLearningTitle;
+  /// **'Supplications'**
+  String get homeSupplicationsTitle;
 
-  /// No description provided for @homeLearningSubtitle.
+  /// No description provided for @homeSupplicationsSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Courses & guided lessons'**
-  String get homeLearningSubtitle;
+  /// **'Duas & athkar for daily life'**
+  String get homeSupplicationsSubtitle;
 
   /// No description provided for @homeLastReads.
   ///
@@ -268,23 +268,53 @@ abstract class AppLocalizations {
   /// **'Search failed.\n{error}'**
   String searchFailed(Object error);
 
-  /// No description provided for @learnTitle.
+  /// No description provided for @supplicationsScreenTitle.
   ///
   /// In en, this message translates to:
-  /// **'Learn'**
-  String get learnTitle;
+  /// **'Supplications'**
+  String get supplicationsScreenTitle;
 
-  /// No description provided for @learnHeading.
+  /// No description provided for @supplicationsInfoTitle.
   ///
   /// In en, this message translates to:
-  /// **'IqraSpace Learning'**
-  String get learnHeading;
+  /// **'About this content'**
+  String get supplicationsInfoTitle;
 
-  /// No description provided for @learnBody.
+  /// No description provided for @supplicationsSourcesHeading.
   ///
   /// In en, this message translates to:
-  /// **'Courses and guided lessons are coming in a future update. For now, dive into the Quran Reader.'**
-  String get learnBody;
+  /// **'Sources'**
+  String get supplicationsSourcesHeading;
+
+  /// No description provided for @supplicationsCategoryDuaSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{categoryCount} categories, {duaCount} duas'**
+  String supplicationsCategoryDuaSummary(Object categoryCount, Object duaCount);
+
+  /// No description provided for @supplicationsLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load Supplications content.'**
+  String get supplicationsLoadFailed;
+
+  /// No description provided for @scriptLatin.
+  ///
+  /// In en, this message translates to:
+  /// **'Latin'**
+  String get scriptLatin;
+
+  /// No description provided for @scriptTelugu.
+  ///
+  /// In en, this message translates to:
+  /// **'Telugu'**
+  String get scriptTelugu;
+
+  /// No description provided for @scriptUrdu.
+  ///
+  /// In en, this message translates to:
+  /// **'Urdu'**
+  String get scriptUrdu;
 
   /// No description provided for @quranTitle.
   ///
@@ -979,7 +1009,7 @@ abstract class AppLocalizations {
   /// No description provided for @guideHomeCaption.
   ///
   /// In en, this message translates to:
-  /// **'Tap \"Read Quran\" to start reading, \"Last Reads\" to resume a Surah, or a Quick Link to jump straight to Search, Tajweed Rules, or Reading Settings.'**
+  /// **'Tap \"Quran\" to start reading, \"Last Reads\" to resume a Surah, or a Quick Link to jump straight to Search, Tajweed Rules, or Reading Settings.'**
   String get guideHomeCaption;
 
   /// No description provided for @guideSurahNavTitle.

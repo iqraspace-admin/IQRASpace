@@ -15,7 +15,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navQuran => 'Quran';
 
   @override
-  String get navLearn => 'Learn';
+  String get navSupplications => 'Duas';
 
   @override
   String get navBookmarks => 'Bookmarks';
@@ -27,16 +27,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeTagline => 'Read. Listen. Learn. Reflect.';
 
   @override
-  String get homeReadQuranTitle => 'Read Quran';
+  String get homeReadQuranTitle => 'Quran';
 
   @override
   String get homeReadQuranSubtitle => '114 Surahs, Tajweed & translation';
 
   @override
-  String get homeLearningTitle => 'Learning';
+  String get homeSupplicationsTitle => 'Supplications';
 
   @override
-  String get homeLearningSubtitle => 'Courses & guided lessons';
+  String get homeSupplicationsSubtitle => 'Duas & athkar for daily life';
 
   @override
   String get homeLastReads => 'Last Reads';
@@ -102,14 +102,31 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get learnTitle => 'Learn';
+  String get supplicationsScreenTitle => 'Supplications';
 
   @override
-  String get learnHeading => 'IqraSpace Learning';
+  String get supplicationsInfoTitle => 'About this content';
 
   @override
-  String get learnBody =>
-      'Courses and guided lessons are coming in a future update. For now, dive into the Quran Reader.';
+  String get supplicationsSourcesHeading => 'Sources';
+
+  @override
+  String supplicationsCategoryDuaSummary(
+      Object categoryCount, Object duaCount) {
+    return '$categoryCount categories, $duaCount duas';
+  }
+
+  @override
+  String get supplicationsLoadFailed => 'Could not load Supplications content.';
+
+  @override
+  String get scriptLatin => 'Latin';
+
+  @override
+  String get scriptTelugu => 'Telugu';
+
+  @override
+  String get scriptUrdu => 'Urdu';
 
   @override
   String get quranTitle => 'Quran';
@@ -485,7 +502,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get guideHomeCaption =>
-      'Tap \"Read Quran\" to start reading, \"Last Reads\" to resume a Surah, or a Quick Link to jump straight to Search, Tajweed Rules, or Reading Settings.';
+      'Tap \"Quran\" to start reading, \"Last Reads\" to resume a Surah, or a Quick Link to jump straight to Search, Tajweed Rules, or Reading Settings.';
 
   @override
   String get guideSurahNavTitle => 'The Surah screen';

@@ -15,7 +15,7 @@ class AppLocalizationsUr extends AppLocalizations {
   String get navQuran => 'قرآن';
 
   @override
-  String get navLearn => 'سیکھیں';
+  String get navSupplications => 'دعائیں';
 
   @override
   String get navBookmarks => 'بک مارکس';
@@ -27,16 +27,17 @@ class AppLocalizationsUr extends AppLocalizations {
   String get homeTagline => 'پڑھیں۔ سنیں۔ سیکھیں۔ غور کریں۔';
 
   @override
-  String get homeReadQuranTitle => 'قرآن پڑھیں';
+  String get homeReadQuranTitle => 'قرآن';
 
   @override
   String get homeReadQuranSubtitle => '114 سورتیں، تجوید اور ترجمہ';
 
   @override
-  String get homeLearningTitle => 'تعلیم';
+  String get homeSupplicationsTitle => 'دعائیں';
 
   @override
-  String get homeLearningSubtitle => 'کورسز اور رہنما اسباق';
+  String get homeSupplicationsSubtitle =>
+      'روزمرہ زندگی کے لیے دعائیں اور اذکار';
 
   @override
   String get homeLastReads => 'حالیہ پڑھائی';
@@ -102,14 +103,31 @@ class AppLocalizationsUr extends AppLocalizations {
   }
 
   @override
-  String get learnTitle => 'سیکھیں';
+  String get supplicationsScreenTitle => 'دعائیں';
 
   @override
-  String get learnHeading => 'اقرا اسپیس تعلیم';
+  String get supplicationsInfoTitle => 'اس مواد کے بارے میں';
 
   @override
-  String get learnBody =>
-      'کورسز اور رہنما اسباق ایک آئندہ اپڈیٹ میں آئیں گے۔ فی الحال، قرآن ریڈر میں مطالعہ جاری رکھیں۔';
+  String get supplicationsSourcesHeading => 'ماخذ';
+
+  @override
+  String supplicationsCategoryDuaSummary(
+      Object categoryCount, Object duaCount) {
+    return '$categoryCount زمرہ جات، $duaCount دعائیں';
+  }
+
+  @override
+  String get supplicationsLoadFailed => 'دعاؤں کا مواد لوڈ نہیں ہو سکا۔';
+
+  @override
+  String get scriptLatin => 'لاطینی';
+
+  @override
+  String get scriptTelugu => 'تیلگو';
+
+  @override
+  String get scriptUrdu => 'اردو';
 
   @override
   String get quranTitle => 'قرآن';
@@ -485,7 +503,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get guideHomeCaption =>
-      'پڑھنا شروع کرنے کے لیے \"قرآن پڑھیں\"، کسی سورت کو دوبارہ شروع کرنے کے لیے \"حالیہ پڑھائی\"، یا براہِ راست تلاش، تجوید کے قواعد، یا پڑھنے کی ترتیبات پر جانے کے لیے کسی فوری ربط پر تھپتھپائیں۔';
+      'پڑھنا شروع کرنے کے لیے \"قرآن\"، کسی سورت کو دوبارہ شروع کرنے کے لیے \"حالیہ پڑھائی\"، یا براہِ راست تلاش، تجوید کے قواعد، یا پڑھنے کی ترتیبات پر جانے کے لیے کسی فوری ربط پر تھپتھپائیں۔';
 
   @override
   String get guideSurahNavTitle => 'سورت والی اسکرین';

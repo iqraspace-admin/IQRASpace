@@ -2,25 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_flutter/core/theme/app_theme.dart';
 import 'package:quran_flutter/core/widgets/brand_mark.dart';
+import 'package:quran_flutter/core/widgets/dua_hands_icon.dart';
 import 'package:quran_flutter/core/widgets/iqra_bottom_nav.dart';
 import 'package:quran_flutter/core/widgets/mini_player_bar.dart';
 import 'package:quran_flutter/core/widgets/surah_name_label.dart';
 import 'package:quran_flutter/features/bookmarks/presentation/providers/bookmarks_providers.dart';
 import 'package:quran_flutter/features/bookmarks/presentation/screens/bookmarks_screen.dart';
-import 'package:quran_flutter/features/learning/presentation/screens/learn_coming_soon_screen.dart';
 import 'package:quran_flutter/features/quran_reader/presentation/providers/surah_providers.dart';
 import 'package:quran_flutter/features/quran_reader/presentation/screens/surah_list_screen.dart';
 import 'package:quran_flutter/features/quran_reader/presentation/screens/surah_reader_screen.dart';
 import 'package:quran_flutter/features/quran_reader/presentation/screens/tajweed_rules_screen.dart';
 import 'package:quran_flutter/features/search/presentation/screens/search_screen.dart';
 import 'package:quran_flutter/features/settings/presentation/widgets/reader_settings_sheet.dart';
+import 'package:quran_flutter/features/supplications/presentation/screens/supplications_categories_screen.dart';
 import 'package:quran_flutter/l10n/app_localizations.dart';
 
 /// The app's landing screen — branding, a "Continue Reading" card for
 /// wherever the reader last left off, entry points into the Quran
-/// Reader and (reserved, non-functional) Learning, and a Bookmarks
-/// preview. Everything here is a doorway to another top-level screen;
-/// no reading happens directly on this page.
+/// Reader and Supplications, and a Bookmarks preview. Everything here is
+/// a doorway to another top-level screen; no reading happens directly on
+/// this page.
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
@@ -79,12 +80,12 @@ class HomeScreen extends ConsumerWidget {
 
             const SizedBox(height: 16),
 
-            // Entry tiles: Read Quran / Learning
+            // Entry tiles: Quran / Supplications
             Row(
               children: [
                 Expanded(
                   child: _EntryTile(
-                    icon: Icons.menu_book_outlined,
+                    icon: Icon(Icons.menu_book_outlined, size: 19, color: brand),
                     color: brand,
                     colors: colors,
                     title: l10n.homeReadQuranTitle,
@@ -96,13 +97,13 @@ class HomeScreen extends ConsumerWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: _EntryTile(
-                    icon: Icons.school_outlined,
+                    icon: DuaHandsIcon(size: 19, color: gold),
                     color: gold,
                     colors: colors,
-                    title: l10n.homeLearningTitle,
-                    subtitle: l10n.homeLearningSubtitle,
+                    title: l10n.homeSupplicationsTitle,
+                    subtitle: l10n.homeSupplicationsSubtitle,
                     onTap: () => Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (_) => const LearnComingSoonScreen())),
+                        .push(MaterialPageRoute(builder: (_) => const SupplicationsCategoriesScreen())),
                   ),
                 ),
               ],
@@ -445,7 +446,7 @@ class _QuickLinkChip extends StatelessWidget {
 }
 
 class _EntryTile extends StatelessWidget {
-  final IconData icon;
+  final Widget icon;
   final Color color;
   final ReaderColors colors;
   final String title;
@@ -479,7 +480,7 @@ class _EntryTile extends StatelessWidget {
               width: 38,
               height: 38,
               decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(11)),
-              child: Icon(icon, color: color, size: 19),
+              child: Center(child: icon),
             ),
             const SizedBox(height: 10),
             Text(title, style: const TextStyle(fontSize: 14.5, fontWeight: FontWeight.w600)),

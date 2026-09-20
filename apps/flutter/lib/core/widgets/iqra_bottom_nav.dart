@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_flutter/core/theme/app_theme.dart';
+import 'package:quran_flutter/core/widgets/dua_hands_icon.dart';
 import 'package:quran_flutter/features/bookmarks/presentation/screens/bookmarks_screen.dart';
 import 'package:quran_flutter/features/home/presentation/screens/home_screen.dart';
-import 'package:quran_flutter/features/learning/presentation/screens/learn_coming_soon_screen.dart';
 import 'package:quran_flutter/features/quran_reader/presentation/providers/surah_providers.dart';
 import 'package:quran_flutter/features/quran_reader/presentation/screens/surah_list_screen.dart';
 import 'package:quran_flutter/features/settings/presentation/widgets/reader_settings_sheet.dart';
+import 'package:quran_flutter/features/supplications/presentation/screens/supplications_categories_screen.dart';
 import 'package:quran_flutter/l10n/app_localizations.dart';
 
-/// The app's persistent bottom navigation — Home | Quran | Learn |
-/// Bookmarks | Settings — present on every top-level screen (never on
+/// The app's persistent bottom navigation — Home | Quran | Supplications
+/// | Bookmarks | Settings — present on every top-level screen (never on
 /// the Quran Reader itself, which stays distraction-free).
 ///
 /// Navigation is plain `pushReplacement` between top-level screens
@@ -50,7 +51,7 @@ class IqraBottomNav extends ConsumerWidget {
           case 1:
             if (currentIndex != 1) go(const SurahListScreen());
           case 2:
-            go(const LearnComingSoonScreen());
+            go(const SupplicationsCategoriesScreen());
           case 3:
             if (currentIndex != 3) go(const BookmarksScreen());
           case 4:
@@ -64,7 +65,11 @@ class IqraBottomNav extends ConsumerWidget {
           selectedIcon: const Icon(Icons.menu_book),
           label: l10n.navQuran,
         ),
-        NavigationDestination(icon: const Icon(Icons.school_outlined), selectedIcon: const Icon(Icons.school), label: l10n.navLearn),
+        NavigationDestination(
+          icon: const DuaHandsIcon(),
+          selectedIcon: const DuaHandsIcon(filled: true),
+          label: l10n.navSupplications,
+        ),
         NavigationDestination(
           icon: const Icon(Icons.bookmark_outline),
           selectedIcon: const Icon(Icons.bookmark),
