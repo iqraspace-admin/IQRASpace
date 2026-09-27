@@ -46,10 +46,6 @@ export function getAllChapters(): Chapter[] {
   }
 }
 
-export function getChapter(number: number): Chapter | undefined {
-  return getAllChapters().find((c) => c.id === number);
-}
-
 /** Full verse content (Uthmani text + translation) for one Surah. */
 export function getSurahContent(number: number): SurahContent | undefined {
   try {

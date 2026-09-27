@@ -51,8 +51,3 @@ function loadManifest(): PdfManifest | undefined {
 export function getSurahPdfInfo(surahNumber: number): SurahPdfInfo | undefined {
   return loadManifest()?.surahs[String(surahNumber)];
 }
-
-/** Whether PDF Mode has any generated content at all — used to decide whether to surface the feature/toggle in the UI at all if the pipeline has never been run. */
-export function isPdfModeAvailable(): boolean {
-  return loadManifest() !== undefined;
-}

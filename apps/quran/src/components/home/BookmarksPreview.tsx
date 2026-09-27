@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { loadBookmarks, type BookmarkKey } from "@/lib/preferences/storage";
 import { useT } from "@/lib/i18n/useT";
 import type { Chapter } from "@/lib/content/types";
+import { useHydratedState } from "./useHydratedState";
+import { HomeCard } from "./HomeCard";
+import { headingRowStyle, headingStyle, seeAllStyle, rowStyle } from "./homeRowStyles";
 
 type Props = {
   chapters: Chapter[];
@@ -22,17 +24,8 @@ const MAX_PREVIEW = 5;
  * this uses the same Mushaf-order sort for consistency with that page.
  */
 export function BookmarksPreview({ chapters }: Props) {
-  const [keys, setKeys] = useState<BookmarkKey[] | null>(null);
+  const keys = useHydratedState<BookmarkKey[] | null>(loadBookmarks, null);
   const { t } = useT();
-
-  useEffect(() => {
-    async function hydrate() {
-      const loaded = loadBookmarks();
-      await Promise.resolve(); // satisfies react-hooks/set-state-in-effect
-      setKeys(loaded);
-    }
-    hydrate();
-  }, []);
 
   if (keys === null) return null; // avoid a first-render "no bookmarks" flash before hydration
 
@@ -57,62 +50,15 @@ export function BookmarksPreview({ chapters }: Props) {
             .sort((a, b) => a.surahNumber - b.surahNumber || a.ayahNumber - b.ayahNumber)
             .slice(0, MAX_PREVIEW)
             .map(({ key, surahNumber, ayahNumber, chapter }) => (
-              <Link key={key} href={`/surah/${surahNumber}?verse=${surahNumber}:${ayahNumber}`} style={cardStyle}>
-                <span style={{ fontWeight: 600, color: "var(--color-text)" }}>
-                  {chapter?.name_simple ?? `Surah ${surahNumber}`}
-                </span>
-                <span style={{ color: "var(--color-text-muted)", fontSize: "0.8rem" }}>
-                  {t("homeAyah", { n: ayahNumber })}
-                </span>
-              </Link>
+              <HomeCard
+                key={key}
+                href={`/surah/${surahNumber}?verse=${surahNumber}:${ayahNumber}`}
+                title={chapter?.name_simple ?? `Surah ${surahNumber}`}
+                subtitle={t("homeAyah", { n: ayahNumber })}
+              />
             ))}
         </div>
       )}
     </section>
   );
 }
-
-const headingRowStyle: CSSProperties = {
-  display: "flex",
-  alignItems: "baseline",
-  justifyContent: "space-between",
-  marginBottom: "0.75rem",
-};
-
-const headingStyle: CSSProperties = {
-  fontFamily: "var(--font-display)",
-  fontWeight: 600,
-  fontSize: "1.125rem",
-  color: "var(--color-text)",
-  margin: 0,
-};
-
-const seeAllStyle: CSSProperties = {
-  color: "var(--color-primary)",
-  fontWeight: 600,
-  fontSize: "0.85rem",
-  textDecoration: "none",
-};
-
-const rowStyle: CSSProperties = {
-  display: "flex",
-  gap: "0.75rem",
-  overflowX: "auto",
-  paddingBottom: "0.25rem",
-  scrollSnapType: "x proximity",
-  WebkitOverflowScrolling: "touch",
-};
-
-const cardStyle: CSSProperties = {
-  flexShrink: 0,
-  scrollSnapAlign: "start",
-  display: "flex",
-  flexDirection: "column",
-  gap: "0.25rem",
-  width: "9.5rem",
-  padding: "0.75rem 0.9rem",
-  borderRadius: "0.5rem",
-  border: "1px solid var(--color-border)",
-  background: "var(--color-surface)",
-  textDecoration: "none",
-};

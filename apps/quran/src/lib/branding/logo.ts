@@ -32,17 +32,6 @@ export function readLogoDataUri(): string {
 export const LOGO_ICON_CROP = { left: 267, top: 60, width: 720, height: 600 };
 
 /**
- * The two elements within the icon mark, cropped separately for use as
- * small decorative icons (e.g. the homepage's feature strip) — same
- * "measured against the real file, re-measure if it's ever replaced"
- * caveat as LOGO_ICON_CROP. The two boxes deliberately overlap a little
- * where the candle visually sits into the book in the source art, rather
- * than a razor-clean split.
- */
-export const LOGO_CANDLE_CROP = { left: 495, top: 65, width: 270, height: 390 };
-export const LOGO_BOOK_CROP = { left: 267, top: 445, width: 720, height: 145 };
-
-/**
  * Computes the position/size for the FULL source image so that
  * `crop` (a region within it) fits a `frame` square via "contain"
  * semantics (uniform scale, letterboxed on the shorter axis) — the same

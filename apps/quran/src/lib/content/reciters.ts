@@ -37,10 +37,6 @@ export const RECITERS: readonly Reciter[] = [
 
 export const DEFAULT_RECITER: ReciterId = "ar.alafasy";
 
-export function reciterLabel(id: ReciterId): string {
-  return RECITERS.find((r) => r.id === id)?.label ?? id;
-}
-
 /** The mp3 URL for one Ayah, given its global (1-6236) Ayah number — see
     the module doc comment above for how/why this is safe to build
     client-side with no API call. `128` is the bitrate directory Al Quran

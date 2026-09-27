@@ -22,7 +22,3 @@ export const TRANSLATION_LANGUAGES: readonly TranslationLanguage[] = [
   { id: "english", resourceId: 85, label: "English" },
   { id: "roman-urdu", resourceId: 831, label: "Roman Urdu" },
 ];
-
-export function translationLanguageLabel(id: TranslationLanguageId): string {
-  return TRANSLATION_LANGUAGES.find((l) => l.id === id)?.label ?? id;
-}

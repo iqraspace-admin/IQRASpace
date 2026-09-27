@@ -1,5 +1,3 @@
-import type { CSSProperties } from "react";
-
 type Props = {
   size?: "sm" | "lg";
   /** Shows "Quran" under/after the wordmark — this app is one product
@@ -78,11 +76,3 @@ export function BrandWordmark({ size = "sm", showProductLabel = true }: Props) {
     </span>
   );
 }
-
-export const flourishRuleStyle: CSSProperties = {
-  display: "inline-block",
-  width: "2rem",
-  height: "1px",
-  background: "var(--color-accent)",
-  verticalAlign: "middle",
-};
