@@ -35,7 +35,6 @@ export type Annotation = {
 };
 
 export const TOOL_COLORS = ["#b23b2e", "#0b6b5c", "#1c4f9c", "#b98a3d", "#1c2521"];
-export const HIGHLIGHT_COLOR = "#ffd35c";
 
 export function newAnnotationId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;

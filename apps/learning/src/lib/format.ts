@@ -37,10 +37,6 @@ export function formatDateLong(dateISO: string) {
   return d.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" });
 }
 
-export function combineDateTime(dateISO: string, time: string | null | undefined) {
-  return new Date(`${dateISO}T${time ?? "00:00:00"}`);
-}
-
 /** "14:30" + 20 -> "14:50" (wraps at 24h; Postgres TIME "HH:MM" or "HH:MM:SS" in, "HH:MM" out). */
 export function addMinutesToTime(time: string, minutes: number): string {
   const [hStr, mStr] = time.split(":");

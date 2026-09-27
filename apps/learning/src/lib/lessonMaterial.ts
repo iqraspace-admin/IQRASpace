@@ -13,10 +13,6 @@ export function isQuranSurahMaterialPath(path: string): boolean {
   return path.startsWith(QURAN_SURAH_PREFIX);
 }
 
-export function quranSurahMaterialPath(surahNumber: number): string {
-  return `${QURAN_SURAH_PREFIX}${surahNumber}`;
-}
-
 /** The one place every material-viewing call site resolves a
  * `material_storage_path` (or `lesson_materials.storage_path`) into an
  * actual URL for the PDF Viewer — instead of each assuming every path is a

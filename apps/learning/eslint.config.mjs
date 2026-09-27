@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored pdfjs-dist runtime assets, copied by scripts/copy-pdfjs-assets.mjs
+    // (predev/prebuild) — gitignored, not source, not seen by a fresh CI checkout
+    // before lint runs, but present locally after any `npm run dev`/`build`.
+    "public/pdfjs/**",
   ]),
 ]);
 
