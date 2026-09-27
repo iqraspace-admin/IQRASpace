@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IqraSpace — Agentic Technical Documentation</title>
+<style>
+  :root{
+    --bg:#f7f7f5; --panel:#ffffff; --ink:#1c1b19; --ink-soft:#565349; --border:#e4e1d8;
+    --accent:#0d6e5b; --accent-ink:#ffffff; --accent-soft:#e4f3ee;
+    --code-bg:#f1efe6; --code-ink:#3a3730;
+    --ok:#0d6e5b; --ok-bg:#e4f3ee;
+    --warn:#8a5a00; --warn-bg:#fbf0da;
+    --danger:#9c3a2f; --danger-bg:#fbe9e5;
+    --info:#2c5f8a; --info-bg:#e6f0f8;
+    --biz:#7a4fb5; --biz-bg:#f0e9fa;
+    --muted:#8f8b7d; --muted-bg:#eeece3;
+    --link:#0d6e5b;
+    --shadow: 0 1px 2px rgba(30,28,20,.06), 0 6px 20px rgba(30,28,20,.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#15161a; --panel:#1b1c21; --ink:#eceae2; --ink-soft:#a8a498; --border:#2c2d33;
+      --accent:#3ecfa9; --accent-ink:#0b1210; --accent-soft:#12312a;
+      --code-bg:#101114; --code-ink:#d9d6c9;
+      --ok:#3ecfa9; --ok-bg:#12312a;
+      --warn:#e0b04a; --warn-bg:#332a10;
+      --danger:#e2897a; --danger-bg:#3a1a15;
+      --info:#7bb3e0; --info-bg:#13293a;
+      --biz:#c3a4ec; --biz-bg:#241c33;
+      --muted:#7c7969; --muted-bg:#232419;
+      --link:#3ecfa9;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#15161a; --panel:#1b1c21; --ink:#eceae2; --ink-soft:#a8a498; --border:#2c2d33;
+    --accent:#3ecfa9; --accent-ink:#0b1210; --accent-soft:#12312a;
+    --code-bg:#101114; --code-ink:#d9d6c9;
+    --ok:#3ecfa9; --ok-bg:#12312a;
+    --warn:#e0b04a; --warn-bg:#332a10;
+    --danger:#e2897a; --danger-bg:#3a1a15;
+    --info:#7bb3e0; --info-bg:#13293a;
+    --biz:#c3a4ec; --biz-bg:#241c33;
+    --muted:#7c7969; --muted-bg:#232419;
+    --link:#3ecfa9;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 24px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+    font-size:15.5px; line-height:1.6;
+  }
+  code, pre, .mono{ font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; }
+  a{ color:var(--link); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+
+  .layout{ display:flex; min-height:100vh; max-width:1680px; margin:0 auto; }
+
+  #sidebar{
+    width:300px; flex:0 0 300px; border-right:1px solid var(--border);
+    position:sticky; top:0; align-self:flex-start; height:100vh; overflow-y:auto;
+    padding:22px 16px 60px; background:var(--panel);
+  }
+  #sidebar .brand{ display:flex; align-items:center; gap:10px; margin-bottom:4px; }
+  #sidebar .brand .dot{ width:11px; height:11px; border-radius:50%; background:var(--accent); flex:0 0 auto; }
+  #sidebar .brand strong{ font-size:15px; letter-spacing:.2px; }
+  #sidebar .subtitle{ font-size:12px; color:var(--ink-soft); margin:2px 0 12px; }
+  #sidebar .searchBox{ margin-bottom:12px; }
+  #sidebar .searchBox input{
+    width:100%; padding:7px 10px; border-radius:8px; border:1px solid var(--border);
+    background:var(--bg); color:var(--ink); font-size:12.5px;
+  }
+  #sidebar nav a{
+    display:block; color:var(--ink-soft); font-size:13.5px; padding:5px 8px; border-radius:6px;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  #sidebar nav a:hover{ background:var(--muted-bg); text-decoration:none; color:var(--ink); }
+  #sidebar nav a.active{ background:var(--accent-soft); color:var(--accent); font-weight:600; }
+  #sidebar nav .h1{ margin-top:14px; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); padding:6px 8px 2px; font-weight:700; }
+  #sidebar nav .h2{ padding-left:20px; font-size:12.5px; }
+  #menuToggle{ display:none; }
+
+  main{ flex:1; min-width:0; padding:0; }
+  .container{ max-width:1040px; margin:0 auto; padding:40px 40px 120px; }
+
+  header.hero{
+    padding:56px 40px 34px; border-bottom:1px solid var(--border);
+    background: linear-gradient(180deg, var(--accent-soft), transparent 140%);
+  }
+  header.hero .container{ padding:0; max-width:1040px; }
+  header.hero h1{ font-size:34px; margin:0 0 8px; letter-spacing:-.02em; }
+  header.hero p.lead{ font-size:16.5px; color:var(--ink-soft); max-width:800px; margin:0 0 18px; }
+  .meta-row{ display:flex; gap:10px; flex-wrap:wrap; font-size:12.5px; color:var(--ink-soft); }
+  .meta-row span{ background:var(--panel); border:1px solid var(--border); padding:4px 10px; border-radius:999px; }
+
+  h2{ font-size:24px; margin:52px 0 6px; padding-top:8px; letter-spacing:-.01em; scroll-margin-top:24px; }
+  h2 .num{ color:var(--muted); font-weight:500; margin-right:8px; }
+  h3{ font-size:18px; margin:30px 0 8px; scroll-margin-top:24px; }
+  h4{ font-size:15px; margin:22px 0 6px; color:var(--ink); }
+  section > p.section-sub{ color:var(--ink-soft); margin-top:0; margin-bottom:18px; font-size:14.5px; }
+  p{ margin:10px 0; }
+  ul, ol{ padding-left:22px; margin:10px 0; }
+  li{ margin:4px 0; }
+  hr.sep{ border:none; border-top:1px solid var(--border); margin:48px 0; }
+
+  .card{ background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:18px 20px; margin:16px 0; box-shadow:var(--shadow); }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .grid4{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  @media (max-width:820px){ .grid2, .grid3, .grid4{ grid-template-columns:1fr; } }
+
+  .app-card{ border-left:4px solid var(--accent); }
+  .app-card h4{ margin-top:0; font-size:16px; }
+  .app-card .tag{ font-size:11.5px; color:var(--ink-soft); }
+
+  table{ width:100%; border-collapse:collapse; margin:14px 0; font-size:13.6px; }
+  th, td{ text-align:left; padding:9px 10px; border-bottom:1px solid var(--border); vertical-align:top; }
+  th{ background:var(--muted-bg); font-weight:600; font-size:12.3px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); }
+  tr:hover td{ background: color-mix(in srgb, var(--muted-bg) 45%, transparent); }
+  td code, li code, p code{ background:var(--code-bg); color:var(--code-ink); padding:1.5px 6px; border-radius:5px; font-size:.88em; }
+
+  pre{ background:var(--code-bg); color:var(--code-ink); padding:14px 16px; border-radius:10px; overflow-x:auto; font-size:13px; border:1px solid var(--border); }
+  pre code{ background:none; padding:0; }
+
+  .badge{ display:inline-block; font-size:11px; font-weight:700; padding:2px 9px; border-radius:999px; letter-spacing:.02em; white-space:nowrap; }
+  .badge.ok{ background:var(--ok-bg); color:var(--ok); }
+  .badge.warn{ background:var(--warn-bg); color:var(--warn); }
+  .badge.danger{ background:var(--danger-bg); color:var(--danger); }
+  .badge.info{ background:var(--info-bg); color:var(--info); }
+  .badge.biz{ background:var(--biz-bg); color:var(--biz); }
+  .badge.muted{ background:var(--muted-bg); color:var(--muted); }
+
+  .callout{ border-radius:10px; padding:13px 16px; margin:16px 0; font-size:14px; border:1px solid; }
+  .callout.warn{ background:var(--warn-bg); border-color:var(--warn); color:var(--ink); }
+  .callout.info{ background:var(--info-bg); border-color:var(--info); color:var(--ink); }
+  .callout.danger{ background:var(--danger-bg); border-color:var(--danger); color:var(--ink); }
+  .callout.ok{ background:var(--ok-bg); border-color:var(--ok); color:var(--ink); }
+  .callout strong{ display:block; margin-bottom:3px; }
+
+  .biz-box{ background:var(--biz-bg); border:1px solid var(--biz); border-left-width:4px; border-radius:10px; padding:14px 18px; margin:16px 0; font-size:14px; }
+  .biz-box .biz-label{ display:flex; align-items:center; gap:8px; font-weight:700; color:var(--biz); font-size:12px; text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px; }
+  .biz-box .biz-label::before{ content:"💼"; font-size:13px; }
+
+  .fn-card{ background:var(--panel); border:1px solid var(--border); border-radius:10px; margin:14px 0; overflow:hidden; }
+  .fn-card .fn-head{ background:var(--muted-bg); padding:10px 16px; font-family: ui-monospace, monospace; font-size:13.5px; font-weight:600; border-bottom:1px solid var(--border); }
+  .fn-card .fn-head .fn-path{ color:var(--ink-soft); font-weight:400; font-size:12px; display:block; margin-top:2px; }
+  .fn-body{ padding:4px 16px 12px; }
+  .fn-row{ display:grid; grid-template-columns:130px 1fr; gap:10px; padding:7px 0; border-bottom:1px dashed var(--border); font-size:13.3px; }
+  .fn-row:last-child{ border-bottom:none; }
+  .fn-row .fn-k{ font-weight:700; color:var(--ink-soft); font-size:11.5px; text-transform:uppercase; letter-spacing:.04em; padding-top:2px; }
+  .fn-row .fn-v{ color:var(--ink); }
+  .fn-row .fn-v code{ background:var(--code-bg); color:var(--code-ink); padding:1px 5px; border-radius:4px; }
+
+  .mermaid-wrap{ background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:18px; margin:16px 0; overflow-x:auto; }
+  .mermaid{ display:flex; justify-content:center; }
+
+  .toc-mini{ columns:2; font-size:13.5px; }
+  .toc-mini li{ break-inside:avoid; }
+
+  .tree{ background:var(--code-bg); border:1px solid var(--border); border-radius:10px; padding:16px 18px; font-size:12.6px; line-height:1.65; overflow-x:auto; }
+  .tree .c1{ color:var(--accent); }
+  .tree .c2{ color:var(--ink-soft); }
+
+  .glossary dt{ font-weight:700; margin-top:14px; font-family: ui-monospace, monospace; font-size:13.5px; }
+  .glossary dd{ margin:2px 0 0; color:var(--ink-soft); font-size:13.8px; }
+
+  footer{ padding:40px; text-align:center; color:var(--muted); font-size:12.5px; border-top:1px solid var(--border); }
+
+  .backtotop{ position:fixed; right:24px; bottom:24px; background:var(--panel); border:1px solid var(--border); color:var(--ink-soft); width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow); font-size:16px; }
+
+  @media (max-width: 980px){
+    #sidebar{ position:fixed; z-index:50; left:-320px; top:0; width:290px; transition:left .2s ease; box-shadow:var(--shadow); }
+    #sidebar.open{ left:0; }
+    #menuToggle{ display:flex; align-items:center; gap:8px; position:sticky; top:0; z-index:40; background:var(--panel); border-bottom:1px solid var(--border); padding:12px 16px; font-size:14px; font-weight:600; }
+    .container{ padding:24px 20px 100px; }
+    header.hero{ padding:28px 20px 22px; }
+    header.hero h1{ font-size:26px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="menuToggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰ &nbsp;Contents</div>
+
+<div class="layout">
+  <aside id="sidebar">
+    <div class="brand"><span class="dot"></span><strong>IqraSpace</strong></div>
+    <div class="subtitle">Agentic Technical Documentation</div>
+    <div class="searchBox"><input id="tocFilter" type="text" placeholder="Filter contents…" oninput="filterToc(this.value)"></div>
+    <nav id="tocNav">
+      <a href="#howto">0. How to Read This</a>
+      <a href="#exec">1. Executive Summary</a>
+      <a href="#architecture">2. System Architecture</a>
+      <a href="#apps-overview">3. The Four Applications</a>
+      <a href="#stack">4. Technology Stack</a>
+      <a href="#structure">5. Repository &amp; File Inventory</a>
+      <div class="h1">App Deep Dives</div>
+      <a href="#app-learning">6. apps/learning</a>
+      <a href="#app-quran">7. apps/quran</a>
+      <a href="#app-mobile">8. apps/mobile/android</a>
+      <a href="#app-landing">9. apps/landing</a>
+      <div class="h1">End-to-End Flows</div>
+      <a href="#flow-routing">10. Multi-Zones Routing</a>
+      <a href="#flow-auth">11. Authentication Flow</a>
+      <a href="#flow-reading">12. Quran Reading Flow</a>
+      <a href="#flow-audio">13. Audio / Listening Flow</a>
+      <a href="#flow-teach">14. Learning / Tutor Live-Teach Flow</a>
+      <a href="#flow-sync">15. Content Sync Pipeline</a>
+      <a href="#flow-cicd">16. CI/CD &amp; Deployment Flow</a>
+      <div class="h1">Cross-Cutting</div>
+      <a href="#data">17. Data Architecture</a>
+      <a href="#integrations">18. Third-Party Integrations</a>
+      <a href="#testing">19. Testing &amp; Quality</a>
+      <div class="h1">This Session's Work</div>
+      <a href="#cleanup">20. Before/After Cleanup Summary</a>
+      <div class="h1">Reference</div>
+      <a href="#debt">21. Known Gaps &amp; Doc Drift</a>
+      <a href="#glossary">22. Glossary</a>
+      <a href="#appendix">23. Appendix: Full File Inventory</a>
+    </nav>
+  </aside>
+
+  <main>
+    <header class="hero">
+      <div class="container">
+        <span class="badge info">Technical + Business Reference</span>
+        <span class="badge biz">Written for developers AND non-technical stakeholders</span>
+        <h1>IqraSpace — Agentic Technical Documentation</h1>
+        <p class="lead">A complete, ground-truth walkthrough of everything IqraSpace is and does — from a user tapping a button to the exact file, function, API call, and database row that responds. Every technical section is paired with a <span class="badge biz" style="vertical-align:middle;">💼 business</span> explanation in plain language, so a non-technical reader can follow the same story a developer would trace through code.</p>
+        <div class="meta-row">
+          <span>Generated: 2026-09-27</span>
+          <span>4 independent apps, 1 shared domain</span>
+          <span>Source of truth: current code on <code>main</code></span>
+          <span>Companion doc: <code>docs/DEVELOPER_GUIDE.html</code></span>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+
+    <!-- 0. HOW TO READ -->
+    <section id="howto">
+      <h2><span class="num">0</span>How to Read This Document</h2>
+      <p class="section-sub">Two audiences, one document — pick your path.</p>
+      <div class="grid2">
+        <div class="card">
+          <strong>If you're a developer</strong>
+          <p style="margin-bottom:0;">Read §2–§5 for the shape of the whole repo, then jump straight to the app you're touching (§6–§9). §10–§16 trace real user actions through actual file and function names — use them when you need to find "where does X happen." §21–§23 are reference material (known issues, terminology, full file lists).</p>
+        </div>
+        <div class="card">
+          <strong>If you're a non-technical stakeholder</strong>
+          <p style="margin-bottom:0;">Read §1 (Executive Summary) and §3 (The Four Applications) first. Every section after that has a <span class="badge biz">💼 business</span>-labeled box before the technical detail — read just those boxes to follow the whole story without needing to understand code. §22 (Glossary) defines every technical term used elsewhere in plain English.</p>
+        </div>
+      </div>
+      <div class="callout info"><strong>This document only states what the code actually does.</strong>
+      Every claim here was checked directly against the source on the <code>main</code> branch during this review — not against older docs, memory, or assumption. Where an existing doc elsewhere in the repo disagrees with the code, this document follows the code and flags the discrepancy in §21.</div>
+    </section>
+
+    <!-- 1. EXECUTIVE SUMMARY -->
+    <section id="exec">
+      <h2><span class="num">1</span>Executive Summary</h2>
+      <p class="section-sub">What IqraSpace is, in plain terms.</p>
+
+      <div class="biz-box">
+        <div class="biz-label">Business Explanation</div>
+        <p>IqraSpace is a small, self-funded Islamic education brand with two distinct product lines under one name and one website:</p>
+        <ol>
+          <li><strong>A free public Quran reader</strong> — anyone in the world can open <code>iqraspace.org/quran</code> or the Android app and read, listen to, and search the Quran with no sign-up, no ads, and no cost. This is the "give freely" side of the brand — a Sadaqah Jariyah (ongoing charity), not a commercial product.</li>
+          <li><strong>A paid-adjacent tutoring product</strong> — <code>iqraspace.org/learning</code> is a private classroom system for one solo Quran tutor and their students: scheduling lessons, teaching live with a shared PDF and synchronized highlighting, tracking attendance and progress, and keeping a shared curriculum.</li>
+        </ol>
+        <p style="margin-bottom:0;">These two products deliberately share nothing technical — different databases, different login systems, different codebases — because they serve different audiences with different privacy needs (the tutoring app holds real student data; the reader app is anonymous by design). A third, native Android version of the reader exists separately for the Play Store, and a single plain webpage ties all of it together under the <code>iqraspace.org</code> domain.</p>
+      </div>
+
+      <h3>What exists today (verified against code, not aspiration)</h3>
+      <table>
+        <tr><th>Product</th><th>Status</th><th>Who it's for</th></tr>
+        <tr><td>Quran reader (web) — <code>apps/quran</code></td><td><span class="badge ok">Live, actively developed</span></td><td>Anyone, worldwide, no account</td></tr>
+        <tr><td>Quran reader (Android) — <code>apps/mobile/android</code></td><td><span class="badge ok">Live on Play Store (closed testing)</span></td><td>Android users, no account</td></tr>
+        <tr><td>Tutoring LMS — <code>apps/learning</code></td><td><span class="badge ok">Live pilot</span></td><td>One tutor + their enrolled students, invite-only</td></tr>
+        <tr><td>Domain landing page — <code>apps/landing</code></td><td><span class="badge ok">Live</span></td><td>Anyone arriving at the bare domain</td></tr>
+      </table>
+
+      <h3>Guiding principles that shape every technical decision</h3>
+      <ul>
+        <li><strong>The Quran reader must stay free and account-free forever.</strong> Reading, search, audio, and preferences never require login — this is a product promise, not just a current state.</li>
+        <li><strong>The Quran reader must stay near-$0 to run.</strong> No paid databases, no paid search engines, no self-hosted media bandwidth for content that can stream from a free CDN instead.</li>
+        <li><strong>The tutoring app protects real people's data.</strong> Minors' information (names, schedules, progress) lives only in its own access-controlled database, never touched by the public reader apps.</li>
+        <li><strong>Each app can be rebuilt, redeployed, or even discontinued independently</strong> — none of the four apps' failure or removal breaks another.</li>
+      </ul>
+    </section>
+
+    <!-- 2. SYSTEM ARCHITECTURE -->
+    <section id="architecture">
+      <h2><span class="num">2</span>System Architecture</h2>
+      <p class="section-sub">How a browser request actually finds its way to the right app.</p>
+
+      <div class="biz-box">
+        <div class="biz-label">Business Explanation</div>
+        <p style="margin-bottom:0;">Think of <code>iqraspace.org</code> as a building lobby with a directory sign. The lobby itself (<code>apps/landing</code>) is a single, simple page. Walk toward "Quran Reader" or "Learning Portal" and the sign silently redirects you into a completely separate building (a separate deployed application, on a separate server, built by a separate team process) — but the elevator ride is seamless, so as a visitor you never notice you changed buildings. This means the tutoring app's ups and downs never affect the Quran reader, and vice versa.</p>
+      </div>
+
+      <h3>Diagram</h3>
+      <div class="mermaid-wrap">
+        <div class="mermaid">
+flowchart TB
+  U["Browser / Android device"] --> DNS["iqraspace.org DNS<br/>(Cloudflare, DNS-only)"]
+  DNS --> LAND["apps/landing<br/>static HTML + vercel.json rewrites()"]
+  LAND -- "/quran/*" --> QVERCEL["apps/quran Vercel project<br/>Next.js 16, basePath=/quran, SSG"]
+  LAND -- "/learning/*" --> LVERCEL["apps/learning Vercel project<br/>Next.js 16, basePath=/learning"]
+  LAND -- "everything else" --> LANDPAGES["landing's own pages<br/>index.html, privacy.html"]
+
+  LVERCEL --> SBL["Supabase (learning project)<br/>Postgres + Auth + Realtime + Storage"]
+  LVERCEL -.-> GOAUTH["Google OAuth / Drive<br/>(code-complete, NOT deployed)"]
+  SBL --> EDGE["Edge Functions<br/>admin-user-management (live)"]
+
+  QVERCEL -.-> SBQ["Supabase (quran project)<br/>schema exists, UNWIRED"]
+  QVERCEL --> QFAPI["Quran Foundation API<br/>build-time content sync only"]
+  QVERCEL --> AQC["Al Quran Cloud API<br/>live Tajweed fetch, opt-in"]
+  QVERCEL --> R2["Cloudflare R2<br/>audio.iqraspace.org"]
+
+  MOBILE["apps/mobile/android<br/>Android / Web, Hive local storage"] --> AQC
+  MOBILE --> R2
+
+  style LAND fill:#0d6e5b22,stroke:#0d6e5b
+  style R2 fill:#0d6e5b22,stroke:#0d6e5b
+        </div>
+      </div>
+
+      <div class="callout warn"><strong>One connection this repo's own top-level docs don't mention</strong>
+      The Cloudflare R2 audio bucket is documented as apps/mobile/android's "one deliberate exception" to its isolation from apps/quran. In the current code, <strong>apps/quran also streams whole-Surah audio directly from that same bucket</strong> (its Content-Security-Policy allow-lists <code>https://audio.iqraspace.org</code>, and <code>src/lib/content/listeningAudio.ts</code> builds the same URL scheme, ported from the Flutter app's Dart constants). No code or imports are shared — both apps independently hard-code URLs to the same public, keyless CDN endpoint — but the bucket is now a dependency of <em>two</em> apps, not one.</div>
+
+      <h3>Multi-Zones routing, traced end to end</h3>
+      <p>A request to <code>iqraspace.org/quran/some-page</code>:</p>
+      <ol>
+        <li>DNS for <code>iqraspace.org</code> resolves to the <strong>apps/landing</strong> Vercel project (kept DNS-only/un-proxied on Cloudflare).</li>
+        <li>Landing's <code>vercel.json</code> evaluates its <code>rewrites</code> array. <code>/quran/:path*</code> matches a rule that transparently proxies to <code>https://iqraspace-quran.vercel.app/quran/:path*</code> — the browser's address bar never changes.</li>
+        <li>That target is <strong>apps/quran's own, separately deployed</strong> Vercel project. Its <code>next.config.ts</code> sets <code>basePath</code> from <code>NEXT_BASE_PATH</code>, set to <code>/quran</code> only in that project's Vercel production environment — so the app's own routing lines up exactly with the incoming path.</li>
+        <li>The same pattern applies to <code>/learning/*</code> → apps/learning's own project.</li>
+        <li>Anything not matching <code>/quran*</code> or <code>/learning*</code> is served directly by apps/landing, with its own security headers applied only there (scoped via a negative-lookahead <code>source</code> pattern so they don't collide with the proxied apps' own headers).</li>
+      </ol>
+      <p><strong>Net effect:</strong> three fully independent Vercel projects/deployments, each with its own CI workflow and secrets, stitched into one apparent domain purely by an edge-level rewrite. There is no shared runtime.</p>
+    </section>
+
+    <!-- 3. THE FOUR APPS -->
+    <section id="apps-overview">
+      <h2><span class="num">3</span>The Four Applications</h2>
+      <p class="section-sub">Independent products, one brand, one domain.</p>
+      <div class="grid2">
+        <div class="card app-card">
+          <h4>Quranic Teacher <span class="tag">apps/learning</span></h4>
+          <p>A tutoring LMS for one solo Quran tutor and their students: scheduling, live PDF-based teaching with real-time highlight sync, attendance, progress tracking, curriculum ("lesson plans"), notifications. Requires login. Lives at <code>iqraspace.org/learning</code>.</p>
+        </div>
+        <div class="card app-card">
+          <h4>IqraSpace Quran <span class="tag">apps/quran</span></h4>
+          <p>A free, anonymous-first public Quran reader: Surah/Page/PDF reading modes, per-ayah and whole-Surah audio, Tajweed coloring, search, Supplications, bookmarks — all local-only today, no login required. Lives at <code>iqraspace.org/quran</code>.</p>
+        </div>
+        <div class="card app-card">
+          <h4>IqraSpace Quran (Flutter) <span class="tag">apps/mobile/android</span></h4>
+          <p>The native Android (and web-capable) counterpart to apps/quran — a fully separate codebase and data source: Tajweed-colored reading, Listening Mode, Supplications, bookmarks, all offline-first via Hive. Distributed through Google Play (closed testing).</p>
+        </div>
+        <div class="card app-card">
+          <h4>Landing <span class="tag">apps/landing</span></h4>
+          <p>A single static HTML page that owns the <code>iqraspace.org</code> domain root and transparently proxies <code>/quran/*</code> and <code>/learning/*</code> to the other two Vercel projects. No framework, no build step, by design.</p>
+        </div>
+      </div>
+
+      <div class="biz-box">
+        <div class="biz-label">Business Explanation</div>
+        <p style="margin-bottom:0;">Why keep them so separate instead of one big app? Two reasons a business stakeholder would care about: <strong>trust</strong> and <strong>survivability</strong>. Trust — the tutoring app holds real students' (often minors') personal data behind a login; the reader apps hold nobody's data and need none, which is exactly the promise made to anonymous readers. Mixing the two systems would put children's data one bug away from public exposure. Survivability — because the four apps don't share code, a bug or outage in one cannot take down another. The Quran reader staying up doesn't depend on the tutoring database being healthy, and vice versa.</p>
+      </div>
+
+      <h3>Key users / actors</h3>
+      <table>
+        <tr><th>Actor</th><th>Interacts with</th><th>Notes</th></tr>
+        <tr><td>Tutor</td><td>apps/learning</td><td>Creates classes, schedules 1:1 sessions, teaches live (PDF + highlight broadcast), marks attendance, writes lesson notes, manages the shared curriculum.</td></tr>
+        <tr><td>Student</td><td>apps/learning</td><td>Views their schedule, follows a live lesson read-only (<code>/share/[lessonId]</code>), sees progress and notifications. Requires a real login — sharing is <strong>not</strong> a public/token link.</td></tr>
+        <tr><td>Guardian</td><td>apps/learning</td><td>Modeled in the DB/type system (<code>role</code> enum, signup metadata) but has <strong>no dedicated UI</strong> today — <span class="badge warn">Partial</span>.</td></tr>
+        <tr><td>Admin / Super Admin</td><td>apps/learning</td><td>Full CRUD across the app via <code>is_admin()</code> RLS bypass; provisioned only by a seed script or the <code>admin-user-management</code> Edge Function, never via public signup.</td></tr>
+        <tr><td>Anonymous reader</td><td>apps/quran, apps/mobile/android</td><td>The overwhelming majority of users. No account needed for any core reading/audio/search feature.</td></tr>
+        <tr><td>Owner / solo developer</td><td>All four apps</td><td>Runs Supabase projects, Vercel projects, Play Console, Cloudflare R2, and the GitHub Actions secrets for each app independently.</td></tr>
+      </table>
+    </section>
+
+    <!-- 4. STACK -->
+    <section id="stack">
+      <h2><span class="num">4</span>Technology Stack</h2>
+      <p class="section-sub">Exact versions as declared in each app's own manifest.</p>
+      <table>
+        <tr><th>App</th><th>Runtime</th><th>Framework</th><th>Language</th><th>Styling</th><th>Key libraries</th><th>Data/Backend</th></tr>
+        <tr>
+          <td><code>apps/learning</code></td>
+          <td>Node ≥20.9</td>
+          <td>Next.js 16.3.3 (App Router)</td>
+          <td>TypeScript ^5</td>
+          <td>Tailwind CSS ^4</td>
+          <td>React 19.2.8, <code>@supabase/supabase-js</code> ^2.112.4, <code>pdfjs-dist</code> ^6.3.289</td>
+          <td>Supabase (own project): Postgres, Auth, Realtime, Storage, Edge Functions</td>
+        </tr>
+        <tr>
+          <td><code>apps/quran</code></td>
+          <td>Node ≥20.9</td>
+          <td>Next.js 16.3.3 (App Router, SSG — 759 static routes)</td>
+          <td>TypeScript ^5</td>
+          <td>Tailwind CSS ^4</td>
+          <td>React 19.2.8, <code>react-pdf</code> ^10.5.0, <code>pdf-lib</code> ^1.17.1 (dev)</td>
+          <td>Committed generated JSON content; Supabase project provisioned but unwired (no client installed)</td>
+        </tr>
+        <tr>
+          <td><code>apps/mobile/android</code></td>
+          <td>Dart SDK ≥3.5 &lt;4.0 (Flutter 3.47.3 pinned in CI)</td>
+          <td>Flutter</td>
+          <td>Dart</td>
+          <td>Flutter widgets, custom theme (Light / TrueBlack-Dark / Sepia)</td>
+          <td><code>flutter_riverpod</code> ^2.6.1, <code>hive</code>/<code>hive_flutter</code>, <code>dio</code> ^5.7.0, <code>just_audio</code> ^0.9.42, <code>audio_service</code> ^0.18.19</td>
+          <td>No backend DB — Hive (local, 4 boxes) + Al Quran Cloud/Quran.com APIs + Cloudflare R2 audio</td>
+        </tr>
+        <tr>
+          <td><code>apps/landing</code></td>
+          <td>—</td>
+          <td>None (static HTML)</td>
+          <td>HTML/CSS</td>
+          <td>Inline CSS, dark-mode media query</td>
+          <td>—</td>
+          <td>None — <code>vercel.json</code> rewrites only</td>
+        </tr>
+      </table>
+      <p>Root-level: a Node/npm workspace with a single Supabase CLI devDependency (<code>supabase ^2.116.0</code>) for apps/learning's DB; no shared build tool across apps.</p>
+    </section>
+
+    <!-- 5. STRUCTURE -->
+    <section id="structure">
+      <h2><span class="num">5</span>Repository &amp; File Inventory</h2>
+      <p class="section-sub">The full directory shape, verified against the current tree.</p>
+      <div class="tree">
+IqraSpace/
+├─ apps/
+│  ├─ <span class="c1">learning/</span>        <span class="c2"># Quranic Teacher — tutoring LMS (Next.js + Supabase)</span>
+│  │  ├─ src/app/(public)     <span class="c2"># /, /login, /signup</span>
+│  │  ├─ src/app/(app)        <span class="c2"># dashboard, classes, lessons, students, materials,</span>
+│  │  │                       <span class="c2">#   schedule, attendance, progress, notes, meet,</span>
+│  │  │                       <span class="c2">#   notifications, settings, teach/[lessonId], admin/*</span>
+│  │  ├─ src/app/share/[lessonId]   <span class="c2"># read-only live-follow view (still requires login)</span>
+│  │  ├─ src/components/{ui,shell,pdf,teach,lessons,students,attendance,admin}
+│  │  ├─ src/lib/              <span class="c2"># supabaseClient, authContext, realtime, sharing, storage,</span>
+│  │  │                        <span class="c2">#   notifications, curriculum, roster, quranLink, types, ...</span>
+│  │  └─ scripts/               <span class="c2"># pdfjs asset copy, admin seeding, surah-lesson seeding</span>
+│  │
+│  ├─ <span class="c1">quran/</span>           <span class="c2"># IqraSpace Quran — public reader (Next.js, SSG, 759 routes)</span>
+│  │  ├─ src/app/{surah,page,bookmarks,search,supplications}
+│  │  ├─ src/components/{layout,reader,home,bookmarks,search,supplications,audio}
+│  │  ├─ src/content/generated/    <span class="c2"># synced Quran text/translations — gitignored, regenerated</span>
+│  │  ├─ src/lib/{content,preferences,audio,i18n,reader,branding,site.ts}
+│  │  ├─ scripts/                  <span class="c2"># sync-content.mjs, generate-search-index.mjs, pdf/*</span>
+│  │  └─ supabase/                 <span class="c2"># OWN Supabase project — schema exists, NOT wired into the app</span>
+│  │
+│  ├─ <span class="c1">mobile/android/</span>  <span class="c2"># IqraSpace Quran (Flutter) — Android/Web, sibling to apps/quran</span>
+│  │  ├─ lib/core/{audio,constants,network,storage,theme,widgets,utils}
+│  │  ├─ lib/features/{home,quran_reader,bookmarks,search,settings,supplications}
+│  │  ├─ lib/l10n/                 <span class="c2"># app_{en,te,ur}.arb + generated app_localizations*.dart</span>
+│  │  └─ assets/{fonts,supplications.json,user_guide}
+│  │
+│  └─ <span class="c1">landing/</span>         <span class="c2"># Static domain-root page — no framework</span>
+│     ├─ index.html, privacy.html, robots.txt, sitemap.xml
+│     └─ vercel.json               <span class="c2"># the Multi-Zones rewrites() config</span>
+│
+├─ supabase/                    <span class="c2"># belongs to apps/learning — migrations/ (0001-0023) + functions/</span>
+├─ .github/workflows/           <span class="c2"># ci.yml, ci-quran.yml, ci-flutter.yml, ci-landing.yml</span>
+├─ .claude/skills/               <span class="c2"># iqs-debug, iqs-deploy, iqs-git (AI-assisted dev tooling)</span>
+├─ CLAUDE.md                    <span class="c2"># repo-wide guidance for AI coding agents</span>
+├─ Iqra-space-architecture.md   <span class="c2"># ORIGINAL apps/learning-only planning doc — pre-monorepo</span>
+├─ DEPLOYMENT.md                <span class="c2"># apps/learning-scoped deployment notes</span>
+├─ resources/                   <span class="c2"># gitignored — reference material moved out of app roots (see §20)</span>
+└─ docs/, design/                <span class="c2"># gitignored local working material — will NOT exist on a fresh clone,</span>
+                                  <span class="c2">#   EXCEPT files force-added with `git add -f` (this document included)</span>
+      </div>
+      <p><strong>Root <code>package.json</code></strong> only proxies into two apps: <code>dev</code>/<code>build</code>/<code>lint</code> → apps/learning (the unprefixed "default"), <code>quran:dev</code>/<code>quran:build</code>/<code>quran:lint</code>/<code>quran:typecheck</code> → apps/quran. There is <strong>no delegator script at all</strong> for apps/mobile/android or apps/landing — they use their own toolchains directly. Always run app-specific commands from inside that app's directory, or with an explicit <code>--prefix</code>.</p>
+    </section>
+
+    <hr class="sep">
+
+    <!-- 6. APPS/LEARNING -->
+    <section id="app-learning">
+      <h2><span class="num">6</span>apps/learning — Quranic Teacher (LMS)</h2>
+      <p class="section-sub">A tutoring LMS for a single solo tutor and their students.</p>
+
+      <div class="biz-box">
+        <div class="biz-label">Business Explanation</div>
+        <p style="margin-bottom:0;">This is the tutor's digital classroom. Instead of juggling WhatsApp for scheduling, a separate video call for teaching, and memory for tracking each student's progress, the tutor does all three from one login: book a session, open it and share a Quran page live with synchronized highlighting so the student sees exactly what the tutor is pointing at, mark who attended, record a skill score, and the student can log in separately to see their own schedule and progress. Every student's data is walled off from every other student and completely invisible to the public Quran reader apps.</p>
+      </div>
+
+      <h3>Routes (<code>src/app/**</code>)</h3>
+      <table>
+        <tr><th>Path</th><th>Group</th><th>Notes</th></tr>
+        <tr><td><code>/</code>, <code>/login</code>, <code>/signup</code></td><td><code>(public)</code></td><td>Slim public header, no sidebar.</td></tr>
+        <tr><td><code>/dashboard</code>, <code>/students</code>, <code>/classes</code>, <code>/lessons</code>, <code>/materials</code>, <code>/schedule</code>, <code>/attendance</code>, <code>/progress</code>, <code>/notes</code>, <code>/meet</code>, <code>/notifications</code>, <code>/settings</code></td><td><code>(app)</code></td><td>Wrapped in <code>RequireAuth</code> + <code>AppShell</code> (sidebar/topbar).</td></tr>
+        <tr><td><code>/teach/[lessonId]</code></td><td><code>(app)</code></td><td>Tutor's live teaching screen — PDF/ayah selection, highlight broadcast, presence.</td></tr>
+        <tr><td><code>/admin</code>, <code>/admin/users</code></td><td><code>(app)</code></td><td>Admin/super_admin only.</td></tr>
+        <tr><td><code>/share/[lessonId]</code></td><td>outside both groups</td><td>Chrome-minimal student follow view. <strong>Requires a real login</strong> — not a token/magic-link share.</td></tr>
+      </table>
+      <p>No <code>middleware.ts</code> and no <code>src/app/api</code> routes exist — route protection is client-side (<code>RequireAuth</code>, UX-only) backed by Postgres Row-Level Security (RLS) as the real boundary.</p>
+
+      <h3>Component architecture</h3>
+      <ul>
+        <li><code>components/ui/</code> — hand-built primitives: Button, Card, Field/Input/Select/Textarea, Badge, Avatar, ProgressBar, EmptyState, Tabs, Modal, Toast. No component library dependency.</li>
+        <li><code>components/shell/</code> — AppShell, Sidebar, Topbar, PublicHeader, NotificationBell, ThemeToggle, and <code>navConfig.ts</code> (single source of truth for nav items/titles).</li>
+        <li><code>components/pdf/</code> — <code>PdfViewer.tsx</code> (pdf.js wrapper: zoom/fit, page nav, fullscreen, JBIG2/scanned-PDF support), <code>AnnotationLayer.tsx</code> (SVG draw overlay, session-local only — never persisted or broadcast), <code>PdfToolbar.tsx</code>.</li>
+        <li><code>components/teach/</code> — <code>TeachClient.tsx</code> (tutor's live screen) and <code>ShareClient.tsx</code> (student's read-only follow view).</li>
+        <li><code>components/lessons/</code>, <code>students/</code>, <code>attendance/</code>, <code>admin/</code> — feature-specific forms and widgets.</li>
+      </ul>
+
+      <h3>Data layer (<code>src/lib/</code>) — function-level detail</h3>
+
+      <div class="fn-card">
+        <div class="fn-head">recordHighlight()<span class="fn-path">apps/learning/src/lib/sharing.ts</span></div>
+        <div class="fn-body">
+          <div class="fn-row"><div class="fn-k">Purpose</div><div class="fn-v">Durably persist the tutor's current highlight state so a late-joining or reloading student can catch up.</div></div>
+          <div class="fn-row"><div class="fn-k">Input</div><div class="fn-v">A <code>lessonId</code> and a <code>HighlightState</code> payload (material id, page number, ayah reference).</div></div>
+          <div class="fn-row"><div class="fn-k">Processing</div><div class="fn-v">Writes/updates a row in the <code>highlighted_content</code> table, scoped to the active <code>sharing_sessions</code> row for that lesson.</div></div>
+          <div class="fn-row"><div class="fn-k">Output</div><div class="fn-v">The persisted row (or void — caller doesn't block UI on this).</div></div>
+          <div class="fn-row"><div class="fn-k">Dependencies</div><div class="fn-v"><code>supabaseClient.ts</code> (browser Supabase client), RLS policy on <code>highlighted_content</code>.</div></div>
+          <div class="fn-row"><div class="fn-k">Called by</div><div class="fn-v"><code>TeachClient.tsx</code>, immediately after broadcasting the same state over Realtime.</div></div>
+          <div class="fn-row"><div class="fn-k">Calls</div><div class="fn-v">Supabase Postgres <code>insert</code>/<code>upsert</code>.</div></div>
+          <div class="fn-row"><div class="fn-k">Example</div><div class="fn-v">Tutor taps Ayah 2:255 on page 42 → <code>recordHighlight(lessonId, {materialId, page:42, ayah:"2:255"})</code> → row written, independent of whether any student is currently connected.</div></div>
+        </div>
+      </div>
+
+      <div class="fn-card">
+        <div class="fn-head">getLatestHighlight()<span class="fn-path">apps/learning/src/lib/sharing.ts</span></div>
+        <div class="fn-body">
+          <div class="fn-row"><div class="fn-k">Purpose</div><div class="fn-v">Catch-up query so a student who just opened/reloaded <code>/share/[lessonId]</code> sees the tutor's current position immediately, not just future broadcasts.</div></div>
+          <div class="fn-row"><div class="fn-k">Input</div><div class="fn-v"><code>lessonId</code>.</div></div>
+          <div class="fn-row"><div class="fn-k">Processing</div><div class="fn-v">Reads the most recent row for the active <code>sharing_sessions</code> row from <code>highlighted_content</code>.</div></div>
+          <div class="fn-row"><div class="fn-k">Output</div><div class="fn-v">The last known <code>HighlightState</code>, or null if the tutor hasn't started teaching yet.</div></div>
+          <div class="fn-row"><div class="fn-k">Called by</div><div class="fn-v"><code>ShareClient.tsx</code> on mount, before it subscribes to the live channel.</div></div>
+          <div class="fn-row"><div class="fn-k">Example</div><div class="fn-v">Student's phone drops connection mid-lesson and reconnects — this query fixes the view without waiting for the tutor's next click.</div></div>
+        </div>
+      </div>
+
+      <div class="fn-card">
+        <div class="fn-head">notify_user() <span class="badge muted">Postgres RPC</span><span class="fn-path">supabase/migrations — SECURITY DEFINER function</span></div>
+        <div class="fn-body">
+          <div class="fn-row"><div class="fn-k">Purpose</div><div class="fn-v">The single, only path for creating an in-app notification row — direct table inserts are never used.</div></div>
+          <div class="fn-row"><div class="fn-k">Input</div><div class="fn-v">Target user id, notification type, message payload.</div></div>
+          <div class="fn-row"><div class="fn-k">Processing</div><div class="fn-v">Server-side authorization check: caller may only notify themself, or (if a tutor) their own student — enforced inside the function body, not just by RLS.</div></div>
+          <div class="fn-row"><div class="fn-k">Output</div><div class="fn-v">The inserted <code>notifications</code> row.</div></div>
+          <div class="fn-row"><div class="fn-k">Called by</div><div class="fn-v"><code>lib/notifications.ts</code>'s thin wrapper, invoked from scheduling/attendance/progress actions.</div></div>
+          <div class="fn-row"><div class="fn-k">Example</div><div class="fn-v">Tutor marks a lesson complete → app calls the wrapper → RPC inserts "Great job in today's lesson!" for the student, bell icon updates.</div></div>
+        </div>
+      </div>
+
+      <div class="fn-card">
+        <div class="fn-head">get_auth_email_for_username() <span class="badge muted">Postgres RPC, anon-callable</span></div>
+        <div class="fn-body">
+          <div class="fn-row"><div class="fn-k">Purpose</div><div class="fn-v">Lets a user log in with a plain <strong>username</strong> instead of an email address, since Supabase Auth itself is email-based.</div></div>
+          <div class="fn-row"><div class="fn-k">Input</div><div class="fn-v">A username string, typed on the login form.</div></div>
+          <div class="fn-row"><div class="fn-k">Processing</div><div class="fn-v">Looks up the matching <code>users</code> row and returns its (real or synthetic) <code>auth_email</code>. This is the <strong>only</strong> function in the whole project grantable to the <code>anon</code> role — everything else requires a session.</div></div>
+          <div class="fn-row"><div class="fn-k">Output</div><div class="fn-v">An email string, or null if the username doesn't exist.</div></div>
+          <div class="fn-row"><div class="fn-k">Called by</div><div class="fn-v">The login form, before calling Supabase's own <code>signInWithPassword</code>.</div></div>
+          <div class="fn-row"><div class="fn-k">Example</div><div class="fn-v">Tutor types username <code>Shaanu</code> → RPC resolves it to its backing email → <code>signInWithPassword({email, password})</code> proceeds normally.</div></div>
+        </div>
+      </div>
+
+      <table>
+        <tr><th>File</th><th>Responsibility</th></tr>
+        <tr><td><code>supabaseClient.ts</code></td><td>The <strong>only</strong> Supabase client in the app — browser, anon key. No server-side/SSR client exists; RLS is the sole access boundary.</td></tr>
+        <tr><td><code>authContext.tsx</code></td><td><code>AuthProvider</code>/<code>useAuth()</code> — re-validates session via <code>auth.getUser()</code> (server round-trip) rather than trusting a cached session.</td></tr>
+        <tr><td><code>realtime.ts</code> / <code>sharing.ts</code></td><td>Live highlight-sync channel (<code>lesson:{id}</code>) + durable persistence/catch-up query (§14).</td></tr>
+        <tr><td><code>notifications.ts</code></td><td>Thin wrapper around the <code>notify_user()</code> RPC.</td></tr>
+        <tr><td><code>storage.ts</code></td><td><code>lesson-materials</code> Storage bucket: upload/list/signed-URL/delete.</td></tr>
+        <tr><td><code>quranLink.ts</code> / <code>lessonMaterial.ts</code></td><td>Cross-app deep links into apps/quran (its own separate Vercel project), resolving a <code>quran-surah:{N}</code> marker to that app's hosted per-surah PDFs — avoids duplicate uploads.</td></tr>
+        <tr><td><code>curriculum.ts</code></td><td>The "Universal Lesson Plan" data layer — shared, tutor-agnostic curriculum with per-student progress.</td></tr>
+        <tr><td><code>recurringSessions.ts</code></td><td>Materializes ~8 weeks of concrete <code>lessons</code> rows from a recurring-session rule. No cron — a manual "Generate 8 more weeks" button.</td></tr>
+        <tr><td><code>types.ts</code></td><td>Hand-written domain types mirroring the SQL schema — not generated via <code>supabase gen types</code>.</td></tr>
+      </table>
+
+      <h3>Database schema</h3>
+      <p>23 migrations at repo root (<code>supabase/migrations/0001–0023</code>, not inside <code>apps/learning/</code>). Every table uses <code>STABLE SECURITY DEFINER</code> helper functions (<code>is_tutor_of_class</code>, <code>is_member_of_class</code>, <code>is_tutor_of_student</code>, <code>is_admin</code>, <code>is_super_admin</code>, <code>is_any_tutor</code>) for RLS, adopted specifically to avoid an infinite-recursion bug (Postgres error <code>42P17</code>) hit early on with naive inline-subquery policies.</p>
+      <table>
+        <tr><th>Table</th><th>Purpose</th><th>Key relationships</th></tr>
+        <tr><td><code>users</code></td><td>One row per authenticated person; <code>role</code> enum (tutor/student/guardian/admin/super_admin), <code>username</code> (unique, NOT NULL), <code>auth_email</code> (real or synthetic).</td><td>Root of the role system; FK target for most ownership checks.</td></tr>
+        <tr><td><code>tutors</code> / <code>students</code></td><td>Role-specific profile rows, created by the signup trigger.</td><td>1:1 with <code>users</code>.</td></tr>
+        <tr><td><code>classes</code> / <code>class_members</code></td><td>Class grouping and membership.</td><td><code>classes.tutor_id → tutors</code>; joins classes↔students.</td></tr>
+        <tr><td><code>lessons</code></td><td>A scheduled/held session — student-based (one-to-one) as of migration 0023.</td><td><code>student_id</code> NOT NULL; optional <code>recurring_rule_id</code>, <code>lesson_plan_item_id</code>.</td></tr>
+        <tr><td><code>recurring_session_rules</code></td><td>A recurrence definition materialized into concrete <code>lessons</code> rows.</td><td>0023.</td></tr>
+        <tr><td><code>lesson_materials</code></td><td>Uploaded PDFs (Storage bucket) + page range.</td><td><code>tutor_id</code>-scoped write, any-authenticated read.</td></tr>
+        <tr><td><code>lesson_plans</code> / <code>lesson_plan_items</code> / <code>class_lesson_plans</code></td><td>Shared, admin-edited curriculum catalog (tutor-agnostic since 0021).</td><td>Read-only for tutors.</td></tr>
+        <tr><td><code>student_lesson_progress</code> / <code>student_lesson_completions</code></td><td>Per-student position in the curriculum; completions require tutor/admin confirmation.</td><td>Seeded consistently regardless of add-order (0022).</td></tr>
+        <tr><td><code>attendance</code> / <code>lesson_progress</code> / <code>lesson_notes</code></td><td>Per-lesson records: presence, skill scores (recitation/tajweed/memorization), structured notes.</td><td><code>lesson_id</code>-scoped.</td></tr>
+        <tr><td><code>sharing_sessions</code> / <code>highlighted_content</code></td><td>Live-teach session state and the durable highlight audit trail.</td><td><code>lesson_id</code>-scoped.</td></tr>
+        <tr><td><code>notifications</code></td><td>In-app notification rows, written only via <code>notify_user()</code> RPC.</td><td>—</td></tr>
+        <tr><td><code>google_drive_files</code>, <code>meetings</code></td><td>Google Drive material references and manual Meet links.</td><td>Drive integration undeployed.</td></tr>
+      </table>
+
+      <h3>Edge Functions</h3>
+      <table>
+        <tr><th>Function</th><th>Status</th><th>Purpose</th></tr>
+        <tr><td><code>admin-user-management</code></td><td><span class="badge ok">Deployed</span></td><td>Create/reset-password/deactivate/reactivate/delete/status via <code>auth.admin.*</code> — the service_role key never touches the browser.</td></tr>
+        <tr><td><code>google-oauth-exchange</code></td><td><span class="badge warn">Code-complete, not deployed</span></td><td>Token exchange + AES-GCM encrypt/store of the refresh token.</td></tr>
+        <tr><td><code>drive-file-proxy</code></td><td><span class="badge warn">Code-complete, not deployed</span></td><td>Refreshes and streams a Drive file's bytes.</td></tr>
+      </table>
+      <p>Both undeployed functions need a Google Cloud OAuth client that only the project owner can provision. Direct PDF upload to Supabase Storage is the fully-working materials path today.</p>
+
+      <h3>Testing &amp; known gaps</h3>
+      <p><span class="badge danger">No automated tests</span> — no test framework, no test files anywhere under <code>src</code>. Other confirmed gaps: Google Drive/Calendar integration genuinely unconfigured (not faked — UI correctly shows "not configured"); Guardian role exists in DB/types with no dedicated portal; highlight sync is page-level for PDFs, not word-level; the most recent feature (student-based one-to-one scheduling, migration 0023) is explicitly flagged as not independently end-to-end tested.</p>
+    </section>
+
+    <!-- 7. APPS/QURAN -->
+    <section id="app-quran">
+      <h2><span class="num">7</span>apps/quran — IqraSpace Quran (public reader)</h2>
+      <p class="section-sub">Free, anonymous-first Quran reader — the most actively developed app in the repo.</p>
+
+      <div class="biz-box">
+        <div class="biz-label">Business Explanation</div>
+        <p style="margin-bottom:0;">This is the free gift to the public. Anyone anywhere can open the website, immediately start reading any of the 114 chapters, listen to a reciter, search for a verse, or read short daily supplications — with no sign-up wall, no ads, and no tracking of who they are. Their bookmarks and settings are remembered only on their own device (like a browser remembering a password), never sent anywhere. Running this for free, forever, at near-zero cost is the whole point — every technical choice here (what data gets stored, which APIs get called, whether a database is even used) is filtered through "does this keep the lights on for free?"</p>
+      </div>
+
+      <h3>Routes (759 statically generated pages)</h3>
+      <table>
+        <tr><th>Path</th><th>Renders</th></tr>
+        <tr><td><code>/</code></td><td><code>ContinueReadingCard</code>, <code>EntryTiles</code>, <code>QuickLinks</code>, <code>LastReadsRow</code>, <code>BookmarksPreview</code></td></tr>
+        <tr><td><code>/surah</code>, <code>/surah/[surahNumber]</code></td><td>114-chapter list; <code>SurahReader</code> per chapter</td></tr>
+        <tr><td><code>/page</code>, <code>/page/[pageNumber]</code></td><td>Mushaf page grid; <code>PageReader</code> per page</td></tr>
+        <tr><td><code>/search</code></td><td><code>SearchClient</code> (client-side substring search over a generated index)</td></tr>
+        <tr><td><code>/bookmarks</code></td><td><code>BookmarksHeader</code>, <code>BookmarksList</code></td></tr>
+        <tr><td><code>/supplications</code>, <code>/supplications/[categoryId]</code></td><td>Category list; <code>ScriptSwitch</code> + <code>DuaCard</code> per dua</td></tr>
+      </table>
+      <p>No <code>route.ts</code> API handler exists anywhere in this app — every route is either pre-rendered HTML or a client component reading committed static JSON.</p>
+
+      <h3>Component inventory (<code>src/components/**</code>)</h3>
+      <table>
+        <tr><th>Folder</th><th>Key components</th></tr>
+        <tr><td><code>layout/</code></td><td><code>SiteHeader</code> (sticky, measures its own height into a CSS var), <code>SiteFooter</code>, <code>BrandWordmark</code></td></tr>
+        <tr><td><code>reader/</code></td><td><code>SurahReader</code> (owns PDF-mode toggle, auto-scroll, whole-Surah play/stop), <code>PageReader</code>, <code>AyahList</code> (shared rendering + Continue-Reading tracking), <code>AyahBlock</code> (one verse: text, translation, play/bookmark), <code>PdfViewer</code> (react-pdf wrapper, lazy-window rendering), <code>ReaderModeSwitch</code>, <code>ReaderNavBar</code>, <code>ReaderSettingsPanel</code> (~1170 lines — the largest component, hosts every reader preference), <code>JumpToAyah</code>, <code>JumpToSurah</code></td></tr>
+        <tr><td><code>home/</code></td><td><code>ContinueReadingCard</code>, <code>EntryTiles</code>, <code>QuickLinks</code>, <code>LastReadsRow</code>, <code>BookmarksPreview</code> (both refactored this session onto shared <code>useHydratedState</code>/<code>HomeCard</code>/<code>homeRowStyles</code> — see §20)</td></tr>
+        <tr><td><code>bookmarks/</code></td><td><code>BookmarksList</code> (also exports <code>BookmarksHeader</code>)</td></tr>
+        <tr><td><code>search/</code></td><td><code>SearchClient</code></td></tr>
+        <tr><td><code>supplications/</code></td><td><code>DuaCard</code>, <code>ScriptSwitch</code></td></tr>
+        <tr><td><code>audio/</code></td><td><code>MiniPlayerBar</code> (persistent now-playing bar, wires the browser Media Session API)</td></tr>
+      </table>
+
+      <h3>lib/ — function-level detail</h3>
+
+      <div class="fn-card">
+        <div class="fn-head">getSurahContent(number)<span class="fn-path">apps/quran/src/lib/content/quran.ts</span></div>
+        <div class="fn-body">
+          <div class="fn-row"><div class="fn-k">Purpose</div><div class="fn-v">Load one Surah's full verse content (Uthmani Arabic + translations) for rendering.</div></div>
+          <div class="fn-row"><div class="fn-k">Input</div><div class="fn-v"><code>number: number</code> — the Surah's 1–114 id.</div></div>
+          <div class="fn-row"><div class="fn-k">Processing</div><div class="fn-v">Server-only <code>node:fs.readFileSync</code> of <code>src/content/generated/surah/{n}.json</code> — never imported as a JS module (would bundle all 114 files into every page), and never a network call.</div></div>
+          <div class="fn-row"><div class="fn-k">Output</div><div class="fn-v"><code>SurahContent | undefined</code>.</div></div>
+          <div class="fn-row"><div class="fn-k">Dependencies</div><div class="fn-v">Committed content produced by <code>scripts/sync-content.mjs</code>.</div></div>
+          <div class="fn-row"><div class="fn-k">Called by</div><div class="fn-v"><code>src/app/surah/[surahNumber]/page.tsx</code> (Server Component).</div></div>
+          <div class="fn-row"><div class="fn-k">Example</div><div class="fn-v">Visiting <code>/surah/36</code> → <code>getSurahContent(36)</code> → 83 verses of Yā-Sīn returned → passed into <code>SurahReader</code>.</div></div>
+        </div>
+      </div>
+
+      <div class="fn-card">
+        <div class="fn-head">ayahAudioUrl(reciter, globalAyahId)<span class="fn-path">apps/quran/src/lib/content/reciters.ts</span></div>
+        <div class="fn-body">
+          <div class="fn-row"><div class="fn-k">Purpose</div><div class="fn-v">Build a per-ayah recitation audio URL with no API call at all.</div></div>
+          <div class="fn-row"><div class="fn-k">Input</div><div class="fn-v">A <code>ReciterId</code> and the ayah's global 1–6236 id.</div></div>
+          <div class="fn-row"><div class="fn-k">Processing</div><div class="fn-v">String-templates a static, keyless CDN URL pattern — no fetch, no credentials.</div></div>
+          <div class="fn-row"><div class="fn-k">Output</div><div class="fn-v"><code>https://cdn.islamic.network/quran/audio/128/{reciter}/{globalAyahId}.mp3</code></div></div>
+          <div class="fn-row"><div class="fn-k">Called by</div><div class="fn-v"><code>AyahBlock.tsx</code>, <code>SurahReader.tsx</code>'s queue builder.</div></div>
+          <div class="fn-row"><div class="fn-k">Example</div><div class="fn-v"><code>ayahAudioUrl("ar.alafasy", 8)</code> → the mp3 for Surah 2, Ayah 1 (global id 8).</div></div>
+        </div>
+      </div>
+
+      <div class="fn-card">
+        <div class="fn-head">savePreferences() / applyToDocument()<span class="fn-path">apps/quran/src/lib/preferences/{storage.ts, ReaderPreferencesProvider.tsx}</span></div>
+        <div class="fn-body">
+          <div class="fn-row"><div class="fn-k">Purpose</div><div class="fn-v">Persist and instantly apply a reader preference (theme, font, translation, text size…) with zero server round-trip.</div></div>
+          <div class="fn-row"><div class="fn-k">Input</div><div class="fn-v">A partial <code>ReaderPreferences</code> update, e.g. <code>{arabicFont: "amiri"}</code>.</div></div>
+          <div class="fn-row"><div class="fn-k">Processing</div><div class="fn-v"><code>savePreferences()</code> writes the merged object to <code>localStorage["iqraspace-quran:preferences"]</code>; <code>applyToDocument()</code> sets <code>data-theme</code>/<code>data-arabic-font</code>/CSS custom properties directly on <code>&lt;html&gt;</code>, which <code>globals.css</code> reads sitewide.</div></div>
+          <div class="fn-row"><div class="fn-k">Output</div><div class="fn-v">void — the DOM update is the effect.</div></div>
+          <div class="fn-row"><div class="fn-k">Called by</div><div class="fn-v"><code>ReaderSettingsPanel.tsx</code>'s <code>setPreference()</code>, on every control change.</div></div>
+          <div class="fn-row"><div class="fn-k">Example</div><div class="fn-v">Visitor switches to Sepia theme → saved to their browser only → instantly reflected via a CSS variable → still Sepia on their next visit, on that device only.</div></div>
+        </div>
+      </div>
+
+      <h3>Major features (verified against code)</h3>
+      <table>
+        <tr><th>Feature</th><th>Status</th><th>Detail</th></tr>
+        <tr><td>Reader Modes</td><td><span class="badge ok">Implemented</span></td><td>3-way switch: <em>listening</em> (whole-Surah audio, no per-ayah highlight), <em>reading</em> (no audio), <em>readingListening</em> (default — per-ayah playback with highlight).</td></tr>
+        <tr><td>Tajweed coloring</td><td><span class="badge ok">Implemented, opt-in</span></td><td>Live client-side fetch from Al Quran Cloud's keyless <code>quran-tajweed</code> edition, cached per-Surah, falls back to plain text on failure.</td></tr>
+        <tr><td>Supplications</td><td><span class="badge ok">Implemented</span></td><td>Ported from apps/mobile/android's own dataset ("Hisn al-Qalb"), same Latin/Telugu/Urdu script switch.</td></tr>
+        <tr><td>Search</td><td><span class="badge ok">Implemented</span></td><td>Client-side substring search over a build-time-generated static JSON index — deliberately not a database/search-engine, per the cost rule.</td></tr>
+        <tr><td>i18n (UI chrome)</td><td><span class="badge ok">Implemented</span></td><td>English/Telugu/Urdu, hand-rolled dictionary (<code>useT()</code>) — localizes UI chrome only, not Quran content.</td></tr>
+        <tr><td>PDF Mode</td><td><span class="badge ok">Implemented</span></td><td>Scanned-Mushaf per-Surah PDFs via <code>react-pdf</code>, generated from an offline pipeline (watermark strip → boundary crop → merge).</td></tr>
+        <tr><td>Auth / cross-device sync</td><td><span class="badge danger">Unwired</span></td><td>A Supabase project/schema exists (bookmarks, reading_progress, user_preferences, reading_history) but <strong>no Supabase client is installed</strong>. Everything runs on <code>localStorage</code> today.</td></tr>
+        <tr><td>PWA / offline</td><td><span class="badge warn">Partial</span></td><td>Installable manifest only — no service worker, no offline caching.</td></tr>
+      </table>
+
+      <h3>Cost-consciousness (hard constraint)</h3>
+      <p>Target is genuinely $0/month at pilot scale: Vercel Hobby, Supabase free tier (idle), Quran Foundation API is free, and all audio streams from external CDNs — never through this app's own bandwidth. Explicitly disallowed absent a documented requirement: Kubernetes/microservices, Elasticsearch/Algolia, paid CMS, Redis, self-hosted audio storage.</p>
+    </section>
+
+    <!-- 8. APPS/MOBILE/ANDROID -->
+    <section id="app-mobile">
+      <h2><span class="num">8</span>apps/mobile/android — IqraSpace Quran (native)</h2>
+      <p class="section-sub">The Android (and web-capable) counterpart to apps/quran — a deliberately separate codebase and data source. Renamed from <code>apps/flutter</code> to <code>apps/mobile/android</code> this session (§20) — a pure directory move, no functional change.</p>
+
+      <div class="biz-box">
+        <div class="biz-label">Business Explanation</div>
+        <p style="margin-bottom:0;">This is the "install it on your phone" version of the Quran reader, built specifically for people who want Tajweed rules shown as colors directly on the Arabic text (so learners can see pronunciation rules at a glance), and for reliable offline reading once a chapter has been opened once. It works entirely without an internet connection after first use — nothing about a person's reading habits, bookmarks, or progress ever leaves their phone, which is also why it needs no privacy consent screen for accounts (there are no accounts).</p>
+      </div>
+
+      <h3>Architecture</h3>
+      <p>Feature-first under <code>lib/</code>: <code>core/</code> (audio, constants, network, storage, theme, widgets, utils — shared infra) and <code>features/{home, quran_reader, bookmarks, search, settings, supplications}</code>, each layered <code>data/{datasources,models,repositories}</code> → <code>domain/{entities,repositories,usecases}</code> → <code>presentation/{providers,screens,widgets}</code> (clean-architecture-lite). State management is Riverpod throughout (no codegen) — a recurring pattern is a <code>StateNotifier</code> reading its initial value from Hive on construction and writing back on every mutation, so app state and on-disk persistence never drift apart.</p>
+
+      <h3>Feature inventory</h3>
+      <table>
+        <tr><th>Feature</th><th>Purpose</th><th>Key files</th></tr>
+        <tr><td><code>home</code></td><td>Landing screen / dispatcher — no data of its own, aggregates others.</td><td><code>home_screen.dart</code></td></tr>
+        <tr><td><code>quran_reader</code></td><td>Core Tajweed-colored reading experience, the app's largest feature.</td><td><code>surah_reader_screen.dart</code>, <code>ayah_rich_text.dart</code>, <code>surah_providers.dart</code>, <code>surah_remote_datasource.dart</code>, <code>surah_local_datasource.dart</code></td></tr>
+        <tr><td><code>bookmarks</code></td><td>Local star-marking of individual ayahs.</td><td><code>bookmarks_providers.dart</code>, <code>bookmarks_local_datasource.dart</code></td></tr>
+        <tr><td><code>search</code></td><td>Full-text search via Al Quran Cloud's <code>/search</code> endpoint.</td><td><code>search_providers.dart</code>, <code>search_remote_datasource.dart</code></td></tr>
+        <tr><td><code>settings</code></td><td>Reader preferences UI — presentation-only, drives providers owned by other features.</td><td><code>reader_settings_sheet.dart</code>, <code>audio_settings_sheet.dart</code></td></tr>
+        <tr><td><code>supplications</code></td><td>Bundled offline duas ("Hisn al-Qalb"), replacing an earlier "Learn — coming soon" placeholder.</td><td><code>supplications_providers.dart</code>, <code>supplications_local_datasource.dart</code></td></tr>
+      </table>
+
+      <h3>Core inventory (<code>lib/core/**</code>)</h3>
+      <table>
+        <tr><th>Subsystem</th><th>Purpose</th><th>Key class</th></tr>
+        <tr><td><code>audio/</code></td><td>Listening Mode + per-ayah playback engine, lock-screen controls.</td><td><code>IqraAudioHandler</code> (extends <code>BaseAudioHandler</code>), <code>AudioCacheManager</code></td></tr>
+        <tr><td><code>constants/</code></td><td>Static reference data: reciters, reader modes, R2 URL builders, Tajweed rule info.</td><td><code>arabic_surah_audio.dart</code>, <code>urdu_surah_audio.dart</code></td></tr>
+        <tr><td><code>network/</code></td><td>Two configured Dio HTTP clients (Al Quran Cloud, Quran.com).</td><td><code>buildDioClient()</code>, <code>buildQuranComDioClient()</code></td></tr>
+        <tr><td><code>storage/</code></td><td>The single storage abstraction — opens 4 Hive boxes at launch.</td><td><code>HiveBoxes</code></td></tr>
+        <tr><td><code>theme/</code></td><td>Light / TrueBlack-Dark / Sepia themes, Tajweed color mapping.</td><td><code>buildAppTheme()</code>, <code>tajweedCodeToRuleKey</code></td></tr>
+        <tr><td><code>utils/</code></td><td>Parses Al Quran Cloud's bracket-notation Tajweed markup into colored spans.</td><td><code>TajweedParser.parse()</code></td></tr>
+        <tr><td><code>widgets/</code></td><td>Shared UI atoms: bottom nav, mini player, brand mark.</td><td><code>IqraBottomNav</code>, <code>MiniPlayerBar</code></td></tr>
+      </table>
+
+      <h3>Function-level detail</h3>
+
+      <div class="fn-card">
+        <div class="fn-head">TajweedParser.parse(text)<span class="fn-path">lib/core/utils/tajweed_parser.dart</span></div>
+        <div class="fn-body">
+          <div class="fn-row"><div class="fn-k">Purpose</div><div class="fn-v">Convert Al Quran Cloud's bracket-tagged Tajweed markup into renderable colored text spans.</div></div>
+          <div class="fn-row"><div class="fn-k">Input</div><div class="fn-v">Raw tagged string, e.g. <code>"[h:1[ٱ]لرَّحۡمَـٰنِ"</code>.</div></div>
+          <div class="fn-row"><div class="fn-k">Processing</div><div class="fn-v">Regex-matches each bracket code into a <code>TajweedSpan(text, ruleKey)</code>, then <code>_reattachOrphanedMarks()</code> merges any combining mark with no base letter of its own into the preceding span.</div></div>
+          <div class="fn-row"><div class="fn-k">Output</div><div class="fn-v"><code>List&lt;TajweedSpan&gt;</code>.</div></div>
+          <div class="fn-row"><div class="fn-k">Called by</div><div class="fn-v"><code>AyahModel.fromApiJson</code>, once per ayah, at fetch time (result is cached — never re-parsed on every render).</div></div>
+          <div class="fn-row"><div class="fn-k">Calls</div><div class="fn-v"><code>colorForTajweedCode()</code> (indirectly, via the widget layer) to map each <code>ruleKey</code> to a color.</div></div>
+          <div class="fn-row"><div class="fn-k">Example</div><div class="fn-v">Parses one Basmala into ~6 spans, most untagged (default color) and one tagged "madd" (elongation, drawn in its rule's color).</div></div>
+        </div>
+      </div>
+
+      <div class="fn-card">
+        <div class="fn-head">IqraAudioHandler.playSurahLocal(surahNumber)<span class="fn-path">lib/core/audio/iqra_audio_handler.dart</span></div>
+        <div class="fn-body">
+          <div class="fn-row"><div class="fn-k">Purpose</div><div class="fn-v">Play Listening Mode's whole-Surah audio with real Android lock-screen/notification controls.</div></div>
+          <div class="fn-row"><div class="fn-k">Input</div><div class="fn-v">The Surah number; reads the user's Arabic-only vs. Arabic+Urdu track choice from Hive.</div></div>
+          <div class="fn-row"><div class="fn-k">Processing</div><div class="fn-v">Resolves one or more R2 URLs (<code>arabicSurahAudioParts()</code> / <code>urduSurahAudioUrl()</code>), downloads-or-reads-cache via <code>AudioCacheManager.resolve()</code>, builds a <code>MediaItem</code>, sets it on the underlying <code>just_audio</code> player as a single file or a gapless <code>ConcatenatingAudioSource</code> for multi-part Surahs.</div></div>
+          <div class="fn-row"><div class="fn-k">Output</div><div class="fn-v">Updates the OS-facing <code>mediaItem</code>/<code>playbackState</code> streams that drive the Android notification.</div></div>
+          <div class="fn-row"><div class="fn-k">Dependencies</div><div class="fn-v"><code>just_audio</code>, <code>audio_service</code>, <code>AudioCacheManager</code>, Cloudflare R2.</div></div>
+          <div class="fn-row"><div class="fn-k">Called by</div><div class="fn-v"><code>AudioController.playSurahLocal()</code> (the Riverpod adapter), triggered from the reader's play button.</div></div>
+          <div class="fn-row"><div class="fn-k">Example</div><div class="fn-v">Surah 5 (historically split into parts for size) plays as one seamless track via <code>ConcatenatingAudioSource</code>, with working lock-screen Next-Surah/Previous-Surah buttons.</div></div>
+        </div>
+      </div>
+
+      <h3>Local storage (Hive)</h3>
+      <table>
+        <tr><th>Box</th><th>Contents</th></tr>
+        <tr><td><code>surah_cache</code></td><td>JSON-encoded, already Tajweed-parsed ayah lists per Surah — offline-first content cache.</td></tr>
+        <tr><td><code>reader_settings</code></td><td>Theme, font size, translation toggle, Tajweed on/off, reciter, reader mode, listening track, last-read history, Supplications script choice.</td></tr>
+        <tr><td><code>bookmarks</code></td><td>Bookmarked ayahs, written the instant the star is tapped.</td></tr>
+        <tr><td><code>audio_file_cache</code></td><td>Listening Mode's on-device audio cache metadata (native only; web streams live every time).</td></tr>
+      </table>
+      <p>No account/personal data is ever stored or transmitted — confirmed both by the Play Data-Safety review and by there being no auth code at all in the app.</p>
+
+      <h3>Testing &amp; release</h3>
+      <p><span class="badge ok">The only app in the repo with real CI-gated tests</span> — widget/unit tests under <code>test/</code> mirror <code>lib/</code>'s structure; <code>ci-flutter.yml</code> runs <code>flutter analyze</code> + <code>flutter test</code> on the <code>mobile/android</code> branch (verified this session: 66/66 tests passing after the directory rename). Release is a separate, manual/skill-driven flow (<code>iqs-deploy</code>): validate → bump <code>pubspec.yaml</code>'s <code>+N</code> build number → build a signed <code>.aab</code> → verify → upload to Play Console's <strong>Closed testing</strong> track via the Android Publisher API. <code>applicationId</code> is <code>org.iqraspace.app</code>.</p>
+    </section>
+
+    <!-- 9. APPS/LANDING -->
+    <section id="app-landing">
+      <h2><span class="num">9</span>apps/landing — domain root</h2>
+      <p class="section-sub">A single static page, by design.</p>
+
+      <div class="biz-box">
+        <div class="biz-label">Business Explanation</div>
+        <p style="margin-bottom:0;">This is the front door at <code>iqraspace.org</code> — a simple, fast-loading welcome page explaining what IqraSpace is and pointing visitors to either the Quran reader or the tutoring portal. It intentionally has no moving parts: no database, no build process, no framework to go out of date. That's a deliberate cost and reliability choice, not a limitation — the front door should never be the thing that breaks.</p>
+      </div>
+
+      <ul>
+        <li><code>index.html</code> — marketing/hero page, full SEO/OG meta tags, inline CSS with a <code>prefers-color-scheme: dark</code> variant, links to <code>/quran</code> and <code>/learning</code>.</li>
+        <li><code>privacy.html</code> — companion static privacy-policy page (also listed in <code>sitemap.xml</code>) — this resolves apps/mobile/android's own documented "no Privacy Policy page yet" Play Store blocker.</li>
+        <li><code>vercel.json</code> — the Multi-Zones <code>rewrites()</code> (§2) plus security headers scoped away from the proxied paths via a negative-lookahead <code>source</code>.</li>
+        <li><code>robots.txt</code> — deliberately lists two sitemaps (its own, and apps/quran's), since <code>robots.txt</code> can only exist once per domain.</li>
+        <li><code>favicon.png</code>, <code>apple-touch-icon.png</code>, <code>hero.png</code>, <code>logo.png</code> — all confirmed referenced by at least one HTML file; nothing orphaned.</li>
+      </ul>
+      <p>No <code>package.json</code>, no <code>node_modules</code>, no framework config exist here. CI (<code>ci-landing.yml</code>) only validates that <code>vercel.json</code> parses as JSON and runs <code>html-validate</code> on the HTML files — there's no lint/typecheck step because there's nothing to lint. Reviewed this session: no dead files, no broken links, <code>vercel.json</code>'s rewrites correctly match root <code>CLAUDE.md</code>'s description.</p>
+    </section>
+
+    <hr class="sep">
+
+    <!-- 10. FLOW: ROUTING -->
+    <section id="flow-routing">
+      <h2><span class="num">10</span>End-to-End Flow: Multi-Zones Routing</h2>
+      <p class="section-sub">User → UI → Component → Function → API → Response, traced for a real URL.</p>
+      <div class="biz-box">
+        <div class="biz-label">Business Explanation</div>
+        <p style="margin-bottom:0;">A visitor never sees three different websites stitched together — they experience one continuous site. Behind the scenes, the front door (landing page) is silently handing them off to a completely separate, independently-run application the instant they click "Read Quran" or "Learning Portal."</p>
+      </div>
+      <div class="mermaid-wrap">
+        <div class="mermaid">
+sequenceDiagram
+  actor U as Visitor
+  participant DNS as Cloudflare DNS
+  participant L as apps/landing<br/>(vercel.json rewrites)
+  participant Q as apps/quran<br/>Vercel project
+  U->>DNS: GET iqraspace.org/quran/surah/36
+  DNS->>L: routed to apps/landing project
+  L->>L: rewrites() matches "/quran/:path*"
+  L->>Q: proxy to https://iqraspace-quran.vercel.app/quran/surah/36
+  Q->>Q: next.config.ts basePath="/quran" aligns routing
+  Q->>Q: src/app/surah/[surahNumber]/page.tsx (statically pre-rendered)
+  Q-->>U: pre-rendered HTML (address bar still shows iqraspace.org)
+        </div>
+      </div>
+      <p>See §2 for the full architecture diagram and narrative.</p>
+    </section>
+
+    <!-- 11. FLOW: AUTH -->
+    <section id="flow-auth">
+      <h2><span class="num">11</span>End-to-End Flow: Authentication (apps/learning)</h2>
+      <p class="section-sub">The only app with accounts — traced from the login form to a validated session.</p>
+      <div class="biz-box">
+        <div class="biz-label">Business Explanation</div>
+        <p style="margin-bottom:0;">Students and tutors log in with a plain username (like "Shaanu"), not an email address — friendlier for younger students. Behind the scenes the system quietly translates that username into the email format its authentication provider actually requires, so the login experience feels simple while the underlying security system stays standard and well-tested.</p>
+      </div>
+      <div class="mermaid-wrap">
+        <div class="mermaid">
+sequenceDiagram
+  actor T as Tutor/Student
+  participant LF as (public)/login/page.tsx
+  participant RPC as get_auth_email_for_username()<br/>(anon-callable Postgres RPC)
+  participant AUTH as Supabase Auth
+  participant RLS as Postgres RLS
+  T->>LF: types username + password
+  LF->>RPC: resolve "Shaanu" to auth_email
+  RPC-->>LF: shaanu@synthetic.iqraspace.internal
+  LF->>AUTH: signInWithPassword({email, password})
+  AUTH-->>LF: session + JWT
+  LF->>AUTH: auth.getUser() (re-validate, not cached)
+  Note over LF,RLS: Every later query carries the JWT;<br/>RLS policies (is_tutor_of_class, is_admin, ...)<br/>are the REAL authorization boundary, not the client UI
+  LF-->>T: redirected to /dashboard (RequireAuth passes)
+        </div>
+      </div>
+      <p>apps/quran and apps/mobile/android have <strong>no authentication at all</strong> by product design — every reading feature is anonymous. apps/landing is a static page with no accounts.</p>
+    </section>
+
+    <!-- 12. FLOW: READING -->
+    <section id="flow-reading">
+      <h2><span class="num">12</span>End-to-End Flow: Quran Reading (apps/quran)</h2>
+      <p class="section-sub">Opening a Surah, from click to rendered, Tajweed-capable verse text.</p>
+      <div class="biz-box">
+        <div class="biz-label">Business Explanation</div>
+        <p style="margin-bottom:0;">When someone opens a chapter, the text they see was already prepared in advance — during a "build" step, long before that visitor ever arrived — and downloaded from Al-Quran's official content provider under a license the team keeps current. That's why the page loads instantly with no spinner: the server isn't fetching or translating anything live, it's just handing over a page that was already fully assembled.</p>
+      </div>
+      <div class="mermaid-wrap">
+        <div class="mermaid">
+flowchart LR
+  U["Visitor clicks<br/>Surah 36"] --> R["/surah/36<br/>page.tsx (Server Component)"]
+  R --> GC["getSurahContent(36)<br/>lib/content/quran.ts"]
+  GC --> FS["node:fs.readFileSync<br/>src/content/generated/surah/36.json"]
+  FS --> SR["SurahReader.tsx"]
+  SR --> AL["AyahList.tsx"]
+  AL --> AB["AyahBlock.tsx<br/>(one per verse)"]
+  AB -. "opt-in" .-> TJ["useTajweedSpans()<br/>lib/content/tajweedApi.ts"]
+  TJ -. "client fetch" .-> AQC["api.alquran.cloud<br/>quran-tajweed edition"]
+  AB --> RENDER["Arabic text + translation<br/>+ play/bookmark buttons"]
+
+  subgraph BUILD["Build-time (before any visitor arrives)"]
+    SYNC["scripts/sync-content.mjs"] -->|"OAuth2 client-credentials"| QFAPI["Quran Foundation<br/>Content API"]
+    QFAPI --> JSON["src/content/generated/<br/>*.json (committed)"]
+  end
+  JSON -.-> FS
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. FLOW: AUDIO -->
+    <section id="flow-audio">
+      <h2><span class="num">13</span>End-to-End Flow: Audio / Listening Mode</h2>
+      <p class="section-sub">Whole-Surah playback, traced across both apps/quran and apps/mobile/android — they independently consume the same storage bucket.</p>
+      <div class="biz-box">
+        <div class="biz-label">Business Explanation</div>
+        <p style="margin-bottom:0;">Rather than paying to host audio files on its own servers (expensive at scale), IqraSpace stores its recitation audio once in a low-cost cloud storage bucket that streams directly to the listener's device or app. Both the website and the Android app point at that exact same bucket independently — like two stores drawing from the same warehouse, without either one owning it.</p>
+      </div>
+      <div class="mermaid-wrap">
+        <div class="mermaid">
+flowchart TB
+  R2["Cloudflare R2 bucket<br/>audio.iqraspace.org<br/>(public read, no auth)"]
+
+  subgraph WEB["apps/quran (browser)"]
+    W1["Reader taps Play<br/>(Listening mode)"] --> W2["listeningAudio.ts<br/>builds /arabic/036.mp3 URL"]
+    W2 --> W3["AudioProvider.tsx<br/>playListeningSurah()"]
+    W3 --> W4["single &lt;audio&gt; element<br/>streams directly"]
+  end
+
+  subgraph APP["apps/mobile/android (Flutter)"]
+    A1["Reader taps Play<br/>(Listening mode)"] --> A2["arabic_surah_audio.dart<br/>builds R2 URL(s)"]
+    A2 --> A3["AudioCacheManager.resolve()<br/>download-or-cache-hit"]
+    A3 --> A4["IqraAudioHandler.playSurahLocal()<br/>just_audio + audio_service"]
+    A4 --> A5["Android lock-screen /<br/>notification controls"]
+  end
+
+  W4 --> R2
+  A3 --> R2
+        </div>
+      </div>
+      <p>Per-ayah audio (a different, shorter-clip flow) streams from a separate, keyless source — <code>cdn.islamic.network</code> — built by <code>ayahAudioUrl()</code> (apps/quran) with no R2 involvement at all.</p>
+    </section>
+
+    <!-- 14. FLOW: TEACH -->
+    <section id="flow-teach">
+      <h2><span class="num">14</span>End-to-End Flow: Learning / Tutor Live-Teach</h2>
+      <p class="section-sub">The most architecturally interesting workflow in the repo — a genuine real-time feature.</p>
+      <div class="biz-box">
+        <div class="biz-label">Business Explanation</div>
+        <p style="margin-bottom:0;">During a live lesson, when the tutor points to a specific line on a page, the student's screen highlights that exact spot within a fraction of a second — as if they were sitting side by side looking at the same physical book. If the student's connection drops and they reconnect, the app also quietly checks "what was the tutor pointing at most recently?" so the student doesn't miss anything.</p>
+      </div>
+      <div class="mermaid-wrap">
+        <div class="mermaid">
+sequenceDiagram
+  actor Tu as Tutor
+  participant TC as TeachClient.tsx
+  participant RT as Supabase Realtime<br/>channel "lesson:{id}"
+  participant DB as highlighted_content table<br/>(sharing.ts: recordHighlight)
+  participant SC as ShareClient.tsx
+  actor St as Student
+
+  Tu->>TC: selects Ayah 2:255, page 42
+  par Live broadcast
+    TC->>RT: broadcast "highlight" event
+    RT->>SC: pushed instantly
+    SC-->>St: view updates live
+  and Durable record
+    TC->>DB: recordHighlight(lessonId, state)
+  end
+
+  Note over St,SC: If a student reloads or joins late,<br/>broadcast has no replay — so:
+  St->>SC: opens /share/[lessonId]
+  SC->>DB: getLatestHighlight(lessonId)
+  DB-->>SC: last known state
+  SC-->>St: view catches up immediately
+        </div>
+      </div>
+      <p><strong>Net pattern:</strong> broadcast for liveness, database row for the record. Both sides also track Realtime Presence to show a "connected" indicator.</p>
+    </section>
+
+    <!-- 15. FLOW: SYNC -->
+    <section id="flow-sync">
+      <h2><span class="num">15</span>End-to-End Flow: Content Sync Pipeline</h2>
+      <p class="section-sub">How Quran text gets from the official API into a page a visitor sees, weeks before that visitor ever arrives.</p>
+      <div class="biz-box">
+        <div class="biz-label">Business Explanation</div>
+        <p style="margin-bottom:0;">The Quran text and its translations are licensed content — a developer periodically re-downloads a fresh copy from the official provider (Quran Foundation) and re-publishes the site with it, on a manual schedule, not automatically on every visit. This keeps the site fast and free (no live API calls per visitor) while staying compliant with the license's requirement to refresh cached content periodically.</p>
+      </div>
+      <div class="mermaid-wrap">
+        <div class="mermaid">
+flowchart LR
+  DEV["Developer runs<br/>npm run sync:content"] --> AUTH["OAuth2 client-credentials<br/>against Quran Foundation"]
+  AUTH --> FETCH["GET /chapters, /verses/by_chapter/{n}<br/>text_uthmani + translations 85, 831"]
+  FETCH --> WRITE["src/content/generated/*.json<br/>(114 chapters, 6236 verses — gitignored)"]
+  WRITE --> COMMIT["Committed to the deploy<br/>(re-run manually, ~7-day license window)"]
+  COMMIT --> BUILD["npm run build"]
+  BUILD --> IDX["generate-search-index.mjs<br/>→ public/search-index.json"]
+  COMMIT --> SSG["Next.js generateStaticParams<br/>759 pre-rendered routes"]
+  SSG --> DEPLOY["Deployed — visitor gets<br/>pre-rendered HTML, zero live API calls"]
+        </div>
+      </div>
+    </section>
+
+    <!-- 16. FLOW: CICD -->
+    <section id="flow-cicd">
+      <h2><span class="num">16</span>End-to-End Flow: CI/CD &amp; Deployment</h2>
+      <p class="section-sub">Four independent, path-filtered GitHub Actions workflows.</p>
+      <div class="biz-box">
+        <div class="biz-label">Business Explanation</div>
+        <p style="margin-bottom:0;">Every time code is pushed, an automated checklist runs before anything goes live — checking the code compiles, follows style rules, and builds successfully. Only after passing does it actually go live on the internet, and only for the specific app that changed (changing the Quran reader never risks accidentally breaking the tutoring portal's checklist or deployment).</p>
+      </div>
+      <div class="mermaid-wrap">
+        <div class="mermaid">
+flowchart TB
+  PUSH["git push origin main"] --> FILTER{"Path filter:<br/>which app changed?"}
+  FILTER -->|"apps/learning/**"| CIL["ci.yml<br/>lint → typegen → typecheck → build"]
+  FILTER -->|"apps/quran/**"| CIQ["ci-quran.yml<br/>lint → typegen → typecheck → build"]
+  FILTER -->|"apps/landing/**"| CILA["ci-landing.yml<br/>vercel.json JSON check + html-validate"]
+  FILTER -->|"apps/mobile/android/**<br/>(branch mobile/android only)"| CIF["ci-flutter.yml<br/>flutter analyze → flutter test"]
+
+  CIL -->|"push to main only"| DL["vercel deploy --prebuilt --prod"]
+  CIQ -->|"push to main only"| DQ["vercel deploy --prod<br/>(remote build — see §16 note)"]
+  CILA -->|"push to main only"| DLA["vercel deploy --prod"]
+  CIF -.->|"no deploy job"| REL["Manual: iqs-deploy skill<br/>→ Play Console Closed testing"]
+
+  DL --> HC1["Health check: curl / and /login"]
+  DQ --> HC2["Health check: curl stable alias"]
+  DLA --> HC3["Health check"]
+        </div>
+      </div>
+      <div class="callout warn"><strong>Why apps/quran and apps/landing deploy differently from apps/learning</strong>
+      They use <code>vercel deploy --prod</code> (remote build) instead of the local <code>vercel build</code> + <code>--prebuilt</code> flow apps/learning uses, because of a Next.js 16 / Vercel CLI local lambda-tracing incompatibility specific to SSG output — don't "fix" this by switching them back without re-testing that upstream issue first.</div>
+    </section>
+
+    <hr class="sep">
+
+    <!-- 17. DATA ARCHITECTURE -->
+    <section id="data">
+      <h2><span class="num">17</span>Data Architecture</h2>
+      <p class="section-sub">Four apps, three different storage models. Nothing is shared.</p>
+      <div class="biz-box">
+        <div class="biz-label">Business Explanation</div>
+        <p style="margin-bottom:0;">"Where is the data?" has a different answer for each app, on purpose. The tutoring app's data (real names, schedules, progress) lives in a locked database only that app can reach. The public reader apps store almost nothing about their visitors at all — what little exists (bookmarks, preferences) lives only on the visitor's own device, never uploaded anywhere. No system in this repository can see another system's users or data.</p>
+      </div>
+      <table>
+        <tr><th>App</th><th>Where data lives</th><th>Who reads/writes</th></tr>
+        <tr><td>apps/learning</td><td>Its own Supabase project (Postgres + Auth + Realtime + Storage)</td><td>Browser client only, gated entirely by RLS. No server-side Supabase client exists.</td></tr>
+        <tr><td>apps/quran</td><td>Committed static JSON for content; <code>localStorage</code> for everything user-specific (bookmarks, progress, preferences)</td><td>Its own Supabase project exists with a real schema but is currently unused by any shipped code path — no client is even installed.</td></tr>
+        <tr><td>apps/mobile/android</td><td>Hive (on-device, 4 boxes) for everything user-specific; bundled JSON assets for content</td><td>No backend database at all. Only network dependency besides the Quran APIs is the R2 audio bucket.</td></tr>
+        <tr><td>apps/landing</td><td>None</td><td>—</td></tr>
+      </table>
+
+      <h3>Notifications (apps/learning)</h3>
+      <p>Plain DB rows, not push/email. All inserts go through the single <code>notify_user()</code> SECURITY DEFINER RPC — direct table inserts are never used — which only allows self-notify or a tutor notifying their own student.</p>
+    </section>
+
+    <!-- 18. INTEGRATIONS -->
+    <section id="integrations">
+      <h2><span class="num">18</span>Third-Party Integrations</h2>
+      <p class="section-sub">Every external service this codebase talks to, why, and how.</p>
+      <div class="biz-box">
+        <div class="biz-label">Business Explanation</div>
+        <p style="margin-bottom:0;">IqraSpace deliberately depends on very few outside vendors, and picks free or keyless services wherever the product allows it — this keeps monthly costs near zero and means no single vendor outage can take down the whole platform (reading still works even if the search index, audio CDN, or login system is briefly down).</p>
+      </div>
+      <table>
+        <tr><th>Integration</th><th>Used by</th><th>Purpose</th><th>Auth</th><th>Status</th></tr>
+        <tr><td>Supabase</td><td>apps/learning</td><td>Postgres, Auth, Realtime, Storage, Edge Functions — the entire backend</td><td>Anon key (browser) + service_role (scripts/Edge Functions only)</td><td><span class="badge ok">Live</span></td></tr>
+        <tr><td>Quran Foundation Content API</td><td>apps/quran</td><td>Build-time-only sync of Quran text/translations into committed static content</td><td>OAuth2 client-credentials, script-side only</td><td><span class="badge ok">Live</span></td></tr>
+        <tr><td>Al Quran Cloud API</td><td>apps/quran (Tajweed + per-ayah audio CDN), apps/mobile/android (primary content + search)</td><td>Keyless public API</td><td>None (keyless)</td><td><span class="badge ok">Live</span></td></tr>
+        <tr><td>Quran.com v4 API</td><td>apps/mobile/android (Roman-Urdu translation only, best-effort)</td><td>Secondary translation source, short timeout, failure silently swallowed</td><td>None (keyless)</td><td><span class="badge ok">Live</span></td></tr>
+        <tr><td>Cloudflare R2 (<code>audio.iqraspace.org</code>)</td><td>apps/mobile/android (owner) + apps/quran (consumer)</td><td>Whole-Surah recitation/translation audio, public-read, no egress fees</td><td>None for playback (public bucket)</td><td><span class="badge ok">Live</span></td></tr>
+        <tr><td>Google OAuth / Drive API</td><td>apps/learning</td><td>Optional lesson-material sourcing from a tutor's Drive</td><td>OAuth2, owner-provisioned client secret</td><td><span class="badge warn">Code-complete, not deployed</span></td></tr>
+        <tr><td>Vercel</td><td>All 3 Next.js/static web apps</td><td>Hosting + deploy, 3 fully separate projects</td><td>Per-project tokens via GitHub Secrets</td><td><span class="badge ok">Live</span></td></tr>
+        <tr><td>Google Play Console</td><td>apps/mobile/android</td><td>Distribution — Closed testing track</td><td>Service account, release-to-testing-tracks scope only</td><td><span class="badge ok">Live</span></td></tr>
+        <tr><td>Google Meet</td><td>apps/learning</td><td>Manual link only — no OAuth</td><td>None needed</td><td><span class="badge ok">Live, by design</span></td></tr>
+      </table>
+    </section>
+
+    <!-- 19. TESTING -->
+    <section id="testing">
+      <h2><span class="num">19</span>Testing &amp; Quality</h2>
+      <table>
+        <tr><th>App</th><th>Automated tests</th><th>What CI gates on</th></tr>
+        <tr><td>apps/learning</td><td><span class="badge danger">None</span></td><td>lint + typecheck + build only</td></tr>
+        <tr><td>apps/quran</td><td><span class="badge danger">None</span></td><td>lint + typecheck + build only</td></tr>
+        <tr><td>apps/mobile/android</td><td><span class="badge ok">Yes — 66 tests</span></td><td><code>flutter analyze</code> + <code>flutter test</code> — the only app in the repo with real CI-gated tests</td></tr>
+        <tr><td>apps/landing</td><td>N/A (static HTML)</td><td><code>vercel.json</code> JSON validity + HTML validation</td></tr>
+      </table>
+      <p>For the two untested Next.js apps, this session's validation for every change was: <code>lint</code> → <code>next typegen &amp;&amp; typecheck</code> → <code>build</code> → (for UI-affecting changes) a real dev-server + browser check. All four passed clean after this session's cleanup (see §20).</p>
+    </section>
+
+    <hr class="sep">
+
+    <!-- 20. CLEANUP SUMMARY -->
+    <section id="cleanup">
+      <h2><span class="num">20</span>Before/After Cleanup Summary</h2>
+      <p class="section-sub">What this review session actually changed, app by app — every item verified by build/lint/typecheck (and a real browser check for UI-affecting changes) before being recorded here.</p>
+
+      <div class="biz-box">
+        <div class="biz-label">Business Explanation</div>
+        <p style="margin-bottom:0;">Think of this like a home inspection followed by only the repairs the inspector was fully confident about, plus a punch-list of things worth a second opinion. Nothing that a real visitor, student, or tutor would notice changed — every change was verified to still build and behave identically before being kept. A handful of items that looked unused were deliberately <em>not</em> touched because removing them without a human sign-off carried more risk than leaving them in place, especially in the tutoring app, which has no automated test suite to catch a mistake.</p>
+      </div>
+
+      <h3>apps/mobile/android — renamed from apps/flutter</h3>
+      <p>A pure directory move (<code>apps/flutter</code> → <code>apps/mobile/android</code>, 190 files as tracked git renames), per an explicit request mid-session. <code>applicationId</code> (<code>org.iqraspace.app</code>) and Play Console identity were deliberately left unchanged.</p>
+      <ul>
+        <li>Updated every reference across the repo: root <code>CLAUDE.md</code>, root <code>package.json</code>, all 3 <code>.claude/skills/*.md</code> files, <code>.github/workflows/ci-flutter.yml</code> (path filters + working-directory), the app's own docs (<code>DEPLOYMENT.md</code>, <code>README.md</code>, <code>AUDIO.md</code>), scripts, Dart source comments, <code>docs/DEVELOPER_GUIDE.html</code>, <code>docs/user_guide/</code>, <code>resources/urdu-audio/</code>.</li>
+        <li>Found and fixed two relative-path bugs the added directory nesting introduced: <code>scripts/emulator/run-app.ps1</code>'s repo-root climb (needed one more <code>..</code> level) and <code>assets/user_guide/NOTE.md</code>'s equivalent doc-comment path.</li>
+        <li><strong>Validated:</strong> <code>flutter pub get</code>, <code>flutter analyze</code> (0 issues), <code>flutter test</code> (<strong>66/66 passing</strong>).</li>
+      </ul>
+
+      <h3>apps/quran</h3>
+      <table>
+        <tr><th>Change</th><th>Detail</th></tr>
+        <tr><td>Removed (confirmed zero usage)</td><td><code>LOGO_CANDLE_CROP</code>/<code>LOGO_BOOK_CROP</code> (logo.ts), <code>isPdfModeAvailable()</code> (pdf.ts), <code>getChapter()</code> (quran.ts), <code>reciterLabel()</code> (reciters.ts), <code>translationLanguageLabel()</code> (translations.ts), <code>flourishRuleStyle</code> (BrandWordmark.tsx) — 6 dead exports across 6 files</td></tr>
+        <tr><td>Moved to <code>resources/apps-quran/</code></td><td><code>quran-api/client.ts</code> (100% dead scaffolding for a future server route), <code>PROJECT-STATUS.md</code>, <code>PRODUCT-ROADMAP.md</code>, <code>SETUP.md</code> (stale planning docs referencing already-deleted routes)</td></tr>
+        <tr><td>Deliberately kept in place</td><td><code>Readme.md</code> — initially moved, then <strong>restored</strong> after discovering 50+ source-code comments cite it as "Readme.md §N" design rationale; moving it would have orphaned those citations on a fresh clone (<code>resources/</code> is gitignored)</td></tr>
+        <tr><td>Refactored</td><td><code>BookmarksPreview.tsx</code> and <code>LastReadsRow.tsx</code>'s near-duplicate layout/hydration logic extracted into shared <code>useHydratedState.ts</code>, <code>HomeCard.tsx</code>, <code>homeRowStyles.ts</code></td></tr>
+        <tr><td>Fixed</td><td>Root <code>package.json</code>'s description referenced the just-moved <code>apps/quran/Readme.md</code> path — corrected</td></tr>
+      </table>
+      <p><strong>Validated:</strong> lint (clean), typecheck (clean), production build (759 routes generated), and a real browser check of the homepage (Bookmarks/Last-Reads rows) and a Surah page (RTL header centering) via a headless-Chromium session — no console errors.</p>
+
+      <h3>apps/learning</h3>
+      <table>
+        <tr><th>Change</th><th>Detail</th></tr>
+        <tr><td>Removed (confirmed zero usage)</td><td><code>combineDateTime()</code> (format.ts), <code>HIGHLIGHT_COLOR</code> (annotationTypes.ts), <code>quranSurahMaterialPath()</code> (lessonMaterial.ts), and the entire <code>src/components/ui/index.ts</code> barrel file (zero importers — every call site imports each UI primitive directly)</td></tr>
+        <tr><td>Moved to <code>resources/apps-learning/</code></td><td><code>README.md</code> — confirmed to be unmodified <code>create-next-app</code> boilerplate with zero project-specific content and zero citations from source</td></tr>
+        <tr><td>Config fix</td><td>Added an ESLint ignore for <code>public/pdfjs/**</code> (vendored pdfjs-dist runtime assets, copied by a build script, gitignored) — not a real CI issue since a fresh checkout never has them at lint time, but was producing 166 false-positive local lint findings in this workspace</td></tr>
+      </table>
+      <p><strong>Validated:</strong> lint (clean), typecheck (clean), production build (23 routes generated, including the dynamic <code>/share/[lessonId]</code> and <code>/teach/[lessonId]</code>).</p>
+
+      <div class="callout warn"><strong>Flagged but deliberately NOT changed in apps/learning</strong> — each carries a real judgment call this document defers to a human:
+      <ul style="margin-bottom:0;">
+        <li><code>endSession()</code> (sharing.ts) is never called — no code path currently transitions a <code>sharing_sessions</code> row to "ended." This may be an incomplete feature (should be wired to the teach-screen unmount) rather than dead code; removing it would delete real infrastructure.</li>
+        <li><code>isSuperAdminRole()</code> (roles.ts) is unused but mirrors a real database function (<code>public.is_super_admin()</code>) — a silent, unused authorization helper is exactly the kind of thing worth a second pair of eyes before deleting.</li>
+        <li><code>GoogleDriveFile</code> and <code>StudentLessonCompletion</code> types are unused but document live/paused-feature table shapes, not accidents.</li>
+        <li>Three instances of near-duplicate query/UI logic (curriculum.ts's four join-chain functions; <code>lessons/page.tsx</code>'s <code>openMaterial</code> vs. <code>LessonMaterialViewer</code>'s <code>useLessonMaterialViewer</code> hook, which the code's own comments acknowledge mirror each other) — genuine refactor opportunities, but apps/learning has <strong>zero automated tests</strong>, and these touch RLS-sensitive, real-student-data code paths in a live pilot. The regression risk of a mechanical merge outweighed the tidiness gain without a human explicitly signing off.</li>
+      </ul>
+      </div>
+
+      <h3>apps/landing</h3>
+      <p>Fully audited (every file read) — <span class="badge ok">nothing to change</span>. No dead files, no broken links, <code>vercel.json</code>'s rewrites correctly match documented behavior. Two minor, non-actionable cosmetic notes: <code>privacy.html</code>'s footer tagline doesn't quite match <code>index.html</code>'s, and both pages duplicate their entire color-token CSS block (expected for a "no build step, no shared stylesheet" design).</p>
+
+      <h3>Net effect</h3>
+      <table>
+        <tr><th>Metric</th><th>Count</th></tr>
+        <tr><td>Dead exports/constants removed</td><td>10 (6 in apps/quran, 4 in apps/learning)</td></tr>
+        <tr><td>Dead/orphaned files removed</td><td>1 (apps/learning's unused UI barrel file)</td></tr>
+        <tr><td>Files moved to gitignored <code>resources/</code> (preserved, not deleted)</td><td>8 (4 in apps/quran, 1 in apps/learning, 1 code file, 2 restored/reconsidered along the way)</td></tr>
+        <tr><td>Directories renamed</td><td>1 (<code>apps/flutter</code> → <code>apps/mobile/android</code>, 190 files)</td></tr>
+        <tr><td>Duplicate-code refactors applied</td><td>1 (apps/quran home components)</td></tr>
+        <tr><td>Duplicate-code refactors flagged for human review, not applied</td><td>3 (all in apps/learning — see callout above)</td></tr>
+        <tr><td>Config fixes</td><td>2 (apps/learning ESLint ignore; root package.json stale path reference)</td></tr>
+        <tr><td>Broken functionality introduced</td><td><strong>Zero</strong> — every app's build/lint/typecheck (and Flutter's test suite) passed after every change</td></tr>
+      </table>
+    </section>
+
+    <!-- 21. DEBT -->
+    <section id="debt">
+      <h2><span class="num">21</span>Known Gaps &amp; Documentation Drift</h2>
+      <p class="section-sub">Every item below was found by comparing an existing doc's claim against the actual current code.</p>
+      <ol>
+        <li><strong>Root <code>CLAUDE.md</code> (pre-session)</strong> described apps/quran as having Capacitor + <code>cap:sync</code>/<code>cap:open:android</code> + a <code>ci-quran-mobile.yml</code> workflow. None of this exists on <code>main</code> — <code>package.json</code> has zero Capacitor dependencies, no <code>android/</code> folder, and <code>.github/workflows/</code> only has the four files described in §16. That work exists only on the separate <code>mobile/android</code> git branch, not yet merged. Treat apps/mobile/android as the real native Android app for the Quran reader.</li>
+        <li><strong>Root <code>DEPLOYMENT.md</code></strong> states "no custom domain yet — temporary Vercel URL only." This is now false — the Multi-Zones custom-domain setup shipped after this doc was written. It's also scoped to apps/learning only despite reading as repo-wide.</li>
+        <li><strong><code>Iqra-space-architecture.md</code></strong> is a pre-monorepo, apps/learning-only planning document — its structure sections predate apps/quran, apps/mobile/android, and apps/landing entirely. Good for original product/DB rationale only.</li>
+        <li><strong>The R2 audio bucket "one deliberate exception" framing</strong>: root CLAUDE.md attributes this exception to apps/mobile/android alone. In current code, apps/quran's Listening Mode also consumes the same bucket directly (§2 callout) — a second live consumer of the same infrastructure, not shared code.</li>
+        <li><strong>Supplications content duplication</strong>: the same dataset is maintained as two separate committed files (one per app), kept in parity by convention only — no automated sync exists. A future edit to one without the other will silently diverge.</li>
+        <li><strong>No <code>supabase gen types</code></strong> for apps/learning — <code>src/lib/types.ts</code> is hand-written and can drift from the actual schema as migrations are added.</li>
+        <li><strong>apps/learning's most recent feature</strong> (student-based one-to-one scheduling, migration 0023) is explicitly documented in the repo's own history as not independently end-to-end tested.</li>
+        <li><strong>No automated tests</strong> exist for either Next.js app (learning, quran) — see §19.</li>
+        <li><strong>apps/learning's <code>sharing_sessions.status</code> "ended" transition</strong> appears never written (§20) — worth a deliberate decision on whether to wire it up.</li>
+      </ol>
+      <p>A companion, even more exhaustive developer-focused audit of documentation drift (CI, environments, troubleshooting) lives in <code>docs/DEVELOPER_GUIDE.html</code> §22 — read that alongside this section for the full picture.</p>
+    </section>
+
+    <hr class="sep">
+
+    <!-- 22. GLOSSARY -->
+    <section id="glossary">
+      <h2><span class="num">22</span>Glossary</h2>
+      <p class="section-sub">Every technical term used in this document, defined in plain English.</p>
+      <dl class="glossary">
+        <dt>SSG (Static Site Generation)</dt><dd>Pages are fully built into plain HTML files ahead of time (at deploy time), not generated fresh for each visitor. Fast and cheap to serve; used throughout apps/quran (759 pages).</dd>
+        <dt>App Router</dt><dd>Next.js's file-system-based routing convention, where a folder path under <code>src/app/</code> becomes a URL path and a <code>page.tsx</code> file inside it is that page's content.</dd>
+        <dt>Server Component</dt><dd>A React component that runs only on the server (or at build time) and never ships its own code to the browser — used for anything that reads files or a database directly.</dd>
+        <dt>RLS (Row-Level Security)</dt><dd>A Postgres database feature that filters which rows a query can see/edit based on who's asking — the real security boundary in apps/learning, not the app's own code.</dd>
+        <dt>SECURITY DEFINER function</dt><dd>A database function that runs with the permissions of the person who <em>created</em> it, not the person calling it — used carefully here to let a normal user safely trigger a privileged action (like sending a notification) without giving them broad table access.</dd>
+        <dt>Multi-Zones</dt><dd>A Next.js pattern for making several independently-deployed applications appear as one website by routing different URL paths to different backends at the edge (see §2, §10).</dd>
+        <dt>basePath</dt><dd>A Next.js setting that prefixes every route in an app with a fixed segment (e.g. <code>/quran</code>) so its internal routing lines up with where Multi-Zones proxies it to.</dd>
+        <dt>Edge Function</dt><dd>A small, independently-deployed backend function (here, on Supabase) for logic too sensitive to run in the browser — e.g. deleting a user account.</dd>
+        <dt>OAuth2 client-credentials</dt><dd>An authentication flow for server-to-server calls with no human login involved — used by apps/quran's content sync script to authenticate to the Quran Foundation API.</dd>
+        <dt>CDN (Content Delivery Network)</dt><dd>A network of servers that host and stream files (like audio) from a location close to the visitor, so the app itself never has to serve that heavy file traffic.</dd>
+        <dt>Realtime channel</dt><dd>A live, two-way connection (via Supabase Realtime) that instantly pushes an event from one connected browser to another — the mechanism behind live highlight-sync in apps/learning.</dd>
+        <dt>Hive</dt><dd>A lightweight, on-device key-value database used by the Flutter app (apps/mobile/android) to store everything locally — no server, no account needed.</dd>
+        <dt>Riverpod</dt><dd>The state-management library apps/mobile/android uses to keep its UI in sync with underlying data (similar in spirit to React's own state, but for Flutter).</dd>
+        <dt>Tajweed</dt><dd>The set of rules governing correct Quranic recitation pronunciation. "Tajweed coloring" means displaying Arabic text with each rule's affected letters shown in a distinct color.</dd>
+        <dt>Capacitor</dt><dd>A framework for wrapping a web app into a native mobile app shell. Referenced by some older docs for apps/quran, but not present on the current <code>main</code> branch (§21) — apps/mobile/android is the real native app today.</dd>
+        <dt>Dead code / orphaned file</dt><dd>Code that exists in the repository but is never actually called or imported by anything else — safe to remove once confirmed, since deleting it changes nothing a user would experience.</dd>
+        <dt>CI/CD</dt><dd>Continuous Integration / Continuous Deployment — the automated pipeline (GitHub Actions here) that checks and then publishes code changes without a human manually running each step.</dd>
+        <dt>Vercel</dt><dd>The hosting platform all three web-facing apps (learning, quran, landing) deploy to — each as its own separate, independently-billed project.</dd>
+        <dt>Anonymous-first</dt><dd>A product design principle meaning a feature must work fully without the user creating an account or signing in — apps/quran's core, non-negotiable rule.</dd>
+      </dl>
+    </section>
+
+    <!-- 23. APPENDIX -->
+    <section id="appendix">
+      <h2><span class="num">23</span>Appendix: File &amp; Component Inventory</h2>
+      <p class="section-sub">Quick-reference counts and pointers — full per-file detail lives in each app's deep-dive section (§6–§9).</p>
+
+      <h3>File counts by app (application code only — excludes node_modules, build output, vendored assets)</h3>
+      <table>
+        <tr><th>App</th><th>Routes / screens</th><th>Components / widgets</th><th>lib/core files</th><th>Other</th></tr>
+        <tr><td>apps/learning</td><td>27 files under <code>src/app</code></td><td>36 files under <code>src/components</code></td><td>22 files under <code>src/lib</code></td><td>23 SQL migrations (repo root <code>supabase/</code>), 3 Edge Functions</td></tr>
+        <tr><td>apps/quran</td><td>17 files under <code>src/app</code> (759 generated routes)</td><td>26 files under <code>src/components</code></td><td>23 files under <code>src/lib</code></td><td>117 generated content files under <code>src/content</code> (gitignored, regenerated)</td></tr>
+        <tr><td>apps/mobile/android</td><td>Screens within 57 files under <code>lib/features</code></td><td>Widgets within the same 57 files (feature-colocated)</td><td>22 files under <code>lib/core</code></td><td>17 test files under <code>test/</code> (66 individual test cases)</td></tr>
+        <tr><td>apps/landing</td><td>2 HTML pages</td><td>—（no components, inline HTML/CSS）</td><td>—</td><td>1 <code>vercel.json</code>, 1 <code>robots.txt</code>, 1 <code>sitemap.xml</code></td></tr>
+      </table>
+
+      <h3>apps/learning — full component directory map</h3>
+      <p><code>components/ui/</code> (Button, Card, Field, Badge, Avatar, ProgressBar, EmptyState, Tabs, Modal, Toast, classNames) · <code>components/shell/</code> (AppShell, Sidebar, Topbar, NotificationBell, ThemeToggle, PublicHeader, navConfig) · <code>components/pdf/</code> (PdfViewer, AnnotationLayer, PdfToolbar, annotationTypes, svgCoords) · <code>components/teach/</code> (TeachClient, ShareClient) · <code>components/lessons/</code> (LessonPlanPicker, LessonPlanItemForm, ScheduleSessionForm, ConfirmLessonCompletionModal) · <code>components/attendance/</code> (AttendanceControl, AttendanceStatusBadge) · <code>components/students/</code> (StudentLessonManager, LessonMaterialViewer) · <code>components/admin/</code> (TutorPicker) · root-level <code>Providers.tsx</code>, <code>RequireAuth.tsx</code>.</p>
+
+      <h3>apps/quran — full lib/ inventory</h3>
+      <p><code>lib/content/</code>: quran.ts, types.ts, pdf.ts, reciters.ts, listeningAudio.ts, translations.ts, arabicFonts.ts, chapterIndex.ts, supplications.ts, tajweed.ts, tajweedApi.ts, tajweedRules.ts · <code>lib/preferences/</code>: ReaderPreferencesProvider.tsx, storage.ts, types.ts · <code>lib/audio/</code>: AudioProvider.tsx · <code>lib/i18n/</code>: strings.ts, useT.ts · <code>lib/reader/</code>: ayahDom.ts, useModalA11y.ts · <code>lib/branding/</code>: logo.ts, renderCroppedIcon.tsx · root: site.ts.</p>
+
+      <h3>apps/mobile/android — full feature list</h3>
+      <p><code>lib/features/</code>: home, quran_reader, bookmarks, search, settings, supplications — each with its own <code>data/</code>, <code>domain/</code>, <code>presentation/</code> layers (see §8). <code>lib/core/</code>: audio, constants, network, storage, theme, utils, widgets.</p>
+
+      <h3>Further reading</h3>
+      <ul class="toc-mini">
+        <li><code>docs/DEVELOPER_GUIDE.html</code> — the companion developer-audience reference this document draws verified facts from (environments, troubleshooting table, safe-change guidelines, full CI/CD table)</li>
+        <li><code>Iqra-space-architecture.md</code> — original apps/learning product/DB design rationale</li>
+        <li><code>apps/quran/ARCHITECTURE.md</code>, <code>COST.md</code>, <code>DEPLOYMENT.md</code>, <code>PDF-CONTENT.md</code>, <code>QURAN-CONTENT.md</code></li>
+        <li><code>apps/mobile/android/AUDIO.md</code>, <code>DEPLOYMENT.md</code>, <code>TESTING.md</code>, <code>CLAUDE.md</code></li>
+        <li><code>.claude/skills/{iqs-debug,iqs-deploy,iqs-git}/SKILL.md</code> — the AI-assisted dev workflows used on this repo</li>
+        <li>Root <code>CLAUDE.md</code> — repo-wide guidance for AI coding agents</li>
+        <li><code>resources/apps-quran/</code>, <code>resources/apps-learning/</code> — reference material moved out of app roots during this session's cleanup (§20); gitignored, local-only</li>
+      </ul>
+    </section>
+
+    </div>
+
+    <footer>
+      IqraSpace Agentic Technical Documentation — generated from a direct, tool-verified review of the repository on the <code>main</code> branch, 2026-09-27. Every architectural claim was checked against actual source files during this session; where an older document disagreed with the code, this document follows the code (see §21 for the specific discrepancies found). Companion reference: <code>docs/DEVELOPER_GUIDE.html</code>.
+    </footer>
+  </main>
+</div>
+
+<a href="#howto" class="backtotop" title="Back to top">↑</a>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>
+  (function(){
+    var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var root = document.documentElement;
+    var forced = root.getAttribute('data-theme');
+    if (forced === 'dark') isDark = true;
+    if (forced === 'light') isDark = false;
+    if (window.mermaid) {
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: isDark ? 'dark' : 'neutral',
+        securityLevel: 'loose',
+        flowchart: { curve: 'basis' },
+        themeVariables: isDark ? {
+          background:'#1b1c21', primaryColor:'#12312a', primaryTextColor:'#eceae2',
+          primaryBorderColor:'#3ecfa9', lineColor:'#7c7969', secondaryColor:'#232419', tertiaryColor:'#15161a'
+        } : {
+          background:'#ffffff', primaryColor:'#e4f3ee', primaryTextColor:'#1c1b19',
+          primaryBorderColor:'#0d6e5b', lineColor:'#8f8b7d', secondaryColor:'#eeece3', tertiaryColor:'#f7f7f5'
+        }
+      });
+    }
+  })();
+
+  document.querySelectorAll('#tocNav a').forEach(function(a){
+    a.addEventListener('click', function(){
+      document.getElementById('sidebar').classList.remove('open');
+    });
+  });
+  var sections = Array.from(document.querySelectorAll('main section[id]'));
+  var links = Array.from(document.querySelectorAll('#tocNav a'));
+  function onScroll(){
+    var pos = window.scrollY + 120;
+    var current = sections[0];
+    for (var i=0;i<sections.length;i++){
+      if (sections[i].offsetTop <= pos) current = sections[i];
+    }
+    links.forEach(function(l){
+      l.classList.toggle('active', l.getAttribute('href') === '#' + (current && current.id));
+    });
+  }
+  document.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  function filterToc(q){
+    q = q.trim().toLowerCase();
+    document.querySelectorAll('#tocNav a, #tocNav .h1').forEach(function(el){
+      if (!q) { el.style.display = ''; return; }
+      el.style.display = el.textContent.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>
