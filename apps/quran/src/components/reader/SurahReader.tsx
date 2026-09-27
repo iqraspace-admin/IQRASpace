@@ -184,6 +184,11 @@ export function SurahReader({ chapter, verses, previous, next, pdfInfo, allChapt
             fontSize: "2.25rem",
             margin: "0.5rem 0",
             color: "var(--color-primary)",
+            // Explicit, not left to inherit "center" from <header>: the
+            // globals.css `[dir="rtl"]` safety net (see AyahBlock.tsx's
+            // comment) matches this element directly and would otherwise
+            // override the inherited centering with "right".
+            textAlign: "center",
           }}
         >
           {chapter.name_arabic}
