@@ -7,7 +7,7 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
-// Play Store upload signing (apps/flutter/DEPLOYMENT.md §3). key.properties
+// Play Store upload signing (apps/mobile/android/DEPLOYMENT.md §3). key.properties
 // is gitignored (android/.gitignore) and points at an upload keystore kept
 // outside this repo — never committed. Falls back to the debug key when
 // key.properties is absent (e.g. a fresh checkout, or CI without the
@@ -45,7 +45,7 @@ android {
         // (org.iqraspace.quran) so the two never look like the same app
         // side-by-side in a store listing. Treat as effectively
         // permanent now that it matches a real listing — see
-        // apps/flutter/README.md.
+        // apps/mobile/android/README.md.
         //
         // Deliberately different from `namespace` above: namespace only
         // has to match this module's Kotlin source package

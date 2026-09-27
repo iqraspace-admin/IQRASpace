@@ -1,0 +1,12 @@
+{
+  "name": "iqraspace-flutter-play-deploy",
+  "private": true,
+  "type": "module",
+  "description": "Uploads a signed release .aab for org.iqraspace.app to Google Play Console's internal testing track via the Android Publisher API. Used by the iqs-deploy skill (see .claude/skills/iqs-deploy/SKILL.md). Never targets any track other than internal — see upload-to-play.mjs and apps/mobile/android/DEPLOYMENT.md §9.",
+  "scripts": {
+    "upload": "node --env-file=.env.local upload-to-play.mjs"
+  },
+  "dependencies": {
+    "googleapis": "^144.0.0"
+  }
+}

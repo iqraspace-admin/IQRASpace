@@ -2,7 +2,7 @@
   "name": "iqraspace-flutter-audio-scripts",
   "private": true,
   "type": "module",
-  "description": "One-off/repeatable content-prep scripts for apps/flutter's Listening Mode audio (Resources/ -> Cloudflare R2). Not part of the Flutter app itself; run with Node from this directory.",
+  "description": "One-off/repeatable content-prep scripts for apps/mobile/android's Listening Mode audio (Resources/ -> Cloudflare R2). Not part of the Flutter app itself; run with Node from this directory.",
   "scripts": {
     "fetch:missing-alafasy": "node fetch-missing-alafasy.mjs",
     "split:large": "node split-large-audio.mjs",

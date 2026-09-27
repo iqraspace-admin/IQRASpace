@@ -1,6 +1,6 @@
 ---
 name: iqs-debug
-description: Debug and actually fix bugs in IqraSpace's Flutter app (apps/flutter) using a connected physical Android device — reproduce on-device, find the root cause via logs/diagnostics, implement the fix, then retest until resolved. Trigger when the user says "iqs-debug".
+description: Debug and actually fix bugs in IqraSpace's Flutter app (apps/mobile/android) using a connected physical Android device — reproduce on-device, find the root cause via logs/diagnostics, implement the fix, then retest until resolved. Trigger when the user says "iqs-debug".
 ---
 
 # iqs-debug
@@ -27,7 +27,7 @@ its own known limitations in this environment).
 
 ## 2. Run App
 
-From `apps/flutter`:
+From `apps/mobile/android`:
 ```
 flutter run -d <device-id>
 ```

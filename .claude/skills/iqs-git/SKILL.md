@@ -10,7 +10,7 @@ Determine Target → Merge → Resolve Conflicts → Test Again → Push (target
 → Report**
 
 This repo is a monorepo of **four fully independent apps**
-(`apps/learning`, `apps/quran`, `apps/flutter`, `apps/landing` — see root
+(`apps/learning`, `apps/quran`, `apps/mobile/android`, `apps/landing` — see root
 `CLAUDE.md`), each with its own CI workflow, path-filtered to that app's
 files. This skill mirrors that: it figures out which app(s) a change
 touches and only runs the checks relevant to those apps — the same thing
@@ -52,7 +52,7 @@ git diff main...HEAD     # everything this branch adds relative to main (adjust 
 ```
 
 Read the actual diff, not just filenames. Identify which app(s) it
-touches by path prefix (`apps/learning/`, `apps/quran/`, `apps/flutter/`,
+touches by path prefix (`apps/learning/`, `apps/quran/`, `apps/mobile/android/`,
 `apps/landing/`, or repo-root files like `CLAUDE.md`/`DEPLOYMENT.md`/
 root `package.json`). Per root `CLAUDE.md`, changes spanning multiple
 apps in one commit are unusual (apps share nothing) — if the diff
@@ -68,16 +68,16 @@ before anything gets staged or committed:
 - **Secrets / credentials** — reject if present: any `.env`, `.env.*`
   (except already-committed `.env.example`-style templates),
   `key.properties`, `google-services.json`, `*.jks`, `*.keystore`,
-  `service-account*.json`, `apps/flutter/scripts/deploy/.env.local`, or
+  `service-account*.json`, `apps/mobile/android/scripts/deploy/.env.local`, or
   any file matching entries already in `.gitignore` (root and per-app —
-  `apps/quran/.gitignore`, `apps/flutter/.gitignore`). Also scan the
+  `apps/quran/.gitignore`, `apps/mobile/android/.gitignore`). Also scan the
   actual diff content (not just filenames) for obvious inline secrets —
   API keys, private keys, tokens, connection strings with embedded
   passwords — since a secret can land in a file that isn't named like
   one.
 - **Generated / build artifacts** — reject: `node_modules/`, `.next/`,
-  `dist/`, `build/`, `apps/flutter/.dart_tool/`,
-  `apps/flutter/android/.gradle`, `*.apk`, `*.aab`, `.dart_tool/`,
+  `dist/`, `build/`, `apps/mobile/android/.dart_tool/`,
+  `apps/mobile/android/android/.gradle`, `*.apk`, `*.aab`, `.dart_tool/`,
   Supabase local artifacts already covered by `.gitignore`
   (`supabase/.branches`, `supabase/.temp`, etc).
 - **Unrelated changes** — anything in the diff that has nothing to do
@@ -106,8 +106,8 @@ don't skip an app's checks because "it's probably fine":
 - **apps/quran**: same pattern from `apps/quran` — `npm install` (if
   needed) → `npm run typecheck` caveat (same `next typegen` step) →
   `npm run lint` → `npm run typecheck` → `npm run build`
-- **apps/flutter**: `flutter analyze` → `flutter test` (from
-  `apps/flutter`)
+- **apps/mobile/android**: `flutter analyze` → `flutter test` (from
+  `apps/mobile/android`)
 - **apps/landing**: validate the HTML and confirm `vercel.json` is valid
   JSON (no real build step, matching `ci-landing.yml`)
 - **Root-only changes** (e.g. root `CLAUDE.md`, `package.json`

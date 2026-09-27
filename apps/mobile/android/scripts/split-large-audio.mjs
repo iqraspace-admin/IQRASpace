@@ -4,7 +4,7 @@
  * Storage's 50MiB free-tier object limit into sequential parts, each
  * comfortably under that limit — a storage workaround only, not a
  * change to the verified Surah audio itself (see
- * `upload-audio-to-r2.mjs`'s header and apps/flutter/AUDIO.md).
+ * `upload-audio-to-r2.mjs`'s header and apps/mobile/android/AUDIO.md).
  *
  * Cut points are chosen at actual silence in the recitation (via
  * ffmpeg's `silencedetect` filter), nearest to each ideal
@@ -21,7 +21,7 @@
  * detection are both read from plain `ffmpeg` stderr output, not
  * `ffprobe`, so only the one binary is needed).
  *
- * Usage (from apps/flutter/scripts): npm install && npm run split:large
+ * Usage (from apps/mobile/android/scripts): npm install && npm run split:large
  * Safe to re-run — a Surah already fully split (all expected part files
  * present) is skipped.
  */

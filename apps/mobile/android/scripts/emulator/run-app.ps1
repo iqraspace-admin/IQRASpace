@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-  Runs the apps/flutter app on a running iqs- emulator with hot reload.
+  Runs the apps/mobile/android app on a running iqs- emulator with hot reload.
 
 .DESCRIPTION
   Thin wrapper around `flutter run` that targets the emulator by AVD name
@@ -16,8 +16,8 @@ param(
     [string]$Avd = "iqra_primary_api36"
 )
 
-$repoRoot = Resolve-Path (Join-Path $PSScriptRoot "..\..\..\..")
-$flutterDir = Join-Path $repoRoot "apps\flutter"
+$repoRoot = Resolve-Path (Join-Path $PSScriptRoot "..\..\..\..\..")
+$flutterDir = Join-Path $repoRoot "apps\mobile\android"
 
 $AndroidHome = $env:ANDROID_HOME
 if (-not $AndroidHome) { $AndroidHome = "$env:LOCALAPPDATA\Android\sdk" }

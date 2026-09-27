@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-  Launches one of the iqs- Android emulators for local apps/flutter testing.
+  Launches one of the iqs- Android emulators for local apps/mobile/android testing.
 
 .DESCRIPTION
   This machine's BIOS/UEFI has hardware virtualization (VT-x/AMD-V) disabled,

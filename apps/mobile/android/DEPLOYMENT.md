@@ -81,7 +81,7 @@ committed to git.
    obtaining it, is unrecoverable for this listing (mitigated only if you
    later enroll in Play App Signing, which re-keys the *app* signing key
    but still needs the upload key to push updates).
-2. Create `apps/flutter/android/key.properties` (gitignored — verify
+2. Create `apps/mobile/android/android/key.properties` (gitignored — verify
    `android/key.properties` and `*.jks` are in `.gitignore`; add them if
    not):
    ```
@@ -208,7 +208,7 @@ mechanical parts of a release: `flutter analyze`/`flutter test`, bumping
 the `pubspec.yaml` build number, building the signed `.aab` (§4),
 verifying it, and uploading it to Play Console's **closed testing**
 track (the Android Publisher API's `alpha` track id) via
-`apps/flutter/scripts/deploy/upload-to-play.mjs`.
+`apps/mobile/android/scripts/deploy/upload-to-play.mjs`.
 
 It is hardcoded to that track only and will never touch production —
 promoting a build past closed testing stays the manual, owner-driven
@@ -233,10 +233,10 @@ Same category as §3's signing keystore — needs your own Google account:
    list/opt-in URL. The upload script only uploads a build to this
    track — it doesn't create the track or manage testers, and the very
    first automated upload will fail if this hasn't been done first.
-4. Copy `apps/flutter/scripts/deploy/.env.local.example` to
-   `apps/flutter/scripts/deploy/.env.local` and set
+4. Copy `apps/mobile/android/scripts/deploy/.env.local.example` to
+   `apps/mobile/android/scripts/deploy/.env.local` and set
    `PLAY_SERVICE_ACCOUNT_JSON_PATH` to the JSON key's absolute path.
-5. `npm install --prefix apps/flutter/scripts/deploy` once.
+5. `npm install --prefix apps/mobile/android/scripts/deploy` once.
 
 Until this is done, the skill's validate/build/verify steps still work —
 only the Play Console upload step fails, with a clear "missing

@@ -168,7 +168,7 @@
       <div class="h1">Apps</div>
       <a href="#app-learning">6. apps/learning (LMS)</a>
       <a href="#app-quran">7. apps/quran (Reader)</a>
-      <a href="#app-flutter">8. apps/flutter (Native)</a>
+      <a href="#app-flutter">8. apps/mobile/android (Native)</a>
       <a href="#app-landing">9. apps/landing (Domain)</a>
       <div class="h1">Cross-Cutting</div>
       <a href="#data">10. Data Architecture</a>
@@ -223,7 +223,7 @@
           <p>A free, anonymous-first public Quran reader: Surah/Page/PDF reading modes, audio (per-ayah and whole-Surah), Tajweed coloring, search, Supplications (duas), bookmarks — all local-only today, no login required. Lives at <code>iqraspace.org/quran</code>.</p>
         </div>
         <div class="card app-card">
-          <h4>IqraSpace Quran (Flutter) <span class="tag">apps/flutter</span></h4>
+          <h4>IqraSpace Quran (Flutter) <span class="tag">apps/mobile/android</span></h4>
           <p>The native Android (and web-capable) counterpart to apps/quran, but a fully separate codebase and data source: Tajweed-colored reading, Listening Mode, Supplications, bookmarks — all offline-first via Hive. Distributed through Google Play (closed testing).</p>
         </div>
         <div class="card app-card">
@@ -239,7 +239,7 @@
         <tr><td>Student</td><td>apps/learning</td><td>Views their schedule, follows a live lesson read-only (<code>/share/[lessonId]</code>), sees progress and notifications. Requires a real login — sharing is <strong>not</strong> a public/token link.</td></tr>
         <tr><td>Guardian</td><td>apps/learning</td><td>Modeled in the DB/type system (<code>role</code> enum, signup metadata) but has <strong>no dedicated UI</strong> today — <span class="badge warn">Partial</span>.</td></tr>
         <tr><td>Admin / Super Admin</td><td>apps/learning</td><td>Full CRUD across the app via <code>is_admin()</code> RLS bypass; provisioned only by a seed script or the <code>admin-user-management</code> Edge Function, never via public signup.</td></tr>
-        <tr><td>Anonymous reader</td><td>apps/quran, apps/flutter</td><td>The overwhelming majority of users. No account needed for any core reading/audio/search feature in either app — this is a hard product rule for apps/quran (see §20).</td></tr>
+        <tr><td>Anonymous reader</td><td>apps/quran, apps/mobile/android</td><td>The overwhelming majority of users. No account needed for any core reading/audio/search feature in either app — this is a hard product rule for apps/quran (see §20).</td></tr>
         <tr><td>Owner / solo developer</td><td>All four apps</td><td>Runs Supabase projects, Vercel projects, Play Console, Cloudflare R2, and the GitHub Actions secrets for each app independently.</td></tr>
       </table>
 
@@ -343,14 +343,14 @@
 
         <!-- flutter app, separate -->
         <rect x="330" y="580" width="320" height="50" class="box"/>
-        <text x="490" y="600" text-anchor="middle" class="lbl">apps/flutter (Android / Web)</text>
+        <text x="490" y="600" text-anchor="middle" class="lbl">apps/mobile/android (Android / Web)</text>
         <text x="490" y="615" text-anchor="middle" class="lbl-sm">separate codebase, Hive local storage, no shared DB/code</text>
         <line x1="490" y1="580" x2="490" y2="554" class="edge"/>
         <line x1="490" y1="580" x2="685" y2="480" class="edge-dashed"/>
       </svg>
 
       <div class="callout warn"><strong>One connection root CLAUDE.md doesn't mention</strong>
-      The R2 audio bucket is documented as apps/flutter's "one deliberate exception" to isolation from apps/quran. In the current code, <strong>apps/quran also fetches whole-Surah audio directly from that same bucket</strong> (its Listening Mode CSP allow-lists <code>https://audio.iqraspace.org</code>, and <code>src/lib/content/listeningAudio.ts</code> builds the same URL scheme, ported from the Flutter app's Dart constants). Nothing is shared code-wise or via imports — both apps independently hard-code URLs to the same public, keyless CDN endpoint — but it means the R2 bucket is now a dependency of <em>two</em> apps, not one. Worth knowing before renaming keys or restructuring that bucket.</div>
+      The R2 audio bucket is documented as apps/mobile/android's "one deliberate exception" to isolation from apps/quran. In the current code, <strong>apps/quran also fetches whole-Surah audio directly from that same bucket</strong> (its Listening Mode CSP allow-lists <code>https://audio.iqraspace.org</code>, and <code>src/lib/content/listeningAudio.ts</code> builds the same URL scheme, ported from the Flutter app's Dart constants). Nothing is shared code-wise or via imports — both apps independently hard-code URLs to the same public, keyless CDN endpoint — but it means the R2 bucket is now a dependency of <em>two</em> apps, not one. Worth knowing before renaming keys or restructuring that bucket.</div>
 
       <h3>Multi-Zones routing, traced end to end</h3>
       <p>A request to <code>iqraspace.org/quran/some-page</code>:</p>
@@ -389,7 +389,7 @@
           <td>Static generated content (committed JSON); Supabase project exists but is unwired (see §7)</td>
         </tr>
         <tr>
-          <td><code>apps/flutter</code></td>
+          <td><code>apps/mobile/android</code></td>
           <td>Dart SDK ≥3.5 &lt;4.0 (Flutter 3.47.3 pinned in CI)</td>
           <td>Flutter</td>
           <td>Dart</td>
@@ -453,7 +453,7 @@ IqraSpace/
 ├─ DEPLOYMENT.md                <span class="c2"># apps/learning-scoped deployment notes (has stale claims — see §22)</span>
 └─ docs/, design/, resources/   <span class="c2"># gitignored local working material — will NOT exist on a fresh clone</span>
       </div>
-      <p><strong>Root <code>package.json</code></strong> only proxies into two apps: <code>dev</code>/<code>build</code>/<code>lint</code> → apps/learning (the unprefixed "default"), <code>quran:dev</code>/<code>quran:build</code>/<code>quran:lint</code>/<code>quran:typecheck</code> → apps/quran. Notably it has <strong>no <code>typecheck</code> proxy for apps/learning</strong> and <strong>no delegator scripts at all</strong> for apps/flutter or apps/landing (they use their own toolchains). Always run app-specific commands from inside that app's directory, or with an explicit <code>--prefix</code>.</p>
+      <p><strong>Root <code>package.json</code></strong> only proxies into two apps: <code>dev</code>/<code>build</code>/<code>lint</code> → apps/learning (the unprefixed "default"), <code>quran:dev</code>/<code>quran:build</code>/<code>quran:lint</code>/<code>quran:typecheck</code> → apps/quran. Notably it has <strong>no <code>typecheck</code> proxy for apps/learning</strong> and <strong>no delegator scripts at all</strong> for apps/mobile/android or apps/landing (they use their own toolchains). Always run app-specific commands from inside that app's directory, or with an explicit <code>--prefix</code>.</p>
     </section>
 
     <!-- 5. ONBOARDING -->
@@ -462,7 +462,7 @@ IqraSpace/
       <p class="section-sub">A concrete, ordered path using only commands that actually exist in this repo.</p>
       <ol>
         <li><strong>Read this document's §2–§4</strong>, then skim the per-app section (§6–§9) for whichever app you'll actually touch.</li>
-        <li><strong>Prerequisites:</strong> Node ≥20.9 + npm for the two Next.js apps; Flutter 3.47.3/Dart ≥3.5 for apps/flutter; nothing extra for apps/landing.</li>
+        <li><strong>Prerequisites:</strong> Node ≥20.9 + npm for the two Next.js apps; Flutter 3.47.3/Dart ≥3.5 for apps/mobile/android; nothing extra for apps/landing.</li>
         <li><strong>Clone and install</strong> only what you need — there's no repo-wide install step:
 <pre><code># apps/learning
 npm install --prefix apps/learning
@@ -470,10 +470,10 @@ npm install --prefix apps/learning
 # apps/quran
 cd apps/quran && npm install
 
-# apps/flutter
-cd apps/flutter && flutter pub get</code></pre>
+# apps/mobile/android
+cd apps/mobile/android && flutter pub get</code></pre>
         </li>
-        <li><strong>Configure environment</strong> — copy each app's <code>.env.local.example</code> to <code>.env.local</code> and fill in your own Supabase project URL/anon key (learning) or Quran Foundation sandbox credentials (quran, only needed if you're touching content sync). apps/flutter needs no env file for normal development (only for the release-upload pipeline).</li>
+        <li><strong>Configure environment</strong> — copy each app's <code>.env.local.example</code> to <code>.env.local</code> and fill in your own Supabase project URL/anon key (learning) or Quran Foundation sandbox credentials (quran, only needed if you're touching content sync). apps/mobile/android needs no env file for normal development (only for the release-upload pipeline).</li>
         <li><strong>Apply the DB schema</strong> (apps/learning only, if you need a working backend):
 <pre><code>npx supabase login
 npx supabase link --project-ref &lt;your-project-ref&gt;
@@ -483,9 +483,9 @@ npx supabase db push          # applies supabase/migrations/*.sql from repo root
         <li><strong>Run it:</strong>
 <pre><code>npm run dev --prefix apps/learning   # http://localhost:3000
 cd apps/quran && npm run dev          # http://localhost:3001 (deliberately different port)
-cd apps/flutter && flutter run -d chrome   # or a connected Android device</code></pre>
+cd apps/mobile/android && flutter run -d chrome   # or a connected Android device</code></pre>
         </li>
-        <li><strong>Verify:</strong> apps/learning — sign up, confirm a <code>public.users</code>/<code>tutors</code> or <code>students</code> row was created by the DB trigger. apps/quran — reading/search/bookmarks should all work with zero configuration (it's local-storage-only today). apps/flutter — the app should boot straight to Home with no login screen.</li>
+        <li><strong>Verify:</strong> apps/learning — sign up, confirm a <code>public.users</code>/<code>tutors</code> or <code>students</code> row was created by the DB trigger. apps/quran — reading/search/bookmarks should all work with zero configuration (it's local-storage-only today). apps/mobile/android — the app should boot straight to Home with no login screen.</li>
         <li><strong>Run the checks before any change:</strong> <code>npm run lint</code>, then <code>npx next typegen && npm run typecheck</code> (both Next.js apps need the <code>next typegen</code> step first on a fresh checkout — see §17), <code>npm run build</code>. For Flutter: <code>flutter analyze</code> and <code>flutter test</code> (what CI actually gates on).</li>
         <li><strong>Make a small, safe change</strong> — e.g. a copy tweak in one component — and confirm the dev server hot-reloads it and lint/typecheck still pass.</li>
         <li><strong>Understand deployment</strong> before pushing to <code>main</code> on anything CI-guarded (§16) — each app deploys independently on push to <code>main</code> (Flutter is analyze/test-only, no auto-deploy; release is a separate manual/skill-driven process, §16).</li>
@@ -581,7 +581,7 @@ cd apps/flutter && flutter run -d chrome   # or a connected Android device</code
       <p class="section-sub">Free, anonymous-first Quran reader. The most actively developed app in the repo right now — most of its documentation (dated 2026-08-31) is 3+ weeks and 15+ commits behind the code.</p>
 
       <div class="callout danger"><strong>Correcting a stale claim in root CLAUDE.md</strong>
-      Root <code>CLAUDE.md</code> describes this app as "Next.js 16 + Capacitor" with <code>cap:sync</code>/<code>cap:open:android</code> scripts and a <code>ci-quran-mobile.yml</code> workflow. <strong>None of that exists in the current tree.</strong> <code>package.json</code> has zero Capacitor dependencies, there's no <code>capacitor.config</code>, no <code>android/</code> folder, and <code>.github/workflows/</code> only has four files (<code>ci.yml</code>, <code>ci-quran.yml</code>, <code>ci-flutter.yml</code>, <code>ci-landing.yml</code>) — <code>ci-quran-mobile.yml</code> exists only on the separate <code>mobile/android</code> git branch and was deliberately excluded when that branch's work was folded into <code>main</code> (merge commit <code>144d049</code>: "main's apps/quran has since had its own newer redesign ... reconciling those two independently-evolved UIs is a separate, deliberate product decision"). <strong>The actual native Android app for the Quran reader today is the sibling <code>apps/flutter</code></strong>, a fully different codebase.</div>
+      Root <code>CLAUDE.md</code> describes this app as "Next.js 16 + Capacitor" with <code>cap:sync</code>/<code>cap:open:android</code> scripts and a <code>ci-quran-mobile.yml</code> workflow. <strong>None of that exists in the current tree.</strong> <code>package.json</code> has zero Capacitor dependencies, there's no <code>capacitor.config</code>, no <code>android/</code> folder, and <code>.github/workflows/</code> only has four files (<code>ci.yml</code>, <code>ci-quran.yml</code>, <code>ci-flutter.yml</code>, <code>ci-landing.yml</code>) — <code>ci-quran-mobile.yml</code> exists only on the separate <code>mobile/android</code> git branch and was deliberately excluded when that branch's work was folded into <code>main</code> (merge commit <code>144d049</code>: "main's apps/quran has since had its own newer redesign ... reconciling those two independently-evolved UIs is a separate, deliberate product decision"). <strong>The actual native Android app for the Quran reader today is the sibling <code>apps/mobile/android</code></strong>, a fully different codebase.</div>
 
       <h3>Routes</h3>
       <p><code>/</code>, <code>/surah</code> + <code>/surah/[surahNumber]</code>, <code>/page</code> + <code>/page/[pageNumber]</code>, <code>/bookmarks</code>, <code>/search</code>, <code>/supplications</code> + <code>/supplications/[categoryId]</code>. <strong>No <code>/juz</code> route</strong> — Juz Mode was deliberately removed (commit <code>1956544</code>, replaced by per-Surah PDF Mode); several of this app's own docs (PRODUCT-ROADMAP.md, PROJECT-STATUS.md) still describe it as built — it is not, in the current tree.</p>
@@ -594,14 +594,14 @@ cd apps/flutter && flutter run -d chrome   # or a connected Android device</code
         <tr><th>Feature</th><th>Status</th><th>Detail</th></tr>
         <tr><td>Reader Modes</td><td><span class="badge ok">Implemented</span></td><td>3-way switch: <em>listening</em> (whole-Surah audio from the Flutter app's R2 bucket, no per-ayah highlight), <em>reading</em> (no audio), <em>readingListening</em> (default — original per-ayah playback with now-playing highlight).</td></tr>
         <tr><td>Tajweed coloring</td><td><span class="badge ok">Implemented, opt-in</span></td><td>Live client-side fetch from Al Quran Cloud's keyless <code>quran-tajweed</code> edition, cached per-Surah, falls back to plain text on failure. Off by default — it's the one feature with a live third-party fetch.</td></tr>
-        <tr><td>Supplications (duas)</td><td><span class="badge ok">Implemented</span></td><td><code>/supplications</code> + detail route, backed by <code>src/content/supplications.json</code> — <strong>reused verbatim from apps/flutter's own dataset</strong> ("Hisn al-Qalb"), not independently maintained. Same Latin/Telugu/Urdu transliteration-script switch as the Flutter app.</td></tr>
+        <tr><td>Supplications (duas)</td><td><span class="badge ok">Implemented</span></td><td><code>/supplications</code> + detail route, backed by <code>src/content/supplications.json</code> — <strong>reused verbatim from apps/mobile/android's own dataset</strong> ("Hisn al-Qalb"), not independently maintained. Same Latin/Telugu/Urdu transliteration-script switch as the Flutter app.</td></tr>
         <tr><td>Search</td><td><span class="badge ok">Implemented</span>, simple</td><td>Client-side fetch of a static, build-time-generated JSON index (English translation text only) — deliberately not a database/Elasticsearch search, per the cost-consciousness rule (§20).</td></tr>
         <tr><td>i18n (UI chrome)</td><td><span class="badge ok">Implemented</span>, scoped</td><td>English/Telugu/Urdu — a hand-rolled dictionary + <code>useT()</code> hook (no i18n library), reusing wording from the Flutter app's <code>.arb</code> files where concepts overlap. Localizes UI chrome only, <strong>not</strong> Quran/translation content.</td></tr>
         <tr><td>PDF Mode</td><td><span class="badge ok">Implemented</span></td><td>Scanned-Mushaf per-Surah PDFs (<code>react-pdf</code>), built from a documented, multi-step offline pipeline (watermark strip → boundary crop → merge). Not in any prior roadmap phase — added ad hoc.</td></tr>
         <tr><td>Mini-player / Media Session</td><td><span class="badge ok">Implemented</span></td><td>Persistent bottom bar with real <code>navigator.mediaSession</code> integration (lock-screen-style controls), confirmed in code, not just claimed.</td></tr>
         <tr><td>Auth / cross-device sync</td><td><span class="badge danger">Unwired</span></td><td>A Supabase project and schema exist (bookmarks, reading_progress, user_preferences, reading_history — one simple RLS policy per table), but <strong>no Supabase client is even installed</strong> in <code>package.json</code>. Every feature runs 100% on <code>localStorage</code> today. This is the roadmapped-but-not-started "Phase 5."</td></tr>
         <tr><td>PWA / offline</td><td><span class="badge warn">Partial</span></td><td>Only an installable manifest (<code>manifest.ts</code>) exists — <strong>no service worker anywhere</strong>, no offline caching.</td></tr>
-        <tr><td>Capacitor / Android wrap</td><td><span class="badge danger">Not present</span></td><td>See callout above — this app has no native wrap; use apps/flutter for the Android experience.</td></tr>
+        <tr><td>Capacitor / Android wrap</td><td><span class="badge danger">Not present</span></td><td>See callout above — this app has no native wrap; use apps/mobile/android for the Android experience.</td></tr>
       </table>
 
       <h3>Cost-consciousness (hard constraint)</h3>
@@ -616,7 +616,7 @@ cd apps/flutter && flutter run -d chrome   # or a connected Android device</code
 
     <!-- 8. APPS/FLUTTER -->
     <section id="app-flutter">
-      <h2><span class="num">8</span>apps/flutter — IqraSpace Quran (native)</h2>
+      <h2><span class="num">8</span>apps/mobile/android — IqraSpace Quran (native)</h2>
       <p class="section-sub">The Android (and web-capable) counterpart to apps/quran — a deliberately separate codebase and data source. Currently the most active part of the whole repo.</p>
 
       <h3>Architecture</h3>
@@ -646,10 +646,10 @@ cd apps/flutter && flutter run -d chrome   # or a connected Android device</code
 
       <h3>Testing &amp; release</h3>
       <ul>
-        <li><strong>CI</strong> (<code>ci-flutter.yml</code>): triggers only on the <code>mobile/android</code> branch (not <code>main</code>), path-filtered to <code>apps/flutter/**</code>. Runs <code>flutter pub get</code> → <code>flutter analyze</code> → <code>flutter test</code> only — <strong>no build/deploy job exists in CI</strong>.</li>
+        <li><strong>CI</strong> (<code>ci-flutter.yml</code>): triggers only on the <code>mobile/android</code> branch (not <code>main</code>), path-filtered to <code>apps/mobile/android/**</code>. Runs <code>flutter pub get</code> → <code>flutter analyze</code> → <code>flutter test</code> only — <strong>no build/deploy job exists in CI</strong>.</li>
         <li><strong>Local test-only dev loop</strong> documented in <code>TESTING.md</code>: PowerShell scripts to start/run/stop an Android emulator, with documented environment quirks (no hardware acceleration on the dev machine, a sandboxed-shell emulator segfault, a stale-lockfile gotcha).</li>
         <li><strong>Release build number</strong>: always bump only the <code>+N</code> in <code>pubspec.yaml</code>'s <code>version:</code> before any real release build — Play Console permanently rejects a reused <code>versionCode</code>, even from a never-published build. Recent history shows this followed mechanically (one commit per bump).</li>
-        <li><strong>Release upload</strong>: the <code>iqs-deploy</code> Claude Code skill automates validate → bump → build signed <code>.aab</code> → verify → upload to Play Console. As of commit <code>5a7f0cf</code> it targets the <strong>Closed testing</strong> track (Android Publisher API track id <code>alpha</code>) — <span class="badge warn">doc drift</span>: <code>apps/flutter/CLAUDE.md</code> still says "internal testing (never closed testing or production)," which is now inconsistent with the actual skill file and with <code>DEPLOYMENT.md</code> §9.</li>
+        <li><strong>Release upload</strong>: the <code>iqs-deploy</code> Claude Code skill automates validate → bump → build signed <code>.aab</code> → verify → upload to Play Console. As of commit <code>5a7f0cf</code> it targets the <strong>Closed testing</strong> track (Android Publisher API track id <code>alpha</code>) — <span class="badge warn">doc drift</span>: <code>apps/mobile/android/CLAUDE.md</code> still says "internal testing (never closed testing or production)," which is now inconsistent with the actual skill file and with <code>DEPLOYMENT.md</code> §9.</li>
       </ul>
     </section>
 
@@ -659,7 +659,7 @@ cd apps/flutter && flutter run -d chrome   # or a connected Android device</code
       <p class="section-sub">A single static page, by design. This is not an app that will grow a framework — treat any request to "add a build step here" with suspicion.</p>
       <ul>
         <li><code>index.html</code> — marketing/hero page, full SEO/OG meta tags, inline CSS with a <code>prefers-color-scheme: dark</code> variant, links out to <code>/quran</code> and <code>/learning</code>.</li>
-        <li><code>privacy.html</code> — companion static privacy-policy page (also listed in <code>sitemap.xml</code>). <strong>This resolves apps/flutter's DEPLOYMENT.md-documented "no Privacy Policy page yet" blocker</strong> — it already exists.</li>
+        <li><code>privacy.html</code> — companion static privacy-policy page (also listed in <code>sitemap.xml</code>). <strong>This resolves apps/mobile/android's DEPLOYMENT.md-documented "no Privacy Policy page yet" blocker</strong> — it already exists.</li>
         <li><code>vercel.json</code> — the Multi-Zones <code>rewrites()</code> (see §2) plus security headers scoped away from the proxied paths via a negative-lookahead <code>source</code>, and <code>robots.txt</code> deliberately listing two sitemaps (its own, and apps/quran's) since <code>robots.txt</code> can only exist once per domain.</li>
       </ul>
       <p>No <code>package.json</code>, no <code>node_modules</code>, no framework config exist here — confirmed by directory listing. CI (<code>ci-landing.yml</code>) only validates that <code>vercel.json</code> parses as JSON and runs <code>html-validate</code> on <code>index.html</code>; there's no lint/typecheck step because there's nothing to lint.</p>
@@ -675,7 +675,7 @@ cd apps/flutter && flutter run -d chrome   # or a connected Android device</code
         <tr><th>App</th><th>Where data lives</th><th>Who reads/writes</th></tr>
         <tr><td>apps/learning</td><td>Its own Supabase project (Postgres + Auth + Realtime + Storage)</td><td>Browser client only, gated entirely by RLS. No server-side Supabase client exists in this app.</td></tr>
         <tr><td>apps/quran</td><td>Committed static JSON (<code>src/content/generated/</code>, <code>public/search-index.json</code>) for content; <code>localStorage</code> for everything user-specific (bookmarks, progress, preferences)</td><td>Its own Supabase project exists with a real schema but is currently unused by any shipped code path.</td></tr>
-        <tr><td>apps/flutter</td><td>Hive (on-device, four boxes — see §8) for everything user-specific; bundled JSON assets for content</td><td>No backend database at all. Its only network dependency besides the Quran API is the R2 audio bucket.</td></tr>
+        <tr><td>apps/mobile/android</td><td>Hive (on-device, four boxes — see §8) for everything user-specific; bundled JSON assets for content</td><td>No backend database at all. Its only network dependency besides the Quran API is the R2 audio bucket.</td></tr>
         <tr><td>apps/landing</td><td>None</td><td>—</td></tr>
       </table>
 
@@ -710,7 +710,7 @@ cd apps/flutter && flutter run -d chrome   # or a connected Android device</code
           <td>N/A — every feature is anonymous by product design; this must not change without a deliberate decision (see §20).</td>
         </tr>
         <tr>
-          <td>apps/flutter</td>
+          <td>apps/mobile/android</td>
           <td><span class="badge danger">None</span> — no accounts, no login screen, nothing transmitted off-device.</td>
           <td>N/A.</td>
         </tr>
@@ -731,11 +731,11 @@ cd apps/flutter && flutter run -d chrome   # or a connected Android device</code
         <tr><th>Integration</th><th>Used by</th><th>Purpose</th><th>Auth</th><th>Status</th></tr>
         <tr><td>Supabase</td><td>apps/learning</td><td>Postgres, Auth, Realtime, Storage, Edge Functions — the entire backend</td><td>Anon key (browser) + service_role (scripts/Edge Functions only)</td><td><span class="badge ok">Live</span></td></tr>
         <tr><td>Quran Foundation Content API</td><td>apps/quran</td><td>Build-time-only sync of Quran text/translations into committed static content</td><td>OAuth2 client-credentials, server/script-side only</td><td><span class="badge ok">Live (production access granted 2026-08-31)</span></td></tr>
-        <tr><td>Al Quran Cloud API</td><td>apps/quran (Tajweed only), apps/flutter (primary content source)</td><td>Keyless public API — chosen for apps/flutter specifically because it needs no server-held OAuth secret</td><td>None (keyless)</td><td><span class="badge ok">Live</span></td></tr>
-        <tr><td>Cloudflare R2 (<code>audio.iqraspace.org</code>)</td><td>apps/flutter (owner) + apps/quran (consumer)</td><td>Whole-Surah recitation/translation audio, public-read, no egress fees</td><td>None for playback (public bucket)</td><td><span class="badge ok">Live</span></td></tr>
+        <tr><td>Al Quran Cloud API</td><td>apps/quran (Tajweed only), apps/mobile/android (primary content source)</td><td>Keyless public API — chosen for apps/mobile/android specifically because it needs no server-held OAuth secret</td><td>None (keyless)</td><td><span class="badge ok">Live</span></td></tr>
+        <tr><td>Cloudflare R2 (<code>audio.iqraspace.org</code>)</td><td>apps/mobile/android (owner) + apps/quran (consumer)</td><td>Whole-Surah recitation/translation audio, public-read, no egress fees</td><td>None for playback (public bucket)</td><td><span class="badge ok">Live</span></td></tr>
         <tr><td>Google OAuth / Drive API</td><td>apps/learning</td><td>Optional lesson-material sourcing from a tutor's Drive</td><td>OAuth2, client secret owner-provisioned only</td><td><span class="badge warn">Code-complete, not deployed</span></td></tr>
         <tr><td>Vercel</td><td>All 3 Next.js/static web apps</td><td>Hosting + deploy, 3 fully separate projects</td><td>Per-project tokens via GitHub Secrets</td><td><span class="badge ok">Live</span></td></tr>
-        <tr><td>Google Play Console</td><td>apps/flutter</td><td>Distribution — Closed testing track</td><td>Service account (Release-to-testing-tracks scope only)</td><td><span class="badge ok">Live</span></td></tr>
+        <tr><td>Google Play Console</td><td>apps/mobile/android</td><td>Distribution — Closed testing track</td><td>Service account (Release-to-testing-tracks scope only)</td><td><span class="badge ok">Live</span></td></tr>
         <tr><td>Google Meet</td><td>apps/learning</td><td>Manual link only (architecture's "Option A") — no OAuth</td><td>None needed</td><td><span class="badge ok">Live, by design (no auto-attendance)</span></td></tr>
       </table>
     </section>
@@ -779,7 +779,7 @@ cd apps/flutter && flutter run -d chrome   # or a connected Android device</code
         <tr><td><code>NEXT_BASE_PATH</code></td><td>Build/deploy only</td><td>Set to <code>/quran</code> only in the real Vercel production project.</td></tr>
       </table>
 
-      <h3>apps/flutter</h3>
+      <h3>apps/mobile/android</h3>
       <p>No env file needed for normal development — the app is entirely offline-first with keyless APIs. The <em>release upload</em> tooling only (<code>scripts/deploy/.env.local</code>) needs <code>PLAY_SERVICE_ACCOUNT_JSON_PATH</code> for the Google Play Publisher API, plus an owner-provisioned signing keystore (<code>android/key.properties</code>, gitignored, never committable).</p>
     </section>
 
@@ -790,7 +790,7 @@ cd apps/flutter && flutter run -d chrome   # or a connected Android device</code
         <tr><th>App</th><th>Local dev</th><th>CI validate</th><th>Production</th></tr>
         <tr><td>apps/learning</td><td><code>localhost:3000</code>, no basePath, hosted Supabase project (no local Docker stack by choice)</td><td>Builds without <code>NEXT_BASE_PATH</code> set</td><td><code>iqraspace.org/learning</code> via Vercel + Multi-Zones, <code>NEXT_BASE_PATH=/learning</code></td></tr>
         <tr><td>apps/quran</td><td><code>localhost:3001</code> (chosen so it can run alongside apps/learning), no basePath</td><td>Builds without <code>NEXT_BASE_PATH</code> — proves compilation only, not basePath-correct output</td><td><code>iqraspace.org/quran</code>, <code>NEXT_BASE_PATH=/quran</code>, deployed via <code>vercel deploy --prod</code> directly (see §16 for why)</td></tr>
-        <tr><td>apps/flutter</td><td>Local emulator or connected device, Chrome for web</td><td><code>flutter analyze</code> + <code>flutter test</code> on branch <code>mobile/android</code> only</td><td>Google Play — Closed testing track (not yet Production)</td></tr>
+        <tr><td>apps/mobile/android</td><td>Local emulator or connected device, Chrome for web</td><td><code>flutter analyze</code> + <code>flutter test</code> on branch <code>mobile/android</code> only</td><td>Google Play — Closed testing track (not yet Production)</td></tr>
         <tr><td>apps/landing</td><td>Open <code>index.html</code> directly, or any static server</td><td><code>vercel.json</code> JSON validation + <code>html-validate</code></td><td><code>iqraspace.org</code> root, via <code>vercel deploy --prod</code> directly</td></tr>
       </table>
     </section>
@@ -818,7 +818,7 @@ cd apps/flutter && flutter run -d chrome   # or a connected Android device</code
         <tr><th>App</th><th>Automated tests</th><th>What CI actually gates on</th></tr>
         <tr><td>apps/learning</td><td><span class="badge danger">None</span></td><td>lint + typecheck + build only</td></tr>
         <tr><td>apps/quran</td><td><span class="badge danger">None</span></td><td>lint + typecheck + build only</td></tr>
-        <tr><td>apps/flutter</td><td><span class="badge ok">Yes</span> — widget/unit tests under <code>test/</code>, mirroring <code>lib/</code>'s structure</td><td><code>flutter analyze</code> + <code>flutter test</code> (the only app in the repo with real CI-gated tests)</td></tr>
+        <tr><td>apps/mobile/android</td><td><span class="badge ok">Yes</span> — widget/unit tests under <code>test/</code>, mirroring <code>lib/</code>'s structure</td><td><code>flutter analyze</code> + <code>flutter test</code> (the only app in the repo with real CI-gated tests)</td></tr>
         <tr><td>apps/landing</td><td>N/A (static HTML)</td><td>JSON validity + HTML validation</td></tr>
       </table>
       <p>For the two untested Next.js apps, validate changes manually: run the dev server, exercise the actual golden path in a browser, and rely on <code>lint</code>/<code>typecheck</code>/<code>build</code> to catch structural mistakes — they do not verify feature correctness.</p>
@@ -831,7 +831,7 @@ cd apps/flutter && flutter run -d chrome   # or a connected Android device</code
       <h2><span class="num">18</span>Debugging &amp; Logging</h2>
       <ul>
         <li><strong>apps/learning / apps/quran</strong> — no structured logging framework; rely on browser devtools console, Next.js dev-server output, and Vercel's deployment/function logs in production. Supabase errors surface via the client library's error objects.</li>
-        <li><strong>apps/flutter</strong> — standard Flutter/Dart console logging plus <code>flutter analyze</code> for static issues. The documented local Android-emulator dev loop (<code>TESTING.md</code>) is the main way to reproduce device-specific bugs (notifications, lock-screen audio controls, background throttling) since these don't show up on web/desktop runs.</li>
+        <li><strong>apps/mobile/android</strong> — standard Flutter/Dart console logging plus <code>flutter analyze</code> for static issues. The documented local Android-emulator dev loop (<code>TESTING.md</code>) is the main way to reproduce device-specific bugs (notifications, lock-screen audio controls, background throttling) since these don't show up on web/desktop runs.</li>
         <li><strong>CI failures</strong> — check the specific workflow's Actions run; each job's step names map directly to the table in §16 (e.g. a failure at "Type check" almost always means the <code>next typegen</code> step didn't run first, or a real type error).</li>
         <li><strong>Deploy health checks</strong> — all three web-app deploy jobs curl the stable alias (not the ephemeral per-deploy URL) after deploying, specifically because Vercel's SSO Deployment Protection redirects requests to ephemeral URLs. A failing health check after a successful deploy step is the first place to look for a routing/basePath regression.</li>
       </ul>
@@ -881,7 +881,7 @@ cd apps/flutter && flutter run -d chrome   # or a connected Android device</code
         <tr>
           <td>Play Console rejects an APK/AAB upload</td>
           <td>Reused <code>versionCode</code> — Play Console permanently blocks this, even for a never-published build</td>
-          <td><code>apps/flutter/pubspec.yaml</code>'s <code>version:</code></td>
+          <td><code>apps/mobile/android/pubspec.yaml</code>'s <code>version:</code></td>
           <td>Bump the <code>+N</code> build number and rebuild; there's no way to query previously used codes, so always bump before a real release build</td>
         </tr>
         <tr>
@@ -900,12 +900,12 @@ cd apps/flutter && flutter run -d chrome   # or a connected Android device</code
         <li><strong>Apps are independent — verify before assuming sharing.</strong> No shared package, types, or UI library exists between any two apps. Cross-app references are always either a deep link (URL) or a duplicated file kept in parity by convention (e.g. Supplications JSON), never a code import.</li>
         <li><strong>apps/quran must stay anonymous-first.</strong> Reading, search, audio, and theme/font preferences must never require sign-in. Auth is reserved exclusively for future optional cross-device sync.</li>
         <li><strong>apps/quran's cost ceiling is a hard constraint,</strong> not a suggestion — no paid infra, no unnecessary third-party API dependencies for core reading. The resilience rule is explicit: "reading still works if audio/search/login/analytics are down."</li>
-        <li><strong>apps/flutter's isolation from apps/quran</strong> is deliberate (different <code>applicationId</code>, no shared code) with exactly one sanctioned exception: the Cloudflare R2 audio bucket, which — per current code — both apps now independently consume (see the callout in §2). Don't casually add a second "exception."</li>
+        <li><strong>apps/mobile/android's isolation from apps/quran</strong> is deliberate (different <code>applicationId</code>, no shared code) with exactly one sanctioned exception: the Cloudflare R2 audio bucket, which — per current code — both apps now independently consume (see the callout in §2). Don't casually add a second "exception."</li>
         <li><strong>RLS is the real authorization boundary in apps/learning,</strong> not client-side checks. Any new table needs its own RLS policies (migration <code>0001</code>'s tables shipped with RLS enabled but zero policies — a deliberate deny-by-default placeholder pattern to follow for new tables too).</li>
         <li><strong>Never reference another RLS-protected table via an inline subquery in a new policy</strong> — use or extend the existing <code>STABLE SECURITY DEFINER</code> helper functions to avoid the recursion bug fixed in migration <code>0004</code>.</li>
         <li><strong>Admin/super_admin accounts are never created by public signup,</strong> by design, enforced server-side in the DB trigger and independently in the Edge Function. Don't add a code path that lets a client specify its own privileged role.</li>
         <li><strong>Quran content in apps/quran is licensed, cached content</strong> — it must be re-synced within the license's cache window (7 days) and must never be modified or redistributed as a standalone product. Don't hand-edit <code>src/content/generated/</code>.</li>
-        <li><strong>Always bump only the <code>+N</code> build number</strong> in apps/flutter's <code>pubspec.yaml</code> before a real release build; bump <code>x.y.z</code> itself only for an explicit, user-requested version change.</li>
+        <li><strong>Always bump only the <code>+N</code> build number</strong> in apps/mobile/android's <code>pubspec.yaml</code> before a real release build; bump <code>x.y.z</code> itself only for an explicit, user-requested version change.</li>
         <li><strong>Run app-specific commands from inside that app's directory</strong> (or with an explicit <code>--prefix</code>) — root <code>package.json</code> only proxies a subset of commands for two of the four apps.</li>
       </ul>
     </section>
@@ -923,9 +923,9 @@ cd apps/flutter && flutter run -d chrome   # or a connected Android device</code
         <tr><td>apps/quran auth / cross-device sync</td><td><span class="badge info">Planned / Not Implemented</span></td><td>Schema exists; no Supabase client installed; entirely unwired</td></tr>
         <tr><td>apps/quran PWA offline support</td><td><span class="badge warn">Partial / In Progress</span></td><td>Manifest only, no service worker</td></tr>
         <tr><td>apps/quran Capacitor/Android wrap</td><td><span class="badge danger">Not Implemented (contradicts CLAUDE.md)</span></td><td>No Capacitor dependency, config, or android/ folder in the current tree</td></tr>
-        <tr><td>apps/flutter reading, bookmarks, search, settings, Listening Mode, Supplications, i18n (en/te/ur)</td><td><span class="badge ok">Implemented</span></td><td>Verified against <code>lib/features/*</code>, recent commits, generated l10n</td></tr>
-        <tr><td>apps/flutter Supplications content</td><td><span class="badge warn">Partial / In Progress</span></td><td>106 of an eventual ~267 duas populated, per the data's own coverage note</td></tr>
-        <tr><td>apps/flutter automated release build in CI</td><td><span class="badge info">Planned / Not Implemented</span></td><td>CI is analyze/test only; release is a separate manual/skill-driven flow</td></tr>
+        <tr><td>apps/mobile/android reading, bookmarks, search, settings, Listening Mode, Supplications, i18n (en/te/ur)</td><td><span class="badge ok">Implemented</span></td><td>Verified against <code>lib/features/*</code>, recent commits, generated l10n</td></tr>
+        <tr><td>apps/mobile/android Supplications content</td><td><span class="badge warn">Partial / In Progress</span></td><td>106 of an eventual ~267 duas populated, per the data's own coverage note</td></tr>
+        <tr><td>apps/mobile/android automated release build in CI</td><td><span class="badge info">Planned / Not Implemented</span></td><td>CI is analyze/test only; release is a separate manual/skill-driven flow</td></tr>
         <tr><td>apps/landing static page + Multi-Zones rewrites + privacy page</td><td><span class="badge ok">Implemented</span></td><td>Verified <code>vercel.json</code>, <code>index.html</code>, <code>privacy.html</code></td></tr>
         <tr><td>Analytics / reporting (any app)</td><td><span class="badge danger">Not Implemented</span></td><td>No analytics SDK or reporting table found anywhere in the repo</td></tr>
         <tr><td><code>ci-quran-mobile.yml</code> (per root CLAUDE.md)</td><td><span class="badge danger">Deprecated / branch-only</span></td><td>Exists on <code>mobile/android</code> only, deliberately excluded from <code>main</code></td></tr>
@@ -937,14 +937,14 @@ cd apps/flutter && flutter run -d chrome   # or a connected Android device</code
       <h2><span class="num">22</span>Known Limitations, Technical Debt &amp; Documentation Drift</h2>
       <p class="section-sub">Every item below was found by comparing an existing doc's claim against the actual current code — flagged so the next developer doesn't inherit a false assumption.</p>
       <ol>
-        <li><strong>Root <code>CLAUDE.md</code>:</strong> describes apps/quran as having Capacitor + <code>cap:sync</code>/<code>cap:open:android</code> + a <code>ci-quran-mobile.yml</code> workflow. None of this exists on <code>main</code> today (§7, §16). Treat apps/flutter as the real native Android app.</li>
+        <li><strong>Root <code>CLAUDE.md</code>:</strong> describes apps/quran as having Capacitor + <code>cap:sync</code>/<code>cap:open:android</code> + a <code>ci-quran-mobile.yml</code> workflow. None of this exists on <code>main</code> today (§7, §16). Treat apps/mobile/android as the real native Android app.</li>
         <li><strong>Root <code>DEPLOYMENT.md</code>:</strong> states "no custom domain yet — temporary Vercel URL only." This is now false — the Multi-Zones custom-domain setup (<code>apps/landing</code> + basePath cutovers) shipped on 2026-08-31, after this doc was written. It's also scoped to apps/learning only, despite reading as repo-wide.</li>
         <li><strong>Root <code>package.json</code> vs. <code>DEPLOYMENT.md</code>:</strong> the doc implies <code>npm run typecheck</code> works from repo root; it doesn't — only <code>quran:typecheck</code> is proxied, not a bare <code>typecheck</code> for apps/learning.</li>
-        <li><strong><code>Iqra-space-architecture.md</code>:</strong> a pre-monorepo, apps/learning-only planning document — its "Deployment Instructions" and "Folder/Project Structure" sections predate apps/quran, apps/flutter, and apps/landing entirely. Good for original product/DB rationale only.</li>
+        <li><strong><code>Iqra-space-architecture.md</code>:</strong> a pre-monorepo, apps/learning-only planning document — its "Deployment Instructions" and "Folder/Project Structure" sections predate apps/quran, apps/mobile/android, and apps/landing entirely. Good for original product/DB rationale only.</li>
         <li><strong>apps/quran's own docs</strong> (<code>PROJECT-STATUS.md</code>, <code>PRODUCT-ROADMAP.md</code>, <code>ARCHITECTURE.md</code>, <code>COST.md</code>, <code>QURAN-CONTENT.md</code>): all dated 2026-08-31, still call apps/learning by its old name <code>apps/web</code>, still describe Juz Mode as built (it was removed), and don't mention PDF Mode, Reader Modes, Tajweed, Supplications, search, or i18n at all — 3+ weeks and 15+ commits behind.</li>
-        <li><strong>apps/flutter <code>CLAUDE.md</code> vs. the <code>iqs-deploy</code> skill:</strong> CLAUDE.md still says releases go to "internal testing (never closed testing or production)"; the skill and <code>DEPLOYMENT.md</code> §9 both correctly say Closed testing (<code>alpha</code> track) as of commit <code>5a7f0cf</code>.</li>
-        <li><strong>apps/flutter <code>DEPLOYMENT.md</code>'s Privacy Policy blocker:</strong> flagged as blocking Play Store submission; already resolved — <code>apps/landing/privacy.html</code> exists.</li>
-        <li><strong>The R2 audio bucket "one deliberate exception" framing:</strong> root CLAUDE.md attributes this exception to apps/flutter alone. In current code, apps/quran's Listening Mode also consumes the same bucket directly (§2 callout) — not shared code, but a second live consumer of the same infrastructure.</li>
+        <li><strong>apps/mobile/android <code>CLAUDE.md</code> vs. the <code>iqs-deploy</code> skill:</strong> CLAUDE.md still says releases go to "internal testing (never closed testing or production)"; the skill and <code>DEPLOYMENT.md</code> §9 both correctly say Closed testing (<code>alpha</code> track) as of commit <code>5a7f0cf</code>.</li>
+        <li><strong>apps/mobile/android <code>DEPLOYMENT.md</code>'s Privacy Policy blocker:</strong> flagged as blocking Play Store submission; already resolved — <code>apps/landing/privacy.html</code> exists.</li>
+        <li><strong>The R2 audio bucket "one deliberate exception" framing:</strong> root CLAUDE.md attributes this exception to apps/mobile/android alone. In current code, apps/quran's Listening Mode also consumes the same bucket directly (§2 callout) — not shared code, but a second live consumer of the same infrastructure.</li>
         <li><strong>Supplications content duplication:</strong> the same <code>supplications.json</code> dataset is maintained as two separate committed files (one per app), kept in parity by convention only — no automated sync exists. A future edit to one without the other will silently diverge.</li>
         <li><strong><code>apps/learning/README.md</code> and <code>AGENTS.md</code>:</strong> are Next.js 16 auto-generated boilerplate, not hand-written project docs — don't mistake them for authoritative project documentation; the real build history is in <code>docs/PROGRESS.md</code> (gitignored, local-only).</li>
         <li><strong>No <code>supabase gen types</code> yet</strong> for apps/learning — <code>src/lib/types.ts</code> is hand-written and can drift from the actual schema as migrations are added.</li>
@@ -974,7 +974,7 @@ cd apps/flutter && flutter run -d chrome   # or a connected Android device</code
             <li>The CI deploy strategy for apps/quran/apps/landing (<code>vercel deploy --prod</code> directly) — don't revert to the prebuilt flow without re-testing the lambda-tracing issue upstream</li>
             <li>Anything introducing auth or a Supabase client into apps/quran — this is a deliberate product/cost decision, not an oversight</li>
             <li>The R2 bucket's key layout/domain — two apps now depend on it</li>
-            <li>apps/flutter's <code>pubspec.yaml</code> version — bump only the build number unless a real release is intended</li>
+            <li>apps/mobile/android's <code>pubspec.yaml</code> version — bump only the build number unless a real release is intended</li>
           </ul>
         </div>
       </div>
@@ -989,7 +989,7 @@ cd apps/flutter && flutter run -d chrome   # or a connected Android device</code
         <li><code>DEPLOYMENT.md</code> (root) — apps/learning pilot deployment notes (has stale points, §22)</li>
         <li><code>docs/PROGRESS.md</code> (gitignored, local) — apps/learning's real build log</li>
         <li><code>apps/quran/ARCHITECTURE.md</code>, <code>COST.md</code>, <code>DEPLOYMENT.md</code>, <code>PDF-CONTENT.md</code>, <code>PRODUCT-ROADMAP.md</code>, <code>PROJECT-STATUS.md</code>, <code>QURAN-CONTENT.md</code>, <code>SETUP.md</code></li>
-        <li><code>apps/flutter/AUDIO.md</code>, <code>DEPLOYMENT.md</code>, <code>TESTING.md</code>, <code>CLAUDE.md</code></li>
+        <li><code>apps/mobile/android/AUDIO.md</code>, <code>DEPLOYMENT.md</code>, <code>TESTING.md</code>, <code>CLAUDE.md</code></li>
         <li><code>.claude/skills/{iqs-debug,iqs-deploy,iqs-git}/SKILL.md</code> — the AI-assisted dev workflows used on this repo</li>
         <li>Root <code>CLAUDE.md</code> — repo-wide guidance for AI coding agents (cross-check against §22 before relying on any specific claim)</li>
       </ul>

@@ -9,7 +9,7 @@
  * production is a manual, owner-driven Play Console decision (the
  * 20-tester/14-day closed-testing bar and pre-launch report review
  * still apply before Play grants production access — see
- * apps/flutter/DEPLOYMENT.md §6), never something an automated skill
+ * apps/mobile/android/DEPLOYMENT.md §6), never something an automated skill
  * should do unattended.
  *
  * "alpha" is the Android Publisher API's fixed track id for the
@@ -23,9 +23,9 @@
  *
  * Requires one-time owner setup (GCP service account + Play Console
  * permission grant) that cannot be done from inside a coding session —
- * see apps/flutter/DEPLOYMENT.md §9.
+ * see apps/mobile/android/DEPLOYMENT.md §9.
  *
- * Usage (from apps/flutter/scripts/deploy):
+ * Usage (from apps/mobile/android/scripts/deploy):
  *   npm install
  *   node --env-file=.env.local upload-to-play.mjs <path-to-app-release.aab>
  */
@@ -51,7 +51,7 @@ if (!keyPath) {
   console.error(
     "PLAY_SERVICE_ACCOUNT_JSON_PATH is not set. This is one-time owner-only " +
       "setup (Google Cloud service account + Play Console permission grant) " +
-      "— see apps/flutter/DEPLOYMENT.md §9. Not something this script can do " +
+      "— see apps/mobile/android/DEPLOYMENT.md §9. Not something this script can do " +
       "for itself.",
   );
   process.exit(1);

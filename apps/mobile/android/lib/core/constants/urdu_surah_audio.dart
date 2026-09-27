@@ -4,7 +4,7 @@ import 'package:quran_flutter/core/constants/arabic_surah_audio.dart' show arabi
 /// file per entry (not per-ayah). Uploaded to the same Cloudflare R2
 /// bucket as `arabic_surah_audio.dart`'s Al-Afasy recitation (see
 /// `Resources/Urdu Audio (Surah-wise)` at the repo root and
-/// `apps/flutter/scripts/upload-audio-to-r2.mjs`) — the URL is computed
+/// `apps/mobile/android/scripts/upload-audio-to-r2.mjs`) — the URL is computed
 /// the same predictable way, just under the `urdu/` prefix instead of
 /// `arabic/`.
 ///

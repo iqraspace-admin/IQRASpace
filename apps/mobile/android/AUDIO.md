@@ -20,7 +20,7 @@ exist).
 
 ## A new, dedicated Cloudflare R2 bucket — not apps/quran's Supabase project
 
-This is `apps/flutter`'s first-ever backend dependency (it was previously
+This is `apps/mobile/android`'s first-ever backend dependency (it was previously
 "fully isolated," using only public, keyless APIs — see the root
 `CLAUDE.md`). It deliberately uses its own object storage rather than
 `apps/quran`'s Supabase project (or any Supabase project at all):
@@ -69,7 +69,7 @@ Done once via the Cloudflare dashboard, not scriptable:
    below).
 
 Fill the resulting four values plus the bucket name and public URL into
-`apps/flutter/scripts/.env.local` (see `.env.local.example` in that
+`apps/mobile/android/scripts/.env.local` (see `.env.local.example` in that
 directory) before running `upload-audio-to-r2.mjs`.
 
 ## Storage layout
@@ -151,7 +151,7 @@ conventions (env-var-gated, fail-fast, clear logging):
 3. `upload-audio-to-r2.mjs` — uploads `Resources/Al-Afasy Recitation`
    (whole files, or split parts for the Surahs `split-manifest.json`
    covers — never both) and `Resources/Urdu Audio (Surah-wise)` as-is to
-   the bucket (R2 API token, `apps/flutter/scripts/.env.local` — never
+   the bucket (R2 API token, `apps/mobile/android/scripts/.env.local` — never
    committed; see "Cloudflare R2 setup" above), skips already-uploaded
    Surahs/parts, writes `audio-manifest.json` with each Surah's public
    URL(s).

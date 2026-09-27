@@ -4,8 +4,8 @@
 /// workaround for a since-migrated storage backend's 50MiB per-object
 /// limit (originally Supabase Storage; audio now lives on Cloudflare R2,
 /// which has no such limit) — see
-/// `apps/flutter/scripts/split-large-audio.mjs` and
-/// `apps/flutter/AUDIO.md`. The already-split files are kept as-is
+/// `apps/mobile/android/scripts/split-large-audio.mjs` and
+/// `apps/mobile/android/AUDIO.md`. The already-split files are kept as-is
 /// rather than re-merged now that the limit is gone, since re-splitting/
 /// merging already-verified audio would be unnecessary rework. Splits
 /// are cut at real silence in the recitation nearest the ideal
@@ -30,7 +30,7 @@ class ArabicSurahAudioPart {
 const String _r2AudioBaseUrl = 'https://audio.iqraspace.org';
 
 /// Surahs split into sequential parts by
-/// `apps/flutter/scripts/split-large-audio.mjs` because the whole
+/// `apps/mobile/android/scripts/split-large-audio.mjs` because the whole
 /// recitation file exceeded Supabase Storage's old 50MiB free-tier
 /// object limit (historical — audio is now hosted on Cloudflare R2,
 /// which has no per-object size limit) — object names

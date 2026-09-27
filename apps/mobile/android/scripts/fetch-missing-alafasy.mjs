@@ -11,7 +11,7 @@
  * for the same repo-wide convention. No API key needed; this CDN serves
  * public files over plain HTTPS.
  *
- * Usage (from apps/flutter/scripts): npm run fetch:missing-alafasy
+ * Usage (from apps/mobile/android/scripts): npm run fetch:missing-alafasy
  * Safe to re-run — already-present Surahs (any file already starting
  * with that zero-padded number) are skipped without a network call.
  */
@@ -34,7 +34,7 @@ function pad3(n) {
 
 async function presentSurahNumbers() {
   if (!existsSync(RESOURCES_DIR)) {
-    throw new Error(`Resources dir not found: ${RESOURCES_DIR} — run this from apps/flutter/scripts.`);
+    throw new Error(`Resources dir not found: ${RESOURCES_DIR} — run this from apps/mobile/android/scripts.`);
   }
   const files = await readdir(RESOURCES_DIR);
   const present = new Set();

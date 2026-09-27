@@ -1,6 +1,6 @@
 name: CI (Flutter)
 
-# apps/flutter is a fully independent Flutter app — separate from every
+# apps/mobile/android is a fully independent Flutter app — separate from every
 # other lane in this directory (Next.js/Vercel and Capacitor/Android
 # lanes for apps/quran, apps/learning, apps/landing). Its path filter
 # doesn't overlap any of theirs, so no other workflow needed edits to
@@ -15,12 +15,12 @@ on:
   push:
     branches: [mobile/android]
     paths:
-      - "apps/flutter/**"
+      - "apps/mobile/android/**"
       - ".github/workflows/ci-flutter.yml"
   pull_request:
     branches: [mobile/android]
     paths:
-      - "apps/flutter/**"
+      - "apps/mobile/android/**"
       - ".github/workflows/ci-flutter.yml"
   workflow_dispatch:
 
@@ -30,7 +30,7 @@ concurrency:
 
 defaults:
   run:
-    working-directory: apps/flutter
+    working-directory: apps/mobile/android
 
 jobs:
   validate:

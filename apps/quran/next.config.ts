@@ -109,7 +109,7 @@ const nextConfig: NextConfig = {
               // audio.iqraspace.org: Listening Mode's whole-Surah files,
               // streamed directly from the IqraSpace Flutter app's own
               // dedicated Cloudflare R2 bucket (lib/content/listeningAudio.ts,
-              // apps/flutter/AUDIO.md) — a separate host from the per-ayah
+              // apps/mobile/android/AUDIO.md) — a separate host from the per-ayah
               // CDN above; Listening Mode never uses that one.
               "media-src 'self' https://cdn.islamic.network https://audio.iqraspace.org",
               // api.alquran.cloud: opt-in live Tajweed coloring fetch

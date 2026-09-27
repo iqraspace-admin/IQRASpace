@@ -2,10 +2,10 @@
  * Listening Mode's whole-Surah audio — streamed directly from the
  * IqraSpace Flutter app's own dedicated Cloudflare R2 bucket
  * (`audio.iqraspace.org`), never from the per-ayah Quran API. Ported
- * from `apps/flutter/lib/core/constants/arabic_surah_audio.dart` /
+ * from `apps/mobile/android/lib/core/constants/arabic_surah_audio.dart` /
  * `urdu_surah_audio.dart` — same base URL, same object-name pattern, same
  * split-part surah list — so the website streams the exact same files.
- * See `apps/flutter/AUDIO.md` for the full storage-layout writeup.
+ * See `apps/mobile/android/AUDIO.md` for the full storage-layout writeup.
  *
  * Reading + Listening Mode is UNAFFECTED by this file — it still plays
  * per-ayah audio from the Quran API (lib/content/reciters.ts), since

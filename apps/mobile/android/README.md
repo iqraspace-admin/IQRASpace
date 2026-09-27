@@ -83,7 +83,7 @@ shamsiyyah, blue/purple madd variants) on real, live API data.
 
 ## Commands
 
-Run from this directory (`apps/flutter`):
+Run from this directory (`apps/mobile/android`):
 
 ```bash
 flutter pub get              # resolve dependencies
@@ -113,7 +113,7 @@ based render path) rather than a build flag.
 
 ## If the Next.js dev server (apps/quran) feels slow after this
 
-It shouldn't — `apps/flutter` is a sibling directory, not nested inside
+It shouldn't — `apps/mobile/android` is a sibling directory, not nested inside
 `apps/quran`, so Next's file watcher has no reason to touch it. If you do
 ever nest Flutter build artifacts near a Next.js app in the future,
 watch out for `.dart_tool/`/`build/`/`android/.gradle` slowing down that

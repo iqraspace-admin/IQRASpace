@@ -3,7 +3,7 @@
  * Uploads Listening Mode's whole-Surah audio (Al-Afasy recitation + Urdu
  * translation, from `Resources/` at the repo root) to a **dedicated**
  * Cloudflare R2 bucket — deliberately not apps/quran's Supabase project
- * (or any Supabase project at all); see apps/flutter/AUDIO.md for why
+ * (or any Supabase project at all); see apps/mobile/android/AUDIO.md for why
  * (apps/quran's own COST.md/ARCHITECTURE.md explicitly reject
  * self-hosting audio there, and R2's lack of a per-object size cap plus
  * egress-free bandwidth fit this ~600MB+ whole-Surah use case better than
@@ -20,8 +20,8 @@
  * practical here since R2 uploads need SigV4 request signing, which the
  * SDK already implements correctly.
  *
- * Usage (from apps/flutter/scripts):
- *   Create apps/flutter/scripts/.env.local with (see .env.local.example):
+ * Usage (from apps/mobile/android/scripts):
+ *   Create apps/mobile/android/scripts/.env.local with (see .env.local.example):
  *     R2_ACCOUNT_ID=<Cloudflare account id>
  *     R2_ACCESS_KEY_ID=<R2 API token access key id>
  *     R2_SECRET_ACCESS_KEY=<R2 API token secret access key>
@@ -31,7 +31,7 @@
  *
  * The bucket itself, its public custom domain, and the API token are all
  * created once, manually, in the Cloudflare dashboard — see
- * apps/flutter/AUDIO.md's "Cloudflare R2 setup" section. This script
+ * apps/mobile/android/AUDIO.md's "Cloudflare R2 setup" section. This script
  * intentionally does not auto-create the bucket (unlike the old Supabase
  * version): a bucket created via API here would still be missing its
  * custom-domain binding, which can only be done in the dashboard anyway.
@@ -72,11 +72,11 @@ function fail(message) {
   console.error(`\n✗ ${message}\n`);
   process.exit(1);
 }
-if (!R2_ACCOUNT_ID) fail("Missing R2_ACCOUNT_ID — see apps/flutter/scripts/.env.local.example.");
-if (!R2_ACCESS_KEY_ID) fail("Missing R2_ACCESS_KEY_ID — see apps/flutter/scripts/.env.local.example.");
-if (!R2_SECRET_ACCESS_KEY) fail("Missing R2_SECRET_ACCESS_KEY — see apps/flutter/scripts/.env.local.example.");
-if (!BUCKET) fail("Missing R2_BUCKET — see apps/flutter/scripts/.env.local.example.");
-if (!PUBLIC_BASE_URL) fail("Missing R2_PUBLIC_BASE_URL (the bucket's public custom domain) — see apps/flutter/scripts/.env.local.example.");
+if (!R2_ACCOUNT_ID) fail("Missing R2_ACCOUNT_ID — see apps/mobile/android/scripts/.env.local.example.");
+if (!R2_ACCESS_KEY_ID) fail("Missing R2_ACCESS_KEY_ID — see apps/mobile/android/scripts/.env.local.example.");
+if (!R2_SECRET_ACCESS_KEY) fail("Missing R2_SECRET_ACCESS_KEY — see apps/mobile/android/scripts/.env.local.example.");
+if (!BUCKET) fail("Missing R2_BUCKET — see apps/mobile/android/scripts/.env.local.example.");
+if (!PUBLIC_BASE_URL) fail("Missing R2_PUBLIC_BASE_URL (the bucket's public custom domain) — see apps/mobile/android/scripts/.env.local.example.");
 
 const s3 = new S3Client({
   region: "auto",
@@ -89,7 +89,7 @@ async function verifyBucket() {
     await s3.send(new HeadBucketCommand({ Bucket: BUCKET }));
   } catch (err) {
     throw new Error(
-      `Bucket "${BUCKET}" not reachable (${err.message}). Create it in the Cloudflare dashboard first — see apps/flutter/AUDIO.md's "Cloudflare R2 setup" section.`,
+      `Bucket "${BUCKET}" not reachable (${err.message}). Create it in the Cloudflare dashboard first — see apps/mobile/android/AUDIO.md's "Cloudflare R2 setup" section.`,
     );
   }
 }
