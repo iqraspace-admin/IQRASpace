@@ -1,9 +1,166 @@
 ---
 name: iqs-deploy
-description: Run IqraSpace's Flutter (apps/mobile/android) Android production deployment workflow — validate, bump the build number, build a signed release .aab, verify it, upload it to Play Console's closed testing track, and report. Trigger when the user says "iqs-deploy".
+description: Run IqraSpace's full production deployment workflow — validate and deploy the website (apps/quran + apps/landing) to production, and build/upload the Android app (apps/mobile/android) to Play Console's closed testing track. Trigger when the user says "iqs-deploy".
 ---
 
 # iqs-deploy
+
+Runs the full release pipeline for **the website** (`apps/quran` +
+`apps/landing`, both served under `iqraspace.org`) and **the Android
+app** (`apps/mobile/android`, IqraSpace Quran Flutter reader,
+`org.iqraspace.app`): **Inspect → Validate → Build → Deploy → Verify →
+Report**, for each, then one combined final report (see "Combined
+Report" at the end).
+
+Both halves run every invocation unless one genuinely has nothing to
+ship (see each half's own Inspect step) — this skill doesn't ask "which
+one do you want" by default.
+
+Never bypass, skip, or hide a build/test/validate failure in either half
+to make this pipeline "pass." Fix the genuine root cause, or stop and
+report that half as FAILED with the real reason.
+
+---
+
+## Website (apps/quran + apps/landing)
+
+**Hard rule: this repo's actual deploy mechanism for both apps is
+`vercel deploy --prod` running *inside GitHub Actions* (`ci-quran.yml` /
+`ci-landing.yml`), gated on a push to `main`, using each app's own
+dedicated Vercel secrets (`QURAN_VERCEL_*` / `LANDING_VERCEL_*`) — never
+a locally-run `vercel` command.** This session has no Vercel
+credentials (`vercel whoami` is logged out; no token exists anywhere on
+this machine) and no `gh` CLI, so it cannot authenticate as either
+Vercel project or directly dispatch/inspect a GitHub Actions run.
+**"Deploy" for the website therefore means: validate locally exactly
+like CI would, get the change safely onto `main` (which is what
+actually triggers the real deploy), then poll the same live production
+health-check endpoints CI itself checks.** Never attempt
+`vercel deploy --prod`, `vercel build`, `vercel link`, or any other
+direct Vercel CLI command from this session, even if a token were
+somehow available — that would bypass the deliberate CI-only,
+path-filtered, health-checked pipeline both apps rely on (see
+`apps/quran/DEPLOYMENT.md`'s "why not the prebuilt flow" note and root
+`CLAUDE.md`'s CI/CD section). Do not create or modify any `.vercel/`
+project-linkage files as a workaround.
+
+### W0. Inspect
+
+- `git status --short` (repo root) — note all uncommitted changes,
+  tracked and untracked.
+- `git branch --show-current`, then `git fetch origin --prune` and
+  compare local `main` to `origin/main` (ahead/behind).
+- Determine which of `apps/quran/**` and `apps/landing/**` actually have
+  pending changes — either uncommitted locally, or committed locally but
+  not yet on `origin/main`. Both `ci-quran.yml` and `ci-landing.yml` are
+  path-filtered, so a push only redeploys the app(s) whose files
+  actually changed; if **neither** app has anything pending, skip
+  straight to reporting `Website: NOTHING TO DEPLOY` rather than forcing
+  an empty push.
+- Do not stash, discard, or reset anything found here. If unrelated
+  work-in-progress exists alongside the changes meant to ship, call it
+  out in the final report rather than silently bundling or dropping it.
+
+### W1. Validate (mirrors each app's own CI `validate` job exactly)
+
+For **apps/quran**, only if it has pending changes, from `apps/quran`:
+```
+npm ci                       # if node_modules is missing/stale
+npm run lint
+npx next typegen             # tsc needs next-env.d.ts / .next/types — CI does this too
+npm run typecheck
+npm run test --if-present    # currently a no-op; kept anyway, matches CI exactly
+npm run build
+```
+
+For **apps/landing**, only if it has pending changes, from `apps/landing`:
+```
+node -e "JSON.parse(require('fs').readFileSync('vercel.json','utf8')); console.log('vercel.json OK')"
+npx --yes html-validate index.html
+```
+
+If any check fails: diagnose and fix the real cause in the source —
+never weaken a lint rule, skip a test, or otherwise mask a failure just
+to get a clean run. If it isn't something this skill can legitimately
+fix (needs a product decision), stop here and report `Website: FAILED`
+with the specific error — do not push a change that would fail CI's own
+identical checks.
+
+### W2. Commit & push to `main`
+
+Apply the same discipline `iqs-git` uses (see that skill for the full
+secret/generated-file screening list) before committing anything:
+
+- Screen `git status --short` / the diff for secrets (any `.env*`
+  besides an already-committed `.env.*.example` template, tokens, keys,
+  service-account JSON), generated/build output (`node_modules/`,
+  `.next/`, `dist/`), and anything unrelated to this deploy. Unstage or
+  exclude anything that matches — never `git add -A` / `git add .`
+  blindly.
+- Stage and commit only the reviewed files:
+  `git add <files...> && git commit -m "<type>(<app>): <summary>"` using
+  the attribution trailer from the system reminder (skip this bullet if
+  everything relevant is already committed).
+- If the current branch is **not** `main`: `git fetch origin`,
+  `git checkout main`, `git pull origin main`, then
+  `git merge --no-ff <source-branch>`. Resolve any real conflicts by
+  reading both sides in full context — never blindly take one side
+  wholesale; if a conflict is a genuine semantic disagreement and
+  neither side obviously wins, **stop and ask** rather than guessing.
+  Re-run W1's validate steps on the merged result before pushing.
+- `git push origin main`. If rejected because the remote moved,
+  `git pull origin main` (a merge, resolved the same careful way) and
+  retry — never `--force`.
+- Never push if W1 failed and wasn't genuinely fixed.
+
+### W3. Deploy (automatic — the push in W2 *is* the trigger)
+
+`ci-quran.yml` and/or `ci-landing.yml` (whichever app(s) had files in
+the push) now run their own `validate` job again and, because this is a
+push to `main`, their `deploy` job — `vercel deploy --prod` against
+each app's real Vercel project, using CI-only secrets this session
+doesn't have. There is nothing further to run locally for this step.
+
+### W4. Verify (post-deploy health check)
+
+Vercel's remote build + deploy typically takes a few minutes. Poll
+rather than checking once immediately after pushing — retry every ~30s
+for up to ~5-6 minutes if a path doesn't return 200 right away:
+
+```
+# apps/quran — only if it was deployed
+for path in /quran /quran/surah /quran/sitemap.xml; do
+  curl -s -o /dev/null -w "%{http_code} $path\n" "https://iqraspace-quran.vercel.app$path"
+done
+
+# apps/landing — only if it was deployed
+for path in / /robots.txt /sitemap.xml; do
+  curl -s -o /dev/null -w "%{http_code} $path\n" "https://iqraspace-landing.vercel.app$path"
+done
+
+# Real custom domain, for whichever app(s) deployed:
+curl -s -o /dev/null -w "%{http_code} https://iqraspace.org\n" https://iqraspace.org
+curl -s -o /dev/null -w "%{http_code} https://iqraspace.org/quran\n" https://iqraspace.org/quran
+```
+
+**Be honest about what this does and doesn't prove.** A passing check
+confirms the site is reachable and healthy after pushing — the same
+thing CI's own health check confirms — but this session has no `gh` CLI
+or Vercel token, so it **cannot** directly confirm the specific GitHub
+Actions run for this push actually succeeded, or distinguish "the new
+deploy is live" from "the previous deploy is still serving because the
+new one is still building or silently failed after checkout." State
+this limitation plainly in the report rather than claiming full
+certainty — point the user at the Actions tab or the Vercel dashboard
+if they want that stronger confirmation.
+
+If a health check still fails after the full wait window, report
+`Website: FAILED` with which path(s) failed and the HTTP code seen — do
+not claim success.
+
+---
+
+## Android (apps/mobile/android)
 
 Runs the full release pipeline for `apps/mobile/android` (IqraSpace Quran
 Flutter reader, `org.iqraspace.app`): **Inspect → Validate → Build →
@@ -28,11 +185,11 @@ Never bypass, skip, or hide a build/test/analyze failure to make this
 pipeline "pass" — fix the genuine root cause, or stop and report FAILED
 with the real reason.
 
-## 0. Inspect
+### A0. Inspect
 
 - `git -C apps/mobile/android status --short` — note any uncommitted changes.
   This skill will itself commit exactly one file (the `pubspec.yaml`
-  version bump, step 2) — do not stash, discard, or otherwise touch
+  version bump, step A2) — do not stash, discard, or otherwise touch
   unrelated in-progress work; if there are unrelated uncommitted changes,
   proceed but call them out in the final report rather than silently
   including or discarding them.
@@ -40,9 +197,9 @@ with the real reason.
   here and report FAILED — signing setup is owner-only (DEPLOYMENT.md
   §3) and cannot be created from this session.
 - Read `apps/mobile/android/pubspec.yaml`'s `version:` line to know the current
-  version before bumping it in step 2.
+  version before bumping it in step A2.
 
-## 1. Validate
+### A1. Validate
 
 From `apps/mobile/android`:
 ```
@@ -57,7 +214,7 @@ Both must be clean. If either fails:
 - If a failure isn't something you can legitimately fix (e.g. needs a
   product decision), stop and report FAILED with the specific error.
 
-## 2. Build — bump the version
+### A2. Build — bump the version
 
 Per `apps/mobile/android/CLAUDE.md`: bump only the `+N` build number by default
 (e.g. `0.3.0+8` → `0.3.0+9`). Only bump the `x.y.z` part too if the user
@@ -71,7 +228,7 @@ being shipped are a genuine user-visible release.
 - Do not push. Mention in the final report that the bump is committed
   locally and needs a manual push.
 
-## 3. Generate .aab
+### A3. Generate .aab
 
 From `apps/mobile/android`:
 ```
@@ -82,17 +239,17 @@ Expected output: `apps/mobile/android/build/app/outputs/bundle/release/app-relea
 If this fails, the whole run is FAILED — do not proceed to Deploy, and
 do not report AAB or overall success.
 
-## 4. Verify (build artifact)
+### A4. Verify (build artifact)
 
 - Confirm the `.aab` file exists on disk and has non-trivial size (reject
   a 0-byte or missing file as a failure, don't just check the build
   command's exit code).
-- Cross-check that the version you bumped in step 2 is what actually got
+- Cross-check that the version you bumped in step A2 is what actually got
   built (the `.aab`'s embedded version comes directly from
-  `pubspec.yaml`, so this is mostly a sanity check that step 2's edit
+  `pubspec.yaml`, so this is mostly a sanity check that step A2's edit
   didn't get reverted/overwritten).
 
-## 5. Deploy (Play Console closed testing track)
+### A5. Deploy (Play Console closed testing track)
 
 Check `apps/mobile/android/scripts/deploy/.env.local` exists and
 `PLAY_SERVICE_ACCOUNT_JSON_PATH` is set:
@@ -113,7 +270,7 @@ Check `apps/mobile/android/scripts/deploy/.env.local` exists and
   (hardcoded — see the hard rule above). Capture the `versionCode` it
   reports uploading.
 
-## 6. Verify (post-deploy)
+### A6. Verify (post-deploy)
 
 - Confirm the upload script exited `0` and printed a successful upload
   with a `versionCode` matching the `.aab` you built.
@@ -121,33 +278,47 @@ Check `apps/mobile/android/scripts/deploy/.env.local` exists and
   after upload — this skill can't wait on that synchronously. Note that
   in the report rather than claiming it's fully processed.
 
-## 7. Report
+---
+
+## Combined Report
 
 Always end with this exact structure, filled in truthfully — never mark
-a line SUCCESS unless it actually happened as verified above:
+a line SUCCESS unless it actually happened as verified above. Both
+halves always report here, even if one had nothing to do or was
+skipped.
 
 ```
-iqs-deploy: SUCCESS / FAILED
-Android Build: SUCCESS / FAILED
-AAB: SUCCESS / FAILED
+iqs-deploy: SUCCESS / PARTIAL / FAILED
 
-Version: x.x.x
-Build: xxx
-AAB: <exact .aab path>
+Website
+  Status: SUCCESS / FAILED / NOTHING TO DEPLOY
+  Apps deployed: apps/quran / apps/landing / both / none
+  Commit pushed: <sha> <subject>  (or "n/a")
+  Validate: <apps/quran and/or apps/landing check results>
+  Production URL(s): https://iqraspace.org , https://iqraspace.org/quran
+  Health check: <per-path HTTP codes>
+  Note: <the "cannot confirm the exact GitHub Actions run" caveat from W4,
+  every time — never omit it just because checks passed>
 
-Changes:
-- <brief summary>
+Android
+  Status: SUCCESS / FAILED
+  Version: x.x.x
+  Build: xxx
+  AAB: <exact .aab path>
+  Validate: flutter analyze/test results
+  Deploy: Play Console closed-track (alpha) upload result / versionCode
 
-Verification:
-- <brief summary — what was actually checked: analyze/test results, file
-  existence+size, uploaded versionCode, closed-track link>
+Errors/warnings:
+- <anything needing the owner's attention from either half — missing
+  credentials, a check that couldn't be fixed, unrelated uncommitted
+  changes noticed along the way, etc. "None" if genuinely nothing>
 ```
 
-`iqs-deploy: SUCCESS` requires validate + build + AAB verification +
-Play closed-track upload to all have actually succeeded. If the Deploy
-step failed only due to missing owner credentials (step 5), mark
-`AAB: SUCCESS` but `iqs-deploy: FAILED`, and say exactly what's needed
-(point at DEPLOYMENT.md §9) rather than guessing. If it failed because
-the `alpha` track itself doesn't exist yet or has no testers configured
-in Play Console, report that distinctly too — that's also owner-only
-Play Console setup, separate from the API credentials in §9.
+`iqs-deploy: SUCCESS` requires **both** halves to have actually
+succeeded as verified above (or a half legitimately had nothing to
+deploy). Use `PARTIAL` when one half succeeded and the other failed or
+is blocked on something owner-only (missing Play Console credentials
+per A5; a website check that can't fully verify without `gh`/Vercel
+access per W4) — say exactly which half and why. Use `FAILED` only when
+neither half completed successfully. Never describe either half as
+production-verified beyond what was actually checked.
