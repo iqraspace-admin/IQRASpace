@@ -231,7 +231,7 @@
         <h1>IqraSpace — Agentic Technical Documentation</h1>
         <p class="lead">A complete, ground-truth walkthrough of everything IqraSpace is and does — from a user tapping a button to the exact file, function, API call, and database row that responds. Every technical section is paired with a <span class="badge biz" style="vertical-align:middle;">💼 business</span> explanation in plain language, so a non-technical reader can follow the same story a developer would trace through code.</p>
         <div class="meta-row">
-          <span>Generated: 2026-09-27</span>
+          <span>Generated: 2026-09-27, updated 2026-09-28</span>
           <span>4 independent apps, 1 shared domain</span>
           <span>Source of truth: current code on <code>main</code></span>
           <span>Companion doc: <code>docs/DEVELOPER_GUIDE.html</code></span>
@@ -312,20 +312,22 @@ flowchart TB
   LAND -- "/learning/*" --> LVERCEL["apps/learning Vercel project<br/>Next.js 16, basePath=/learning"]
   LAND -- "everything else" --> LANDPAGES["landing's own pages<br/>index.html, privacy.html"]
 
-  LVERCEL --> SBL["Supabase (learning project)<br/>Postgres + Auth + Realtime + Storage"]
+  LVERCEL --> SBL["Supabase (learning project)<br/>Postgres + Auth + Realtime"]
   LVERCEL -.-> GOAUTH["Google OAuth / Drive<br/>(code-complete, NOT deployed)"]
-  SBL --> EDGE["Edge Functions<br/>admin-user-management (live)"]
+  SBL --> EDGE["Edge Functions<br/>admin-user-management, lesson-materials-r2 (both live)"]
+  EDGE --> R2LEARN["Cloudflare R2<br/>iqraspace-learning (private)"]
 
   QVERCEL -.-> SBQ["Supabase (quran project)<br/>schema exists, UNWIRED"]
   QVERCEL --> QFAPI["Quran Foundation API<br/>build-time content sync only"]
   QVERCEL --> AQC["Al Quran Cloud API<br/>live Tajweed fetch, opt-in"]
-  QVERCEL --> R2["Cloudflare R2<br/>audio.iqraspace.org"]
+  QVERCEL --> R2["Cloudflare R2<br/>audio.iqraspace.org (public)"]
 
   MOBILE["apps/mobile/android<br/>Android / Web, Hive local storage"] --> AQC
   MOBILE --> R2
 
   style LAND fill:#0d6e5b22,stroke:#0d6e5b
   style R2 fill:#0d6e5b22,stroke:#0d6e5b
+  style R2LEARN fill:#0d6e5b22,stroke:#0d6e5b
         </div>
       </div>
 
@@ -397,7 +399,7 @@ flowchart TB
           <td>TypeScript ^5</td>
           <td>Tailwind CSS ^4</td>
           <td>React 19.2.8, <code>@supabase/supabase-js</code> ^2.112.4, <code>pdfjs-dist</code> ^6.3.289</td>
-          <td>Supabase (own project): Postgres, Auth, Realtime, Storage, Edge Functions</td>
+          <td>Supabase (own project): Postgres, Auth, Realtime, Edge Functions; file storage on a dedicated Cloudflare R2 bucket</td>
         </tr>
         <tr>
           <td><code>apps/quran</code></td>
@@ -446,7 +448,8 @@ IqraSpace/
 │  │  ├─ src/components/{ui,shell,pdf,teach,lessons,students,attendance,admin}
 │  │  ├─ src/lib/              <span class="c2"># supabaseClient, authContext, realtime, sharing, storage,</span>
 │  │  │                        <span class="c2">#   notifications, curriculum, roster, quranLink, types, ...</span>
-│  │  └─ scripts/               <span class="c2"># pdfjs asset copy, admin seeding, surah-lesson seeding</span>
+│  │  └─ scripts/               <span class="c2"># pdfjs asset copy, admin seeding, surah-lesson seeding,</span>
+│  │                             <span class="c2">#   R2 storage migration (one-off, see §20)</span>
 │  │
 │  ├─ <span class="c1">quran/</span>           <span class="c2"># IqraSpace Quran — public reader (Next.js, SSG, 759 routes)</span>
 │  │  ├─ src/app/{surah,page,bookmarks,search,supplications}
@@ -466,7 +469,8 @@ IqraSpace/
 │     ├─ index.html, privacy.html, robots.txt, sitemap.xml
 │     └─ vercel.json               <span class="c2"># the Multi-Zones rewrites() config</span>
 │
-├─ supabase/                    <span class="c2"># belongs to apps/learning — migrations/ (0001-0023) + functions/</span>
+├─ supabase/                    <span class="c2"># belongs to apps/learning — migrations/ (0001-0024) + functions/</span>
+│                                <span class="c2">#   (admin-user-management, lesson-materials-r2, google-oauth-exchange, drive-file-proxy)</span>
 ├─ .github/workflows/           <span class="c2"># ci.yml, ci-quran.yml, ci-flutter.yml, ci-landing.yml</span>
 ├─ .claude/skills/               <span class="c2"># iqs-debug, iqs-deploy, iqs-git (AI-assisted dev tooling)</span>
 ├─ CLAUDE.md                    <span class="c2"># repo-wide guidance for AI coding agents</span>
@@ -569,7 +573,7 @@ IqraSpace/
         <tr><td><code>authContext.tsx</code></td><td><code>AuthProvider</code>/<code>useAuth()</code> — re-validates session via <code>auth.getUser()</code> (server round-trip) rather than trusting a cached session.</td></tr>
         <tr><td><code>realtime.ts</code> / <code>sharing.ts</code></td><td>Live highlight-sync channel (<code>lesson:{id}</code>) + durable persistence/catch-up query (§14).</td></tr>
         <tr><td><code>notifications.ts</code></td><td>Thin wrapper around the <code>notify_user()</code> RPC.</td></tr>
-        <tr><td><code>storage.ts</code></td><td><code>lesson-materials</code> Storage bucket: upload/list/signed-URL/delete.</td></tr>
+        <tr><td><code>storage.ts</code></td><td>Lesson material upload/list/signed-URL/delete — calls the <code>lesson-materials-r2</code> Edge Function broker (Cloudflare R2, migrated off Supabase Storage — see §20).</td></tr>
         <tr><td><code>quranLink.ts</code> / <code>lessonMaterial.ts</code></td><td>Cross-app deep links into apps/quran (its own separate Vercel project), resolving a <code>quran-surah:{N}</code> marker to that app's hosted per-surah PDFs — avoids duplicate uploads.</td></tr>
         <tr><td><code>curriculum.ts</code></td><td>The "Universal Lesson Plan" data layer — shared, tutor-agnostic curriculum with per-student progress.</td></tr>
         <tr><td><code>recurringSessions.ts</code></td><td>Materializes ~8 weeks of concrete <code>lessons</code> rows from a recurring-session rule. No cron — a manual "Generate 8 more weeks" button.</td></tr>
@@ -577,7 +581,7 @@ IqraSpace/
       </table>
 
       <h3>Database schema</h3>
-      <p>23 migrations at repo root (<code>supabase/migrations/0001–0023</code>, not inside <code>apps/learning/</code>). Every table uses <code>STABLE SECURITY DEFINER</code> helper functions (<code>is_tutor_of_class</code>, <code>is_member_of_class</code>, <code>is_tutor_of_student</code>, <code>is_admin</code>, <code>is_super_admin</code>, <code>is_any_tutor</code>) for RLS, adopted specifically to avoid an infinite-recursion bug (Postgres error <code>42P17</code>) hit early on with naive inline-subquery policies.</p>
+      <p>24 migrations at repo root (<code>supabase/migrations/0001–0024</code>, not inside <code>apps/learning/</code>). Every table uses <code>STABLE SECURITY DEFINER</code> helper functions (<code>is_tutor_of_class</code>, <code>is_member_of_class</code>, <code>is_tutor_of_student</code>, <code>is_admin</code>, <code>is_super_admin</code>, <code>is_any_tutor</code>) for RLS, adopted specifically to avoid an infinite-recursion bug (Postgres error <code>42P17</code>) hit early on with naive inline-subquery policies.</p>
       <table>
         <tr><th>Table</th><th>Purpose</th><th>Key relationships</th></tr>
         <tr><td><code>users</code></td><td>One row per authenticated person; <code>role</code> enum (tutor/student/guardian/admin/super_admin), <code>username</code> (unique, NOT NULL), <code>auth_email</code> (real or synthetic).</td><td>Root of the role system; FK target for most ownership checks.</td></tr>
@@ -585,7 +589,7 @@ IqraSpace/
         <tr><td><code>classes</code> / <code>class_members</code></td><td>Class grouping and membership.</td><td><code>classes.tutor_id → tutors</code>; joins classes↔students.</td></tr>
         <tr><td><code>lessons</code></td><td>A scheduled/held session — student-based (one-to-one) as of migration 0023.</td><td><code>student_id</code> NOT NULL; optional <code>recurring_rule_id</code>, <code>lesson_plan_item_id</code>.</td></tr>
         <tr><td><code>recurring_session_rules</code></td><td>A recurrence definition materialized into concrete <code>lessons</code> rows.</td><td>0023.</td></tr>
-        <tr><td><code>lesson_materials</code></td><td>Uploaded PDFs (Storage bucket) + page range.</td><td><code>tutor_id</code>-scoped write, any-authenticated read.</td></tr>
+        <tr><td><code>lesson_materials</code></td><td>Metadata row per uploaded PDF (path, page range) — the file bytes themselves live in Cloudflare R2, not this database (§20).</td><td><code>tutor_id</code>-scoped write, any-authenticated read (enforced in the R2 broker Edge Function, not RLS — R2 has none).</td></tr>
         <tr><td><code>lesson_plans</code> / <code>lesson_plan_items</code> / <code>class_lesson_plans</code></td><td>Shared, admin-edited curriculum catalog (tutor-agnostic since 0021).</td><td>Read-only for tutors.</td></tr>
         <tr><td><code>student_lesson_progress</code> / <code>student_lesson_completions</code></td><td>Per-student position in the curriculum; completions require tutor/admin confirmation.</td><td>Seeded consistently regardless of add-order (0022).</td></tr>
         <tr><td><code>attendance</code> / <code>lesson_progress</code> / <code>lesson_notes</code></td><td>Per-lesson records: presence, skill scores (recitation/tajweed/memorization), structured notes.</td><td><code>lesson_id</code>-scoped.</td></tr>
@@ -598,10 +602,24 @@ IqraSpace/
       <table>
         <tr><th>Function</th><th>Status</th><th>Purpose</th></tr>
         <tr><td><code>admin-user-management</code></td><td><span class="badge ok">Deployed</span></td><td>Create/reset-password/deactivate/reactivate/delete/status via <code>auth.admin.*</code> — the service_role key never touches the browser.</td></tr>
+        <tr><td><code>lesson-materials-r2</code></td><td><span class="badge ok">Deployed</span></td><td>Presigned-URL broker for lesson material files, now on Cloudflare R2 instead of Supabase Storage — see §20 for the full migration.</td></tr>
         <tr><td><code>google-oauth-exchange</code></td><td><span class="badge warn">Code-complete, not deployed</span></td><td>Token exchange + AES-GCM encrypt/store of the refresh token.</td></tr>
         <tr><td><code>drive-file-proxy</code></td><td><span class="badge warn">Code-complete, not deployed</span></td><td>Refreshes and streams a Drive file's bytes.</td></tr>
       </table>
-      <p>Both undeployed functions need a Google Cloud OAuth client that only the project owner can provision. Direct PDF upload to Supabase Storage is the fully-working materials path today.</p>
+      <p>Both Google Drive functions need a Google Cloud OAuth client that only the project owner can provision. Direct PDF upload — now to R2 via the broker above — is the fully-working materials path today.</p>
+
+      <div class="fn-card">
+        <div class="fn-head">lesson-materials-r2 <span class="badge muted">Supabase Edge Function</span><span class="fn-path">supabase/functions/lesson-materials-r2/index.ts</span></div>
+        <div class="fn-body">
+          <div class="fn-row"><div class="fn-k">Purpose</div><div class="fn-v">Mint short-lived, scoped presigned R2 URLs so the browser can upload/download/list/delete lesson materials without ever holding an R2 secret key — R2 has no RLS equivalent, so this function re-implements the exact access rules migrations <code>0011</code>/<code>0018</code> used to enforce directly on <code>storage.objects</code>.</div></div>
+          <div class="fn-row"><div class="fn-k">Input</div><div class="fn-v">POST body <code>{action, ...}</code> — <code>sign-upload</code>, <code>sign-download</code>, <code>list</code>, <code>list-all</code>, or <code>delete</code>; caller's Supabase session JWT in the <code>Authorization</code> header.</div></div>
+          <div class="fn-row"><div class="fn-k">Processing</div><div class="fn-v">Identifies the caller via <code>auth.getUser()</code>, re-checks their role against <code>public.users</code> (never trusts a client-sent role), then either presigns an R2 request (upload/download) or calls R2's List/Delete API directly — write actions require the caller's own <code>{tutorId}/</code> folder or admin/super_admin.</div></div>
+          <div class="fn-row"><div class="fn-k">Output</div><div class="fn-v">JSON <code>{ok, data|error}</code> — an <code>uploadUrl</code>/<code>path</code> pair, a download <code>url</code>, a <code>StoredFile[]</code> list, or a bare success/failure for delete.</div></div>
+          <div class="fn-row"><div class="fn-k">Dependencies</div><div class="fn-v">A dedicated, private Cloudflare R2 bucket (<code>iqraspace-learning</code>) — separate from apps/mobile/android's public audio bucket; R2 credentials held only as Edge Function secrets, never in the Next.js app.</div></div>
+          <div class="fn-row"><div class="fn-k">Called by</div><div class="fn-v"><code>apps/learning/src/lib/storage.ts</code>, via <code>supabase.functions.invoke("lesson-materials-r2", ...)</code>.</div></div>
+          <div class="fn-row"><div class="fn-k">Example</div><div class="fn-v">Tutor uploads a PDF → <code>sign-upload</code> returns a presigned PUT URL scoped to <code>{their uid}/{timestamp}-{filename}</code> → browser <code>fetch(uploadUrl, {method:"PUT", body:file})</code> straight to R2, no bytes pass through Supabase at all.</div></div>
+        </div>
+      </div>
 
       <h3>Testing &amp; known gaps</h3>
       <p><span class="badge danger">No automated tests</span> — no test framework, no test files anywhere under <code>src</code>. Other confirmed gaps: Google Drive/Calendar integration genuinely unconfigured (not faked — UI correctly shows "not configured"); Guardian role exists in DB/types with no dedicated portal; highlight sync is page-level for PDFs, not word-level; the most recent feature (student-based one-to-one scheduling, migration 0023) is explicitly flagged as not independently end-to-end tested.</p>
@@ -1019,7 +1037,7 @@ flowchart TB
       </div>
       <table>
         <tr><th>App</th><th>Where data lives</th><th>Who reads/writes</th></tr>
-        <tr><td>apps/learning</td><td>Its own Supabase project (Postgres + Auth + Realtime + Storage)</td><td>Browser client only, gated entirely by RLS. No server-side Supabase client exists.</td></tr>
+        <tr><td>apps/learning</td><td>Its own Supabase project (Postgres + Auth + Realtime) for everything except files; lesson material PDFs live in a dedicated, private Cloudflare R2 bucket (<code>iqraspace-learning</code>) as of this session — see §20</td><td>Database: browser client only, gated by RLS. Files: browser talks to the <code>lesson-materials-r2</code> Edge Function, which mints presigned R2 URLs — the one server-side code path in this app besides <code>admin-user-management</code>.</td></tr>
         <tr><td>apps/quran</td><td>Committed static JSON for content; <code>localStorage</code> for everything user-specific (bookmarks, progress, preferences)</td><td>Its own Supabase project exists with a real schema but is currently unused by any shipped code path — no client is even installed.</td></tr>
         <tr><td>apps/mobile/android</td><td>Hive (on-device, 4 boxes) for everything user-specific; bundled JSON assets for content</td><td>No backend database at all. Only network dependency besides the Quran APIs is the R2 audio bucket.</td></tr>
         <tr><td>apps/landing</td><td>None</td><td>—</td></tr>
@@ -1039,11 +1057,12 @@ flowchart TB
       </div>
       <table>
         <tr><th>Integration</th><th>Used by</th><th>Purpose</th><th>Auth</th><th>Status</th></tr>
-        <tr><td>Supabase</td><td>apps/learning</td><td>Postgres, Auth, Realtime, Storage, Edge Functions — the entire backend</td><td>Anon key (browser) + service_role (scripts/Edge Functions only)</td><td><span class="badge ok">Live</span></td></tr>
+        <tr><td>Supabase</td><td>apps/learning</td><td>Postgres, Auth, Realtime, Edge Functions — the entire backend except file storage</td><td>Anon key (browser) + service_role (scripts/Edge Functions only)</td><td><span class="badge ok">Live</span></td></tr>
         <tr><td>Quran Foundation Content API</td><td>apps/quran</td><td>Build-time-only sync of Quran text/translations into committed static content</td><td>OAuth2 client-credentials, script-side only</td><td><span class="badge ok">Live</span></td></tr>
         <tr><td>Al Quran Cloud API</td><td>apps/quran (Tajweed + per-ayah audio CDN), apps/mobile/android (primary content + search)</td><td>Keyless public API</td><td>None (keyless)</td><td><span class="badge ok">Live</span></td></tr>
         <tr><td>Quran.com v4 API</td><td>apps/mobile/android (Roman-Urdu translation only, best-effort)</td><td>Secondary translation source, short timeout, failure silently swallowed</td><td>None (keyless)</td><td><span class="badge ok">Live</span></td></tr>
         <tr><td>Cloudflare R2 (<code>audio.iqraspace.org</code>)</td><td>apps/mobile/android (owner) + apps/quran (consumer)</td><td>Whole-Surah recitation/translation audio, public-read, no egress fees</td><td>None for playback (public bucket)</td><td><span class="badge ok">Live</span></td></tr>
+        <tr><td>Cloudflare R2 (<code>iqraspace-learning</code>)</td><td>apps/learning</td><td>Lesson material PDFs — <strong>private</strong> bucket, a separate Cloudflare R2 bucket from the public audio one above, fronted by the <code>lesson-materials-r2</code> Edge Function broker. Migrated off Supabase Storage this session (§20).</td><td>R2 API token (Edge Function secret only, never client-side); presigned URLs scoped per-request</td><td><span class="badge ok">Live</span></td></tr>
         <tr><td>Google OAuth / Drive API</td><td>apps/learning</td><td>Optional lesson-material sourcing from a tutor's Drive</td><td>OAuth2, owner-provisioned client secret</td><td><span class="badge warn">Code-complete, not deployed</span></td></tr>
         <tr><td>Vercel</td><td>All 3 Next.js/static web apps</td><td>Hosting + deploy, 3 fully separate projects</td><td>Per-project tokens via GitHub Secrets</td><td><span class="badge ok">Live</span></td></tr>
         <tr><td>Google Play Console</td><td>apps/mobile/android</td><td>Distribution — Closed testing track</td><td>Service account, release-to-testing-tracks scope only</td><td><span class="badge ok">Live</span></td></tr>
@@ -1128,6 +1147,27 @@ flowchart TB
         <tr><td>Config fixes</td><td>2 (apps/learning ESLint ignore; root package.json stale path reference)</td></tr>
         <tr><td>Broken functionality introduced</td><td><strong>Zero</strong> — every app's build/lint/typecheck (and Flutter's test suite) passed after every change</td></tr>
       </table>
+
+      <hr class="sep">
+
+      <h3>Follow-up (same review period): production incident + Supabase Storage → Cloudflare R2 migration</h3>
+      <p>After the cleanup above shipped, <code>iqraspace.org/learning/login</code> stopped working in production. Traced live (headless-browser network capture, cross-checked against two independent public DNS resolvers) to the Supabase project itself being unreachable — <code>pqlrexhtwgleokyiamie.supabase.co</code> returned NXDOMAIN. Not a code or deployment regression: nothing in this repo can delete a Supabase project's DNS record. The Management API confirmed the project as <code>INACTIVE</code> (paused, not deleted) — the project owner restored it from the Supabase Dashboard, confirmed independently afterward (DNS resolved, Management API reported <code>ACTIVE_HEALTHY</code>, and the live login page's network calls succeeded with zero errors).</p>
+
+      <div class="biz-box">
+        <div class="biz-label">Business Explanation</div>
+        <p style="margin-bottom:0;">A free-tier cloud database was automatically paused after a period of inactivity — the same way a free trial might lapse — which took the tutoring portal's login down until the owner clicked "restore" in the Supabase dashboard. Nothing was lost; it was a pause, not a deletion. That incident was also the trigger for a deliberate follow-up decision: move file storage (lesson material PDFs) off Supabase entirely and onto Cloudflare R2, so file storage no longer shares fate with the database/auth pause risk, and to match the (near-$0) cost model already used for apps/mobile/android's audio.</p>
+      </div>
+
+      <p>With Supabase reachable again, lesson-material file storage was migrated from Supabase Storage to a new, dedicated, private Cloudflare R2 bucket (<code>iqraspace-learning</code>) — full detail in §7's <code>lesson-materials-r2</code> Edge Function write-up and §17/§18's updated data-architecture and integrations tables. Summary:</p>
+      <ul>
+        <li>New Edge Function <code>lesson-materials-r2</code> (presigned-URL broker) — R2 has no RLS equivalent, so this re-implements the exact access rules that used to live directly on <code>storage.objects</code> (migrations <code>0011</code>/<code>0018</code>): own-folder write, admin bypass, any-authenticated read.</li>
+        <li><code>apps/learning/src/lib/storage.ts</code> rewritten to call the broker — all 6 existing call sites needed zero changes.</li>
+        <li>All 4 existing files (15.5MB) copied from Supabase Storage to R2 via a one-off, resumable migration script — zero failures.</li>
+        <li>A real bug caught during testing, not a hypothetical: the R2 bucket needed an explicit CORS policy configured before the browser could PUT/GET against presigned URLs — Supabase Storage had handled this transparently, R2 does not.</li>
+        <li>Verified end-to-end against the live production Supabase project and R2 bucket through the actual UI: signed up a throwaway test account, uploaded a PDF, viewed it (rendered correctly via presigned GET), deleted it (confirmed gone on reload) — full CRUD, not just an API check. Test account and data cleaned up afterward.</li>
+        <li><strong>Leftover removal</strong> (explicitly requested as a follow-up, not bundled automatically): migration <code>0024</code> dropped the 7 now-unused RLS policies from <code>0011</code>/<code>0018</code>; a second one-off script removed the bucket's remaining objects and the bucket itself via the Storage API (Supabase blocks direct SQL <code>DELETE</code> on <code>storage.objects</code>/<code>storage.buckets</code> — "Use the Storage API instead"). Confirmed gone: the bucket now 404s. <code>public.lesson_materials</code> (the Postgres metadata table) was untouched throughout — only the Storage <em>product's</em> bucket/objects/policies were removed.</li>
+      </ul>
+      <p>apps/learning's Supabase project is now scoped to exactly Postgres + Auth + Realtime + 2 Edge Functions — no Storage product usage at all. Its Google Drive integration (§6, still code-complete but undeployed) is unrelated and unaffected.</p>
     </section>
 
     <!-- 21. DEBT -->
@@ -1215,7 +1255,7 @@ flowchart TB
     </div>
 
     <footer>
-      IqraSpace Agentic Technical Documentation — generated from a direct, tool-verified review of the repository on the <code>main</code> branch, 2026-09-27. Every architectural claim was checked against actual source files during this session; where an older document disagreed with the code, this document follows the code (see §21 for the specific discrepancies found). Companion reference: <code>docs/DEVELOPER_GUIDE.html</code>.
+      IqraSpace Agentic Technical Documentation — generated from a direct, tool-verified review of the repository on the <code>main</code> branch, 2026-09-27, updated 2026-09-28 after the Supabase Storage → Cloudflare R2 migration (§20). Every architectural claim was checked against actual source files during these sessions; where an older document disagreed with the code, this document follows the code (see §21 for the specific discrepancies found). Companion reference: <code>docs/DEVELOPER_GUIDE.html</code>.
     </footer>
   </main>
 </div>
