@@ -2,12 +2,17 @@ import { supabase } from "./supabaseClient";
 import type { LessonMaterial } from "./types";
 
 /**
- * Direct-upload lesson materials to Supabase Storage — the architecture §8
- * "simpler fallback... recommended for the very first MVP cut" over Google
- * Drive OAuth. Path convention: `{tutorId}/{filename}` (matches the RLS
- * policies in supabase/migrations/0011_storage_lesson_materials_bucket.sql).
+ * Lesson material storage — migrated from Supabase Storage to Cloudflare R2
+ * (see supabase/functions/lesson-materials-r2 for the presigned-URL broker
+ * this now goes through; R2 has no RLS equivalent, so every access-control
+ * rule that used to live in supabase/migrations/0011_storage_lesson_materials_bucket.sql
+ * and 0018_admin_full_access.sql is re-enforced server-side in that
+ * function instead). Path convention unchanged: `{tutorId}/{filename}` —
+ * the Edge Function is the only place that knows this now lives under a
+ * `learning/` prefix in R2, so no existing `lesson_materials.storage_path`
+ * row needed rewriting as part of this migration.
  */
-export const LESSON_MATERIALS_BUCKET = "lesson-materials";
+const BROKER_FUNCTION = "lesson-materials-r2";
 
 export type StoredFile = {
   name: string;
@@ -16,50 +21,52 @@ export type StoredFile = {
   updatedAt: string;
 };
 
-export async function uploadLessonMaterial(tutorId: string, file: File) {
-  const path = `${tutorId}/${Date.now()}-${file.name}`;
-  const { error } = await supabase.storage.from(LESSON_MATERIALS_BUCKET).upload(path, file, {
+type BrokerResponse<T> = { ok: true; data: T } | { ok: false; error: string };
+
+async function invokeBroker<T>(body: Record<string, unknown>): Promise<{ data: T | null; error: { message: string } | null }> {
+  const { data, error } = await supabase.functions.invoke<BrokerResponse<T>>(BROKER_FUNCTION, { body });
+  if (error) return { data: null, error: { message: error.message } };
+  if (!data?.ok) return { data: null, error: { message: (data as { error?: string })?.error ?? "Unknown storage error." } };
+  return { data: data.data, error: null };
+}
+
+export async function uploadLessonMaterial(_tutorId: string, file: File) {
+  // _tutorId kept for call-site compatibility; the broker derives the
+  // authoritative tutor id from the caller's own session, never a
+  // client-supplied value.
+  const { data, error } = await invokeBroker<{ path: string; uploadUrl: string }>({
+    action: "sign-upload",
+    filename: file.name,
     contentType: file.type || "application/pdf",
   });
-  return { path, error };
+  if (error || !data) return { path: "", error: error ?? { message: "Could not get an upload URL." } };
+
+  const putRes = await fetch(data.uploadUrl, {
+    method: "PUT",
+    body: file,
+    headers: { "Content-Type": file.type || "application/pdf" },
+  });
+  if (!putRes.ok) {
+    return { path: data.path, error: { message: `Upload to storage failed (HTTP ${putRes.status}).` } };
+  }
+  return { path: data.path, error: null };
 }
 
 export async function listLessonMaterials(tutorId: string): Promise<StoredFile[]> {
-  const { data, error } = await supabase.storage.from(LESSON_MATERIALS_BUCKET).list(tutorId, {
-    sortBy: { column: "updated_at", order: "desc" },
-  });
+  const { data, error } = await invokeBroker<StoredFile[]>({ action: "list", tutorId });
   if (error || !data) return [];
-  return data
-    .filter((f) => f.id) // Storage's `list` also returns folder placeholder entries with no id.
-    .map((f) => ({
-      name: f.name,
-      path: `${tutorId}/${f.name}`,
-      size: f.metadata?.size ?? 0,
-      updatedAt: f.updated_at ?? f.created_at ?? "",
-    }));
+  return data;
 }
 
 /**
- * All lesson materials across every tutor's folder — for admin/super_admin,
- * who have no folder of their own (0018_admin_full_access.sql grants the
- * write side; bucket read/list is already open to any authenticated user
- * per 0011, so no RLS change was needed for this). `list("")` on the bucket
- * root returns one folder-placeholder entry (no `id`) per tutor who's
- * uploaded something; each is then listed individually and flattened.
+ * All lesson materials across every tutor's folder — for admin/super_admin.
+ * Authorization (admin-only) is enforced inside the Edge Function itself,
+ * not just by which UI screens call this.
  */
 export async function listAllLessonMaterials(): Promise<StoredFile[]> {
-  const { data: folders, error } = await supabase.storage.from(LESSON_MATERIALS_BUCKET).list("");
-  if (error || !folders) return [];
-  const tutorIds = folders.filter((f) => !f.id).map((f) => f.name);
-  const perTutor = await Promise.all(tutorIds.map((id) => listLessonMaterials(id)));
-  return perTutor.flat().sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
-}
-
-export async function getSignedMaterialUrl(path: string, expiresInSeconds = 3600) {
-  const { data, error } = await supabase.storage
-    .from(LESSON_MATERIALS_BUCKET)
-    .createSignedUrl(path, expiresInSeconds);
-  return { url: data?.signedUrl ?? null, error };
+  const { data, error } = await invokeBroker<StoredFile[]>({ action: "list-all" });
+  if (error || !data) return [];
+  return data;
 }
 
 /**
@@ -81,8 +88,14 @@ export async function getLessonMaterial(lessonId: string): Promise<LessonMateria
   return (data as LessonMaterial) ?? null;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- expiresInSeconds kept for call-site compatibility; the broker sets a fixed, server-controlled TTL rather than trusting a client-passed value.
+export async function getSignedMaterialUrl(path: string, expiresInSeconds = 3600) {
+  const { data, error } = await invokeBroker<{ url: string }>({ action: "sign-download", path });
+  return { url: data?.url ?? null, error };
+}
+
 export async function deleteLessonMaterial(path: string) {
-  return supabase.storage.from(LESSON_MATERIALS_BUCKET).remove([path]);
+  return invokeBroker<null>({ action: "delete", path });
 }
 
 export function formatFileSize(bytes: number) {
