@@ -41,6 +41,16 @@
           "id": 1550626,
           "resource_id": 831,
           "text": "Tumne dekha nahin ke tumhare Rubb ne haathi walon ke saath kya kiya"
+        },
+        {
+          "id": -1006189,
+          "resource_id": "ur.maududi",
+          "text": "تم نے دیکھا نہیں کہ تمہارے رب نے ہاتھی والوں کے ساتھ کیا کیا؟"
+        },
+        {
+          "id": -2006189,
+          "resource_id": 227,
+          "text": "ఏమీ? ఏనుగువారి (సైన్యంతో) నీ ప్రభువు ఎలా వ్యవహరించాడో నీకు తెలియదా?"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550627,
           "resource_id": 831,
           "text": "Kya usne unki tadbir ko akarat nahin kar diya"
+        },
+        {
+          "id": -1006190,
+          "resource_id": "ur.maududi",
+          "text": "کیا اُس نے اُن کی تدبیر کو اکارت نہیں کر دیا؟"
+        },
+        {
+          "id": -2006190,
+          "resource_id": 227,
+          "text": "ఏమీ? ఆయన వారి కుట్రను భంగం చేయలేదా?"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550628,
           "resource_id": 831,
           "text": "Aur un par parindo ke jhund ke jhund bhej diye"
+        },
+        {
+          "id": -1006191,
+          "resource_id": "ur.maududi",
+          "text": "اور اُن پر پرندوں کے جھنڈ کے جھنڈ بھیج دیے"
+        },
+        {
+          "id": -2006191,
+          "resource_id": 227,
+          "text": "మరియు ఆయన వారిపైకి పక్షుల గుంపులను పంపాడు;"
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550629,
           "resource_id": 831,
           "text": "Jo un par pakey huey mitti ke patthar phenk rahey thay"
+        },
+        {
+          "id": -1006192,
+          "resource_id": "ur.maududi",
+          "text": "جو اُن پر پکی ہوئی مٹی کے پتھر پھینک رہے تھے"
+        },
+        {
+          "id": -2006192,
+          "resource_id": 227,
+          "text": "అవి (ఆ పక్షులు) వారి మీద మట్టితో చేసి కాల్చిన కంకర రాళ్ళను (సిజ్జీల్) విసురుతూ పోయాయి;"
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550630,
           "resource_id": 831,
           "text": "Phir un ka yeh haal kar diya jaise janwaron ka khaya hua bhoosa"
+        },
+        {
+          "id": -1006193,
+          "resource_id": "ur.maududi",
+          "text": "پھر اُن کا یہ حال کر دیا جیسے جانوروں کا کھایا ہوا بھوسا"
+        },
+        {
+          "id": -2006193,
+          "resource_id": 227,
+          "text": "ఆ విధంగా ఆయన వారిని (పశువులు) తినివేసిన పొట్టుగా మార్చి వేశాడు."
         }
       ]
     }

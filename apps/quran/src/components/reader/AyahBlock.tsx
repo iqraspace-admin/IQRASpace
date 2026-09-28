@@ -180,20 +180,48 @@ export function AyahBlock({
             const language = TRANSLATION_LANGUAGES.find((l) => l.id === languageId);
             const translation = verse.translations.find((t) => t.resource_id === language?.resourceId);
             if (!translation) return null;
+            // Urdu (Arabic-script) is the only translation language that's
+            // RTL — Roman Urdu is Latin-script (LTR) despite the language,
+            // and Telugu/English are both LTR too. Font-family follows the
+            // same DuaCard.tsx pattern used for Supplications'
+            // transliteration script: Telugu/Urdu need their embedded Noto
+            // faces, everything else inherits the body font.
+            const dir = languageId === "urdu" ? "rtl" : "ltr";
+            const lang =
+              languageId === "roman-urdu"
+                ? "ur-Latn"
+                : languageId === "urdu"
+                  ? "ur"
+                  : languageId === "telugu"
+                    ? "te"
+                    : "en";
+            const fontFamily =
+              languageId === "telugu"
+                ? "var(--font-transliteration-telugu)"
+                : languageId === "urdu"
+                  ? "var(--font-transliteration-urdu)"
+                  : undefined;
             return (
               <p
                 key={languageId}
-                lang={languageId === "roman-urdu" ? "ur-Latn" : "en"}
+                dir={dir}
+                lang={lang}
                 style={{
                   fontSize: "calc(1rem * var(--reader-translation-scale))",
                   lineHeight: "calc(1.6 * var(--reader-line-spacing))",
                   color: "var(--color-text-muted)",
                   marginTop: "0.5rem",
                   marginBottom: 0,
+                  ...(fontFamily ? { fontFamily } : {}),
                 }}
               >
                 {enabledTranslations.length > 1 && (
-                  <span style={{ fontWeight: 600, marginRight: "0.4em" }}>{language?.label}:</span>
+                  // Logical property, not `marginRight` — this label
+                  // precedes the translation text in source order, and
+                  // needs its gap on whichever side that text actually
+                  // continues towards, which flips for the RTL (Urdu)
+                  // paragraph above.
+                  <span style={{ fontWeight: 600, marginInlineEnd: "0.4em" }}>{language?.label}:</span>
                 )}
                 {translation.text}
               </p>

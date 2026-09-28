@@ -41,6 +41,16 @@
           "id": 1550659,
           "resource_id": 831,
           "text": "Kaho woh Allah hai, Yakta"
+        },
+        {
+          "id": -1006222,
+          "resource_id": "ur.maududi",
+          "text": "کہو، وہ اللہ ہے، یکتا"
+        },
+        {
+          "id": -2006222,
+          "resource_id": 227,
+          "text": "ఇలా అను: \"ఆయనే అల్లాహ్! ఏకైకుడు."
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550660,
           "resource_id": 831,
           "text": "Allah sab se bay-niyaz hai aur sab us kay mohtaj hain"
+        },
+        {
+          "id": -1006223,
+          "resource_id": "ur.maududi",
+          "text": "اللہ سب سے بے نیاز ہے اور سب اس کے محتاج ہیں"
+        },
+        {
+          "id": -2006223,
+          "resource_id": 227,
+          "text": "అల్లాహ్! ఎవరి అక్కరా లేని వాడు."
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550661,
           "resource_id": 831,
           "text": "Na uski koi aulad hai aur na woh kisi ki aulad"
+        },
+        {
+          "id": -1006224,
+          "resource_id": "ur.maududi",
+          "text": "نہ اس کی کوئی اولاد ہے اور نہ وہ کسی کی اولاد"
+        },
+        {
+          "id": -2006224,
+          "resource_id": 227,
+          "text": "ఆయనకు సంతానం లేదు (బిడ్డలను కనడు) మరియు ఆయన కూడా ఎవరి సంతానమూ (ఎవరికీ జన్మించిన వాడునూ) కాడు."
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550662,
           "resource_id": 831,
           "text": "Aur koi uska humsar nahin hai"
+        },
+        {
+          "id": -1006225,
+          "resource_id": "ur.maududi",
+          "text": "اور کوئی اس کا ہمسر نہیں ہے"
+        },
+        {
+          "id": -2006225,
+          "resource_id": 227,
+          "text": "మరియు (సర్వలోకాలలో) ఆయనతో పోల్చదగినది ఏదీ లేదు.\""
         }
       ]
     }

@@ -41,6 +41,16 @@
           "id": 1550405,
           "resource_id": 831,
           "text": "Kya tumhein us chaa janey wali aafat ki khabar pahunchi hai"
+        },
+        {
+          "id": -1005968,
+          "resource_id": "ur.maududi",
+          "text": "کیا تمہیں اُس چھا جانے والی آفت کی خبر پہنچی ہے؟"
+        },
+        {
+          "id": -2005968,
+          "resource_id": 227,
+          "text": "హఠాత్తుగా ఆసన్నమయ్యే ఆ విపత్తు (పునరుత్థాన దినపు) సమాచారం నీకు అందిందా?"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550406,
           "resource_id": 831,
           "text": "Kuch chehrey us roz khauff zada hongey"
+        },
+        {
+          "id": -1005969,
+          "resource_id": "ur.maududi",
+          "text": "کچھ چہرے اُس روز خوف زدہ ہونگے"
+        },
+        {
+          "id": -2005969,
+          "resource_id": 227,
+          "text": "కొన్ని ముఖాలు ఆ రోజు వాలి (క్రుంగి) పోయి ఉంటాయి."
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550407,
           "resource_id": 831,
           "text": "Sakht mashakkat kar rahe hongey"
+        },
+        {
+          "id": -1005970,
+          "resource_id": "ur.maududi",
+          "text": "سخت مشقت کر رہے ہونگے"
+        },
+        {
+          "id": -2005970,
+          "resource_id": 227,
+          "text": "(ప్రపంచంలోని వృథా) శ్రమకు, (పరలోకంలో జరిగే) అవమానానికి,"
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550408,
           "resource_id": 831,
           "text": "Thakey jatey hongey, shadeed aag mei jhulas rahe hongey"
+        },
+        {
+          "id": -1005971,
+          "resource_id": "ur.maududi",
+          "text": "تھکے جاتے ہونگے، شدید آگ میں جھلس رہے ہونگے"
+        },
+        {
+          "id": -2005971,
+          "resource_id": 227,
+          "text": "వారు దహించే అగ్నిలో పడి కాలుతారు."
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550409,
           "resource_id": 831,
           "text": "khaultey(boiling) huey chashmey(spring) ka paani unhei peene ko diya jaeyga"
+        },
+        {
+          "id": -1005972,
+          "resource_id": "ur.maududi",
+          "text": "کھولتے ہوئے چشمے کا پانی انہیں پینے کو دیا جائے گا"
+        },
+        {
+          "id": -2005972,
+          "resource_id": 227,
+          "text": "వారికి సలసల కాగే చెలమ నీరు త్రాగటానికి ఇవ్వబడుతుంది."
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1550410,
           "resource_id": 831,
           "text": "khar-dar(kaante-daar) sukhi ghaans ke siwa koi khana unke liye na hoga"
+        },
+        {
+          "id": -1005973,
+          "resource_id": "ur.maududi",
+          "text": "خار دار سوکھی گھاس کے سوا کوئی کھانا اُن کے لیے نہ ہوگا"
+        },
+        {
+          "id": -2005973,
+          "resource_id": 227,
+          "text": "వారికి చేదు ముళ్ళగడ్డ (దరీఅ) తప్ప మరొక ఆహారం ఉండదు."
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1550411,
           "resource_id": 831,
           "text": "Jo na mota karey na bhook mitaye"
+        },
+        {
+          "id": -1005974,
+          "resource_id": "ur.maududi",
+          "text": "جو نہ موٹا کرے نہ بھوک مٹائے"
+        },
+        {
+          "id": -2005974,
+          "resource_id": 227,
+          "text": "అది వారికి బలమూ నియ్యదు మరియు ఆకలీ తీర్చదు!"
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1550412,
           "resource_id": 831,
           "text": "kuch chehrey us roz ba-raunak hongey"
+        },
+        {
+          "id": -1005975,
+          "resource_id": "ur.maududi",
+          "text": "کچھ چہرے اُس روز با رونق ہوں گے"
+        },
+        {
+          "id": -2005975,
+          "resource_id": 227,
+          "text": "ఆ రోజున, మరికొన్ని ముఖాలు కళకళలాడుతూ ఉంటాయి;"
         }
       ]
     },
@@ -241,6 +321,16 @@
           "id": 1550413,
           "resource_id": 831,
           "text": "Apne kar-guzari par khush hongey"
+        },
+        {
+          "id": -1005976,
+          "resource_id": "ur.maududi",
+          "text": "اپنی کار گزاری پر خوش ہونگے"
+        },
+        {
+          "id": -2005976,
+          "resource_id": 227,
+          "text": "తాము చేసుకున్న సత్కార్యాలకు (ఫలితాలకు) వారు సంతోషపడుతూ ఉంటారు."
         }
       ]
     },
@@ -266,6 +356,16 @@
           "id": 1550414,
           "resource_id": 831,
           "text": "Aali muqaam jannat mein hongey"
+        },
+        {
+          "id": -1005977,
+          "resource_id": "ur.maududi",
+          "text": "عالی مقام جنت میں ہوں گے"
+        },
+        {
+          "id": -2005977,
+          "resource_id": 227,
+          "text": "అత్యున్నతమైన స్వర్గవనంలో."
         }
       ]
     },
@@ -291,6 +391,16 @@
           "id": 1550415,
           "resource_id": 831,
           "text": "koi behuda baat wahan na sunengey"
+        },
+        {
+          "id": -1005978,
+          "resource_id": "ur.maududi",
+          "text": "کوئی بیہودہ بات وہاں نہ سنیں گے"
+        },
+        {
+          "id": -2005978,
+          "resource_id": 227,
+          "text": "అందులో వారు ఎలాంటి వృథా మాటలు వినరు."
         }
       ]
     },
@@ -316,6 +426,16 @@
           "id": 1550416,
           "resource_id": 831,
           "text": "Usmein chasmey rawan hongey"
+        },
+        {
+          "id": -1005979,
+          "resource_id": "ur.maududi",
+          "text": "اُس میں چشمے رواں ہونگے"
+        },
+        {
+          "id": -2005979,
+          "resource_id": 227,
+          "text": "అందులో ప్రవహించే సెలయేళ్ళు ఉంటాయి;"
         }
       ]
     },
@@ -341,6 +461,16 @@
           "id": 1550417,
           "resource_id": 831,
           "text": "Uske andar unchi masnadein hongi"
+        },
+        {
+          "id": -1005980,
+          "resource_id": "ur.maududi",
+          "text": "اُس کے اندر اونچی مسندیں ہوں گی"
+        },
+        {
+          "id": -2005980,
+          "resource_id": 227,
+          "text": "అందులో ఎత్తైన ఆసనాలు ఉంటాయి;"
         }
       ]
     },
@@ -366,6 +496,16 @@
           "id": 1550418,
           "resource_id": 831,
           "text": "Sagar rakhey huey hongey"
+        },
+        {
+          "id": -1005981,
+          "resource_id": "ur.maududi",
+          "text": "ساغر رکھے ہوئے ہوں گے"
+        },
+        {
+          "id": -2005981,
+          "resource_id": 227,
+          "text": "మరియు పేర్చబడిన (మధు) పాత్రలు;"
         }
       ]
     },
@@ -391,6 +531,16 @@
           "id": 1550419,
           "resource_id": 831,
           "text": "gaon takiyon(cushions arrayed) ke qatarein lagi hongi"
+        },
+        {
+          "id": -1005982,
+          "resource_id": "ur.maududi",
+          "text": "گاؤ تکیوں کی قطاریں لگی ہوں گی"
+        },
+        {
+          "id": -2005982,
+          "resource_id": 227,
+          "text": "మరియు వరుసలుగా వేయబడిన, దిండ్లు;"
         }
       ]
     },
@@ -416,6 +566,16 @@
           "id": 1550420,
           "resource_id": 831,
           "text": "Aur nafees farsh bichey huey hongey"
+        },
+        {
+          "id": -1005983,
+          "resource_id": "ur.maududi",
+          "text": "اور نفیس فرش بچھے ہوئے ہوں گے"
+        },
+        {
+          "id": -2005983,
+          "resource_id": 227,
+          "text": "మరియు పరచబడిన నాణ్యమైన తివాచీలు."
         }
       ]
     },
@@ -441,6 +601,16 @@
           "id": 1550421,
           "resource_id": 831,
           "text": "(yeh log nahin mantey) to kya yeh unton ko nahin dekhtey ke kaisey banaye gaye"
+        },
+        {
+          "id": -1005984,
+          "resource_id": "ur.maududi",
+          "text": "(یہ لوگ نہیں مانتے) تو کیا یہ اونٹوں کو نہیں دیکھتے کہ کیسے بنائے گئے؟"
+        },
+        {
+          "id": -2005984,
+          "resource_id": 227,
+          "text": "ఏమిటీ? వారు ఒంటెల వైపు చూడరా? అవి ఎలా సృష్టించబడ్డాయో?"
         }
       ]
     },
@@ -466,6 +636,16 @@
           "id": 1550422,
           "resource_id": 831,
           "text": "Asman ko nahin dekhte ke kaise uthaya gaya"
+        },
+        {
+          "id": -1005985,
+          "resource_id": "ur.maududi",
+          "text": "آسمان کو نہیں دیکھتے کہ کیسے اٹھایا گیا؟"
+        },
+        {
+          "id": -2005985,
+          "resource_id": 227,
+          "text": "మరియు ఆకాశం వైపుకు (చూడరా)? అది ఎలా పైకి ఎత్తబడి ఉందో?"
         }
       ]
     },
@@ -491,6 +671,16 @@
           "id": 1550423,
           "resource_id": 831,
           "text": "Pahadon ko nahin dekhtey ke kaisey jamaye gaye"
+        },
+        {
+          "id": -1005986,
+          "resource_id": "ur.maududi",
+          "text": "پہاڑوں کو نہیں دیکھتے کہ کیسے جمائے گئے؟"
+        },
+        {
+          "id": -2005986,
+          "resource_id": 227,
+          "text": "మరియు కొండల వైపుకు చూడరా?అవి ఎలా గట్టిగా నాటబడి ఉన్నాయో?"
         }
       ]
     },
@@ -516,6 +706,16 @@
           "id": 1550424,
           "resource_id": 831,
           "text": "Aur zameen ko nahin dekhtey ke kaisey bichayi gayi"
+        },
+        {
+          "id": -1005987,
+          "resource_id": "ur.maududi",
+          "text": "اور زمین کو نہیں دیکھتے کہ کیسے بچھائی گئی؟"
+        },
+        {
+          "id": -2005987,
+          "resource_id": 227,
+          "text": "మరియు భూమి వైపుకు (చూడరా)? అది ఎలా విశాలంగా పరచబడి ఉందో?"
         }
       ]
     },
@@ -541,6 +741,16 @@
           "id": 1550425,
           "resource_id": 831,
           "text": "Acha to ( aey nabi) nasihat kiye jao, tum bas nasihat hi karne wale ho"
+        },
+        {
+          "id": -1005988,
+          "resource_id": "ur.maududi",
+          "text": "اچھا تو (اے نبیؐ) نصیحت کیے جاؤ، تم بس نصیحت ہی کرنے والے ہو"
+        },
+        {
+          "id": -2005988,
+          "resource_id": 227,
+          "text": "కావున (ఓ ముహమ్మద్!) నీవు హితోపదేశం చేస్తూ ఉండు, వాస్తవానికి నీవు కేవలం హితోపదేశం చేసే వాడవు మాత్రమే!"
         }
       ]
     },
@@ -566,6 +776,16 @@
           "id": 1550426,
           "resource_id": 831,
           "text": "kuch inpar jabr karne wale nahin ho"
+        },
+        {
+          "id": -1005989,
+          "resource_id": "ur.maududi",
+          "text": "کچھ ان پر جبر کرنے والے نہیں ہو"
+        },
+        {
+          "id": -2005989,
+          "resource_id": 227,
+          "text": "నీవు వారిని (విశ్వసించమని) బలవంతం చేసేవాడవు కావు."
         }
       ]
     },
@@ -591,6 +811,16 @@
           "id": 1550427,
           "resource_id": 831,
           "text": "Albatta jo shaks mooh modega aur inkar karega"
+        },
+        {
+          "id": -1005990,
+          "resource_id": "ur.maududi",
+          "text": "البتہ جو شخص منہ موڑے گا اور انکار کرے گا"
+        },
+        {
+          "id": -2005990,
+          "resource_id": 227,
+          "text": "ఇక, ఎవడైతే వెనుదిరుగుతాడో మరియు సత్యాన్ని తిరస్కరిస్తాడో!"
         }
       ]
     },
@@ -616,6 +846,16 @@
           "id": 1550428,
           "resource_id": 831,
           "text": "To Allah usko bhaari saza dega"
+        },
+        {
+          "id": -1005991,
+          "resource_id": "ur.maududi",
+          "text": "تو اللہ اس کو بھاری سزا دے گا"
+        },
+        {
+          "id": -2005991,
+          "resource_id": 227,
+          "text": "అప్పుడు అతనికి అల్లాహ్ ఘోరశిక్ష విధిస్తాడు."
         }
       ]
     },
@@ -641,6 +881,16 @@
           "id": 1550429,
           "resource_id": 831,
           "text": "In logon ko palatna hamari taraf hi hai"
+        },
+        {
+          "id": -1005992,
+          "resource_id": "ur.maududi",
+          "text": "اِن لوگوں کو پلٹنا ہماری طرف ہی ہے"
+        },
+        {
+          "id": -2005992,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, మా వైపునకే వారి మరలింపు ఉంది;"
         }
       ]
     },
@@ -666,6 +916,16 @@
           "id": 1550430,
           "resource_id": 831,
           "text": "Phir inka hisab lena hamare hi zimmey hai"
+        },
+        {
+          "id": -1005993,
+          "resource_id": "ur.maududi",
+          "text": "پھر اِن کا حساب لینا ہمارے ہی ذمہ ہے"
+        },
+        {
+          "id": -2005993,
+          "resource_id": 227,
+          "text": "ఆ తర్వాత నిశ్చయంగా, వారి లెక్క తీసుకునేదీ మేమే!"
         }
       ]
     }

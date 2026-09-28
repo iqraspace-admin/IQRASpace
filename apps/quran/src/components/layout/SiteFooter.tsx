@@ -18,11 +18,12 @@ export function SiteFooter() {
       }}
     >
       <p style={{ margin: 0 }}>
-        Quran text and translation data provided by the{" "}
+        Quran text, English, and Roman Urdu translation data provided by the{" "}
         <a href="https://quran.foundation" style={{ color: "inherit" }}>
           Quran Foundation
         </a>
-        . IqraSpace Quran is a free, ad-free reading platform — Sadaqah Jariyah, not a commercial product.
+        . Urdu translation: Al Quran Cloud. Telugu translation: Quran.com. IqraSpace Quran is a free, ad-free reading
+        platform — Sadaqah Jariyah, not a commercial product.
       </p>
 
       <div style={{ display: "flex", justifyContent: "center", gap: "1.25rem", marginTop: "1rem" }}>

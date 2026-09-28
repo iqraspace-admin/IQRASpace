@@ -41,6 +41,16 @@
           "id": 1550614,
           "resource_id": 831,
           "text": "Zamane ki qasam"
+        },
+        {
+          "id": -1006177,
+          "resource_id": "ur.maududi",
+          "text": "زمانے کی قسم"
+        },
+        {
+          "id": -2006177,
+          "resource_id": 227,
+          "text": "కాలం సాక్షిగా!"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550615,
           "resource_id": 831,
           "text": "Insan dar haqeeqat badey khasarey(nuksaan) mein hai"
+        },
+        {
+          "id": -1006178,
+          "resource_id": "ur.maududi",
+          "text": "انسان درحقیقت بڑے خسارے میں ہے"
+        },
+        {
+          "id": -2006178,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా మానవుడు నష్టంలో ఉన్నాడు!"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550616,
           "resource_id": 831,
           "text": "Siwaye un logon ke jo iman laye aur neik aamal karte rahe aur ek dusrey ko haqq ki nasihat aur sabr ki talqeen karte rahe"
+        },
+        {
+          "id": -1006179,
+          "resource_id": "ur.maududi",
+          "text": "سوائے اُن لوگوں کے جو ایمان لائے، اور نیک اعمال کرتے رہے، اور ایک دوسرے کو حق کی نصیحت اور صبر کی تلقین کرتے رہے"
+        },
+        {
+          "id": -2006179,
+          "resource_id": 227,
+          "text": "కాని విశ్వసించి, సత్కార్యాలు చేసేవారు మరియు ఒకరికొకరు సత్యాన్ని బోధించుకునే వారు మరియు ఒకరికొకరు సహనాన్ని (స్థైర్యాన్ని) బోధించుకునే వారు తప్ప!"
         }
       ]
     }

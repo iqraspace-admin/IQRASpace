@@ -41,6 +41,16 @@
           "id": 1550544,
           "resource_id": 831,
           "text": "Padho (Aey Nabi) apne Rubb ke naam ke saath Jisne paida kiya"
+        },
+        {
+          "id": -1006107,
+          "resource_id": "ur.maududi",
+          "text": "پڑھو (اے نبیؐ) اپنے رب کے نام کے ساتھ جس نے پیدا کیا"
+        },
+        {
+          "id": -2006107,
+          "resource_id": 227,
+          "text": "చదువు! నీ ప్రభువు పేరుతో, ఆయనే (సర్వాన్ని) సృష్టించాడు!"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550545,
           "resource_id": 831,
           "text": "Jamey huey khoon ke ek lothdey se Insan ki takhliq ki"
+        },
+        {
+          "id": -1006108,
+          "resource_id": "ur.maududi",
+          "text": "جمے ہوئے خون کے ایک لوتھڑے سے انسان کی تخلیق کی"
+        },
+        {
+          "id": -2006108,
+          "resource_id": 227,
+          "text": "ఆయనే మానవుణ్ణి రక్తముద్దతో (జీవకణంతో) సృష్టించాడు."
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550546,
           "resource_id": 831,
           "text": "Padho aur tumhara Rubb bada kareem hai"
+        },
+        {
+          "id": -1006109,
+          "resource_id": "ur.maududi",
+          "text": "پڑھو، اور تمہارا رب بڑا کریم ہے"
+        },
+        {
+          "id": -2006109,
+          "resource_id": 227,
+          "text": "చదువు! మరియు నీ ప్రభువు పరమదాత."
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550547,
           "resource_id": 831,
           "text": "jisne qalam ke zariya se ilm sikhaya"
+        },
+        {
+          "id": -1006110,
+          "resource_id": "ur.maududi",
+          "text": "جس نے قلم کے ذریعہ سے علم سکھایا"
+        },
+        {
+          "id": -2006110,
+          "resource_id": 227,
+          "text": "ఆయన కలం ద్వారా నేర్పాడు."
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550548,
           "resource_id": 831,
           "text": "Insan ko woh ilm diya jisey woh na jaanta tha"
+        },
+        {
+          "id": -1006111,
+          "resource_id": "ur.maududi",
+          "text": "انسان کو وہ علم دیا جسے وہ نہ جانتا تھا"
+        },
+        {
+          "id": -2006111,
+          "resource_id": 227,
+          "text": "మానవుడు ఎరుగని జ్ఞానాన్ని అతనికి బోధించాడు."
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1550549,
           "resource_id": 831,
           "text": "Hargiz nahin, Insan sarkahshi karta hai"
+        },
+        {
+          "id": -1006112,
+          "resource_id": "ur.maududi",
+          "text": "ہرگز نہیں، انسان سرکشی کرتا ہے"
+        },
+        {
+          "id": -2006112,
+          "resource_id": 227,
+          "text": "అలా కాదు! వాస్తవానికి, మానవుడు తలబిరుసుతనంతో ప్రవర్తిస్తాడు."
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1550550,
           "resource_id": 831,
           "text": "Is bina par ke woh apne aap ko be niyaz dekhta hai"
+        },
+        {
+          "id": -1006113,
+          "resource_id": "ur.maududi",
+          "text": "اِس بنا پر کہ وہ اپنے آپ کو بے نیاز دیکھتا ہے"
+        },
+        {
+          "id": -2006113,
+          "resource_id": 227,
+          "text": "ఎందుకంటే, అతడు తనను తాను నిరపేక్షాపరుడిగా భావిస్తాడు."
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1550551,
           "resource_id": 831,
           "text": "(halaanke) palatna yaqeenan tere Rubb hi ki taraf hai"
+        },
+        {
+          "id": -1006114,
+          "resource_id": "ur.maududi",
+          "text": "پلٹنا یقیناً تیرے رب ہی کی طرف ہے"
+        },
+        {
+          "id": -2006114,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా నీ ప్రభువు వైపునకే (అందరికీ) మరలి పోవలసి ఉంది."
         }
       ]
     },
@@ -241,6 +321,16 @@
           "id": 1550552,
           "resource_id": 831,
           "text": "Tumne dekha us shaks ko"
+        },
+        {
+          "id": -1006115,
+          "resource_id": "ur.maududi",
+          "text": "تم نے دیکھا اُس شخص کو"
+        },
+        {
+          "id": -2006115,
+          "resource_id": 227,
+          "text": "నీవు నిరోధించే వ్యక్తిని చూశావా?"
         }
       ]
     },
@@ -266,6 +356,16 @@
           "id": 1550553,
           "resource_id": 831,
           "text": "Jo ek banday ko mana karta hai jabke woh namaz padta ho"
+        },
+        {
+          "id": -1006116,
+          "resource_id": "ur.maududi",
+          "text": "جو ایک بندے کو منع کرتا ہے جبکہ وہ نماز پڑھتا ہو؟"
+        },
+        {
+          "id": -2006116,
+          "resource_id": 227,
+          "text": "నమాజ్ చేసే (అల్లాహ్) దాసుణ్ణి?"
         }
       ]
     },
@@ -291,6 +391,16 @@
           "id": 1550554,
           "resource_id": 831,
           "text": "Tumhara kya khayal hai agar (woh banda) raah e raast par ho"
+        },
+        {
+          "id": -1006117,
+          "resource_id": "ur.maududi",
+          "text": "تمہارا کیا خیال ہے اگر (وہ بندہ) راہ راست پر ہو"
+        },
+        {
+          "id": -2006117,
+          "resource_id": 227,
+          "text": "ఒకవేళ అతను (ముహమ్మద్!) సన్మార్గంపై ఉంటే నీ అభిప్రాయమేమిటి?"
         }
       ]
     },
@@ -316,6 +426,16 @@
           "id": 1550555,
           "resource_id": 831,
           "text": "ya parhezgari ki talqeen karta ho"
+        },
+        {
+          "id": -1006118,
+          "resource_id": "ur.maududi",
+          "text": "یا پرہیزگاری کی تلقین کرتا ہو؟"
+        },
+        {
+          "id": -2006118,
+          "resource_id": 227,
+          "text": "ఇంకా, దైవభీతిని గురించి ఆదేశిస్తూ ఉంటే?"
         }
       ]
     },
@@ -341,6 +461,16 @@
           "id": 1550556,
           "resource_id": 831,
           "text": "Tumhara kya khayal hai agar (yeh mana karne wala shakhs haqq ko) jhutlata aur mooh moadta ho"
+        },
+        {
+          "id": -1006119,
+          "resource_id": "ur.maududi",
+          "text": "تمہارا کیا خیال ہے اگر (یہ منع کرنے والا شخص حق کو) جھٹلاتا اور منہ موڑتا ہو؟"
+        },
+        {
+          "id": -2006119,
+          "resource_id": 227,
+          "text": "ఒకవేళ (ఆ నిరోధించే) వాడు సత్యాన్ని తిరస్కరించేవాడు మరియు సన్మార్గం నుండి విముఖుడయ్యేవాడైతే?"
         }
       ]
     },
@@ -366,6 +496,16 @@
           "id": 1550557,
           "resource_id": 831,
           "text": "Kya woh nahin jaanta ke Allah dekh raha hai"
+        },
+        {
+          "id": -1006120,
+          "resource_id": "ur.maududi",
+          "text": "کیا وہ نہیں جانتا کہ اللہ دیکھ رہا ہے؟"
+        },
+        {
+          "id": -2006120,
+          "resource_id": 227,
+          "text": "వాస్తవానికి, అల్లాహ్ అంతా చూస్తున్నాడని అతనికి తెలియదా?"
         }
       ]
     },
@@ -391,6 +531,16 @@
           "id": 1550558,
           "resource_id": 831,
           "text": "Hargiz nahin agar woh baaz na aaya to hum uski peshani ke baal pakad kar usey khinchey ge"
+        },
+        {
+          "id": -1006121,
+          "resource_id": "ur.maududi",
+          "text": "ہرگز نہیں، اگر وہ باز نہ آیا تو ہم اس کی پیشانی کے بال پکڑ کر اسے کھینچیں گے"
+        },
+        {
+          "id": -2006121,
+          "resource_id": 227,
+          "text": "అలా కాదు! ఒకవేళ అతడు మానుకోకపోతే, మేము అతడిని, నుదుటి జుట్టు వెంట్రుకలను పట్టి ఈడుస్తాము."
         }
       ]
     },
@@ -416,6 +566,16 @@
           "id": 1550559,
           "resource_id": 831,
           "text": "Us peshani ko jo jhooti aur sakth khatakaar hai"
+        },
+        {
+          "id": -1006122,
+          "resource_id": "ur.maududi",
+          "text": "اُس پیشانی کو جو جھوٹی اور سخت خطا کار ہے"
+        },
+        {
+          "id": -2006122,
+          "resource_id": 227,
+          "text": "అది అబద్ధాలలో, అపరాధాలలో మునిగివున్న నుదురు!"
         }
       ]
     },
@@ -441,6 +601,16 @@
           "id": 1550560,
           "resource_id": 831,
           "text": "Woh bulaley apne haamiyon ki toli ko"
+        },
+        {
+          "id": -1006123,
+          "resource_id": "ur.maududi",
+          "text": "وہ بلا لے اپنے حامیوں کی ٹولی کو"
+        },
+        {
+          "id": -2006123,
+          "resource_id": 227,
+          "text": "అయితే, అతన్ని తన అనుచరులను పిలుచుకోమను!"
         }
       ]
     },
@@ -466,6 +636,16 @@
           "id": 1550561,
           "resource_id": 831,
           "text": "Hum bhi azaab ke farishton ko bula lengey"
+        },
+        {
+          "id": -1006124,
+          "resource_id": "ur.maududi",
+          "text": "ہم بھی عذاب کے فرشتوں کو بلا لیں گے"
+        },
+        {
+          "id": -2006124,
+          "resource_id": 227,
+          "text": "మేము కూడా నరక దూతలను పిలుస్తాము!"
         }
       ]
     },
@@ -491,6 +671,16 @@
           "id": 1550562,
           "resource_id": 831,
           "text": "Hargiz nahin, uski baat na mano aur sajda karo aur (apne Rubb ka) qurb hasil karo"
+        },
+        {
+          "id": -1006125,
+          "resource_id": "ur.maududi",
+          "text": "ہرگز نہیں، اُس کی بات نہ مانو اور سجدہ کرو اور (اپنے رب کا) قرب حاصل کرو"
+        },
+        {
+          "id": -2006125,
+          "resource_id": 227,
+          "text": "అలా కాదు! నీవు అతని మాట వినకు మరియు ఆయనే (అల్లాహ్ కే) సాష్టాంగం (సజ్దా) చెయ్యి మరియు ఆయన (అల్లాహ్) సాన్నిధ్యాన్ని పొందటానికి ప్రయత్నించు!"
         }
       ]
     }

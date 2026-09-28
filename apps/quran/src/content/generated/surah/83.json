@@ -41,6 +41,16 @@
           "id": 1550286,
           "resource_id": 831,
           "text": "Tabahi hai dandi maarne walon ke liye"
+        },
+        {
+          "id": -1005849,
+          "resource_id": "ur.maududi",
+          "text": "تباہی ہے ڈنڈی مارنے والوں کے لیے"
+        },
+        {
+          "id": -2005849,
+          "resource_id": 227,
+          "text": "కొలతలలో, తూనికలలో తగ్గించి ఇచ్చే వారికి వినాశముంది."
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550287,
           "resource_id": 831,
           "text": "Jinka haal yeh hai ke jab logon se letey hai to pura pura letey hai"
+        },
+        {
+          "id": -1005850,
+          "resource_id": "ur.maududi",
+          "text": "جن کا حال یہ ہے کہ جب لوگوں سے لیتے ہیں تو پورا پورا لیتے ہیں"
+        },
+        {
+          "id": -2005850,
+          "resource_id": 227,
+          "text": "వారు ప్రజల నుండి తీసుకునేటప్పుడు పూర్తిగా తీసుకుంటారు."
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550288,
           "resource_id": 831,
           "text": "Aur jab unko naap kar ya toal kar dete hai to unhein ghata dete hai"
+        },
+        {
+          "id": -1005851,
+          "resource_id": "ur.maududi",
+          "text": "اور جب ان کو ناپ کر یا تول کر دیتے ہیں تو انہیں گھاٹا دیتے ہیں"
+        },
+        {
+          "id": -2005851,
+          "resource_id": 227,
+          "text": "మరియు తాము ప్రజలకు కొలిచి గానీ లేక తూచి గానీ ఇచ్చేటప్పుడు మాత్రం తగ్గించి ఇస్తారు."
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550289,
           "resource_id": 831,
           "text": "Kya yeh log nahin samajhte ke ek badey din"
+        },
+        {
+          "id": -1005852,
+          "resource_id": "ur.maududi",
+          "text": "کیا یہ لوگ نہیں سمجھتے کہ ایک بڑے دن،"
+        },
+        {
+          "id": -2005852,
+          "resource_id": 227,
+          "text": "ఏమీ? ఇలాంటి వారు తిరిగి బ్రతికించి లేపబడరని భావిస్తున్నారా?"
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550290,
           "resource_id": 831,
           "text": "Yeh utha kar laaye jaaney waley hain"
+        },
+        {
+          "id": -1005853,
+          "resource_id": "ur.maududi",
+          "text": "یہ اٹھا کر لائے جانے والے ہیں؟"
+        },
+        {
+          "id": -2005853,
+          "resource_id": 227,
+          "text": "ఒక గొప్ప దినమున!"
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1550291,
           "resource_id": 831,
           "text": "Uss din jabke sab log Rabb-ul-Aalamin ke samney khadey hongey"
+        },
+        {
+          "id": -1005854,
+          "resource_id": "ur.maududi",
+          "text": "اُس دن جبکہ سب لوگ رب العالمین کے سامنے کھڑے ہوں گے"
+        },
+        {
+          "id": -2005854,
+          "resource_id": 227,
+          "text": "సర్వ లోకాల ప్రభువు సమక్షంలో ప్రజలు అందరూ నిలబడే రోజు."
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1550292,
           "resource_id": 831,
           "text": "Hargiz nahin, yaqeenan badkaaron ka naam-e- aamal qaid-khane ke daftar mei hai"
+        },
+        {
+          "id": -1005855,
+          "resource_id": "ur.maududi",
+          "text": "ہرگز نہیں، یقیناً بد کاروں کا نامہ اعمال قید خانے کے دفتر میں ہے"
+        },
+        {
+          "id": -2005855,
+          "resource_id": 227,
+          "text": "అలా కాదు! నిశ్చయంగా, దుష్టుల కర్మపత్రం సిజ్జీనులో ఉంది."
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1550293,
           "resource_id": 831,
           "text": "Aur tumhey kya maloom ke woh qaid-khaney ka daftar kya hai"
+        },
+        {
+          "id": -1005856,
+          "resource_id": "ur.maududi",
+          "text": "اور تمہیں کیا معلوم کہ وہ قید خانے کا دفتر کیا ہے؟"
+        },
+        {
+          "id": -2005856,
+          "resource_id": 227,
+          "text": "ఆ సిజ్జీన్ అంటే నీవు ఏమనుకుంటున్నావు?"
         }
       ]
     },
@@ -241,6 +321,16 @@
           "id": 1550294,
           "resource_id": 831,
           "text": "Ek kitaab hai likhi hui"
+        },
+        {
+          "id": -1005857,
+          "resource_id": "ur.maududi",
+          "text": "ایک کتاب ہے لکھی ہوئی"
+        },
+        {
+          "id": -2005857,
+          "resource_id": 227,
+          "text": "వ్రాసి పెట్టబడిన (చెరగని) గ్రంథం."
         }
       ]
     },
@@ -266,6 +356,16 @@
           "id": 1550295,
           "resource_id": 831,
           "text": "Tabahi hai us roz jhutlane walon ke liye"
+        },
+        {
+          "id": -1005858,
+          "resource_id": "ur.maududi",
+          "text": "تباہی ہے اُس روز جھٹلانے والوں کے لیے"
+        },
+        {
+          "id": -2005858,
+          "resource_id": 227,
+          "text": "సత్యాన్ని తిరస్కరించే వారికి ఆ రోజు వినాశముంది."
         }
       ]
     },
@@ -291,6 +391,16 @@
           "id": 1550296,
           "resource_id": 831,
           "text": "Jo roz-e-jaza ko jhutlatay hain"
+        },
+        {
+          "id": -1005859,
+          "resource_id": "ur.maududi",
+          "text": "جو روز جزا کو جھٹلاتے ہیں"
+        },
+        {
+          "id": -2005859,
+          "resource_id": 227,
+          "text": "వారికే! ఎవరైతే తీర్పుదినాన్ని తిరస్కరిస్తారో!"
         }
       ]
     },
@@ -316,6 +426,16 @@
           "id": 1550297,
           "resource_id": 831,
           "text": "Aur usey nahin jhutlata magar har woh shaks jo hadd se guzar janey wala bad-amal hai"
+        },
+        {
+          "id": -1005860,
+          "resource_id": "ur.maududi",
+          "text": "اور اُسے نہیں جھٹلاتا مگر ہر وہ شخص جو حد سے گزر جانے والا بد عمل ہے"
+        },
+        {
+          "id": -2005860,
+          "resource_id": 227,
+          "text": "మరియు మితిమీరి ప్రవర్తించే పాపిష్ఠుడు తప్ప, మరెవ్వడూ దానిని (తీర్పు దినాన్ని) తిరస్కరించడు."
         }
       ]
     },
@@ -341,6 +461,16 @@
           "id": 1550298,
           "resource_id": 831,
           "text": "Usey jab hamari ayaat sunayi jaati hain to kehta hai yeh to agley waqton ki kahaniyan hai"
+        },
+        {
+          "id": -1005861,
+          "resource_id": "ur.maududi",
+          "text": "اُسے جب ہماری آیات سنائی جاتی ہیں تو کہتا ہے یہ تو اگلے وقتوں کی کہانیاں ہیں"
+        },
+        {
+          "id": -2005861,
+          "resource_id": 227,
+          "text": "మా సూచనలు (ఆయాత్ లు) అతడికి వినిపించ బడినప్పుడు అతడు: \"ఇవి పూర్వకాలపు కట్టుకథలే!\" అని అంటాడు."
         }
       ]
     },
@@ -366,6 +496,16 @@
           "id": 1550299,
           "resource_id": 831,
           "text": "Hargiz nahin, balke darasal in logon ke dilon par inke burey aamal ka zang(rust) chadh gaya hai"
+        },
+        {
+          "id": -1005862,
+          "resource_id": "ur.maududi",
+          "text": "ہرگز نہیں، بلکہ دراصل اِن لوگوں کے دلوں پر اِن کے برے اعمال کا زنگ چڑھ گیا ہے"
+        },
+        {
+          "id": -2005862,
+          "resource_id": 227,
+          "text": "అలా కాదు! వాస్తవానికి వారి హృదయాలకు వారి (దుష్ట) కార్యాల త్రుప్పు పట్టింది."
         }
       ]
     },
@@ -391,6 +531,16 @@
           "id": 1550300,
           "resource_id": 831,
           "text": "Hargiz nahin bil yaqeen us roz yeh apne Rubb ki deed(deedar) se mehroom rakhey jayenge"
+        },
+        {
+          "id": -1005863,
+          "resource_id": "ur.maududi",
+          "text": "ہرگز نہیں، بالیقین اُس روز یہ اپنے رب کی دید سے محروم رکھے جائیں گے"
+        },
+        {
+          "id": -2005863,
+          "resource_id": 227,
+          "text": "అంతేకాదు, ఆ రోజు నిశ్చయంగా, వారు తమ ప్రభువు కారుణ్యం నుండి నిరోధింప బడతారు."
         }
       ]
     },
@@ -416,6 +566,16 @@
           "id": 1550301,
           "resource_id": 831,
           "text": "Phir yeh jahannum mein jaa padenge"
+        },
+        {
+          "id": -1005864,
+          "resource_id": "ur.maududi",
+          "text": "پھر یہ جہنم میں جا پڑیں گے"
+        },
+        {
+          "id": -2005864,
+          "resource_id": 227,
+          "text": "తరువాత వారు నిశ్చయంగా, భగభగ మండే నరకాగ్నిలోకి పోతారు."
         }
       ]
     },
@@ -441,6 +601,16 @@
           "id": 1550302,
           "resource_id": 831,
           "text": "Phir insey kaha jayega ke yeh wahi cheez hai jisey tum jhutlaya karte thay"
+        },
+        {
+          "id": -1005865,
+          "resource_id": "ur.maududi",
+          "text": "پھر اِن سے کہا جائے گا کہ یہ وہی چیز ہے جسے تم جھٹلایا کرتے تھے"
+        },
+        {
+          "id": -2005865,
+          "resource_id": 227,
+          "text": "అప్పుడు వారితో: \"దేనినైతే మీరు అసత్యమని తిరస్కరిస్తూ వచ్చారో, అది ఇదే!\" అని చెప్పబడుతుంది."
         }
       ]
     },
@@ -466,6 +636,16 @@
           "id": 1550303,
           "resource_id": 831,
           "text": "Hargiz nahin, beshak neik aadmion ka naam-e-aamal buland paya logon ke daftar mein hai"
+        },
+        {
+          "id": -1005866,
+          "resource_id": "ur.maududi",
+          "text": "ہرگز نہیں، بے شک نیک آدمیوں کا نامہ اعمال بلند پایہ لوگوں کے دفتر میں ہے"
+        },
+        {
+          "id": -2005866,
+          "resource_id": 227,
+          "text": "అలా కాదు! నిశ్చయంగా, ధర్మనిష్ఠాపరుల (పుణ్యాత్ముల) కర్మపత్రం మహోన్నత గ్రంథం (ఇల్లియ్యూన్)లో ఉంది."
         }
       ]
     },
@@ -491,6 +671,16 @@
           "id": 1550304,
           "resource_id": 831,
           "text": "Aur tumhein kya khabar ke kya hai woh buland paya logon ka daftar"
+        },
+        {
+          "id": -1005867,
+          "resource_id": "ur.maududi",
+          "text": "اور تمہیں کیا خبر کہ کیا ہے وہ بلند پایہ لوگوں کا دفتر؟"
+        },
+        {
+          "id": -2005867,
+          "resource_id": 227,
+          "text": "మరి ఆ ఇల్లియ్యూన్ అంటే నీవు ఏమనుకుంటున్నావు?"
         }
       ]
     },
@@ -516,6 +706,16 @@
           "id": 1550305,
           "resource_id": 831,
           "text": "Ek likhi hui kitaab hai"
+        },
+        {
+          "id": -1005868,
+          "resource_id": "ur.maududi",
+          "text": "ایک لکھی ہوئی کتاب ہے"
+        },
+        {
+          "id": -2005868,
+          "resource_id": 227,
+          "text": "అది వ్రాసిపెట్టబడిన ఒక గ్రంథం."
         }
       ]
     },
@@ -541,6 +741,16 @@
           "id": 1550306,
           "resource_id": 831,
           "text": "Jiski nigeh-daasht muqarrab farishtay karte hain"
+        },
+        {
+          "id": -1005869,
+          "resource_id": "ur.maududi",
+          "text": "جس کی نگہداشت مقرب فرشتے کرتے ہیں"
+        },
+        {
+          "id": -2005869,
+          "resource_id": 227,
+          "text": "దానికి, (అల్లాహ్ కు) సన్నిహితులైన వారు (దేవదూతలు) సాక్ష్యంగా ఉంటారు."
         }
       ]
     },
@@ -566,6 +776,16 @@
           "id": 1550307,
           "resource_id": 831,
           "text": "Beshak neik log badey mazey mein hongey"
+        },
+        {
+          "id": -1005870,
+          "resource_id": "ur.maududi",
+          "text": "بے شک نیک لوگ بڑے مزے میں ہوں گے"
+        },
+        {
+          "id": -2005870,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, పుణ్యాత్ములు సుఖసంతోషాలలో ఉంటారు."
         }
       ]
     },
@@ -591,6 +811,16 @@
           "id": 1550308,
           "resource_id": 831,
           "text": "Unchi masnadon(couches) par baithay nazarey kar rahey hongey"
+        },
+        {
+          "id": -1005871,
+          "resource_id": "ur.maududi",
+          "text": "اونچی مسندوں پر بیٹھے نظارے کر رہے ہوں گے"
+        },
+        {
+          "id": -2005871,
+          "resource_id": 227,
+          "text": "ఎత్తైన ఆసనాలపై కూర్చొని (స్వర్గదృశ్యాలను) తిలకిస్తూ."
         }
       ]
     },
@@ -616,6 +846,16 @@
           "id": 1550309,
           "resource_id": 831,
           "text": "Unke chehron par tum khushhaali ki raunak mehsoos karogey"
+        },
+        {
+          "id": -1005872,
+          "resource_id": "ur.maududi",
+          "text": "ان کے چہروں پر تم خوشحالی کی رونق محسوس کرو گے"
+        },
+        {
+          "id": -2005872,
+          "resource_id": 227,
+          "text": "వారి ముఖాలు సుఖసంతోషాలతో కళకళలాడుతూ ఉండటం నీవు చూస్తావు."
         }
       ]
     },
@@ -641,6 +881,16 @@
           "id": 1550310,
           "resource_id": 831,
           "text": "Unko nafees tareen sarband sharaab pilayi jayegi jispar mushk ki mohar(seal) lagi hogi"
+        },
+        {
+          "id": -1005873,
+          "resource_id": "ur.maududi",
+          "text": "ان کو نفیس ترین سر بند شراب پلائی جائے گی جس پر مشک کی مہر لگی ہوگی"
+        },
+        {
+          "id": -2005873,
+          "resource_id": 227,
+          "text": "సీలు చేయబడిన నాణ్యమైన మధువు వారికి త్రాగటానికి ఇవ్వబడుతుంది."
         }
       ]
     },
@@ -666,6 +916,16 @@
           "id": 1550311,
           "resource_id": 831,
           "text": "Jo log dusron par baazi le jana chahtey hon woh is cheez ko haasil karne mei baazi le jane ki koshish karein"
+        },
+        {
+          "id": -1005874,
+          "resource_id": "ur.maududi",
+          "text": "جو لوگ دوسروں پر بازی لے جانا چاہتے ہوں وہ اِس چیز کو حاصل کرنے میں بازی لے جانے کی کوشش کریں"
+        },
+        {
+          "id": -2005874,
+          "resource_id": 227,
+          "text": "దాని చివరి చుక్కలోనూ కస్తూరి సువాసన ఉంటుంది. కాబట్టి దానిని పొందటానికి అపేక్షించే వారంతా ప్రయాస పడాలి."
         }
       ]
     },
@@ -691,6 +951,16 @@
           "id": 1550312,
           "resource_id": 831,
           "text": "Us sharaab mei tasneem ki aamezish(mixture) hogi"
+        },
+        {
+          "id": -1005875,
+          "resource_id": "ur.maududi",
+          "text": "اُس شراب میں تسنیم کی آمیزش ہوگی"
+        },
+        {
+          "id": -2005875,
+          "resource_id": 227,
+          "text": "మరియు దానిలో (ఆ మధువులో) తస్నీమ్ కలుపబడి ఉంటుంది."
         }
       ]
     },
@@ -716,6 +986,16 @@
           "id": 1550313,
           "resource_id": 831,
           "text": "Yeh ek chasma hai jiske paani ke saath muqarrab log sharaab piyengey"
+        },
+        {
+          "id": -1005876,
+          "resource_id": "ur.maududi",
+          "text": "یہ ایک چشمہ ہے جس کے پانی کے ساتھ مقرب لوگ شراب پئیں گے"
+        },
+        {
+          "id": -2005876,
+          "resource_id": 227,
+          "text": "అదొక చెలమ, (అల్లాహ్) సాన్నిధ్యం పొందినవారే దాని నుండి త్రాగుతారు."
         }
       ]
     },
@@ -741,6 +1021,16 @@
           "id": 1550314,
           "resource_id": 831,
           "text": "Mujrim log duniya mein imaan laane walon ka mazaak udate thay"
+        },
+        {
+          "id": -1005877,
+          "resource_id": "ur.maududi",
+          "text": "مجرم لوگ دنیا میں ایمان لانے والوں کا مذاق اڑاتے تھے"
+        },
+        {
+          "id": -2005877,
+          "resource_id": 227,
+          "text": "వాస్తవానికి (ప్రపంచంలో) అపరాధులు విశ్వసించిన వారిని హేళన చేసేవారు."
         }
       ]
     },
@@ -766,6 +1056,16 @@
           "id": 1550315,
           "resource_id": 831,
           "text": "Jab unke paas se guzarte to aankhein maar maar kar unki taraf isharey karte thay"
+        },
+        {
+          "id": -1005878,
+          "resource_id": "ur.maududi",
+          "text": "جب اُن کے پاس سے گزرتے تو آنکھیں مار مار کر اُن کی طرف اشارے کرتے تھے"
+        },
+        {
+          "id": -2005878,
+          "resource_id": 227,
+          "text": "మరియు వీరు (విశ్వాసులు), వారి (అవిశ్వాసుల) యెదుట నుండి పోయి నప్పుడు, వారు (అవిశ్వాసులు) పరస్పరం కనుసైగలు చేసుకునేవారు."
         }
       ]
     },
@@ -791,6 +1091,16 @@
           "id": 1550316,
           "resource_id": 831,
           "text": "Apne gharon ki taraf palat-tey to mazey letey huey palat-tey thay"
+        },
+        {
+          "id": -1005879,
+          "resource_id": "ur.maududi",
+          "text": "اپنے گھروں کی طرف پلٹتے تو مزے لیتے ہوئے پلٹتے تھے"
+        },
+        {
+          "id": -2005879,
+          "resource_id": 227,
+          "text": "మరియు (అవిశ్వాసులు) తమ ఇంటి వారి దగ్గరికి పోయినప్పుడు (విశ్వాసులను గురించి) పరిహసిస్తూ మరలేవారు."
         }
       ]
     },
@@ -816,6 +1126,16 @@
           "id": 1550317,
           "resource_id": 831,
           "text": "Aur jab unhein dekhte to kehte thay ke yeh behke huey log hain"
+        },
+        {
+          "id": -1005880,
+          "resource_id": "ur.maududi",
+          "text": "اور جب انہیں دیکھتے تو کہتے تھے کہ یہ بہکے ہوئے لوگ ہیں"
+        },
+        {
+          "id": -2005880,
+          "resource_id": 227,
+          "text": "మరియు (విశ్వాసులను) చూసినపుడల్లా: \"నిశ్చయంగా, వీరు దారి తప్పినవారు!\" అని అనేవారు."
         }
       ]
     },
@@ -841,6 +1161,16 @@
           "id": 1550318,
           "resource_id": 831,
           "text": "Halaanke woh un par nigran banakar nahin bhejey gaye thay"
+        },
+        {
+          "id": -1005881,
+          "resource_id": "ur.maududi",
+          "text": "حالانکہ وہ اُن پر نگراں بنا کر نہیں بھیجے گئے تھے"
+        },
+        {
+          "id": -2005881,
+          "resource_id": 227,
+          "text": "మరియు వారు (అవిశ్వాసులు) వీరి (విశ్వాసుల) మీద కాపలాదారులుగా పంపబడలేదు!"
         }
       ]
     },
@@ -866,6 +1196,16 @@
           "id": 1550319,
           "resource_id": 831,
           "text": "Aaj imaan laane waley kuffar par hans rahay hai"
+        },
+        {
+          "id": -1005882,
+          "resource_id": "ur.maududi",
+          "text": "آج ایمان لانے والے کفار پر ہنس رہے ہیں"
+        },
+        {
+          "id": -2005882,
+          "resource_id": 227,
+          "text": "కాని ఈ రోజు (పునరుత్థాన దినం నాడు) విశ్వసించినవారు, సత్యతిరస్కారులను చూసి నవ్వుతారు."
         }
       ]
     },
@@ -891,6 +1231,16 @@
           "id": 1550320,
           "resource_id": 831,
           "text": "Masnadon par baithey huey unka haal dekh rahey hain"
+        },
+        {
+          "id": -1005883,
+          "resource_id": "ur.maududi",
+          "text": "مسندوں پر بیٹھے ہوئے ان کا حال دیکھ رہے ہیں"
+        },
+        {
+          "id": -2005883,
+          "resource_id": 227,
+          "text": "ఎత్తైన ఆసనాలపై కూర్చొని (స్వర్గదృశ్యాలను) తిలకిస్తూ (ఇలా అంటారు):"
         }
       ]
     },
@@ -916,6 +1266,16 @@
           "id": 1550321,
           "resource_id": 831,
           "text": "Mil gaya na kafiron ko un harkaton ka sawab jo woh kiya karte thay"
+        },
+        {
+          "id": -1005884,
+          "resource_id": "ur.maududi",
+          "text": "مل گیا نا کافروں کو اُن حرکتوں کا ثواب جو وہ کیا کرتے تھے"
+        },
+        {
+          "id": -2005884,
+          "resource_id": 227,
+          "text": "\"ఇక! ఈ సత్యతిరస్కారులకు, వారి చేష్టలకు తగిన ప్రతిఫలం తప్ప మరేమైనా దొరుకునా?\""
         }
       ]
     }

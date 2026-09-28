@@ -41,6 +41,16 @@
           "id": 1550584,
           "resource_id": 831,
           "text": "Kasam hai un (ghodon) ki jo phunkare marte hue dhaudte hai"
+        },
+        {
+          "id": -1006147,
+          "resource_id": "ur.maududi",
+          "text": "قسم ہے اُن (گھوڑوں) کی جو پھنکارے مارتے ہوئے دوڑتے ہیں"
+        },
+        {
+          "id": -2006147,
+          "resource_id": 227,
+          "text": "వగర్చుతూ పరిగెత్తే గుర్రాల సాక్షిగా!"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550585,
           "resource_id": 831,
           "text": "Phir (apne tapon se) chingariyan jhaadte hain"
+        },
+        {
+          "id": -1006148,
+          "resource_id": "ur.maududi",
+          "text": "پھر (اپنی ٹاپوں سے) چنگاریاں جھاڑتے ہیں"
+        },
+        {
+          "id": -2006148,
+          "resource_id": 227,
+          "text": "తమ ఖురాల తట్టులతో అగ్నికణాలు లేపేవాటి;"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550586,
           "resource_id": 831,
           "text": "Phir subah sawere chapa marte hain"
+        },
+        {
+          "id": -1006149,
+          "resource_id": "ur.maududi",
+          "text": "پھر صبح سویرے چھاپہ مارتے ہیں"
+        },
+        {
+          "id": -2006149,
+          "resource_id": 227,
+          "text": "తెల్లవారుఝామున దాడి చేసేవాటి;"
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550587,
           "resource_id": 831,
           "text": "Phir is mauke par gard o gubar udatey hai"
+        },
+        {
+          "id": -1006150,
+          "resource_id": "ur.maududi",
+          "text": "پھر اس موقع پر گرد و غبار اڑاتے ہیں"
+        },
+        {
+          "id": -2006150,
+          "resource_id": 227,
+          "text": "(మేఘాల వంటి) దుమ్ము లేపుతూ;"
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550588,
           "resource_id": 831,
           "text": "Phir isi halat mei kisi majmey ke andar ja ghustey hai"
+        },
+        {
+          "id": -1006151,
+          "resource_id": "ur.maududi",
+          "text": "پھر اِسی حالت میں کسی مجمع کے اندر جا گھستے ہیں"
+        },
+        {
+          "id": -2006151,
+          "resource_id": 227,
+          "text": "(శత్రువుల) సమూహంలో దూరిపోయే వాటి."
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1550589,
           "resource_id": 831,
           "text": "Haqiqat yeh hai ke Insan apne Rubb ka bada nashukra hai"
+        },
+        {
+          "id": -1006152,
+          "resource_id": "ur.maududi",
+          "text": "حقیقت یہ ہے کہ انسان اپنے رب کا بڑا ناشکرا ہے"
+        },
+        {
+          "id": -2006152,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, మానవుడు తన ప్రభువు పట్ల ఎంతో కృతఘ్నుడు."
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1550590,
           "resource_id": 831,
           "text": "Aur woh khud is par gawah hai"
+        },
+        {
+          "id": -1006153,
+          "resource_id": "ur.maududi",
+          "text": "اور وہ خود اِس پر گواہ ہے"
+        },
+        {
+          "id": -2006153,
+          "resource_id": 227,
+          "text": "మరియు నిశ్చయంగా, దీనికి స్వయంగా అతడే సాక్షి."
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1550591,
           "resource_id": 831,
           "text": "Aur woh maal-o-daulat ki muhabbat mei buri tarah mubtala hai"
+        },
+        {
+          "id": -1006154,
+          "resource_id": "ur.maududi",
+          "text": "اور وہ مال و دولت کی محبت میں بری طرح مبتلا ہے"
+        },
+        {
+          "id": -2006154,
+          "resource_id": 227,
+          "text": "మరియు నిశ్చయంగా, అతడు సిరిసంపదల వ్యామోహంలో పూర్తిగా మునిగి ఉన్నాడు."
         }
       ]
     },
@@ -241,6 +321,16 @@
           "id": 1550592,
           "resource_id": 831,
           "text": "To kya woh us waqt ko nahin janta jab qabron mein jo kuch (madfun) hai usey nikal liya jayega"
+        },
+        {
+          "id": -1006155,
+          "resource_id": "ur.maududi",
+          "text": "تو کیا وہ اُس حقیقت کو نہیں جانتا جب قبروں میں جو کچھ (مدفون) ہے اُسے نکال لیا جائے گا"
+        },
+        {
+          "id": -2006155,
+          "resource_id": 227,
+          "text": "ఏమిటి? అతనికి తెలియదా? గోరీలలో ఉన్నదంతా పెళ్ళగించి బయటికి తీయబడినప్పుడు;"
         }
       ]
     },
@@ -266,6 +356,16 @@
           "id": 1550593,
           "resource_id": 831,
           "text": "Aur seeno mein jo kuch (makhfi) hai usey baramad karke uski jaanch padtal ki jayegi"
+        },
+        {
+          "id": -1006156,
+          "resource_id": "ur.maududi",
+          "text": "اور سینوں میں جو کچھ (مخفی) ہے اُسے برآمد کر کے اس کی جانچ پڑتال کی جائے گی؟"
+        },
+        {
+          "id": -2006156,
+          "resource_id": 227,
+          "text": "మరియు (మానవుల) హృదయాలలోని విషయాలన్నీ వెల్లడి చేయబడినప్పుడు;"
         }
       ]
     },
@@ -291,6 +391,16 @@
           "id": 1550594,
           "resource_id": 831,
           "text": "Yaqeenan unka Rubb us roz unse khoob bakhabar hoga"
+        },
+        {
+          "id": -1006157,
+          "resource_id": "ur.maududi",
+          "text": "یقیناً اُن کا رب اُس روز اُن سے خوب باخبر ہوگا"
+        },
+        {
+          "id": -2006157,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, ఆ రోజున వారి ప్రభువు వారిని గురించి అంతా తెలుసుకొని ఉంటాడని!"
         }
       ]
     }

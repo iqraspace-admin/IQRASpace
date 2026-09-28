@@ -41,6 +41,16 @@
           "id": 1550536,
           "resource_id": 831,
           "text": "Kasam hai Injir(fig) ki aur Zaitun ki"
+        },
+        {
+          "id": -1006099,
+          "resource_id": "ur.maududi",
+          "text": "قسم ہے انجیر اور زیتون کی"
+        },
+        {
+          "id": -2006099,
+          "resource_id": 227,
+          "text": "అంజూరం (అత్తిపండు) మరియు జైతూన్ సాక్షిగా!"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550537,
           "resource_id": 831,
           "text": "Aur Tur-e-sina (Mount Sinai)"
+        },
+        {
+          "id": -1006100,
+          "resource_id": "ur.maududi",
+          "text": "اور طور سینا کی"
+        },
+        {
+          "id": -2006100,
+          "resource_id": 227,
+          "text": "సీనాయ్ (తూర్) కొండ సాక్షిగా!"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550538,
           "resource_id": 831,
           "text": "Aur is pur-aman shehar (Makkah) ki"
+        },
+        {
+          "id": -1006101,
+          "resource_id": "ur.maududi",
+          "text": "اور اِس پرامن شہر (مکہ) کی"
+        },
+        {
+          "id": -2006101,
+          "resource_id": 227,
+          "text": "ఈ శాంతి నగరం (మక్కా) సాక్షిగా!"
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550539,
           "resource_id": 831,
           "text": "Humne Insan ko behtarin saakht par paida kiya"
+        },
+        {
+          "id": -1006102,
+          "resource_id": "ur.maududi",
+          "text": "ہم نے انسان کو بہترین ساخت پر پیدا کیا"
+        },
+        {
+          "id": -2006102,
+          "resource_id": 227,
+          "text": "వాస్తవంగా! మేము మానవుడిని సర్వశ్రేష్ఠమైన ఆకారంలో సృష్టించాము."
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550540,
           "resource_id": 831,
           "text": "Phir usey ulta pher kar humne sab neechon se neech kar diya"
+        },
+        {
+          "id": -1006103,
+          "resource_id": "ur.maududi",
+          "text": "پھر اُسے الٹا پھیر کر ہم نے سب نیچوں سے نیچ کر دیا"
+        },
+        {
+          "id": -2006103,
+          "resource_id": 227,
+          "text": "తరువాత మేము అతన్ని దిగజార్చి అధమాతి - అధమమైన స్థితికి మార్చాము."
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1550541,
           "resource_id": 831,
           "text": "Siwaye un logon ke jo iman laye aur neik amal karte rahey kay unke liye kabhi khatam na hone wala ajar hai"
+        },
+        {
+          "id": -1006104,
+          "resource_id": "ur.maududi",
+          "text": "سوائے اُن لوگوں کے جو ایمان لائے اور نیک عمل کرتے رہے کہ ان کے لیے کبھی ختم نہ ہونے والا اجر ہے"
+        },
+        {
+          "id": -2006104,
+          "resource_id": 227,
+          "text": "కాని విశ్వసించి, సత్కార్యాలు చేసేవారు తప్ప! ఎందుకంటే అలాంటి వారికి అంతులేని ప్రతిఫలం ఉంది."
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1550542,
           "resource_id": 831,
           "text": "Pas (aey nabi) iske baad kaun jaza o saza ke maamle mei tumko jhutla sakta hai"
+        },
+        {
+          "id": -1006105,
+          "resource_id": "ur.maududi",
+          "text": "پس (اے نبیؐ) اس کے بعد کون جزا و سزا کے معاملہ میں تم کو جھٹلا سکتا ہے؟"
+        },
+        {
+          "id": -2006105,
+          "resource_id": 227,
+          "text": "అయితే (ఓ మానవుడా!) దీని తరువాత కూడా నీవు ఎందుకు ప్రతిఫలదినాన్ని తిరస్కరిస్తున్నావు?"
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1550543,
           "resource_id": 831,
           "text": "Kya Allah sab hakimon se bada hakim nahin hai"
+        },
+        {
+          "id": -1006106,
+          "resource_id": "ur.maududi",
+          "text": "کیا اللہ سب حاکموں سے بڑا حاکم نہیں ہے؟"
+        },
+        {
+          "id": -2006106,
+          "resource_id": 227,
+          "text": "ఏమీ? అల్లాహ్ న్యాయాధిపతులలోకెల్లా సర్వోత్తమ న్యాయాధిపతి కాడా?"
         }
       ]
     }

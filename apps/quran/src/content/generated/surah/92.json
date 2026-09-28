@@ -41,6 +41,16 @@
           "id": 1550496,
           "resource_id": 831,
           "text": "Kasam hai raat ki jabke woh chaa jaaye"
+        },
+        {
+          "id": -1006059,
+          "resource_id": "ur.maududi",
+          "text": "قسم ہے رات کی جبکہ وہ چھا جائے"
+        },
+        {
+          "id": -2006059,
+          "resource_id": 227,
+          "text": "క్రమ్ముకునే రాత్రి సాక్షిగా!"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550497,
           "resource_id": 831,
           "text": "Aur din ki jabke woh roshan ho"
+        },
+        {
+          "id": -1006060,
+          "resource_id": "ur.maududi",
+          "text": "اور دن کی جبکہ وہ روشن ہو"
+        },
+        {
+          "id": -2006060,
+          "resource_id": 227,
+          "text": "ప్రకాశించే పగటి సాక్షిగా!"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550498,
           "resource_id": 831,
           "text": "Aur us zaat ki jisne nar(male) aur maada(female) ko paida kiya"
+        },
+        {
+          "id": -1006061,
+          "resource_id": "ur.maududi",
+          "text": "اور اُس ذات کی جس نے نر اور مادہ کو پیدا کیا"
+        },
+        {
+          "id": -2006061,
+          "resource_id": 227,
+          "text": "మరియు, మగ మరియు ఆడ (జాతులను) సృష్టించిన ఆయన (అల్లాహ్) సాక్షిగా!"
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550499,
           "resource_id": 831,
           "text": "Dar haqeeqat tum logon ki koshishein mukhtalif qism ki hai"
+        },
+        {
+          "id": -1006062,
+          "resource_id": "ur.maududi",
+          "text": "درحقیقت تم لوگوں کی کوششیں مختلف قسم کی ہیں"
+        },
+        {
+          "id": -2006062,
+          "resource_id": 227,
+          "text": "వాస్తవానికి, మీ ప్రయత్నాలు నానా విధాలుగా ఉన్నాయి;"
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550500,
           "resource_id": 831,
           "text": "To jisne (rah e khuda mein) maal diya aur (khuda ki nafarmani se) parhez kiya"
+        },
+        {
+          "id": -1006063,
+          "resource_id": "ur.maududi",
+          "text": "تو جس نے (راہ خدا میں) مال دیا اور (خدا کی نافرمانی سے) پرہیز کیا"
+        },
+        {
+          "id": -2006063,
+          "resource_id": 227,
+          "text": "కాని ఎవడైతే (దానధర్మాలు) చేస్తూ దైవభీతి కలిగి ఉంటాడో!"
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1550501,
           "resource_id": 831,
           "text": "Aur bhalayi ko sach mana"
+        },
+        {
+          "id": -1006064,
+          "resource_id": "ur.maududi",
+          "text": "اور بھلائی کو سچ مانا"
+        },
+        {
+          "id": -2006064,
+          "resource_id": 227,
+          "text": "మరియు మంచిని నమ్ముతాడో!"
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1550502,
           "resource_id": 831,
           "text": "Usko hum aasan raastey kay liye sahulat denge"
+        },
+        {
+          "id": -1006065,
+          "resource_id": "ur.maududi",
+          "text": "اس کو ہم آسان راستے کے لیے سہولت دیں گے"
+        },
+        {
+          "id": -2006065,
+          "resource_id": 227,
+          "text": "అతనికి మేము మేలు కొరకు దారిని సులభం చేస్తాము."
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1550503,
           "resource_id": 831,
           "text": "Aur jisne bukhl(kanjoosi) kiya aur (apney khuda se) be niyazi(self-sufficient/independent) barti"
+        },
+        {
+          "id": -1006066,
+          "resource_id": "ur.maududi",
+          "text": "اور جس نے بخل کیا اور (اپنے خدا سے) بے نیازی برتی"
+        },
+        {
+          "id": -2006066,
+          "resource_id": 227,
+          "text": "కాని ఎవడైతే పిసినారితనం చేస్తూ, నిర్లక్ష్య వైఖరిని అవలంబిస్తాడో!"
         }
       ]
     },
@@ -241,6 +321,16 @@
           "id": 1550504,
           "resource_id": 831,
           "text": "aur bhalayi ko jhutlaya"
+        },
+        {
+          "id": -1006067,
+          "resource_id": "ur.maududi",
+          "text": "اور بھلائی کو جھٹلایا"
+        },
+        {
+          "id": -2006067,
+          "resource_id": 227,
+          "text": "మరియు మంచిని అబద్ధమని తిరస్కరిస్తాడో!"
         }
       ]
     },
@@ -266,6 +356,16 @@
           "id": 1550505,
           "resource_id": 831,
           "text": "Usko hum sakht rastey kay liye sahulat dengey"
+        },
+        {
+          "id": -1006068,
+          "resource_id": "ur.maududi",
+          "text": "اس کو ہم سخت راستے کے لیے سہولت دیں گے"
+        },
+        {
+          "id": -2006068,
+          "resource_id": 227,
+          "text": "అతనికి మేము చెడు కొరకు దారిని సులభం చేస్తాము."
         }
       ]
     },
@@ -291,6 +391,16 @@
           "id": 1550506,
           "resource_id": 831,
           "text": "Aur uska maal aakhir uske kis kaam aayega jabke woh halaq ho jaye"
+        },
+        {
+          "id": -1006069,
+          "resource_id": "ur.maududi",
+          "text": "اور اُس کا مال آخر اُس کے کس کام آئے گا جبکہ وہ ہلاک ہو جائے؟"
+        },
+        {
+          "id": -2006069,
+          "resource_id": 227,
+          "text": "మరియు అతడు నశించి పోయినప్పుడు, అతని ధనం అతనికి ఎలా ఉపయోగపడుతుంది?"
         }
       ]
     },
@@ -316,6 +426,16 @@
           "id": 1550507,
           "resource_id": 831,
           "text": "Beshak rasta batana hamare zimmey hai"
+        },
+        {
+          "id": -1006070,
+          "resource_id": "ur.maududi",
+          "text": "بے شک راستہ بتانا ہمارے ذمہ ہے"
+        },
+        {
+          "id": -2006070,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, సన్మార్గం చూపడం మా పని!"
         }
       ]
     },
@@ -341,6 +461,16 @@
           "id": 1550508,
           "resource_id": 831,
           "text": "aur dar haqeeqat aakhirat aur duniya dono kay hum hi malik hai"
+        },
+        {
+          "id": -1006071,
+          "resource_id": "ur.maududi",
+          "text": "اور درحقیقت آخرت اور دنیا، دونوں کے ہم ہی مالک ہیں"
+        },
+        {
+          "id": -2006071,
+          "resource_id": 227,
+          "text": "మరియు నిశ్చయంగా, ఇహపరలోకాల (ఆధిపత్యం) మాకే చెందినది."
         }
       ]
     },
@@ -366,6 +496,16 @@
           "id": 1550509,
           "resource_id": 831,
           "text": "Pas maine tumko khabardar kar diya hai bhadakti hui aag se"
+        },
+        {
+          "id": -1006072,
+          "resource_id": "ur.maududi",
+          "text": "پس میں نے تم کو خبردار کر دیا ہے بھڑکتی ہوئی آگ سے"
+        },
+        {
+          "id": -2006072,
+          "resource_id": 227,
+          "text": "కాబట్టి నేను మిమ్మల్ని ప్రజ్వలించే నరకాగ్నిని గురించి హెచ్చరించాను."
         }
       ]
     },
@@ -391,6 +531,16 @@
           "id": 1550510,
           "resource_id": 831,
           "text": "Usmein nahin jhulsega magar woh intihayi badbakth"
+        },
+        {
+          "id": -1006073,
+          "resource_id": "ur.maududi",
+          "text": "اُس میں نہیں جھلسے گا مگر وہ انتہائی بد بخت"
+        },
+        {
+          "id": -2006073,
+          "resource_id": 227,
+          "text": "పరమ దౌర్భాగ్యుడు తప్ప, మరెవ్వడూ అందులో కాలడు!"
         }
       ]
     },
@@ -416,6 +566,16 @@
           "id": 1550511,
           "resource_id": 831,
           "text": "jisne jhutlaya aur mooh phera"
+        },
+        {
+          "id": -1006074,
+          "resource_id": "ur.maududi",
+          "text": "جس نے جھٹلایا اور منہ پھیرا"
+        },
+        {
+          "id": -2006074,
+          "resource_id": 227,
+          "text": "ఎవడైతే (సత్యాన్ని) తిరస్కరించి (దాని నుండి) విముఖుడవుతాడో!"
         }
       ]
     },
@@ -441,6 +601,16 @@
           "id": 1550512,
           "resource_id": 831,
           "text": "Aur usse door rakkha jayega woh nihayat parhezgaar"
+        },
+        {
+          "id": -1006075,
+          "resource_id": "ur.maududi",
+          "text": "اور اُس سے دور رکھا جائیگا وہ نہایت پرہیزگار"
+        },
+        {
+          "id": -2006075,
+          "resource_id": 227,
+          "text": "కాని దైవభీతి గలవాడు దాని నుండి (ఆ నరకాగ్ని నుండి) దూరంగా ఉంచబడతాడు!"
         }
       ]
     },
@@ -466,6 +636,16 @@
           "id": 1550513,
           "resource_id": 831,
           "text": "Jo paakiza honay ki khatir apna maal deta hai"
+        },
+        {
+          "id": -1006076,
+          "resource_id": "ur.maududi",
+          "text": "جو پاکیزہ ہونے کی خاطر اپنا مال دیتا ہے"
+        },
+        {
+          "id": -2006076,
+          "resource_id": 227,
+          "text": "అతడే! ఎవడైతే, పవిత్రుడవటానికి తన ధనం నుండి (ఇతరులకు) ఇస్తాడో!"
         }
       ]
     },
@@ -491,6 +671,16 @@
           "id": 1550514,
           "resource_id": 831,
           "text": "Uspar kisi ka koi ehsan nahin hai jiska badla usey dena ho"
+        },
+        {
+          "id": -1006077,
+          "resource_id": "ur.maududi",
+          "text": "اُس پر کسی کا کوئی احسان نہیں ہے جس کا بدلہ اُسے دینا ہو"
+        },
+        {
+          "id": -2006077,
+          "resource_id": 227,
+          "text": "కాని అది, వారు అతనికి చేసిన ఏ ఉపకారానికి బదులుగా గాక;"
         }
       ]
     },
@@ -516,6 +706,16 @@
           "id": 1550515,
           "resource_id": 831,
           "text": "Woh to sirf apne Rubb-e-bartrar ki raza joii ke liye yeh kaam karta hai"
+        },
+        {
+          "id": -1006078,
+          "resource_id": "ur.maududi",
+          "text": "وہ تو صرف اپنے رب برتر کی رضا جوئی کے لیے یہ کام کرتا ہے"
+        },
+        {
+          "id": -2006078,
+          "resource_id": 227,
+          "text": "కేవలం మహోన్నతుడైన తన ప్రభువు ప్రసన్నతను పొందటానికి మాత్రమే అయితే!"
         }
       ]
     },
@@ -541,6 +741,16 @@
           "id": 1550516,
           "resource_id": 831,
           "text": "Aur zaroor woh (us se) khush hoga"
+        },
+        {
+          "id": -1006079,
+          "resource_id": "ur.maududi",
+          "text": "اور ضرور وہ (اُس سے) خوش ہوگا"
+        },
+        {
+          "id": -2006079,
+          "resource_id": 227,
+          "text": "మరియు అలాంటి వాడే తప్పక సంతోషిస్తాడు."
         }
       ]
     }

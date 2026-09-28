@@ -430,6 +430,8 @@ function LayoutSection() {
 const TRANSLATION_LABEL_KEY: Record<string, StringKey> = {
   english: "settingsLangEnglish",
   "roman-urdu": "settingsLangRomanUrdu",
+  urdu: "settingsLangUrdu",
+  telugu: "settingsLangTelugu",
 };
 
 function TranslationSection() {

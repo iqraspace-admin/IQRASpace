@@ -41,6 +41,16 @@
           "id": 1550617,
           "resource_id": 831,
           "text": "Tabahi hai har us shaks ke liye jo (moonh dar moonh) logon par taan aur (peeth peechey) buraiyan karne ka khugar hai"
+        },
+        {
+          "id": -1006180,
+          "resource_id": "ur.maududi",
+          "text": "تباہی ہے ہر اُس شخص کے لیے جو (منہ در منہ) لوگوں پر طعن اور (پیٹھ پیچھے) برائیاں کرنے کا خوگر ہے"
+        },
+        {
+          "id": -2006180,
+          "resource_id": 227,
+          "text": "అపనిందలు మోపే, చాడీలు చెప్పే ప్రతి ఒక్కడికీ వినాశం తప్పదు."
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550618,
           "resource_id": 831,
           "text": "Jisne maal jama kiya aur usey gin gin kar rakkha"
+        },
+        {
+          "id": -1006181,
+          "resource_id": "ur.maududi",
+          "text": "جس نے مال جمع کیا اور اُسے گن گن کر رکھا"
+        },
+        {
+          "id": -2006181,
+          "resource_id": 227,
+          "text": "ఎవడైతే ధనాన్ని కూడబెట్టి, మాటి మాటికి దాన్ని లెక్కబెడుతూ ఉంటాడో!"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550619,
           "resource_id": 831,
           "text": "Woh samajhta hai ke us ka maal hamesha uske paas rahega"
+        },
+        {
+          "id": -1006182,
+          "resource_id": "ur.maududi",
+          "text": "وہ سمجھتا ہے کہ اُس کا مال ہمیشہ اُس کے پاس رہے گا"
+        },
+        {
+          "id": -2006182,
+          "resource_id": 227,
+          "text": "తన ధనం, తనను శాశ్వతంగా ఉంచుతుందని అతడు భావిస్తున్నాడు!"
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550620,
           "resource_id": 831,
           "text": "Hargiz nahin, woh shaks to chakna-chur kar dene wali jagah mein phenk diya jayega"
+        },
+        {
+          "id": -1006183,
+          "resource_id": "ur.maududi",
+          "text": "ہرگز نہیں، وہ شخص تو چکنا چور کر دینے والی جگہ میں پھینک دیا جائے گا"
+        },
+        {
+          "id": -2006183,
+          "resource_id": 227,
+          "text": "ఎంత మాత్రం కాదు! అతడు (రాబోయే జీవితంలో) తప్పకుండా అణగ ద్రొక్కబడే నరకాగ్నిలో వేయబడతాడు."
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550621,
           "resource_id": 831,
           "text": "Aur tum kya jano ke kya hai woh chakna-chur kar dene wali jagah"
+        },
+        {
+          "id": -1006184,
+          "resource_id": "ur.maududi",
+          "text": "اور تم کیا جانو کہ کیا ہے وہ چکنا چور کر دینے والی جگہ؟"
+        },
+        {
+          "id": -2006184,
+          "resource_id": 227,
+          "text": "ఆ (అణగద్రొక్కబడే) నరకాగ్ని అంటే ఏమిటో నీకు తెలుసా?"
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1550622,
           "resource_id": 831,
           "text": "Allah ki aag khoob bhadkayi hui"
+        },
+        {
+          "id": -1006185,
+          "resource_id": "ur.maududi",
+          "text": "اللہ کی آگ، خوب بھڑکائی ہوئی"
+        },
+        {
+          "id": -2006185,
+          "resource_id": 227,
+          "text": "అల్లాహ్, తీవ్రంగా ప్రజ్వలింపజేసిన అగ్ని;"
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1550623,
           "resource_id": 831,
           "text": "Jo dilon tak pahunchey gi"
+        },
+        {
+          "id": -1006186,
+          "resource_id": "ur.maududi",
+          "text": "جو دلوں تک پہنچے گی"
+        },
+        {
+          "id": -2006186,
+          "resource_id": 227,
+          "text": "అది గుండెల దాకా చేరుకుంటుంది."
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1550624,
           "resource_id": 831,
           "text": "Woh un par dhaank kar bandh kar di jayegi"
+        },
+        {
+          "id": -1006187,
+          "resource_id": "ur.maududi",
+          "text": "وہ اُن پر ڈھانک کر بند کر دی جائے گی"
+        },
+        {
+          "id": -2006187,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, అది వారి మీద క్రమ్ముకొంటుంది."
         }
       ]
     },
@@ -241,6 +321,16 @@
           "id": 1550625,
           "resource_id": 831,
           "text": "(Is halat mei ke woh) unchey unchey sutuno mei (ghirey huey hongey)"
+        },
+        {
+          "id": -1006188,
+          "resource_id": "ur.maududi",
+          "text": "(اِس حالت میں کہ وہ) اونچے اونچے ستونوں میں (گھرے ہوئے ہوں گے)"
+        },
+        {
+          "id": -2006188,
+          "resource_id": 227,
+          "text": "పొడుగాటి (అగ్ని) స్థంభాల వలే!"
         }
       ]
     }

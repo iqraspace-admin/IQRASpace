@@ -41,6 +41,16 @@
           "id": 1550267,
           "resource_id": 831,
           "text": "Jab Aasman phat jayega"
+        },
+        {
+          "id": -1005830,
+          "resource_id": "ur.maududi",
+          "text": "جب آسمان پھٹ جائے گا"
+        },
+        {
+          "id": -2005830,
+          "resource_id": 227,
+          "text": "ఆకాశం చీల్చబడినప్పుడు!"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550268,
           "resource_id": 831,
           "text": "Aur jab taarey bikhar jayengey"
+        },
+        {
+          "id": -1005831,
+          "resource_id": "ur.maududi",
+          "text": "اور جب تارے بکھر جائیں گے"
+        },
+        {
+          "id": -2005831,
+          "resource_id": 227,
+          "text": "మరియు నక్షత్రాలు చెదిరి పోయినప్పుడు!"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550269,
           "resource_id": 831,
           "text": "Aur jab samandar phaad diye jayengey"
+        },
+        {
+          "id": -1005832,
+          "resource_id": "ur.maududi",
+          "text": "اور جب سمندر پھاڑ دیے جائیں گے"
+        },
+        {
+          "id": -2005832,
+          "resource_id": 227,
+          "text": "మరియు సముద్రాలు పొంగి పొరలి పోయినప్పుడు!"
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550270,
           "resource_id": 831,
           "text": "Aur jab qabrein khol di jayengi"
+        },
+        {
+          "id": -1005833,
+          "resource_id": "ur.maududi",
+          "text": "اور جب قبریں کھول دی جائیں گی"
+        },
+        {
+          "id": -2005833,
+          "resource_id": 227,
+          "text": "మరియు సమాధులు పెళ్ళగింప (తెరువ) బడినప్పుడు!"
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550271,
           "resource_id": 831,
           "text": "Us waqt har shaks ko uska agla pichla sab kiya dhara maloom ho jayega"
+        },
+        {
+          "id": -1005834,
+          "resource_id": "ur.maududi",
+          "text": "اُس وقت ہر شخص کو اُس کا اگلا پچھلا سب کیا دھرا معلوم ہو جائے گا"
+        },
+        {
+          "id": -2005834,
+          "resource_id": 227,
+          "text": "ప్రతి వ్యక్తికి తాను చేసి పంపుకున్నది మరియు వెనుక వదలి పెట్టింది అంతా తెలిసి పోతుంది."
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1550272,
           "resource_id": 831,
           "text": "Aey insaan kis cheez ne tujhey apne uss Rubb-e-kareem ki taraf se dhoke mein daal diya"
+        },
+        {
+          "id": -1005835,
+          "resource_id": "ur.maududi",
+          "text": "اے انسان، کس چیز نے تجھے اپنے اُس رب کریم کی طرف سے دھوکے میں ڈال دیا"
+        },
+        {
+          "id": -2005835,
+          "resource_id": 227,
+          "text": "ఓ మానవుడా! పరమదాత అయిన నీ ప్రభువును గురించి, ఏ విషయం నిన్ను ఏమరుపాటుకు గురి చేసింది?"
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1550273,
           "resource_id": 831,
           "text": "Jisne tujhey paida kiya, tujhey nek-suk se durust kiya(shaped you), tujhe mutanasib(well-proportioned) banaya"
+        },
+        {
+          "id": -1005836,
+          "resource_id": "ur.maududi",
+          "text": "جس نے تجھے پیدا کیا، تجھے نک سک سے درست کیا، تجھے متناسب بنایا"
+        },
+        {
+          "id": -2005836,
+          "resource_id": 227,
+          "text": "ఆయనే నిన్ను సృష్టించాడు, తరువాత ఎలాంటి లోపం లేకుండా నిన్ను తీర్చిదిద్దాడు మరియు నిన్ను తగిన ప్రమాణంలో రూపొందించాడు."
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1550274,
           "resource_id": 831,
           "text": "Aur jis surat mein chaha tujhko jodh kar tayyar kiya"
+        },
+        {
+          "id": -1005837,
+          "resource_id": "ur.maududi",
+          "text": "اور جس صورت میں چاہا تجھ کو جوڑ کر تیار کیا؟"
+        },
+        {
+          "id": -2005837,
+          "resource_id": 227,
+          "text": "తాను తలచిన ఆకారంలో నిన్ను మలిచాడు."
         }
       ]
     },
@@ -241,6 +321,16 @@
           "id": 1550275,
           "resource_id": 831,
           "text": "Hargiz nahin balke (asal baat yeh hai ke) tumlog jaza-o-saza ko jhutlate ho"
+        },
+        {
+          "id": -1005838,
+          "resource_id": "ur.maududi",
+          "text": "ہرگز نہیں، بلکہ (اصل بات یہ ہے کہ) تم لوگ جزا و سزا کو جھٹلاتے ہو"
+        },
+        {
+          "id": -2005838,
+          "resource_id": 227,
+          "text": "అలా కాదు! వాస్తవానికి మీరు (పరలోక) తీర్పును అబద్ధమని తిరస్కరిస్తున్నారు!"
         }
       ]
     },
@@ -266,6 +356,16 @@
           "id": 1550276,
           "resource_id": 831,
           "text": "Halaanke tumpar nigraan muqarrar hain"
+        },
+        {
+          "id": -1005839,
+          "resource_id": "ur.maududi",
+          "text": "حالانکہ تم پر نگراں مقرر ہیں"
+        },
+        {
+          "id": -2005839,
+          "resource_id": 227,
+          "text": "మరియు, నిశ్చయంగా! మిమ్మల్ని కనిపెట్టుకొని ఉండేవారు (దేవదూతలు) ఉన్నారు."
         }
       ]
     },
@@ -291,6 +391,16 @@
           "id": 1550277,
           "resource_id": 831,
           "text": "Aisey muazzaz kaatib"
+        },
+        {
+          "id": -1005840,
+          "resource_id": "ur.maududi",
+          "text": "ایسے معزز کاتب"
+        },
+        {
+          "id": -2005840,
+          "resource_id": 227,
+          "text": "వారు, గౌరవనీయులైన లేఖకులు;"
         }
       ]
     },
@@ -316,6 +426,16 @@
           "id": 1550278,
           "resource_id": 831,
           "text": "Jo tumharey har fail(amal) ko jantey hain"
+        },
+        {
+          "id": -1005841,
+          "resource_id": "ur.maududi",
+          "text": "جو تمہارے ہر فعل کو جانتے ہیں"
+        },
+        {
+          "id": -2005841,
+          "resource_id": 227,
+          "text": "మీరు చేసేదంతా తెలుసుకునేవారు!"
         }
       ]
     },
@@ -341,6 +461,16 @@
           "id": 1550279,
           "resource_id": 831,
           "text": "Yaqeenan neik log mazey mei hongey"
+        },
+        {
+          "id": -1005842,
+          "resource_id": "ur.maududi",
+          "text": "یقیناً نیک لوگ مزے میں ہوں گے"
+        },
+        {
+          "id": -2005842,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా పుణ్యాత్ములు సుఖసంతోషాలలో తేలియాడుతూ ఉంటారు."
         }
       ]
     },
@@ -366,6 +496,16 @@
           "id": 1550280,
           "resource_id": 831,
           "text": "Aur beshak badkar log jahannam me jayenge"
+        },
+        {
+          "id": -1005843,
+          "resource_id": "ur.maududi",
+          "text": "اور بے شک بدکار لوگ جہنم میں جائیں گے"
+        },
+        {
+          "id": -2005843,
+          "resource_id": 227,
+          "text": "మరియు నిశ్చయంగా, దుష్టులు భగభగ మండే నరకాగ్నిలో ఉంటారు."
         }
       ]
     },
@@ -391,6 +531,16 @@
           "id": 1550281,
           "resource_id": 831,
           "text": "Jaza ke din woh is mein daakhil hongey"
+        },
+        {
+          "id": -1005844,
+          "resource_id": "ur.maududi",
+          "text": "جزا کے دن وہ اس میں داخل ہوں گے"
+        },
+        {
+          "id": -2005844,
+          "resource_id": 227,
+          "text": "తీర్పు దినమున వారు అందులో ప్రవేశిస్తారు."
         }
       ]
     },
@@ -416,6 +566,16 @@
           "id": 1550282,
           "resource_id": 831,
           "text": "Aur us se hargiz gayab na ho sakengey"
+        },
+        {
+          "id": -1005845,
+          "resource_id": "ur.maududi",
+          "text": "اور اُس سے ہرگز غائب نہ ہو سکیں گے"
+        },
+        {
+          "id": -2005845,
+          "resource_id": 227,
+          "text": "మరియు వారు దాని నుండి ఎంత మాత్రం తప్పించుకోలేరు."
         }
       ]
     },
@@ -441,6 +601,16 @@
           "id": 1550283,
           "resource_id": 831,
           "text": "Aur tum kya jaante ho ke woh jaza ka din kya hai"
+        },
+        {
+          "id": -1005846,
+          "resource_id": "ur.maududi",
+          "text": "اور تم کیا جانتے ہو کہ وہ جزا کا دن کیا ہے؟"
+        },
+        {
+          "id": -2005846,
+          "resource_id": 227,
+          "text": "మరియు ఆ తీర్పుదినం అంటే ఏమిటో నీకెలా తెలుస్తుంది?"
         }
       ]
     },
@@ -466,6 +636,16 @@
           "id": 1550284,
           "resource_id": 831,
           "text": "Haan tumhein kya khabar ke woh jaza ka din kya hai"
+        },
+        {
+          "id": -1005847,
+          "resource_id": "ur.maududi",
+          "text": "ہاں، تمہیں کیا خبر کہ وہ جزا کا دن کیا ہے؟"
+        },
+        {
+          "id": -2005847,
+          "resource_id": 227,
+          "text": "అవును మరి! ఆ తీర్పుదినం అంటే ఏమిటో నీకెలా తెలుస్తుంది?"
         }
       ]
     },
@@ -491,6 +671,16 @@
           "id": 1550285,
           "resource_id": 831,
           "text": "Yeh woh din hai jab kisi shaks ke liye kuch karna kisi ke bas mei na hoga, faisla us din bilkul Allah ke ikhtiyar mein hoga"
+        },
+        {
+          "id": -1005848,
+          "resource_id": "ur.maududi",
+          "text": "یہ وہ دن ہے جب کسی شخص کے لیے کچھ کرنا کسی کے بس میں نہ ہوگا، فیصلہ اُس دن بالکل اللہ کے اختیار میں ہوگا"
+        },
+        {
+          "id": -2005848,
+          "resource_id": 227,
+          "text": "ఆ దినమున ఏ మానవునికి కూడా ఇతరునికి ఎలాంటి సహాయం చేసే అధికారం ఉండదు. మరియు ఆ రోజు నిర్ణయాధికారం కేవలం అల్లాహ్ కే ఉంటుంది."
         }
       ]
     }

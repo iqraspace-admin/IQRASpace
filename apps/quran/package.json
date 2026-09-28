@@ -13,6 +13,7 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "sync:content": "node --env-file=.env.local scripts/sync-content.mjs",
+    "sync:secondary-translations": "node scripts/sync-secondary-translations.mjs",
     "search:generate-index": "node scripts/generate-search-index.mjs",
     "postinstall": "node scripts/pdf/copy-pdf-worker.mjs",
     "pdf:strip-watermark": "node scripts/pdf/strip-watermark.mjs",

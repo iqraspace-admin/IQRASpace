@@ -41,6 +41,16 @@
           "id": 1550431,
           "resource_id": 831,
           "text": "Kasam hai fajr ki"
+        },
+        {
+          "id": -1005994,
+          "resource_id": "ur.maududi",
+          "text": "قسم ہے فجر کی"
+        },
+        {
+          "id": -2005994,
+          "resource_id": 227,
+          "text": "ప్రాంతః కాలం సాక్షిగా!"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550432,
           "resource_id": 831,
           "text": "Aur dus raaton ki"
+        },
+        {
+          "id": -1005995,
+          "resource_id": "ur.maududi",
+          "text": "اور دس راتوں کی"
+        },
+        {
+          "id": -2005995,
+          "resource_id": 227,
+          "text": "పది రాత్రుల సాక్షిగా!"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550433,
           "resource_id": 831,
           "text": "Aur jufft(even) aur taaq(odd) ki"
+        },
+        {
+          "id": -1005996,
+          "resource_id": "ur.maududi",
+          "text": "اور جفت اور طاق کی"
+        },
+        {
+          "id": -2005996,
+          "resource_id": 227,
+          "text": "సరి బేసీల సాక్షిగా!"
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550434,
           "resource_id": 831,
           "text": "Aur Raat ki jabke woh ruksat ho rahi ho"
+        },
+        {
+          "id": -1005997,
+          "resource_id": "ur.maududi",
+          "text": "اور رات کی جبکہ وہ رخصت ہو رہی ہو"
+        },
+        {
+          "id": -2005997,
+          "resource_id": 227,
+          "text": "గడచిపోయే రాత్రి సాక్షిగా!"
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550435,
           "resource_id": 831,
           "text": "kya ismein kisi sahib-e-aqal ke liye koi kasam hai"
+        },
+        {
+          "id": -1005998,
+          "resource_id": "ur.maududi",
+          "text": "کیا اِس میں کسی صاحب عقل کے لیے کوئی قسم ہے؟"
+        },
+        {
+          "id": -2005998,
+          "resource_id": 227,
+          "text": "వీటిలో బుద్ధిగల వాని కొరకు ఏ ప్రమాణమూ లేదా ఏమిటి?"
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1550436,
           "resource_id": 831,
           "text": "Tumne dekha nahin ke tumhare Rubb ne kya bartao kiya"
+        },
+        {
+          "id": -1005999,
+          "resource_id": "ur.maududi",
+          "text": "تم نے دیکھا نہیں کہ تمہارے رب نے کیا برتاؤ کیا"
+        },
+        {
+          "id": -2005999,
+          "resource_id": 227,
+          "text": "నీ ప్రభువు ఆద్ (జాతి) వారి పట్ల ఎలా వ్యవహరించాడో నీకు తెలియదా?"
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1550437,
           "resource_id": 831,
           "text": "Unchey sutuno waley Aad-e-iram kay saath"
+        },
+        {
+          "id": -1006000,
+          "resource_id": "ur.maududi",
+          "text": "اونچے ستونوں والے عاد ارم کے ساتھ"
+        },
+        {
+          "id": -2006000,
+          "resource_id": 227,
+          "text": "ఎత్తైన స్థంభాల (భవనాలు గల) ఇరమ్ ప్రజల పట్ల?"
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1550438,
           "resource_id": 831,
           "text": "Jinke manind koi qaum duniya kay mulkon mein paida nahin ki gayi thi"
+        },
+        {
+          "id": -1006001,
+          "resource_id": "ur.maududi",
+          "text": "جن کے مانند کوئی قوم دنیا کے ملکوں میں پیدا نہیں کی گئی تھی؟"
+        },
+        {
+          "id": -2006001,
+          "resource_id": 227,
+          "text": "వారిలాంటి జాతి భూమిలో ఎన్నడూ సృష్టించబడలేదు."
         }
       ]
     },
@@ -241,6 +321,16 @@
           "id": 1550439,
           "resource_id": 831,
           "text": "Aur Samood ke saath jinhon ne wadi mei chattane tarashi thi"
+        },
+        {
+          "id": -1006002,
+          "resource_id": "ur.maududi",
+          "text": "اور ثمود کے ساتھ جنہوں نے وادی میں چٹانیں تراشی تھیں؟"
+        },
+        {
+          "id": -2006002,
+          "resource_id": 227,
+          "text": "మరియు లోయలలోని కొండరాళ్ళలో (భవనాలను) తొలిచిన సమూద్ జాతి పట్ల?"
         }
       ]
     },
@@ -266,6 +356,16 @@
           "id": 1550440,
           "resource_id": 831,
           "text": "Aur mekhon waley Firoun kay saath"
+        },
+        {
+          "id": -1006003,
+          "resource_id": "ur.maududi",
+          "text": "اور میخوں والے فرعون کے ساتھ؟"
+        },
+        {
+          "id": -2006003,
+          "resource_id": 227,
+          "text": "మరియు మేకులవాడైన ఫిర్ఔన్ పట్ల?"
         }
       ]
     },
@@ -291,6 +391,16 @@
           "id": 1550441,
           "resource_id": 831,
           "text": "Yeh woh log (thay) jinhone duniya kay mulkon mein badi sarkashi ki thi"
+        },
+        {
+          "id": -1006004,
+          "resource_id": "ur.maududi",
+          "text": "یہ وہ لوگ تھے جنہوں نے دنیا کے ملکوں میں بڑی سرکشی کی تھی"
+        },
+        {
+          "id": -2006004,
+          "resource_id": 227,
+          "text": "వారంతా ఆయా దేశాలలో తలబిరుసుతనంతో ప్రవర్తించారు;"
         }
       ]
     },
@@ -316,6 +426,16 @@
           "id": 1550442,
           "resource_id": 831,
           "text": "Aur inmein bahut fasaad failaya tha"
+        },
+        {
+          "id": -1006005,
+          "resource_id": "ur.maududi",
+          "text": "اور ان میں بہت فساد پھیلایا تھا"
+        },
+        {
+          "id": -2006005,
+          "resource_id": 227,
+          "text": "మరియు వాటిలో దౌర్జన్యాన్ని రేకెత్తించారు."
         }
       ]
     },
@@ -341,6 +461,16 @@
           "id": 1550443,
           "resource_id": 831,
           "text": "Aakhir-e-kaar tumhare Rubb ne inpar azaab ka koda barsa diya"
+        },
+        {
+          "id": -1006006,
+          "resource_id": "ur.maududi",
+          "text": "آخرکار تمہارے رب نے ان پر عذاب کا کوڑا برسا دیا"
+        },
+        {
+          "id": -2006006,
+          "resource_id": 227,
+          "text": "కాబట్టి నీ ప్రభువు వారిపైకి అనేక రకాల బాధాకరమైన శిక్షలను పంపాడు."
         }
       ]
     },
@@ -366,6 +496,16 @@
           "id": 1550444,
           "resource_id": 831,
           "text": "Haqeeqat yeh hai kay tumhara Rubb ghaath(watchful) lagaye huey hai"
+        },
+        {
+          "id": -1006007,
+          "resource_id": "ur.maududi",
+          "text": "حقیقت یہ ہے کہ تمہارا رب گھات لگائے ہوئے ہے"
+        },
+        {
+          "id": -2006007,
+          "resource_id": 227,
+          "text": "వాస్తవానికి, నీ ప్రభువు మాటు వేసి ఉన్నాడు (అంతా కనిపెడ్తూ ఉంటాడు)!"
         }
       ]
     },
@@ -391,6 +531,16 @@
           "id": 1550445,
           "resource_id": 831,
           "text": "Magar Insan ka haal yeh hai kay uska Rubb jab usko aazmaish mein daalta hai aur usey izzat aur niyamat deta hai to woh kehta hai kay mere Rubb ne mujhey izzatdar bana diya"
+        },
+        {
+          "id": -1006008,
+          "resource_id": "ur.maududi",
+          "text": "مگر انسان کا حال یہ ہے کہ اس کا رب جب اُس کو آزمائش میں ڈالتا ہے اور اُسے عزت اور نعمت دیتا ہے تو وہ کہتا ہے کہ میرے رب نے مجھے عزت دار بنا دیا"
+        },
+        {
+          "id": -2006008,
+          "resource_id": 227,
+          "text": "అయితే మానవుడు ఎలాంటి వాడంటే: అతని ప్రభువు అతన్ని పరీక్షించటానికి, అతనికి గౌరవ ప్రతిష్టల నిచ్చి అనుగ్రహించి నప్పుడు: \"నా ప్రభువు నన్ను గౌరవించాడు.\" అని అంటాడు;"
         }
       ]
     },
@@ -416,6 +566,16 @@
           "id": 1550446,
           "resource_id": 831,
           "text": "Aur jab woh usko azmaish mein daalta hai aur uska rizq uspar tangg kar deta hai to woh kehta hai mere Rubb ne mujhey zaleel kar diya"
+        },
+        {
+          "id": -1006009,
+          "resource_id": "ur.maududi",
+          "text": "اور جب وہ اُس کو آزمائش میں ڈالتا ہے اور اُس کا رزق اُس پر تنگ کر دیتا ہے تو وہ کہتا ہے کہ میرے رب نے مجھے ذلیل کر دیا"
+        },
+        {
+          "id": -2006009,
+          "resource_id": 227,
+          "text": "కాని, అతన్ని పరీక్షించటానికి, అతని ఉపాధిని తగ్గించినప్పుడు: \"నా ప్రభువు నన్ను అవమానించాడు.\" అని అంటాడు."
         }
       ]
     },
@@ -441,6 +601,16 @@
           "id": 1550447,
           "resource_id": 831,
           "text": "Hargiz nahin, balke tum yateem se izzat ka sulook nahin kartey"
+        },
+        {
+          "id": -1006010,
+          "resource_id": "ur.maududi",
+          "text": "ہرگز نہیں، بلکہ تم یتیم سے عزت کا سلوک نہیں کرتے"
+        },
+        {
+          "id": -2006010,
+          "resource_id": 227,
+          "text": "అలా కాదు, వాస్తవానికి మీరు అనాథులను ఆదరించరు;"
         }
       ]
     },
@@ -466,6 +636,16 @@
           "id": 1550448,
           "resource_id": 831,
           "text": "Aur miskeen ko khana khilane par ek dusrey ko nahin uksatey"
+        },
+        {
+          "id": -1006011,
+          "resource_id": "ur.maududi",
+          "text": "اور مسکین کو کھانا کھلانے پر ایک دوسرے کو نہیں اکساتے"
+        },
+        {
+          "id": -2006011,
+          "resource_id": 227,
+          "text": "మరియు మీరు పేదలకు అన్నం పెట్టే విషయంలో ఒకరినొకరు ప్రోత్సహించుకోరు;"
         }
       ]
     },
@@ -491,6 +671,16 @@
           "id": 1550449,
           "resource_id": 831,
           "text": "Aur Miras(inheritance) ka sara maal sameith kar kha jatey ho"
+        },
+        {
+          "id": -1006012,
+          "resource_id": "ur.maududi",
+          "text": "اور میراث کا سارا مال سمیٹ کر کھا جاتے ہو"
+        },
+        {
+          "id": -2006012,
+          "resource_id": 227,
+          "text": "మరియు వారసత్వపు ఆస్తిని పేరాశతో అంతా మీరే తినేస్తారు."
         }
       ]
     },
@@ -516,6 +706,16 @@
           "id": 1550450,
           "resource_id": 831,
           "text": "Aur maal ki muhabbat mei buri tarah giraftar ho"
+        },
+        {
+          "id": -1006013,
+          "resource_id": "ur.maududi",
+          "text": "اور مال کی محبت میں بری طرح گرفتار ہو"
+        },
+        {
+          "id": -2006013,
+          "resource_id": 227,
+          "text": "మరియు మీరు ధనవ్యామోహంలో దారుణంగా చిక్కుకు పోయారు!"
         }
       ]
     },
@@ -541,6 +741,16 @@
           "id": 1550451,
           "resource_id": 831,
           "text": "Hargiz nahin jab zameen pai dar pai qoot qoot kar regzaar bana di jayegi"
+        },
+        {
+          "id": -1006014,
+          "resource_id": "ur.maududi",
+          "text": "ہرگز نہیں، جب زمین پے در پے کوٹ کوٹ کر ریگ زار بنا دی جائے گی"
+        },
+        {
+          "id": -2006014,
+          "resource_id": 227,
+          "text": "అలా కాదు, భూమి, దంచి పిండిపిండిగా చేయబడినపుడు;"
         }
       ]
     },
@@ -566,6 +776,16 @@
           "id": 1550452,
           "resource_id": 831,
           "text": "Aur tumahra Rubb jalwa farma hoga is haal mei kay farishtey saff dar saff khade hongey"
+        },
+        {
+          "id": -1006015,
+          "resource_id": "ur.maududi",
+          "text": "اور تمہارا رب جلوہ فرما ہوگا اِس حال میں کہ فرشتے صف در صف کھڑے ہوں گے"
+        },
+        {
+          "id": -2006015,
+          "resource_id": 227,
+          "text": "మరియు నీ ప్రభువు (స్వయంగా) వస్తాడు మరియు దేవదూతలు వరుసలలో వస్తారు."
         }
       ]
     },
@@ -591,6 +811,16 @@
           "id": 1550453,
           "resource_id": 831,
           "text": "Aur jahannum us roz samnay le aayi jaeygi, us din Insan ko samajh ayegi aur us waqt us ke samajhne ka kya hasil"
+        },
+        {
+          "id": -1006016,
+          "resource_id": "ur.maududi",
+          "text": "اور جہنم اُس روز سامنے لے آئی جائے گی، اُس دن انسان کو سمجھ آئے گی اور اس وقت اُس کے سمجھنے کا کیا حاصل؟"
+        },
+        {
+          "id": -2006016,
+          "resource_id": 227,
+          "text": "ఆ రోజు నరకం (ముందుకు) తీసుకు రాబడుతుంది. ఆ రోజు మానవుడు (తన కర్మలన్నీ) జ్ఞప్తికి తెచ్చుకుంటాడు; కాని ఆ రోజు జ్ఞప్తికి తెచ్చుకోవడం వల్ల అతనికి కలిగే ప్రయోజనమేమిటీ?"
         }
       ]
     },
@@ -616,6 +846,16 @@
           "id": 1550454,
           "resource_id": 831,
           "text": "Woh kahega ke kaash maine apni is zindagi ke liye kuch peshgi saman kiya hota"
+        },
+        {
+          "id": -1006017,
+          "resource_id": "ur.maududi",
+          "text": "وہ کہے گا کہ کاش میں نے اپنی اِس زندگی کے لیے کچھ پیشگی سامان کیا ہوتا!"
+        },
+        {
+          "id": -2006017,
+          "resource_id": 227,
+          "text": "అతడు: \"అయ్యో! నా పాడుగానూ! నా ఈ జీవితం కొరకు నేను (సత్కార్యాలు) చేసి పంపు కొని ఉంటే ఎంత బాగుండేది!\" అని వాపోతాడు."
         }
       ]
     },
@@ -641,6 +881,16 @@
           "id": 1550455,
           "resource_id": 831,
           "text": "Phir us din Allah jo azaab dega waisa azaab dene wala koi nahin"
+        },
+        {
+          "id": -1006018,
+          "resource_id": "ur.maududi",
+          "text": "پھر اُس دن اللہ جو عذاب دے گا ویسا عذاب دینے والا کوئی نہیں"
+        },
+        {
+          "id": -2006018,
+          "resource_id": 227,
+          "text": "అయితే, ఆ రోజు, ఆయన (అల్లాహ్) శిక్షించినట్లు, మరెవ్వడూ శిక్షించలేడు!"
         }
       ]
     },
@@ -666,6 +916,16 @@
           "id": 1550456,
           "resource_id": 831,
           "text": "Aur Allah jaisa bandhega waisa bandhne wala koi nahin"
+        },
+        {
+          "id": -1006019,
+          "resource_id": "ur.maududi",
+          "text": "اور اللہ جیسا باندھے گا ویسا باندھنے والا کوئی نہیں"
+        },
+        {
+          "id": -2006019,
+          "resource_id": 227,
+          "text": "మరియు ఆయన (అల్లాహ్) బంధించినట్లు, మరెవ్వడూ బంధించలేడు."
         }
       ]
     },
@@ -691,6 +951,16 @@
           "id": 1550457,
           "resource_id": 831,
           "text": "(Dusri taraf irshad hoga) Aey nafsey mutmain(reassured soul/pious)"
+        },
+        {
+          "id": -1006020,
+          "resource_id": "ur.maududi",
+          "text": "(دوسری طرف ارشاد ہوگا) اے نفس مطمئن!"
+        },
+        {
+          "id": -2006020,
+          "resource_id": 227,
+          "text": "(సన్మార్గునితో ఇలా అనబడుతుంది): \"ఓ తృప్తి పొందిన ఆత్మా!"
         }
       ]
     },
@@ -716,6 +986,16 @@
           "id": 1550458,
           "resource_id": 831,
           "text": "Chal apne Rubb ki taraf is haal mein ke tu (apne anjam-e-neik se) khush (Aur apne Rubb kay nazdeek) pasandida hai"
+        },
+        {
+          "id": -1006021,
+          "resource_id": "ur.maududi",
+          "text": "چل اپنے رب کی طرف، اِس حال میں کہ تو (اپنے انجام نیک سے) خوش (اور اپنے رب کے نزدیک) پسندیدہ ہے"
+        },
+        {
+          "id": -2006021,
+          "resource_id": 227,
+          "text": "నీ ప్రభువు సన్నిధికి మరలి రా! (నీకు లభించే సత్ఫలితానికి) ఆనందిస్తూ మరియు (నీ ప్రభువునకు) ప్రియమైనదానివై!"
         }
       ]
     },
@@ -741,6 +1021,16 @@
           "id": 1550459,
           "resource_id": 831,
           "text": "Shamil ho ja mere (neik) bandon mein"
+        },
+        {
+          "id": -1006022,
+          "resource_id": "ur.maududi",
+          "text": "شامل ہو جا میرے (نیک) بندوں میں"
+        },
+        {
+          "id": -2006022,
+          "resource_id": 227,
+          "text": "నీవు (పుణ్యాత్ములైన) నా దాసులలో చేరిపో!"
         }
       ]
     },
@@ -766,6 +1056,16 @@
           "id": 1550460,
           "resource_id": 831,
           "text": "Aur dakhil hoja meri jannat mein"
+        },
+        {
+          "id": -1006023,
+          "resource_id": "ur.maududi",
+          "text": "اور داخل ہو جا میری جنت میں"
+        },
+        {
+          "id": -2006023,
+          "resource_id": 227,
+          "text": "మరియు నీవు నా స్వర్గంలో ప్రవేశించు!\""
         }
       ]
     }

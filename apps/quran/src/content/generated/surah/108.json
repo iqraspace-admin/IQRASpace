@@ -41,6 +41,16 @@
           "id": 1550642,
           "resource_id": 831,
           "text": "(Aey Nabi ) Hum ne tumhein kausar ata kar diya"
+        },
+        {
+          "id": -1006205,
+          "resource_id": "ur.maududi",
+          "text": "(اے نبیؐ) ہم نے تمہیں کوثر عطا کر دیا"
+        },
+        {
+          "id": -2006205,
+          "resource_id": 227,
+          "text": "(ఓ ముహమ్మద్!) నిశ్చయంగా, మేము నీకు కౌసర్ ప్రసాదించాము."
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550643,
           "resource_id": 831,
           "text": "Pas tum apne Rubb hi ke liye namaz padho aur qurbani karo"
+        },
+        {
+          "id": -1006206,
+          "resource_id": "ur.maududi",
+          "text": "پس تم اپنے رب ہی کے لیے نماز پڑھو اور قربانی کرو"
+        },
+        {
+          "id": -2006206,
+          "resource_id": 227,
+          "text": "కనుక నీవు నీ ప్రభువు కొరకే నమాజ్ చెయ్యి మరియు బలి (ఖుర్బానీ) కూడా (ఆయన కొరకే) ఇవ్వు!"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550644,
           "resource_id": 831,
           "text": "Tumhara dushman hi jadh-kata hai"
+        },
+        {
+          "id": -1006207,
+          "resource_id": "ur.maududi",
+          "text": "تمہارا دشمن ہی جڑ کٹا ہے"
+        },
+        {
+          "id": -2006207,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా నీ శత్రువు, వాడే! వేరు తెగిన వాడిగా (వారసుడూ, పేరూ లేకుండా) అయిపోతాడు."
         }
       ]
     }

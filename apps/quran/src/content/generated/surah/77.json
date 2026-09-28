@@ -41,6 +41,16 @@
           "id": 1550060,
           "resource_id": 831,
           "text": "Kasam hai un ( hawaon) ki jo pai dar pai bheji jati hain"
+        },
+        {
+          "id": -1005623,
+          "resource_id": "ur.maududi",
+          "text": "قسم ہے اُن (ہواؤں) کی جو پے در پے بھیجی جاتی ہیں"
+        },
+        {
+          "id": -2005623,
+          "resource_id": 227,
+          "text": "ఒకదాని తరువాత ఒకటి, వరుసగా పంపబడే వాయువుల సాక్షిగా!"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550061,
           "resource_id": 831,
           "text": "Phir toofani raftar se chalti hai"
+        },
+        {
+          "id": -1005624,
+          "resource_id": "ur.maududi",
+          "text": "پھر طوفانی رفتار سے چلتی ہیں"
+        },
+        {
+          "id": -2005624,
+          "resource_id": 227,
+          "text": "మరియు తీవ్రమైన వేగతో వీచే వాయువుల సాక్షిగా!"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550062,
           "resource_id": 831,
           "text": "Aur (baadalon ko) utha kar phailati hai"
+        },
+        {
+          "id": -1005625,
+          "resource_id": "ur.maududi",
+          "text": "اور (بادلوں کو) اٹھا کر پھیلاتی ہیں"
+        },
+        {
+          "id": -2005625,
+          "resource_id": 227,
+          "text": "మరియు మేఘాలను దూరదూరంగా వ్యాపింపజేసే వాయువుల సాక్షిగా!"
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550063,
           "resource_id": 831,
           "text": "Phir (unko) phaad kar juda karti hai"
+        },
+        {
+          "id": -1005626,
+          "resource_id": "ur.maududi",
+          "text": "پھر (اُن کو) پھاڑ کر جدا کرتی ہیں"
+        },
+        {
+          "id": -2005626,
+          "resource_id": 227,
+          "text": "మరియు మంచి చెడులను విశదపరచే (దైవదూతల) సాక్షిగా!"
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550064,
           "resource_id": 831,
           "text": "Phir (dilon mei khuda ki)yaad daalti hai"
+        },
+        {
+          "id": -1005627,
+          "resource_id": "ur.maududi",
+          "text": "پھر (دلوں میں خدا کی) یاد ڈالتی ہیں"
+        },
+        {
+          "id": -2005627,
+          "resource_id": 227,
+          "text": "సందేశాలను ప్రవక్తల వద్దకు తెచ్చే (దైవదూత) సాక్షిగా!"
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1550065,
           "resource_id": 831,
           "text": "Uzar (justification) ke taur par ya daravey ke taur par"
+        },
+        {
+          "id": -1005628,
+          "resource_id": "ur.maududi",
+          "text": "عذر کے طور پر یا ڈراوے کے طور پر"
+        },
+        {
+          "id": -2005628,
+          "resource_id": 227,
+          "text": "సాకుగా లేక హెచ్చరికగా!"
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1550066,
           "resource_id": 831,
           "text": "Jis cheez ka tumse wada kiya ja raha hai woh zaroor waqey honay wali hai"
+        },
+        {
+          "id": -1005629,
+          "resource_id": "ur.maududi",
+          "text": "جس چیز کا تم سے وعدہ کیا جا رہا ہے وہ ضرور واقع ہونے والی ہے"
+        },
+        {
+          "id": -2005629,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, మీకు వాగ్దానం చేయబడినది, జరగవలసి ఉంది."
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1550067,
           "resource_id": 831,
           "text": "Phir jab sitarey maand (extinguish) pad jayengey"
+        },
+        {
+          "id": -1005630,
+          "resource_id": "ur.maududi",
+          "text": "پھر جب ستارے ماند پڑ جائیں گے"
+        },
+        {
+          "id": -2005630,
+          "resource_id": 227,
+          "text": "అప్పుడు ఎప్పడైతే నక్షత్రాలు కాంతి హీనమై పోతాయో!"
         }
       ]
     },
@@ -241,6 +321,16 @@
           "id": 1550068,
           "resource_id": 831,
           "text": "Aur aasmaan phaad diya jayega"
+        },
+        {
+          "id": -1005631,
+          "resource_id": "ur.maududi",
+          "text": "اور آسمان پھاڑ دیا جائے گا"
+        },
+        {
+          "id": -2005631,
+          "resource_id": 227,
+          "text": "మరియు ఆకాశం చీలిపోతుందో!"
         }
       ]
     },
@@ -266,6 +356,16 @@
           "id": 1550069,
           "resource_id": 831,
           "text": "Aur pahad dhunak daaley jayengey (blown away)"
+        },
+        {
+          "id": -1005632,
+          "resource_id": "ur.maududi",
+          "text": "اور پہاڑ دھنک ڈالے جائیں گے"
+        },
+        {
+          "id": -2005632,
+          "resource_id": 227,
+          "text": "మరియు పర్వతాలు పొడిగా మారి, చెల్లాచెదురుగా చేయబడతాయో!"
         }
       ]
     },
@@ -291,6 +391,16 @@
           "id": 1550070,
           "resource_id": 831,
           "text": "Aur Rasoolon ki haziri ka waqt aa pahunchega (us roz woh cheez waqey ho jaeygi)"
+        },
+        {
+          "id": -1005633,
+          "resource_id": "ur.maududi",
+          "text": "اور رسولوں کی حاضری کا وقت آ پہنچے گا (اس روز وہ چیز واقع ہو جائے گی)"
+        },
+        {
+          "id": -2005633,
+          "resource_id": 227,
+          "text": "మరియు ప్రవక్తలు తమ నిర్ణీత సమయంలో సమావేశపరచబడతారో!"
         }
       ]
     },
@@ -316,6 +426,16 @@
           "id": 1550071,
           "resource_id": 831,
           "text": "Kis roz ke liye yeh kaam utha rakha gaya hai"
+        },
+        {
+          "id": -1005634,
+          "resource_id": "ur.maududi",
+          "text": "کس روز کے لیے یہ کام اٹھا رکھا گیا ہے؟"
+        },
+        {
+          "id": -2005634,
+          "resource_id": 227,
+          "text": "ఏ దినానికి గాను, (ఇవన్నీ) వాయిదా వేయబడ్డాయి?"
         }
       ]
     },
@@ -341,6 +461,16 @@
           "id": 1550072,
           "resource_id": 831,
           "text": "Faisley ke roz ke liye"
+        },
+        {
+          "id": -1005635,
+          "resource_id": "ur.maududi",
+          "text": "فیصلے کے روز کے لیے"
+        },
+        {
+          "id": -2005635,
+          "resource_id": 227,
+          "text": "ఆ తీర్పుదినం కొరకా!"
         }
       ]
     },
@@ -366,6 +496,16 @@
           "id": 1550073,
           "resource_id": 831,
           "text": "Aur tumhein kya khabar ke woh faisley ka din kya hai"
+        },
+        {
+          "id": -1005636,
+          "resource_id": "ur.maududi",
+          "text": "اور تمہیں کیا خبر کہ وہ فیصلے کا دن کیا ہے؟"
+        },
+        {
+          "id": -2005636,
+          "resource_id": 227,
+          "text": "మరియు ఆ తీర్పుదినం అంటే ఏమిటో నీకెలా అర్థం కాగలదు?"
         }
       ]
     },
@@ -391,6 +531,16 @@
           "id": 1550074,
           "resource_id": 831,
           "text": "Tabahi hai us din jhutlane walon ke liye"
+        },
+        {
+          "id": -1005637,
+          "resource_id": "ur.maududi",
+          "text": "تباہی ہے اُس دن جھٹلانے والوں کے لیے"
+        },
+        {
+          "id": -2005637,
+          "resource_id": 227,
+          "text": "ఆ రోజు (పునరుత్థాన దినాన్ని) తిరస్కరించే వారికి వినాశమంది!"
         }
       ]
     },
@@ -416,6 +566,16 @@
           "id": 1550075,
           "resource_id": 831,
           "text": "Kya humne aglon ko halaq nahin kiya"
+        },
+        {
+          "id": -1005638,
+          "resource_id": "ur.maududi",
+          "text": "کیا ہم نے اگلوں کو ہلاک نہیں کیا؟"
+        },
+        {
+          "id": -2005638,
+          "resource_id": 227,
+          "text": "ఏమీ? మేము పూర్వీకులను నాశనం చేయలేదా?"
         }
       ]
     },
@@ -441,6 +601,16 @@
           "id": 1550076,
           "resource_id": 831,
           "text": "Phir unhi ke pichey hum baad walon ko chalta karengey"
+        },
+        {
+          "id": -1005639,
+          "resource_id": "ur.maududi",
+          "text": "پھر اُنہی کے پیچھے ہم بعد والوں کو چلتا کریں گے"
+        },
+        {
+          "id": -2005639,
+          "resource_id": 227,
+          "text": "తరువాత రాబోయే వారిని కూడా, మేము వారి వెనక పంపుతాము."
         }
       ]
     },
@@ -466,6 +636,16 @@
           "id": 1550077,
           "resource_id": 831,
           "text": "Mujrimo ke saath hum yahi kuch kiya karte hain"
+        },
+        {
+          "id": -1005640,
+          "resource_id": "ur.maududi",
+          "text": "مجرموں کے ساتھ ہم یہی کچھ کیا کرتے ہیں"
+        },
+        {
+          "id": -2005640,
+          "resource_id": 227,
+          "text": "ఈ విధంగా మేము నేరస్థుల పట్ల వ్యవహరిస్తాము."
         }
       ]
     },
@@ -491,6 +671,16 @@
           "id": 1550078,
           "resource_id": 831,
           "text": "Tabahi hai us din jhutlaney walon ke liye"
+        },
+        {
+          "id": -1005641,
+          "resource_id": "ur.maududi",
+          "text": "تباہی ہے اُس دن جھٹلانے والوں کے لیے"
+        },
+        {
+          "id": -2005641,
+          "resource_id": 227,
+          "text": "ఆ రోజు (పునరుత్థానాన్ని) తిరస్కరించే వారికి వినాశముంది!"
         }
       ]
     },
@@ -516,6 +706,16 @@
           "id": 1550079,
           "resource_id": 831,
           "text": "Kya humne ek hakeer pani se tumhein paida nahin kiya"
+        },
+        {
+          "id": -1005642,
+          "resource_id": "ur.maududi",
+          "text": "کیا ہم نے ایک حقیر پانی سے تمہیں پیدا نہیں کیا"
+        },
+        {
+          "id": -2005642,
+          "resource_id": 227,
+          "text": "ఏమీ? మేము మిమ్మల్ని తుచ్ఛమైన నీటితో (వీర్యబిందువుతో) సృష్టించలేదా?"
         }
       ]
     },
@@ -541,6 +741,16 @@
           "id": 1550080,
           "resource_id": 831,
           "text": "Aur ek mukarrara muddat tak"
+        },
+        {
+          "id": -1005643,
+          "resource_id": "ur.maududi",
+          "text": "اور ایک مقررہ مدت تک،"
+        },
+        {
+          "id": -2005643,
+          "resource_id": 227,
+          "text": "తరువాత మేము దానిని ఒక భద్రమైన స్థానంలో ఉంచాము."
         }
       ]
     },
@@ -566,6 +776,16 @@
           "id": 1550081,
           "resource_id": 831,
           "text": "Usey ek mehfooz jagah thehraye rakkha"
+        },
+        {
+          "id": -1005644,
+          "resource_id": "ur.maududi",
+          "text": "اُسے ایک محفوظ جگہ ٹھیرائے رکھا؟"
+        },
+        {
+          "id": -2005644,
+          "resource_id": 227,
+          "text": "ఒక నిర్ణీత కాలం వరకు."
         }
       ]
     },
@@ -591,6 +811,16 @@
           "id": 1550082,
           "resource_id": 831,
           "text": "To dekho , hum ispar qadir thay, pas hum bahut acchi qudrat rakhne waley hain"
+        },
+        {
+          "id": -1005645,
+          "resource_id": "ur.maududi",
+          "text": "تو دیکھو، ہم اِس پر قادر تھے، پس ہم بہت اچھی قدرت رکھنے والے ہیں"
+        },
+        {
+          "id": -2005645,
+          "resource_id": 227,
+          "text": "ఈ విధంగా మేము నిర్ణయించాము, ఎందుకంటే మేమే ఉత్తమమైన నిర్ణయాలు తీసుకునే వారము."
         }
       ]
     },
@@ -616,6 +846,16 @@
           "id": 1550083,
           "resource_id": 831,
           "text": "Tabahi hai us roz jhutlaney walon ke liye"
+        },
+        {
+          "id": -1005646,
+          "resource_id": "ur.maududi",
+          "text": "تباہی ہے اُس روز جھٹلانے والوں کے لیے"
+        },
+        {
+          "id": -2005646,
+          "resource_id": 227,
+          "text": "ఆ రోజు (పునరుత్థానాన్ని) తిరస్కరించే వారికి వినాశముంది!"
         }
       ]
     },
@@ -641,6 +881,16 @@
           "id": 1550084,
           "resource_id": 831,
           "text": "Kya humne zameen ko sameth kar rakhne wali nahin banaya"
+        },
+        {
+          "id": -1005647,
+          "resource_id": "ur.maududi",
+          "text": "کیا ہم نے زمین کو سمیٹ کر رکھنے والی نہیں بنایا"
+        },
+        {
+          "id": -2005647,
+          "resource_id": 227,
+          "text": "ఏమీ? మేము భూమిని ఒక సమీకరించే స్థానంగా చేయలేదా?"
         }
       ]
     },
@@ -666,6 +916,16 @@
           "id": 1550085,
           "resource_id": 831,
           "text": "Zindon ke liye bhi aur murdon ke liye bhi"
+        },
+        {
+          "id": -1005648,
+          "resource_id": "ur.maududi",
+          "text": "زندوں کے لیے بھی اور مُردوں کے لیے بھی"
+        },
+        {
+          "id": -2005648,
+          "resource_id": 227,
+          "text": "జీవులకూ మరియు మృతులకూను?"
         }
       ]
     },
@@ -691,6 +951,16 @@
           "id": 1550086,
           "resource_id": 831,
           "text": "Aur is mein buland-o-bala pahad jamaye, Aur tumhein meetha pani pilaya"
+        },
+        {
+          "id": -1005649,
+          "resource_id": "ur.maududi",
+          "text": "اور اس میں بلند و بالا پہاڑ جمائے، اور تمہیں میٹھا پانی پلایا؟"
+        },
+        {
+          "id": -2005649,
+          "resource_id": 227,
+          "text": "మరియు దానిలో ఎత్తైన పర్వతాలను స్థిరంగా నిలుపలేదా? మరియు మీకు త్రాగటానికి మంచి నీటిని ప్రసాదించలేదా?"
         }
       ]
     },
@@ -716,6 +986,16 @@
           "id": 1550087,
           "resource_id": 831,
           "text": "Tabahi hai us roz jhutlaney walon ke liye"
+        },
+        {
+          "id": -1005650,
+          "resource_id": "ur.maududi",
+          "text": "تباہی ہے اُس روز جھٹلانے والوں کے لیے"
+        },
+        {
+          "id": -2005650,
+          "resource_id": 227,
+          "text": "ఆ రోజు (పునరుత్థానాన్ని) తిరస్కరించే వారికి వినాశముంది!"
         }
       ]
     },
@@ -741,6 +1021,16 @@
           "id": 1550088,
           "resource_id": 831,
           "text": "Chalo ab usi cheez ki taraf jisey tum jhutlaya karte thay"
+        },
+        {
+          "id": -1005651,
+          "resource_id": "ur.maududi",
+          "text": "چلو اب اُسی چیز کی طرف جسے تم جھٹلایا کرتے تھے"
+        },
+        {
+          "id": -2005651,
+          "resource_id": 227,
+          "text": "(సత్యతిరస్కారులతో ఇలా అనబడుతుంది): \"మీరు తిరస్కరిస్తూ వచ్చిన దాని వైపునకు పొండి!\""
         }
       ]
     },
@@ -766,6 +1056,16 @@
           "id": 1550089,
           "resource_id": 831,
           "text": "Chalo us saaye ki taraf jo teen shaakhon(columns) wala hai"
+        },
+        {
+          "id": -1005652,
+          "resource_id": "ur.maududi",
+          "text": "چلو اُس سائے کی طرف جو تین شاخوں والا ہے"
+        },
+        {
+          "id": -2005652,
+          "resource_id": 227,
+          "text": "(దాని పొగ) మూడు శాఖలుగా చీలిపోయే నీడ వైపునకు పొండి;"
         }
       ]
     },
@@ -791,6 +1091,16 @@
           "id": 1550090,
           "resource_id": 831,
           "text": "Na thandak pahunchane wala aur na aag ki lapat se bachane wala"
+        },
+        {
+          "id": -1005653,
+          "resource_id": "ur.maududi",
+          "text": "نہ ٹھنڈک پہنچانے والا اور نہ آگ کی لپٹ سے بچانے والا"
+        },
+        {
+          "id": -2005653,
+          "resource_id": 227,
+          "text": "కాని అది ఏ విధమైన (చల్ల) నీడనూ ఇవ్వదూ మరియు (నరక) జ్వాలల నుండి కూడా కాపాడదు!"
         }
       ]
     },
@@ -816,6 +1126,16 @@
           "id": 1550091,
           "resource_id": 831,
           "text": "woh aag mahal (castles/fortress) jaisi badi badi chingariyan phenkegi"
+        },
+        {
+          "id": -1005654,
+          "resource_id": "ur.maududi",
+          "text": "وہ آگ محل جیسی بڑی بڑی چنگاریاں پھینکے گی"
+        },
+        {
+          "id": -2005654,
+          "resource_id": 227,
+          "text": "వాస్తవానికి అది పెద్ద పెద్ద మొద్దు వంటి అగ్నికణాలను విసురుతుంది."
         }
       ]
     },
@@ -841,6 +1161,16 @@
           "id": 1550092,
           "resource_id": 831,
           "text": "(Jo uchalti hui yun mehsus hongi )goya ke woh zard ount (camel) hai"
+        },
+        {
+          "id": -1005655,
+          "resource_id": "ur.maududi",
+          "text": "(جو اچھلتی ہوئی یوں محسوس ہوں گی) گویا کہ وہ زرد اونٹ ہیں"
+        },
+        {
+          "id": -2005655,
+          "resource_id": 227,
+          "text": "వాస్తవానికి ఆ అగ్నికణాలు పసుపు పచ్చని ఒంటెల వలే కనిపిస్తాయి."
         }
       ]
     },
@@ -866,6 +1196,16 @@
           "id": 1550093,
           "resource_id": 831,
           "text": "Tabahi hai us roz jhutlaney walon ke liye"
+        },
+        {
+          "id": -1005656,
+          "resource_id": "ur.maududi",
+          "text": "تباہی ہے اُس روز جھٹلانے والوں کے لیے"
+        },
+        {
+          "id": -2005656,
+          "resource_id": 227,
+          "text": "ఆ రోజు (పునరుత్థానాన్ని) తిరస్కరించే వారికి వినాశముంది!"
         }
       ]
     },
@@ -891,6 +1231,16 @@
           "id": 1550094,
           "resource_id": 831,
           "text": "Yeh woh din hai jismein wo na kuch bolengey"
+        },
+        {
+          "id": -1005657,
+          "resource_id": "ur.maududi",
+          "text": "یہ وہ دن ہے جس میں وہ نہ کچھ بولیں گے"
+        },
+        {
+          "id": -2005657,
+          "resource_id": 227,
+          "text": "ఆ దినాన వారు మాట్లాడలేరు."
         }
       ]
     },
@@ -916,6 +1266,16 @@
           "id": 1550095,
           "resource_id": 831,
           "text": "Aur na unhein mauka diya jaeyga ke koi uzr(excuse) pesh karein"
+        },
+        {
+          "id": -1005658,
+          "resource_id": "ur.maududi",
+          "text": "اور نہ اُنہیں موقع دیا جائے گا کہ کوئی عذر پیش کریں"
+        },
+        {
+          "id": -2005658,
+          "resource_id": 227,
+          "text": "మరియు వారికి సాకులు చెప్పుకునే అవకాశం కూడా ఇవ్వబడదు."
         }
       ]
     },
@@ -941,6 +1301,16 @@
           "id": 1550096,
           "resource_id": 831,
           "text": "Tabahi hai us din jhutlaney walon ke liye"
+        },
+        {
+          "id": -1005659,
+          "resource_id": "ur.maududi",
+          "text": "تباہی ہے اُس دن جھٹلانے والوں کے لیے"
+        },
+        {
+          "id": -2005659,
+          "resource_id": 227,
+          "text": "ఆ రోజు (పునరుత్థానాన్ని) తిరస్కరించే వారికి వినాశముంది!"
         }
       ]
     },
@@ -966,6 +1336,16 @@
           "id": 1550097,
           "resource_id": 831,
           "text": "Yeh faisley ka din hai humne tumhein aur tumse pehle guzrey huey logon ko jamaa kardiya hai"
+        },
+        {
+          "id": -1005660,
+          "resource_id": "ur.maududi",
+          "text": "یہ فیصلے کا دن ہے ہم نے تمہیں اور تم سے پہلے گزرے ہوئے لوگوں کو جمع کر دیا ہے"
+        },
+        {
+          "id": -2005660,
+          "resource_id": 227,
+          "text": "అది తీర్పుదినమై ఉంటుంది! మేము మిమ్మల్ని మరియు మీ పూర్వీకులను సమావేశపరచి ఉంటాము!"
         }
       ]
     },
@@ -991,6 +1371,16 @@
           "id": 1550098,
           "resource_id": 831,
           "text": "Ab agar koi chaal tum chal sakte ho to mere muqabley mein chal dekho"
+        },
+        {
+          "id": -1005661,
+          "resource_id": "ur.maududi",
+          "text": "اب اگر کوئی چال تم چل سکتے ہو تو میرے مقابلہ میں چل دیکھو"
+        },
+        {
+          "id": -2005661,
+          "resource_id": 227,
+          "text": "కావున మీ వద్ద ఏదైనా పన్నాగముంటే దానిని పన్నండి."
         }
       ]
     },
@@ -1016,6 +1406,16 @@
           "id": 1550099,
           "resource_id": 831,
           "text": "Tabahi hai us din jhutlaney walon ke liye"
+        },
+        {
+          "id": -1005662,
+          "resource_id": "ur.maududi",
+          "text": "تباہی ہے اُس دن جھٹلانے والوں کے لیے"
+        },
+        {
+          "id": -2005662,
+          "resource_id": 227,
+          "text": "ఆ రోజు (పునరుత్థానాన్ని) తిరస్కరించే వారికి వినాశముంది!"
         }
       ]
     },
@@ -1041,6 +1441,16 @@
           "id": 1550100,
           "resource_id": 831,
           "text": "Muttaqi log aaj saayon aur chashmon mein hai"
+        },
+        {
+          "id": -1005663,
+          "resource_id": "ur.maududi",
+          "text": "متقی لوگ آج سایوں اور چشموں میں ہیں"
+        },
+        {
+          "id": -2005663,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా భయభక్తులు గలవారు (ఆ రోజు చల్లని) నీడలలో చెలమల దగ్గర ఉంటారు."
         }
       ]
     },
@@ -1066,6 +1476,16 @@
           "id": 1550101,
           "resource_id": 831,
           "text": "Aur jo phal woh chahein (unke liye hazir hai)"
+        },
+        {
+          "id": -1005664,
+          "resource_id": "ur.maududi",
+          "text": "اور جو پھل وہ چاہیں (اُن کے لیے حاضر ہیں)"
+        },
+        {
+          "id": -2005664,
+          "resource_id": 227,
+          "text": "మరియు వారికి వారు కోరే ఫలాలు లభిస్తాయి."
         }
       ]
     },
@@ -1091,6 +1511,16 @@
           "id": 1550102,
           "resource_id": 831,
           "text": "Khao aur piyo mazey se apne un aamal ke siley mein jo tum karte rahey ho"
+        },
+        {
+          "id": -1005665,
+          "resource_id": "ur.maududi",
+          "text": "کھاؤ اور پیو مزے سے اپنے اُن اعمال کے صلے میں جو تم کرتے رہے ہو"
+        },
+        {
+          "id": -2005665,
+          "resource_id": 227,
+          "text": "(వారితో ఇలా అనబడుతుంది): \"మీరు చేస్తూ ఉండిన కర్మలను ఫలితంగా హాయిగా తినండి, త్రాగండి!\""
         }
       ]
     },
@@ -1116,6 +1546,16 @@
           "id": 1550103,
           "resource_id": 831,
           "text": "Hum neik logon ko aisi hi jaza detay hain"
+        },
+        {
+          "id": -1005666,
+          "resource_id": "ur.maududi",
+          "text": "ہم نیک لوگوں کو ایسی ہی جزا دیتے ہیں"
+        },
+        {
+          "id": -2005666,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, మేము సజ్జనులకు ఇలాంటి ప్రతిఫలమే ఇస్తాము."
         }
       ]
     },
@@ -1141,6 +1581,16 @@
           "id": 1550104,
           "resource_id": 831,
           "text": "Tabahi hai us roz jhutlaney walon ke liye"
+        },
+        {
+          "id": -1005667,
+          "resource_id": "ur.maududi",
+          "text": "تباہی ہے اُس روز جھٹلانے والوں کے لیے"
+        },
+        {
+          "id": -2005667,
+          "resource_id": 227,
+          "text": "ఆ రోజు (పునరుత్థానాన్ని) తిరస్కరించే వారికి వినాశముంది!"
         }
       ]
     },
@@ -1166,6 +1616,16 @@
           "id": 1550105,
           "resource_id": 831,
           "text": "Kha lo aur mazey karlo thodey din, haqeeqat mein tum log mujrim ho"
+        },
+        {
+          "id": -1005668,
+          "resource_id": "ur.maududi",
+          "text": "کھا لو اور مزے کر لو تھوڑے دن حقیقت میں تم لوگ مجرم ہو"
+        },
+        {
+          "id": -2005668,
+          "resource_id": 227,
+          "text": "(ఓ సత్యతిరస్కారులారా!) మీరు కొంతకాలం తినండి, సుఖాలు అనుభవించండి. నిశ్చయంగా, మీరు నేరస్థులు!"
         }
       ]
     },
@@ -1191,6 +1651,16 @@
           "id": 1550106,
           "resource_id": 831,
           "text": "Tabahi hai us roz jhutlaney walon ke liye"
+        },
+        {
+          "id": -1005669,
+          "resource_id": "ur.maududi",
+          "text": "تباہی ہے اُس روز جھٹلانے والوں کے لیے"
+        },
+        {
+          "id": -2005669,
+          "resource_id": 227,
+          "text": "ఆ రోజు (పునరుత్థానాన్ని) తిరస్కరించే వారికి వినాశముంది!"
         }
       ]
     },
@@ -1216,6 +1686,16 @@
           "id": 1550107,
           "resource_id": 831,
           "text": "Jab inse kaha jata hai ke (Allah ke aagey) jhuko to nahin jhuktey"
+        },
+        {
+          "id": -1005670,
+          "resource_id": "ur.maududi",
+          "text": "جب اِن سے کہا جاتا ہے کہ (اللہ کے آگے) جھکو تو نہیں جھکتے"
+        },
+        {
+          "id": -2005670,
+          "resource_id": 227,
+          "text": "మరియు వారితో: \"(అల్లాహ్ ముందు) వంగండి (రుకూఉ చేయండి).\" అని అన్నప్పుడు, వారు వంగలేదు."
         }
       ]
     },
@@ -1241,6 +1721,16 @@
           "id": 1550108,
           "resource_id": 831,
           "text": "Tabahi hai uss roz jhutlaney walon ke liye"
+        },
+        {
+          "id": -1005671,
+          "resource_id": "ur.maududi",
+          "text": "تباہی ہے اُس روز جھٹلانے والوں کے لیے"
+        },
+        {
+          "id": -2005671,
+          "resource_id": 227,
+          "text": "ఆ రోజు (పునరుత్థానాన్ని) తిరస్కరించే వారికి వినాశముంది!"
         }
       ]
     },
@@ -1266,6 +1756,16 @@
           "id": 1550109,
           "resource_id": 831,
           "text": "Ab is (Quran) ke baad aur kaunsa kalaam aisa ho sakta hai jispar yeh iman layein"
+        },
+        {
+          "id": -1005672,
+          "resource_id": "ur.maududi",
+          "text": "اب اِس (قرآن) کے بعد اور کونسا کلام ایسا ہو سکتا ہے جس پر یہ ایمان لائیں؟"
+        },
+        {
+          "id": -2005672,
+          "resource_id": 227,
+          "text": "దీని (ఈ ఖుర్ఆన్) తరువాత ఇక వారు మరెలాంటి సందేశాన్నివిశ్వసిస్తారు?"
         }
       ]
     }

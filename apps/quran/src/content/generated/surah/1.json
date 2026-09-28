@@ -41,6 +41,16 @@
           "id": 1544438,
           "resource_id": 831,
           "text": "Allah ke naam se jo Rehman o Raheem hai"
+        },
+        {
+          "id": -1000001,
+          "resource_id": "ur.maududi",
+          "text": "اللہ کے نام سے جو رحمان و رحیم ہے"
+        },
+        {
+          "id": -2000001,
+          "resource_id": 227,
+          "text": "అనంత కరుణామయుడు అపార కరుణా ప్రదాత అయిన అల్లాహ్ పేరుతో"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1544439,
           "resource_id": 831,
           "text": "Tareef Allah hi ke liye hai jo tamaam qayinaat ka Rubb hai"
+        },
+        {
+          "id": -1000002,
+          "resource_id": "ur.maududi",
+          "text": "تعریف اللہ ہی کے لیے ہے جو تمام کائنات کا رب ہے"
+        },
+        {
+          "id": -2000002,
+          "resource_id": 227,
+          "text": "సర్వలోకాలకు ప్రభువైన అల్లాహ్ మాత్రమే సమస్త స్తోత్రాలకు అర్హుడు."
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1544440,
           "resource_id": 831,
           "text": "Rehman aur Raheem hai"
+        },
+        {
+          "id": -1000003,
+          "resource_id": "ur.maududi",
+          "text": "رحمان اور رحیم ہے"
+        },
+        {
+          "id": -2000003,
+          "resource_id": 227,
+          "text": "అనంత కరుణామయుడు, అపార కరుణా ప్రదాత"
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1544441,
           "resource_id": 831,
           "text": "Roz e jaza ka maalik hai"
+        },
+        {
+          "id": -1000004,
+          "resource_id": "ur.maududi",
+          "text": "روز جزا کا مالک ہے"
+        },
+        {
+          "id": -2000004,
+          "resource_id": 227,
+          "text": "తీర్పుదినానికి స్వామి"
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1544442,
           "resource_id": 831,
           "text": "Hum teri hi ibadat karte hain aur tujh hi se madad maangte hain"
+        },
+        {
+          "id": -1000005,
+          "resource_id": "ur.maududi",
+          "text": "ہم تیری ہی عبادت کرتے ہیں اور تجھی سے مدد مانگتے ہیں"
+        },
+        {
+          "id": -2000005,
+          "resource_id": 227,
+          "text": "మేము నిన్నే ఆరాధిస్తున్నాము మరియు నీ సహాయాన్నే అర్థిస్తున్నాము"
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1544443,
           "resource_id": 831,
           "text": "Humein seedha raasta dikha"
+        },
+        {
+          "id": -1000006,
+          "resource_id": "ur.maududi",
+          "text": "ہمیں سیدھا راستہ دکھا"
+        },
+        {
+          "id": -2000006,
+          "resource_id": 227,
+          "text": "మాకు ఋజుమార్గం వైపునకు మార్గదర్శకత్వం చేయి"
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1544444,
           "resource_id": 831,
           "text": "Un logon ka raasta jinpar tu nay inam farmaya, jo maatoob nahin huey (na unka jinpar tera gazab hota raha) , jo bhatke huey nahin hain"
+        },
+        {
+          "id": -1000007,
+          "resource_id": "ur.maududi",
+          "text": "اُن لوگوں کا راستہ جن پر تو نے انعام فرمایا، جو معتوب نہیں ہوئے، جو بھٹکے ہوئے نہیں ہیں"
+        },
+        {
+          "id": -2000007,
+          "resource_id": 227,
+          "text": "నీవు అనుగ్రహించిన వారి మార్గం మాత్రమే (చూపు) నీ ఆగ్రహానికి గురి అయిన వారి (మార్గం కానీ) లేక మార్గభ్రష్టులైన వారి (మార్గం కానీ) కాదు"
         }
       ]
     }

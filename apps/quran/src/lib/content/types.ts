@@ -25,7 +25,12 @@ export type Chapter = {
 
 export type VerseTranslation = {
   id: number;
-  resource_id: number;
+  /** A Quran Foundation/Quran.com numeric resource id for translations
+      synced from that shared numbering space (see scripts/sync-content.mjs
+      and scripts/sync-secondary-translations.mjs), or a string identifier
+      for one merged in from a differently-shaped provider (e.g. Al Quran
+      Cloud's "ur.maududi", which has no numeric id at all). */
+  resource_id: number | string;
   text: string;
 };
 

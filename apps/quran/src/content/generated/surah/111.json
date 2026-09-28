@@ -41,6 +41,16 @@
           "id": 1550654,
           "resource_id": 831,
           "text": "Toot gaye Abu Lahab ke haath aur na-murad ho gaya woh"
+        },
+        {
+          "id": -1006217,
+          "resource_id": "ur.maududi",
+          "text": "ٹوٹ گئے ابولہب کے ہاتھ اور نامراد ہو گیا وہ"
+        },
+        {
+          "id": -2006217,
+          "resource_id": 227,
+          "text": "అబూ లహబ్ రెండు చేతులూ నశించుగాక మరియు అతడు కూడా నశించి పోవు గాక!"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550655,
           "resource_id": 831,
           "text": "Uska maal aur jo kuch us ne kamaya woh uske kisi kaam na aaya"
+        },
+        {
+          "id": -1006218,
+          "resource_id": "ur.maududi",
+          "text": "اُس کا مال اور جو کچھ اس نے کمایا وہ اُس کے کسی کام نہ آیا"
+        },
+        {
+          "id": -2006218,
+          "resource_id": 227,
+          "text": "అతడి ధనం మరియు అతడి సంపాదన (సంతానం) అతడికి ఏ మాత్రం పనికి రావు!"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550656,
           "resource_id": 831,
           "text": "Zaroor woh shola zan Aag mei dala jayega"
+        },
+        {
+          "id": -1006219,
+          "resource_id": "ur.maududi",
+          "text": "ضرور وہ شعلہ زن آگ میں ڈالا جائے گا"
+        },
+        {
+          "id": -2006219,
+          "resource_id": 227,
+          "text": "అతడు ప్రజ్వలించే నరకాగ్నిలో కాల్చబడతాడు!"
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550657,
           "resource_id": 831,
           "text": "Aur (us ke saath) us ki joru(wife) bhi lagai bujhai karne wali"
+        },
+        {
+          "id": -1006220,
+          "resource_id": "ur.maududi",
+          "text": "اور (اُس کے ساتھ) اُس کی جورو بھی، لگائی بجھائی کرنے والی"
+        },
+        {
+          "id": -2006220,
+          "resource_id": 227,
+          "text": "మరియు అతడి భార్య కూడా! కట్టెలు మోసే (చాడీలు చెప్పి కలహాలు రేకెత్తించే) స్త్రీ!"
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550658,
           "resource_id": 831,
           "text": "Us ki gardan(neck) mein moonj ki rassi hogi"
+        },
+        {
+          "id": -1006221,
+          "resource_id": "ur.maududi",
+          "text": "اُس کی گردن میں مونجھ کی رسی ہوگی"
+        },
+        {
+          "id": -2006221,
+          "resource_id": 227,
+          "text": "ఆమె మెడలో బాగా పేనిని ఖర్జూరపునార త్రాడు (మసద్) ఉంటుంది."
         }
       ]
     }

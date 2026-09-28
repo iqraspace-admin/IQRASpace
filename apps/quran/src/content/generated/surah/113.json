@@ -41,6 +41,16 @@
           "id": 1550663,
           "resource_id": 831,
           "text": "Kaho main panaah maangta hoon subah ke Rubb ki"
+        },
+        {
+          "id": -1006226,
+          "resource_id": "ur.maududi",
+          "text": "کہو، میں پناہ مانگتا ہوں صبح کے رب کی"
+        },
+        {
+          "id": -2006226,
+          "resource_id": 227,
+          "text": "ఇలా అను: \"నేను ఉదయ కాలపు ప్రభువు అయిన (అల్లాహ్) శరణు వేడుకుంటున్నాను."
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550664,
           "resource_id": 831,
           "text": "Har us cheez ke shar se jo usne paida ki hai"
+        },
+        {
+          "id": -1006227,
+          "resource_id": "ur.maududi",
+          "text": "ہر اُس چیز کے شر سے جو اُس نے پیدا کی ہے"
+        },
+        {
+          "id": -2006227,
+          "resource_id": 227,
+          "text": "ఆయన సృష్టించిన ప్రతిదాని కీడు నుండి;"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550665,
           "resource_id": 831,
           "text": "Aur raat ki tareeki ke sharr se jab ke woh chaa jaye"
+        },
+        {
+          "id": -1006228,
+          "resource_id": "ur.maududi",
+          "text": "اور رات کی تاریکی کے شر سے جب کہ وہ چھا جائے"
+        },
+        {
+          "id": -2006228,
+          "resource_id": 227,
+          "text": "మరియు చిమ్మచీకటి కీడు నుండి, ఎప్పుడైతే అది క్రమ్ముకుంటుందో!"
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550666,
           "resource_id": 831,
           "text": "Aur girhon mein phoonkne walon (ya waliyon) ke sharr se"
+        },
+        {
+          "id": -1006229,
+          "resource_id": "ur.maududi",
+          "text": "اور گرہوں میں پھونکنے والوں (یا والیوں) کے شر سے"
+        },
+        {
+          "id": -2006229,
+          "resource_id": 227,
+          "text": "మరియు ముడుల మీద మంత్రించి ఊదే వారి కీడు నుండి;"
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550667,
           "resource_id": 831,
           "text": "Aur hasid(envies) ke sharr se jab ke woh hasad(envy) karey"
+        },
+        {
+          "id": -1006230,
+          "resource_id": "ur.maududi",
+          "text": "اور حاسد کے شر سے جب کہ وہ حسد کرے"
+        },
+        {
+          "id": -2006230,
+          "resource_id": 227,
+          "text": "మరియు అసూయపరుడి కీడు నుండి, ఎప్పుడైతే అతడు అసూయపడతాడో!\""
         }
       ]
     }

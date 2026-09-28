@@ -41,6 +41,16 @@
           "id": 1550595,
           "resource_id": 831,
           "text": "Azeem hadisa"
+        },
+        {
+          "id": -1006158,
+          "resource_id": "ur.maududi",
+          "text": "عظیم حادثہ!"
+        },
+        {
+          "id": -2006158,
+          "resource_id": 227,
+          "text": "ఆ! అదరగొట్టే మహా ఉపద్రవం!"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550596,
           "resource_id": 831,
           "text": "Kya hai woh azeem hadisa"
+        },
+        {
+          "id": -1006159,
+          "resource_id": "ur.maududi",
+          "text": "کیا ہے وہ عظیم حادثہ؟"
+        },
+        {
+          "id": -2006159,
+          "resource_id": 227,
+          "text": "ఏమిటా అదరగొట్టే మహా ఉపద్రవం?"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550597,
           "resource_id": 831,
           "text": "Tum kya jano ke woh azeem hadisa kya hai"
+        },
+        {
+          "id": -1006160,
+          "resource_id": "ur.maududi",
+          "text": "تم کیا جانو کہ وہ عظیم حادثہ کیا ہے؟"
+        },
+        {
+          "id": -2006160,
+          "resource_id": 227,
+          "text": "మరియు ఆ అదరగొట్టే మహా ఉపద్రవం, అంటే ఏమిటో నీకేం తెలుసు?"
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550598,
           "resource_id": 831,
           "text": "woh din jab log bhikre huey parwano ki tarah"
+        },
+        {
+          "id": -1006161,
+          "resource_id": "ur.maududi",
+          "text": "وہ دن جب لوگ بکھرے ہوئے پروانوں کی طرح"
+        },
+        {
+          "id": -2006161,
+          "resource_id": 227,
+          "text": "ఆ రోజు మానవులు చెల్లాచెదురైన చిమ్మెటల వలే అయిపోతారు."
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550599,
           "resource_id": 831,
           "text": "Aur pahad rang bi rangi dhunki hui oon ke tarah hongey"
+        },
+        {
+          "id": -1006162,
+          "resource_id": "ur.maududi",
+          "text": "اور پہاڑ رنگ برنگ کے دھنکے ہوئے اون کی طرح ہوں گے"
+        },
+        {
+          "id": -2006162,
+          "resource_id": 227,
+          "text": "మరియు పర్వతాలు రంగు రంగుల ఏకిన దూది వలే అయి పోతాయి."
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1550600,
           "resource_id": 831,
           "text": "Phir jiske palade bhari hongey"
+        },
+        {
+          "id": -1006163,
+          "resource_id": "ur.maududi",
+          "text": "پھر جس کے پلڑے بھاری ہوں گے"
+        },
+        {
+          "id": -2006163,
+          "resource_id": 227,
+          "text": "అప్పుడు ఎవడి త్రాసుపళ్ళాలు (సత్కార్యాలతో) బరువుగా ఉంటాయో!"
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1550601,
           "resource_id": 831,
           "text": "Woh dil pasand aish mei hoga"
+        },
+        {
+          "id": -1006164,
+          "resource_id": "ur.maududi",
+          "text": "وہ دل پسند عیش میں ہوگا"
+        },
+        {
+          "id": -2006164,
+          "resource_id": 227,
+          "text": "అతడు (స్వర్గంలో) సుఖవంతమైన జీవితం గడుపుతాడు."
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1550602,
           "resource_id": 831,
           "text": "Aur jis kay palade halke hongey"
+        },
+        {
+          "id": -1006165,
+          "resource_id": "ur.maududi",
+          "text": "اور جس کے پلڑے ہلکے ہوں گے"
+        },
+        {
+          "id": -2006165,
+          "resource_id": 227,
+          "text": "మరియు ఎవడి (సత్కార్యాల) త్రాసు పళ్ళాలు తేలికగా ఉంటాయో!"
         }
       ]
     },
@@ -241,6 +321,16 @@
           "id": 1550603,
           "resource_id": 831,
           "text": "Uski jaye qarar gehri khayi hogi"
+        },
+        {
+          "id": -1006166,
+          "resource_id": "ur.maududi",
+          "text": "اس کی جائے قرار گہری کھائی ہوگی"
+        },
+        {
+          "id": -2006166,
+          "resource_id": 227,
+          "text": "అతని నివాసం అధః పాతాళమే."
         }
       ]
     },
@@ -266,6 +356,16 @@
           "id": 1550604,
           "resource_id": 831,
           "text": "Aur tumhein kya khabar kay woh kya cheez hai"
+        },
+        {
+          "id": -1006167,
+          "resource_id": "ur.maududi",
+          "text": "اور تمہیں کیا خبر کہ وہ کیا چیز ہے؟"
+        },
+        {
+          "id": -2006167,
+          "resource_id": 227,
+          "text": "మరియు అది ఏమిటో నీకేం తెలుసు?"
         }
       ]
     },
@@ -291,6 +391,16 @@
           "id": 1550605,
           "resource_id": 831,
           "text": "Bhadakti hui Aag"
+        },
+        {
+          "id": -1006168,
+          "resource_id": "ur.maududi",
+          "text": "بھڑکتی ہوئی آگ"
+        },
+        {
+          "id": -2006168,
+          "resource_id": 227,
+          "text": "అదొక భగభగమండే అగ్ని (గుండం)."
         }
       ]
     }

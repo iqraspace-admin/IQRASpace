@@ -41,6 +41,16 @@
           "id": 1549113,
           "resource_id": 831,
           "text": "Kasam hai un hawaon ki jo gard (dust) udane wali hain"
+        },
+        {
+          "id": -1004676,
+          "resource_id": "ur.maududi",
+          "text": "قسم ہے اُن ہواؤں کی جو گرد اڑانے والی ہیں"
+        },
+        {
+          "id": -2004676,
+          "resource_id": 227,
+          "text": "దుమ్ము ఎగురవేసే వాటి (గాలుల) సాక్షిగా!"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1549114,
           "resource_id": 831,
           "text": "Phir pani se ladeh huey badal uthane wali hain"
+        },
+        {
+          "id": -1004677,
+          "resource_id": "ur.maududi",
+          "text": "پھر پانی سے لدے ہوئے بادل اٹھانے والی ہیں"
+        },
+        {
+          "id": -2004677,
+          "resource_id": 227,
+          "text": "మరియు (నీటి) భారాన్ని మోసే (మేఘాల);"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1549115,
           "resource_id": 831,
           "text": "Phir subuk raftari (smoothly speed along) ke saath chalne wali hain"
+        },
+        {
+          "id": -1004678,
+          "resource_id": "ur.maududi",
+          "text": "پھر سبک رفتاری کے ساتھ چلنے والی ہیں"
+        },
+        {
+          "id": -2004678,
+          "resource_id": 227,
+          "text": "మరియు సముద్రంలో సులభంగా తేలియాడే (ఓడల);"
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1549116,
           "resource_id": 831,
           "text": "Phir ek baday kaam (barish) ki taqseem karne wali hain"
+        },
+        {
+          "id": -1004679,
+          "resource_id": "ur.maududi",
+          "text": "پھر ایک بڑے کام (بارش) کی تقسیم کرنے والی ہیں"
+        },
+        {
+          "id": -2004679,
+          "resource_id": 227,
+          "text": "మరియు (ఆయన) ఆజ్ఞతో (అనుగ్రహాలను) పంచిపెట్టే (దేవదూతల సాక్షిగా);"
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1549117,
           "resource_id": 831,
           "text": "Haqq yeh hai ke jis cheez ka tumhein khauf dilaya ja raha hai woh sacchi hai"
+        },
+        {
+          "id": -1004680,
+          "resource_id": "ur.maududi",
+          "text": "حق یہ ہے کہ جس چیز کا تمہیں خوف دلایا جا رہا ہے وہ سچی ہے"
+        },
+        {
+          "id": -2004680,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, మీకు చేయబడ్డ వాగ్దానం సత్యం."
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1549118,
           "resource_id": 831,
           "text": "Aur jazaa-e-aamal (recompense) zaroor pesh aani hai"
+        },
+        {
+          "id": -1004681,
+          "resource_id": "ur.maududi",
+          "text": "اور جزائے اعمال ضرور پیش آنی ہے"
+        },
+        {
+          "id": -2004681,
+          "resource_id": 227,
+          "text": "మరియు నిశ్చయంగా తీర్పు రానున్నది."
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1549119,
           "resource_id": 831,
           "text": "Kasam hai muttafarriq shakalon(numerous forms) waley aasmaan ki"
+        },
+        {
+          "id": -1004682,
+          "resource_id": "ur.maududi",
+          "text": "قسم ہے متفرق شکلوں والے آسمان کی"
+        },
+        {
+          "id": -2004682,
+          "resource_id": 227,
+          "text": "మార్గాలతో నిండిన ఆకాశం సాక్షిగా!"
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1549120,
           "resource_id": 831,
           "text": "(Aakhirat ke barey mein) tumhari baat ek durse se mukhtalif hai"
+        },
+        {
+          "id": -1004683,
+          "resource_id": "ur.maududi",
+          "text": "(آخرت کے بارے میں) تمہاری بات ایک دوسرے سے مختلف ہے"
+        },
+        {
+          "id": -2004683,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, మీరు భేదాభిప్రాయాలలో పడి ఉన్నారు."
         }
       ]
     },
@@ -241,6 +321,16 @@
           "id": 1549121,
           "resource_id": 831,
           "text": "Ussey wahi bargashta (deluded/averse) hota hai jo haqq se phira hua hai"
+        },
+        {
+          "id": -1004684,
+          "resource_id": "ur.maududi",
+          "text": "اُس سے وہی برگشتہ ہوتا ہے جو حق سے پھرا ہوا ہے"
+        },
+        {
+          "id": -2004684,
+          "resource_id": 227,
+          "text": "(సత్యం నుండి) మరలింపబడిన వాడే, మోసగింపబడిన వాడు."
         }
       ]
     },
@@ -266,6 +356,16 @@
           "id": 1549122,
           "resource_id": 831,
           "text": "Maarey gaye qayas-o-gumaan (conjecturers) se hukum lagane wale"
+        },
+        {
+          "id": -1004685,
+          "resource_id": "ur.maududi",
+          "text": "مارے گئے قیاس و گمان سے حکم لگانے والے"
+        },
+        {
+          "id": -2004685,
+          "resource_id": 227,
+          "text": "ఆధారం లేని అభిప్రాయాలు గలవారే నాశనం చేయబడేవారు!"
         }
       ]
     },
@@ -291,6 +391,16 @@
           "id": 1549123,
           "resource_id": 831,
           "text": "Jo jihalat(ignorance) mein garq aur gaflat mein madhosh hain"
+        },
+        {
+          "id": -1004686,
+          "resource_id": "ur.maududi",
+          "text": "جو جہالت میں غرق اور غفلت میں مدہوش ہیں"
+        },
+        {
+          "id": -2004686,
+          "resource_id": 227,
+          "text": "ఎవరైతే నిర్లక్ష్యంలో పడి అశ్రద్ధగా ఉన్నారో!"
         }
       ]
     },
@@ -316,6 +426,16 @@
           "id": 1549124,
           "resource_id": 831,
           "text": "Puchte hain aakhir woh roz-e-jaza kab aayega"
+        },
+        {
+          "id": -1004687,
+          "resource_id": "ur.maududi",
+          "text": "پوچھتے ہیں آخر وہ روز جزاء کب آئے گا؟"
+        },
+        {
+          "id": -2004687,
+          "resource_id": 227,
+          "text": "వారు ఇలా అడుగుతున్నారు: \"తీర్పుదినం ఎప్పుడు రానున్నది?\""
         }
       ]
     },
@@ -341,6 +461,16 @@
           "id": 1549125,
           "resource_id": 831,
           "text": "Woh us roz aayega jab yeh log aag par tapaye jayenge"
+        },
+        {
+          "id": -1004688,
+          "resource_id": "ur.maududi",
+          "text": "وہ اُس روز آئے گا جب یہ لوگ آگ پر تپائے جائیں گے"
+        },
+        {
+          "id": -2004688,
+          "resource_id": 227,
+          "text": "ఆ దినమున, వారు అగ్నితో దహింపబడతారు (పరీక్షింపబడతారు)."
         }
       ]
     },
@@ -366,6 +496,16 @@
           "id": 1549126,
           "resource_id": 831,
           "text": "(Insey kaha jayega) ab chakkho maza apne fitne ka, yeh wahi cheez hai jiske liye tum jaldi macha rahey thay"
+        },
+        {
+          "id": -1004689,
+          "resource_id": "ur.maududi",
+          "text": "(اِن سے کہا جائے گا) اب چکھو مزا اپنے فتنے کا یہ وہی چیز ہے جس کے لیے تم جلدی مچا رہے تھے"
+        },
+        {
+          "id": -2004689,
+          "resource_id": 227,
+          "text": "(వారితో ఇలా అనబడుతుంది): \"మీ పరీక్షను రుచి చూడండి! మీరు దీని కొరకే తొందర పెట్టేవారు!\""
         }
       ]
     },
@@ -391,6 +531,16 @@
           "id": 1549127,
           "resource_id": 831,
           "text": "Albatta muttaqi log us roz baaghon(gardens) aur chashmo (fountains) mein hongey"
+        },
+        {
+          "id": -1004690,
+          "resource_id": "ur.maududi",
+          "text": "البتہ متقی لوگ اُس روز باغوں اور چشموں میں ہوں گے"
+        },
+        {
+          "id": -2004690,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, దైవభీతి గలవారు చెలమలు గల స్వర్గవనాలలో ఉంటారు."
         }
       ]
     },
@@ -416,6 +566,16 @@
           "id": 1549128,
           "resource_id": 831,
           "text": "Jo kuch unka Rubb unhein dega usey khushi khushi le rahey hongey. Woh us din ke aane se pehle neikukar (doers of good) thay"
+        },
+        {
+          "id": -1004691,
+          "resource_id": "ur.maududi",
+          "text": "جو کچھ اُن کا رب انہیں دے گا اسے خوشی خوشی لے رہے ہوں گے وہ اُس دن کے آنے سے پہلے نیکو کار تھے"
+        },
+        {
+          "id": -2004691,
+          "resource_id": 227,
+          "text": "తమ ప్రభువు తమకు ప్రసాదించిన వాటితో సంతోషపడుతూ! నిశ్చయంగా వారు అంతకు పూర్వం సజ్జనులై ఉండేవారు."
         }
       ]
     },
@@ -441,6 +601,16 @@
           "id": 1549129,
           "resource_id": 831,
           "text": "Raaton(nights) ko kam hi sotey(sleep) thay"
+        },
+        {
+          "id": -1004692,
+          "resource_id": "ur.maududi",
+          "text": "راتوں کو کم ہی سوتے تھے"
+        },
+        {
+          "id": -2004692,
+          "resource_id": 227,
+          "text": "వారు రాత్రివేళలో చాలా తక్కువగా నిద్రపోయేవారు."
         }
       ]
     },
@@ -466,6 +636,16 @@
           "id": 1549130,
           "resource_id": 831,
           "text": "Phir wahi raat ke pichle peharon mein maafi maangte thay"
+        },
+        {
+          "id": -1004693,
+          "resource_id": "ur.maududi",
+          "text": "پھر وہی رات کے پچھلے پہروں میں معافی مانگتے تھے"
+        },
+        {
+          "id": -2004693,
+          "resource_id": 227,
+          "text": "మరియు వారు రాత్రి చివరి ఘడియలలో క్షమాపణ వేడుకునే వారు."
         }
       ]
     },
@@ -491,6 +671,16 @@
           "id": 1549131,
           "resource_id": 831,
           "text": "Aur unke maalon(wealth) mein haqq tha saahil( maangne waley) aur mehroom(destitute) ke liye"
+        },
+        {
+          "id": -1004694,
+          "resource_id": "ur.maududi",
+          "text": "اور اُن کے مالوں میں حق تھا سائل اور محروم کے لیے"
+        },
+        {
+          "id": -2004694,
+          "resource_id": 227,
+          "text": "మరియు వారి సంపదలో యాచించే వారికి మరియు ఆవశ్యకత గలవారికి హక్కు ఉంటుంది."
         }
       ]
     },
@@ -516,6 +706,16 @@
           "id": 1549132,
           "resource_id": 831,
           "text": "Zameen mein bahut si nishaniyan hain yaqeen laney walon ke liye"
+        },
+        {
+          "id": -1004695,
+          "resource_id": "ur.maududi",
+          "text": "زمین میں بہت سی نشانیاں ہیں یقین لانے والوں کے لیے"
+        },
+        {
+          "id": -2004695,
+          "resource_id": 227,
+          "text": "మరియు భూమిలో కూడా నమ్మేవారి కొరకు ఎన్నో నిదర్శనాలు (ఆయాత్) ఉన్నాయి."
         }
       ]
     },
@@ -541,6 +741,16 @@
           "id": 1549133,
           "resource_id": 831,
           "text": "Aur khud tumhare apne wajood mein hain, kya tumko soojhta nahin"
+        },
+        {
+          "id": -1004696,
+          "resource_id": "ur.maududi",
+          "text": "اور خود تمہارے اپنے وجود میں ہیں کیا تم کو سوجھتا نہیں؟"
+        },
+        {
+          "id": -2004696,
+          "resource_id": 227,
+          "text": "మరియు స్వయంగా మీలో కూడా ఉన్నాయి. ఏమీ? మీరు చూడలేరా?"
         }
       ]
     },
@@ -566,6 +776,16 @@
           "id": 1549134,
           "resource_id": 831,
           "text": "Aasman hi mein hai tumhara rizq bhi aur woh cheez bhi jiska tumse waada kiya ja raha hai"
+        },
+        {
+          "id": -1004697,
+          "resource_id": "ur.maududi",
+          "text": "آسمان ہی میں ہے تمہارا رزق بھی اور وہ چیز بھی جس کا تم سے وعدہ کیا جا رہا ہے"
+        },
+        {
+          "id": -2004697,
+          "resource_id": 227,
+          "text": "మరియు ఆకాశంలో మీ జీవనోపాధి మరియు మీకు వాగ్దానం చేయబడినది ఉంది."
         }
       ]
     },
@@ -591,6 +811,16 @@
           "id": 1549135,
           "resource_id": 831,
           "text": "Pas kasam hai aasmaan aur zameen ke maalik ki, yeh baat haqq hai, aisi hi yaqeeni jaise tum bol rahey ho"
+        },
+        {
+          "id": -1004698,
+          "resource_id": "ur.maududi",
+          "text": "پس قسم ہے آسمان اور زمین کے مالک کی، یہ بات حق ہے، ایسی ہی یقینی جیسے تم بول رہے ہو"
+        },
+        {
+          "id": -2004698,
+          "resource_id": 227,
+          "text": "కావున భూమ్యాకాశాల ప్రభువు సాక్షిగా! నిశ్చయంగా, ఇది సత్యం; ఏ విధంగానైతే మీరు మాట్లాడగలిగేది (సత్యమో)!"
         }
       ]
     },
@@ -616,6 +846,16 @@
           "id": 1549136,
           "resource_id": 831,
           "text": "Aey Nabi, Ibrahim ke muazzaz mehmano ki hiqayat bhi tumhein pahunchi hai"
+        },
+        {
+          "id": -1004699,
+          "resource_id": "ur.maududi",
+          "text": "اے نبیؐ، ابراہیمؑ کے معزز مہمانوں کی حکایت بھی تمہیں پہنچی ہے؟"
+        },
+        {
+          "id": -2004699,
+          "resource_id": 227,
+          "text": "ఏమీ? ఇబ్రాహీమ్ యొక్క గౌరవనీయులైన అతిథుల గాథ నీకు చేరిందా?"
         }
       ]
     },
@@ -641,6 +881,16 @@
           "id": 1549137,
           "resource_id": 831,
           "text": "Jab woh uske haan (yahan) aaye to kaha aapko salaam hai. Usne kaha “ aap logon ko bhi salaam hai kuch na-aashna se log hain”"
+        },
+        {
+          "id": -1004700,
+          "resource_id": "ur.maududi",
+          "text": "جب وہ اُس کے ہاں آئے تو کہا آپ کو سلام ہے اُس نے کہا \"آپ لوگوں کو بھی سلام ہے کچھ نا آشنا سے لوگ ہیں\""
+        },
+        {
+          "id": -2004700,
+          "resource_id": 227,
+          "text": "వారు అతని వద్దకు వచ్చినపుడు: \"మీకు సలాం!\" అని అన్నారు. అతను: \"మీకూ సలాం!\" అని జవాబిచ్చి : \"మీరు పరిచయం లేని (కొత్త) వారుగా ఉన్నారు.\" అని అన్నాడు."
         }
       ]
     },
@@ -666,6 +916,16 @@
           "id": 1549138,
           "resource_id": 831,
           "text": "Phir woh chupke se apne ghar walon ke paas gaya, aur ek mota taaza bachda (calf) laa kar"
+        },
+        {
+          "id": -1004701,
+          "resource_id": "ur.maududi",
+          "text": "پھر وہ چپکے سے اپنے گھر والوں کے پاس گیا، اور ایک موٹا تازہ بچھڑا لا کر"
+        },
+        {
+          "id": -2004701,
+          "resource_id": 227,
+          "text": "తరువాత అతను తన ఇంటిలోకి పోయి బలిసిన (వేయించిన) ఒక ఆవు దూడను తీసుకొని వచ్చాడు."
         }
       ]
     },
@@ -691,6 +951,16 @@
           "id": 1549139,
           "resource_id": 831,
           "text": "Mehmanon ke aage pesh kiya. Usne kaha aap hazraat khate nahin"
+        },
+        {
+          "id": -1004702,
+          "resource_id": "ur.maududi",
+          "text": "مہمانوں کے آگے پیش کیا اُس نے کہا آپ حضرات کھاتے نہیں؟"
+        },
+        {
+          "id": -2004702,
+          "resource_id": 227,
+          "text": "దానిని వారి ముందుకు జరిపి: \"ఏమీ? మీరెందుకు తినటం లేదు?\" అని అడిగాడు."
         }
       ]
     },
@@ -716,6 +986,16 @@
           "id": 1549140,
           "resource_id": 831,
           "text": "Phir woh apne dil mein unse dara. Unhon ne kaha dariye nahin, aur usey ek zee-ilm ladke ki paidaish ka mushda (good news/basharat) sunaya"
+        },
+        {
+          "id": -1004703,
+          "resource_id": "ur.maududi",
+          "text": "پھر وہ اپنے دل میں ان سے ڈرا انہوں نے کہا ڈریے نہیں، اور اُسے ایک ذی علم لڑکے کی پیدائش کا مژدہ سنایا"
+        },
+        {
+          "id": -2004703,
+          "resource_id": 227,
+          "text": "(వారు తినకుండా ఉండటం చూసి), వారి నుండి భయపడ్డాడు. వారన్నారు: \"భయపడకు!\" మరియు వారు అతనికి జ్ఞానవంతుడైన కుమారుని శుభవార్తనిచ్చారు."
         }
       ]
     },
@@ -741,6 +1021,16 @@
           "id": 1549141,
           "resource_id": 831,
           "text": "Yeh sunkar uski biwi cheekhti hui aage badhi aur usne apna mooh peeth liya aur kehne lagi, “boodhi baanj”"
+        },
+        {
+          "id": -1004704,
+          "resource_id": "ur.maududi",
+          "text": "یہ سن کر اُس کی بیوی چیختی ہوئی آگے بڑھی اور اس نے اپنا منہ پیٹ لیا اور کہنے لگی، \"بوڑھی، بانجھ!\""
+        },
+        {
+          "id": -2004704,
+          "resource_id": 227,
+          "text": "అప్పుడతని భార్య అరుస్తూ వారి ముందుకు వచ్చి, తన చేతిని నుదుటి మీద కొట్టుకుంటూ: \"నేను ముసలిదాన్ని, గొడ్రాలను కదా!\" అని అన్నది."
         }
       ]
     },
@@ -766,6 +1056,16 @@
           "id": 1549142,
           "resource_id": 831,
           "text": "Unhon ne kaha “yahi kuch farmaya hai tere Rubb ne. Woh hakeem hai aur sab kuch jaanta hai"
+        },
+        {
+          "id": -1004705,
+          "resource_id": "ur.maududi",
+          "text": "انہوں نے کہا \"یہی کچھ فرمایا ہے تیرے رب نے، وہ حکیم ہے اور سب کچھ جانتا ہے\""
+        },
+        {
+          "id": -2004705,
+          "resource_id": 227,
+          "text": "వారన్నారు: \"నీ ప్రభువు ఇలాగే అన్నాడు! నిశ్చయంగా, ఆయన మహావివేకవంతుడు, సర్వజ్ఞుడు!\""
         }
       ]
     },
@@ -791,6 +1091,16 @@
           "id": 1549143,
           "resource_id": 831,
           "text": "Ibrahim ne kaha “aey farstaadgaan-e-ilaahi (envoys), kya mohim aapko dar-pesh hai"
+        },
+        {
+          "id": -1004706,
+          "resource_id": "ur.maududi",
+          "text": "ابراہیمؑ نے کہا \"اے فرستادگان الٰہی، کیا مہم آپ کو در پیش ہے؟"
+        },
+        {
+          "id": -2004706,
+          "resource_id": 227,
+          "text": "(ఇబ్రాహీమ్) అడిగాడు: \"ఓ సందేశహరులారా (ఓ దేవదూతలారా)! అయితే మీరు వచ్చిన కారణమేమిటి?\""
         }
       ]
     },
@@ -816,6 +1126,16 @@
           "id": 1549144,
           "resource_id": 831,
           "text": "Unhon ne kaha “hum ek mujrim qaum ki taraf bheje gaye hain"
+        },
+        {
+          "id": -1004707,
+          "resource_id": "ur.maududi",
+          "text": "انہوں نے کہا \"ہم ایک مجرم قوم کی طرف بھیجے گئے ہیں"
+        },
+        {
+          "id": -2004707,
+          "resource_id": 227,
+          "text": "వారన్నారు: \"వాస్తవానికి, మేము నేరస్థులైన జనుల వైపునకు పంపబడ్డాము."
         }
       ]
     },
@@ -841,6 +1161,16 @@
           "id": 1549145,
           "resource_id": 831,
           "text": "Taa-ke uspar paki hui mitti ke patthar (clay-stones) barsa de"
+        },
+        {
+          "id": -1004708,
+          "resource_id": "ur.maududi",
+          "text": "تاکہ اُس پر پکی ہوئی مٹی کے پتھر برسا دیں"
+        },
+        {
+          "id": -2004708,
+          "resource_id": 227,
+          "text": "వారి మీద (కాల్చబడిన) మట్టి రాళ్ళను కురిపించటం కోసం!"
         }
       ]
     },
@@ -866,6 +1196,16 @@
           "id": 1549146,
           "resource_id": 831,
           "text": "Jo aapke Rubb ke haan hadd se guzar jane walon ke liye nishan zada hain”"
+        },
+        {
+          "id": -1004709,
+          "resource_id": "ur.maududi",
+          "text": "جو آپ کے رب کے ہاں حد سے گزر جانے والوں کے لیے نشان زدہ ہیں\""
+        },
+        {
+          "id": -2004709,
+          "resource_id": 227,
+          "text": "నీ ప్రభువు తరఫు నుండి గుర్తు వేయబడిన (రాళ్ళు); మితిమీరి ప్రవర్తించేవారి కొరకు!\""
         }
       ]
     },
@@ -891,6 +1231,16 @@
           "id": 1549147,
           "resource_id": 831,
           "text": "Phir humne un sab logon ko nikal liya jo us basti mein momin thay"
+        },
+        {
+          "id": -1004710,
+          "resource_id": "ur.maududi",
+          "text": "پھر ہم نے اُن سب لوگوں کو نکال لیا جو اُس بستی میں مومن تھے"
+        },
+        {
+          "id": -2004710,
+          "resource_id": 227,
+          "text": "అప్పుడు మేము అందులో ఉన్న విశ్వాసులందరినీ బయటికి తీశాము."
         }
       ]
     },
@@ -916,6 +1266,16 @@
           "id": 1549148,
           "resource_id": 831,
           "text": "Aur wahan humne ek ghar ke siwa musalmano ka koi ghar na paya"
+        },
+        {
+          "id": -1004711,
+          "resource_id": "ur.maududi",
+          "text": "اور وہاں ہم نے ایک گھر کے سوا مسلمانوں کا کوئی گھر نہ پایا"
+        },
+        {
+          "id": -2004711,
+          "resource_id": 227,
+          "text": "మేము అందు ఒక్క గృహం తప్ప! ఇతర విధేయుల (ముస్లింల) గృహాన్ని చూడలేదు."
         }
       ]
     },
@@ -941,6 +1301,16 @@
           "id": 1549149,
           "resource_id": 831,
           "text": "Uske baad humne wahan bas ek nishani un logon ke liye chodh di jo dardnaak azaab se darte hon"
+        },
+        {
+          "id": -1004712,
+          "resource_id": "ur.maududi",
+          "text": "اس کے بعد ہم نے وہاں بس ایک نشانی اُن لوگوں کے لیے چھوڑ دی جو درد ناک عذاب سے ڈرتے ہوں"
+        },
+        {
+          "id": -2004712,
+          "resource_id": 227,
+          "text": "మరియు బాధాకరమైన శిక్షకు భయపడేవారి కొరకు, మేము అక్కడ ఒక సూచన (ఆయత్) ను వదలి పెట్టాము."
         }
       ]
     },
@@ -966,6 +1336,16 @@
           "id": 1549150,
           "resource_id": 831,
           "text": "Aur (tumhare liye nishani hai) Moosa ke qissey mein jab humne usey sareeh sanad (clear authority) ke saath Firoun ke paas bheja"
+        },
+        {
+          "id": -1004713,
+          "resource_id": "ur.maududi",
+          "text": "اور (تمہارے لیے نشانی ہے) موسیٰؑ کے قصے میں جب ہم نے اُسے صریح سند کے ساتھ فرعون کے پاس بھیجا"
+        },
+        {
+          "id": -2004713,
+          "resource_id": 227,
+          "text": "ఇక మూసా (గాథలో) కూడా (ఒక సూచన వుంది) మేము అతనిని ఫిర్ఔన్ వద్దకు స్పష్టమైన ప్రమాణంతో పంపినపుడు;"
         }
       ]
     },
@@ -991,6 +1371,16 @@
           "id": 1549151,
           "resource_id": 831,
           "text": "To woh apne bal-bootay par akad gaya aur bola yeh jaadugar hai ya majnoon(deewana) hai"
+        },
+        {
+          "id": -1004714,
+          "resource_id": "ur.maududi",
+          "text": "تو وہ اپنے بل بوتے پر اکڑ گیا اور بولا یہ جادوگر ہے یا مجنوں ہے"
+        },
+        {
+          "id": -2004714,
+          "resource_id": 227,
+          "text": "అతడు (ఫిర్ఔన్) తన సభాసదులతో సహా మరలిపోతూ, ఇలా అన్నాడు: \"ఇతడు మాంత్రికుడు లేదా పిచ్చివాడు!\""
         }
       ]
     },
@@ -1016,6 +1406,16 @@
           "id": 1549152,
           "resource_id": 831,
           "text": "Aakhir-e-kaar humne usey aur uske lashkaron ko pakda aur sabko samandar mein phenk diya aur woh malamat zadah hokar reh gaya"
+        },
+        {
+          "id": -1004715,
+          "resource_id": "ur.maududi",
+          "text": "آخر کار ہم نے اُسے اور اس کے لشکروں کو پکڑا اور سب کو سمندر میں پھینک دیا اور وہ ملامت زدہ ہو کر رہ گیا"
+        },
+        {
+          "id": -2004715,
+          "resource_id": 227,
+          "text": "కావున మేము అతనిని మరియు అతని సైనికులను పట్టుకొని, వారందరినీ సముద్రంలో ముంచి వేశాము మరియు దానికి అతడే నిందితుడు."
         }
       ]
     },
@@ -1041,6 +1441,16 @@
           "id": 1549153,
           "resource_id": 831,
           "text": "Aur (tumhare liye nishani hai) Aad (people of Aad) mein, jabke humne unpar ek aisi hi bay-khair(devastating) hawa bhej di"
+        },
+        {
+          "id": -1004716,
+          "resource_id": "ur.maududi",
+          "text": "اور (تمہارے لیے نشانی ہے) عاد میں، جبکہ ہم نے ان پر ایک ایسی بے خیر ہوا بھیج دی"
+        },
+        {
+          "id": -2004716,
+          "resource_id": 227,
+          "text": "ఇక ఆద్ జాతి వారిలో కూడా (ఒక సూచన వుంది): మేము వారిపై వినాశకరమైన గాలిని పంపినప్పుడు!"
         }
       ]
     },
@@ -1066,6 +1476,16 @@
           "id": 1549154,
           "resource_id": 831,
           "text": "Ke jis cheez par bhi woh guzar gayi usey boseeda (rotten) karke rakh diya"
+        },
+        {
+          "id": -1004717,
+          "resource_id": "ur.maududi",
+          "text": "کہ جس چیز پر بھی وہ گزر گئی اسے بوسیدہ کر کے رکھ دیا"
+        },
+        {
+          "id": -2004717,
+          "resource_id": 227,
+          "text": "అది దేని పైనయితే వీచిందో, దానిని క్షీణింపజేయకుండా వదలలేదు."
         }
       ]
     },
@@ -1091,6 +1511,16 @@
           "id": 1549155,
           "resource_id": 831,
           "text": "Aur (tumhare liye nishani hai) Samood mein, jab unse kaha gaya tha ke ek khaas waqt tak mazey karlo"
+        },
+        {
+          "id": -1004718,
+          "resource_id": "ur.maududi",
+          "text": "اور (تمہارے لیے نشانی ہے) ثمود میں، جب اُن سے کہا گیا تھا کہ ایک خاص وقت تک مزے کر لو"
+        },
+        {
+          "id": -2004718,
+          "resource_id": 227,
+          "text": "మరియు సమూద్ జాతి వారి గాథలో కూడా (ఒక సూచన ఉంది). వారితో: \"కొంతకాలం మీరు సుఖసంతోషాలను అనుభవించండి.\" అని అన్నాము."
         }
       ]
     },
@@ -1116,6 +1546,16 @@
           "id": 1549156,
           "resource_id": 831,
           "text": "Magar is tambeeh(warning) par bhi unhon ne apne Rubb ke hukum se sartabi (brazenly disobey) ki. Aakhir-e-kar unke dekhte dekhte ek achanak toot padne waley azaab ne unko aa liya"
+        },
+        {
+          "id": -1004719,
+          "resource_id": "ur.maududi",
+          "text": "مگر اس تنبیہ پر بھی انہوں نے اپنے رب کے حکم سے سرتابی کی آخر کار ان کے دیکھتے دیکھتے ایک اچانک ٹوٹ پڑنے والے عذاب نے اُن کو آ لیا"
+        },
+        {
+          "id": -2004719,
+          "resource_id": 227,
+          "text": "అప్పుడు వారు తమ ప్రభువు ఆజ్ఞను ఉపేక్షించారు. కావున వారు చూస్తూ ఉండగానే ఒక పెద్ద పిడుగు వారి మీద విరుచుకు పడింది."
         }
       ]
     },
@@ -1141,6 +1581,16 @@
           "id": 1549157,
           "resource_id": 831,
           "text": "Phir na unmein uthne ki sakat thi aur na woh apna bachao kar sakte thay"
+        },
+        {
+          "id": -1004720,
+          "resource_id": "ur.maududi",
+          "text": "پھر نہ اُن میں اٹھنے کی سکت تھی اور نہ وہ اپنا بچاؤ کر سکتے تھے"
+        },
+        {
+          "id": -2004720,
+          "resource_id": 227,
+          "text": "అప్పుడు వారికి లేచి నిలబడే శక్తి కూడా లేకపోయింది మరియు వారు తమను తాము కూడా కాపాడు కోలేక పోయారు."
         }
       ]
     },
@@ -1166,6 +1616,16 @@
           "id": 1549158,
           "resource_id": 831,
           "text": "Aur in sabse pehle humne Nooh ki qaum ko halaak kiya kyunke woh fasiq (wicked) log thay"
+        },
+        {
+          "id": -1004721,
+          "resource_id": "ur.maududi",
+          "text": "اور ان سب سے پہلے ہم نے نوحؑ کی قوم کو ہلاک کیا کیونکہ وہ فاسق لوگ تھے"
+        },
+        {
+          "id": -2004721,
+          "resource_id": 227,
+          "text": "మరియు దీనికి ముందు నూహ్ జాతి వారిని కూడా (నాశనం చేశాము). నిశ్చయంగా, వారు కూడా అవిధేయులు."
         }
       ]
     },
@@ -1191,6 +1651,16 @@
           "id": 1549159,
           "resource_id": 831,
           "text": "Aasman ko humne apne zoar se banaya hai aur hum iski qudrat rakhte hain"
+        },
+        {
+          "id": -1004722,
+          "resource_id": "ur.maududi",
+          "text": "آسمان کو ہم نے اپنے زور سے بنایا ہے اور ہم اِس کی قدرت رکھتے ہیں"
+        },
+        {
+          "id": -2004722,
+          "resource_id": 227,
+          "text": "మరియు ఆకాశాన్ని మేము (మా) చేతులతో నిర్మించాము. మరియు నిశ్చయంగా, మేమే దానిని విస్తరింపజేయ గలవారము."
         }
       ]
     },
@@ -1216,6 +1686,16 @@
           "id": 1549160,
           "resource_id": 831,
           "text": "Zameen ko humne bichaya hai aur hum badey acchey hamwar(Smoothers/ spread) karne waley hain"
+        },
+        {
+          "id": -1004723,
+          "resource_id": "ur.maududi",
+          "text": "زمین کو ہم نے بچھایا ہے اور ہم بڑے اچھے ہموار کرنے والے ہیں"
+        },
+        {
+          "id": -2004723,
+          "resource_id": 227,
+          "text": "మరియు భూమిని మేము పరుపుగా చేశాము, మేమే చక్కగా పరిచేవారము!"
         }
       ]
     },
@@ -1241,6 +1721,16 @@
           "id": 1549161,
           "resource_id": 831,
           "text": "Aur har cheez ke humne jodey banaye hain, shayad ke tum ussey sabaq lo"
+        },
+        {
+          "id": -1004724,
+          "resource_id": "ur.maududi",
+          "text": "اور ہر چیز کے ہم نے جوڑے بنائے ہیں، شاید کہ تم اس سے سبق لو"
+        },
+        {
+          "id": -2004724,
+          "resource_id": 227,
+          "text": "మరియు మేము ప్రతిదానిని జంటలుగా సృష్టించాము, మీరు గ్రహించాలని."
         }
       ]
     },
@@ -1266,6 +1756,16 @@
           "id": 1549162,
           "resource_id": 831,
           "text": "To daudo Allah ki taraf , main tumahre liye us ki taraf se saaf saaf khabardar karne wala hoon"
+        },
+        {
+          "id": -1004725,
+          "resource_id": "ur.maududi",
+          "text": "تو دوڑو اللہ کی طرف، میں تمہارے لیے اس کی طرف سے صاف صاف خبردار کرنے والا ہوں"
+        },
+        {
+          "id": -2004725,
+          "resource_id": 227,
+          "text": "కావున మీరు అల్లాహ్ వైపునకు పరుగెత్తండి. నిశ్చయంగా, నేను (ముహమ్మద్) ఆయన తరఫు నుండి మీకు స్పష్టంగా హెచ్చరిక చేసేవాడిని మాత్రమే!"
         }
       ]
     },
@@ -1291,6 +1791,16 @@
           "id": 1549163,
           "resource_id": 831,
           "text": "Aur na banao Allah ke saath koi dusra mabood. Main tumahre liye uski taraf se saaf saaf khabardar karne wala hoon"
+        },
+        {
+          "id": -1004726,
+          "resource_id": "ur.maududi",
+          "text": "اور نہ بناؤ اللہ کے ساتھ کوئی دوسرا معبود، میں تمہارے لیے اُس کی طرف سے صاف صاف خبردار کرنے والا ہوں"
+        },
+        {
+          "id": -2004726,
+          "resource_id": 227,
+          "text": "మరియు మీరు అల్లాహ్ కు సాటిగా ఇతర దైవాన్ని నిలుపకండి! నిశ్చయంగా, నేను (ముహమ్మద్) ఆయన తరఫు నుండి మీకు స్పష్టంగా హెచ్చరిక చేసేవాడిని మాత్రమే!"
         }
       ]
     },
@@ -1316,6 +1826,16 @@
           "id": 1549164,
           "resource_id": 831,
           "text": "Yunhi hota raha hai, inse pehle ki qaumon ke paas bhi koi Rasool aisa nahin aaya jisey unhon ne yeh na kaha ho ke yeh saahir (sorcerer) hai ya majnoon(deewana)"
+        },
+        {
+          "id": -1004727,
+          "resource_id": "ur.maududi",
+          "text": "یونہی ہوتا رہا ہے، اِن سے پہلے کی قوموں کے پاس بھی کوئی رسول ایسا نہیں آیا جسے انہوں نے یہ نہ کہا ہو کہ یہ ساحر ہے یا مجنون"
+        },
+        {
+          "id": -2004727,
+          "resource_id": 227,
+          "text": "ఇదే విధంగా, వారికి పూర్వం గడిచిన వారి వద్దకు ఏ ప్రవక్త వచ్చినా వారు: \"ఇతను మాంత్రికుడు లేదా పిచ్చివాడు.\" అని అనకుండా ఉండలేదు."
         }
       ]
     },
@@ -1341,6 +1861,16 @@
           "id": 1549165,
           "resource_id": 831,
           "text": "Kya in sab ne apas mein ispar koi samjhauta karliya hai? Nahin, balke yeh sab sarkash log hain"
+        },
+        {
+          "id": -1004728,
+          "resource_id": "ur.maududi",
+          "text": "کیا اِن سب نے آپس میں اِس پر کوئی سمجھوتہ کر لیا ہے؟ نہیں، بکہ یہ سب سرکش لوگ ہیں"
+        },
+        {
+          "id": -2004728,
+          "resource_id": 227,
+          "text": "ఏమీ? దీనిని (ఇలా పలుకుటను) వారు ఒకరికొకరు వారసత్వంగా ఇచ్చుకున్నారా? అలా కాదు! అసలు వారు తలబిరుసుతనంతో ప్రవర్తించే జనం!"
         }
       ]
     },
@@ -1366,6 +1896,16 @@
           "id": 1549166,
           "resource_id": 831,
           "text": "Pas aey Nabi, inse rukh pher lo, tumpar kuch malamat nahin"
+        },
+        {
+          "id": -1004729,
+          "resource_id": "ur.maududi",
+          "text": "پس اے نبیؐ، ان سے رخ پھیر لو، تم پر کچھ ملامت نہیں"
+        },
+        {
+          "id": -2004729,
+          "resource_id": 227,
+          "text": "కావున నీవు వారి నుండి మరలిపో, ఇక నీపై ఎలాంటి నింద లేదు."
         }
       ]
     },
@@ -1391,6 +1931,16 @@
           "id": 1549167,
           "resource_id": 831,
           "text": "Albatta nasihat karte raho, kyunke nasihat imaan laney walon ke liye nafeh(faiyda-mand) hai"
+        },
+        {
+          "id": -1004730,
+          "resource_id": "ur.maududi",
+          "text": "البتہ نصیحت کرتے رہو، کیونکہ نصیحت ایمان لانے والوں کے لیے نافع ہے"
+        },
+        {
+          "id": -2004730,
+          "resource_id": 227,
+          "text": "మరియు వారిని ఉపదేశిస్తూ వుండు, నిశ్చయంగా, ఉపదేశం విశ్వాసులకు ప్రయోజనకర మవుతుంది."
         }
       ]
     },
@@ -1416,6 +1966,16 @@
           "id": 1549168,
           "resource_id": 831,
           "text": "Maine Jinn aur Insano ko iske siwa kisi kaam ke liye paida nahin kiya hai ke woh meri bandagi karein"
+        },
+        {
+          "id": -1004731,
+          "resource_id": "ur.maududi",
+          "text": "میں نے جن اور انسانوں کو اِس کے سوا کسی کام کے لیے پیدا نہیں کیا ہے کہ وہ میری بندگی کریں"
+        },
+        {
+          "id": -2004731,
+          "resource_id": 227,
+          "text": "మరియు నేను జిన్నాతులను మరియు మానవులను సృష్టించింది, కేవలం వారు నన్ను ఆరాధించటానికే!"
         }
       ]
     },
@@ -1441,6 +2001,16 @@
           "id": 1549169,
           "resource_id": 831,
           "text": "Main unsey koi rizq nahin chahta aur na yeh chahta hoon ke woh mujhey khilayein"
+        },
+        {
+          "id": -1004732,
+          "resource_id": "ur.maududi",
+          "text": "میں اُن سے کوئی رزق نہیں چاہتا اور نہ یہ چاہتا ہوں کہ وہ مجھے کھلائیں"
+        },
+        {
+          "id": -2004732,
+          "resource_id": 227,
+          "text": "నేను వారి నుండి ఎలాంటి జీవనోపాధిని కోరటం లేదు మరియు వారు నాకు ఆహారం పెట్టాలని కూడా కోరటం లేదు."
         }
       ]
     },
@@ -1466,6 +2036,16 @@
           "id": 1549170,
           "resource_id": 831,
           "text": "Allah to khud hi Razzak hai, badi quwwat wala aur zabardast"
+        },
+        {
+          "id": -1004733,
+          "resource_id": "ur.maududi",
+          "text": "اللہ تو خود ہی رزاق ہے، بڑی قوت والا اور زبردست"
+        },
+        {
+          "id": -2004733,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, అల్లాహ్! ఆయన మాత్రమే ఉపాధి ప్రదాత, మహా బలవంతుడు, స్థైర్యం గలవాడు."
         }
       ]
     },
@@ -1491,6 +2071,16 @@
           "id": 1549171,
           "resource_id": 831,
           "text": "Pas jin logon ne zulm kiya hai unke hissey ka bhi waisa hi azaab tayyar hai jaisa inhi jaise logon ko unke hissey ka mil chuka hai, iske liye yeh log jaldi na machayein"
+        },
+        {
+          "id": -1004734,
+          "resource_id": "ur.maududi",
+          "text": "پس جن لوگوں نے ظلم کیا ہے ان کے حصے کا بھی ویسا ہی عذاب تیار ہے جیسا اِنہی جیسے لوگوں کو اُن کے حصے کا مل چکا ہے، اس کے لیے یہ لوگ جلدی نہ مچائیں"
+        },
+        {
+          "id": -2004734,
+          "resource_id": 227,
+          "text": "కావున నిశ్చయంగా, దుర్మార్గానికి పాల్పడినవారి పాపాలు వారి (పూర్వ) స్నేహితుల పాపాల వంటివే! కావున వారు నా (శిక్ష కొరకు) తొందర పెట్టనవసరం లేదు!"
         }
       ]
     },
@@ -1516,6 +2106,16 @@
           "id": 1549172,
           "resource_id": 831,
           "text": "Aakhir ko tabahi hai kufr karne walon ke liye us roz jiska inhein khauff dilaya jaa raha hai"
+        },
+        {
+          "id": -1004735,
+          "resource_id": "ur.maududi",
+          "text": "آخر کو تباہی ہے کفر کرنے والوں کے لیے اُس روز جس کا انہیں خوف دلایا جا رہا ہے"
+        },
+        {
+          "id": -2004735,
+          "resource_id": 227,
+          "text": "కావున సత్యతిరస్కారులకు వినాశం గలదు - వారికి వాగ్దానం చేయబడిన - ఆ దినమున!"
         }
       ]
     }

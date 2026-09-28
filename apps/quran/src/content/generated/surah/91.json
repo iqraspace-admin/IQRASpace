@@ -41,6 +41,16 @@
           "id": 1550481,
           "resource_id": 831,
           "text": "Suraj aur uski dhoop ki kasam"
+        },
+        {
+          "id": -1006044,
+          "resource_id": "ur.maududi",
+          "text": "سورج اور اُس کی دھوپ کی قسم"
+        },
+        {
+          "id": -2006044,
+          "resource_id": 227,
+          "text": "సూర్యుని మరియు దాని ఎండ సాక్షిగా!"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550482,
           "resource_id": 831,
           "text": "Aur Chand ki kasam jabke wo uske pichey aata hai"
+        },
+        {
+          "id": -1006045,
+          "resource_id": "ur.maududi",
+          "text": "اور چاند کی قسم جبکہ وہ اُس کے پیچھے آتا ہے"
+        },
+        {
+          "id": -2006045,
+          "resource_id": 227,
+          "text": "దాని వెనుక వచ్చే చంద్రుని సాక్షిగా!"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550483,
           "resource_id": 831,
           "text": "Aur din ki kasam jabke woh (Suraj ko) numaya kar deta hai"
+        },
+        {
+          "id": -1006046,
+          "resource_id": "ur.maududi",
+          "text": "اور دن کی قسم جبکہ وہ (سورج کو) نمایاں کر دیتا ہے"
+        },
+        {
+          "id": -2006046,
+          "resource_id": 227,
+          "text": "ప్రకాశించే పగటి సాక్షిగా!"
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550484,
           "resource_id": 831,
           "text": "Aur raat ki kasam jabke woh (suraj ko) dhank leti hai"
+        },
+        {
+          "id": -1006047,
+          "resource_id": "ur.maududi",
+          "text": "اور رات کی قسم جبکہ وہ (سورج کو) ڈھانک لیتی ہے"
+        },
+        {
+          "id": -2006047,
+          "resource_id": 227,
+          "text": "దానిని క్రమ్ముకునే, రాత్రి సాక్షిగా!"
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550485,
           "resource_id": 831,
           "text": "Aur aasman ki aur us zaat ki kasam jisne usey qayam kiya"
+        },
+        {
+          "id": -1006048,
+          "resource_id": "ur.maududi",
+          "text": "اور آسمان کی اور اُس ذات کی قسم جس نے اُسے قائم کیا"
+        },
+        {
+          "id": -2006048,
+          "resource_id": 227,
+          "text": "ఆకాశం మరియు దానిని నిర్మించిన ఆయన (అల్లాహ్) సాక్షిగా!"
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1550486,
           "resource_id": 831,
           "text": "Aur zameen ki aur us zaat ki kasam jisne usey bichaya"
+        },
+        {
+          "id": -1006049,
+          "resource_id": "ur.maududi",
+          "text": "اور زمین کی اور اُس ذات کی قسم جس نے اُسے بچھایا"
+        },
+        {
+          "id": -2006049,
+          "resource_id": 227,
+          "text": "భూమి మరియు దానిని విస్తరింపజేసిన ఆయన సాక్షిగా!"
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1550487,
           "resource_id": 831,
           "text": "Aur nafs-e-Insani ki aur us zaat ki kasam jisne usey hamwar kiya"
+        },
+        {
+          "id": -1006050,
+          "resource_id": "ur.maududi",
+          "text": "اور نفس انسانی کی اور اُس ذات کی قسم جس نے اُسے ہموار کیا"
+        },
+        {
+          "id": -2006050,
+          "resource_id": 227,
+          "text": "మానవ ఆత్మ మరియు దానిని తీర్చిదిద్దిన ఆయన సాక్షిగా!"
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1550488,
           "resource_id": 831,
           "text": "Phir uski badi aur uski parhezgari uss par ilham kar di"
+        },
+        {
+          "id": -1006051,
+          "resource_id": "ur.maududi",
+          "text": "پھر اُس کی بدی اور اُس کی پرہیز گاری اس پر الہام کر دی"
+        },
+        {
+          "id": -2006051,
+          "resource_id": 227,
+          "text": "ఆ తరువాత ఆయనే దానికి దుష్టతనాన్ని మరియు దైవభీతిని తెలియజేశాడు."
         }
       ]
     },
@@ -241,6 +321,16 @@
           "id": 1550489,
           "resource_id": 831,
           "text": "Yaqeenan falah pa gaya woh jisne nafs ka tazkiya kiya"
+        },
+        {
+          "id": -1006052,
+          "resource_id": "ur.maududi",
+          "text": "یقیناً فلاح پا گیا وہ جس نے نفس کا تزکیہ کیا"
+        },
+        {
+          "id": -2006052,
+          "resource_id": 227,
+          "text": "వాస్తవానికి తన ఆత్మను శుద్ధపరచుకున్నవాడే సఫలుడవుతాడు."
         }
       ]
     },
@@ -266,6 +356,16 @@
           "id": 1550490,
           "resource_id": 831,
           "text": "Aur na-murad hua woh jisne usko daba diya"
+        },
+        {
+          "id": -1006053,
+          "resource_id": "ur.maududi",
+          "text": "اور نامراد ہوا وہ جس نے اُس کو دبا دیا"
+        },
+        {
+          "id": -2006053,
+          "resource_id": 227,
+          "text": "మరియు వాస్తవానికి దానిని అణగ ద్రొక్కిన వాడే విఫలుడవుతాడు."
         }
       ]
     },
@@ -291,6 +391,16 @@
           "id": 1550491,
           "resource_id": 831,
           "text": "Samood ne apni sarkashi ki bina par jhutlaya"
+        },
+        {
+          "id": -1006054,
+          "resource_id": "ur.maududi",
+          "text": "ثمود نے اپنی سرکشی کی بنا پر جھٹلایا"
+        },
+        {
+          "id": -2006054,
+          "resource_id": 227,
+          "text": "సమూద్ జాతి తలబిరుసుతనంతో (ప్రవక్తను) అసత్యవాదుడవని తిరస్కరించింది; తమలోని పరమ దుష్టుడు (ఆ దుష్కార్యం చేయటానికి) లేచినప్పుడు;"
         }
       ]
     },
@@ -316,6 +426,16 @@
           "id": 1550492,
           "resource_id": 831,
           "text": "Jab us qaum ka sab se zyada shaqi (Badnaseeb) aadmi biphar kar utha"
+        },
+        {
+          "id": -1006055,
+          "resource_id": "ur.maududi",
+          "text": "جب اُس قوم کا سب سے زیادہ شقی آدمی بپھر کر اٹھا"
+        },
+        {
+          "id": -2006055,
+          "resource_id": 227,
+          "text": "అల్లాహ్ సందేశహరుడు (సాలిహ్) వారితో: \"ఈ ఆడ ఒంటె అల్లాహ్ కు చెందింది. కాబట్టి దీనిని (నీళ్ళు) త్రాగనివ్వండి!\" అని అన్నాడు."
         }
       ]
     },
@@ -341,6 +461,16 @@
           "id": 1550493,
           "resource_id": 831,
           "text": "To Allah ke Rasool ne un logon se kaha ke khabardar Allah ki ountni (she-camel) ko (haath na lagana) aur uske paani peene (mein maane na hona)"
+        },
+        {
+          "id": -1006056,
+          "resource_id": "ur.maududi",
+          "text": "تو اللہ کے رسول نے اُن لوگوں سے کہا کہ خبردار، اللہ کی اونٹنی کو (ہاتھ نہ لگانا) اوراُس کے پانی پینے (میں مانع نہ ہونا)"
+        },
+        {
+          "id": -2006056,
+          "resource_id": 227,
+          "text": "అయినా వారు అతని (సాలిహ్) మాటను అబద్ధమని తిరస్కరించారు. మరియు దాని (ఆ ఒంటె) వెనక మోకాలి నరాన్ని కోసి, కుంటిదాన్ని చేసి చంపారు."
         }
       ]
     },
@@ -366,6 +496,16 @@
           "id": 1550494,
           "resource_id": 831,
           "text": "Magar unhon ne uski baat ko jhuta qarar diya aur ountni ko maar dala. Aakhir-e-kaar unke gunah ke padash mein unke Rubb ne unpar aisi aafat toodi ke ek saath sab ko paywand-e-khaaq kar diya"
+        },
+        {
+          "id": -1006057,
+          "resource_id": "ur.maududi",
+          "text": "مگر انہوں نے اُس کی بات کو جھوٹا قرار دیا اور اونٹنی کو مار ڈالا آخرکار اُن کے گناہ کی پاداش میں ان کے رب نے ان پر ایسی آفت توڑی کہ ایک ساتھ سب کو پیوند خاک کر دیا"
+        },
+        {
+          "id": -2006057,
+          "resource_id": 227,
+          "text": "కాబట్టి వారి ప్రభువు వారి పాపానికి పర్యవసానంగా వారి మీద మహా విపత్తును పంపి వారందరినీ నాశనం చేశాడు."
         }
       ]
     },
@@ -391,6 +531,16 @@
           "id": 1550495,
           "resource_id": 831,
           "text": "Aur usey (apne is fail kay) kisi burey natije ka koi khauf(darr) nahin hai"
+        },
+        {
+          "id": -1006058,
+          "resource_id": "ur.maududi",
+          "text": "اور اسے (اپنے ا س فعل کے) کسی برے نتیجے کا کوئی خوف نہیں ہے"
+        },
+        {
+          "id": -2006058,
+          "resource_id": 227,
+          "text": "మరియు ఆయన (అల్లాహ్) దాని పర్యవసానాన్ని గురించి భయపడలేదు!"
         }
       ]
     }

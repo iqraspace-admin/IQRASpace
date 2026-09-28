@@ -41,6 +41,16 @@
           "id": 1550386,
           "resource_id": 831,
           "text": "(Aey nabi) Apne Rubb-e-bartar kay naam ki tasbeeh karo"
+        },
+        {
+          "id": -1005949,
+          "resource_id": "ur.maududi",
+          "text": "(اے نبیؐ) اپنے رب برتر کے نام کی تسبیح کرو"
+        },
+        {
+          "id": -2005949,
+          "resource_id": 227,
+          "text": "అత్యున్నతుడైన నీ ప్రభువు నామాన్ని స్తుతించు!"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550387,
           "resource_id": 831,
           "text": "Jisne paida kiya aur tanasub qayam kiya (then proportioned it)"
+        },
+        {
+          "id": -1005950,
+          "resource_id": "ur.maududi",
+          "text": "جس نے پیدا کیا اور تناسب قائم کیا"
+        },
+        {
+          "id": -2005950,
+          "resource_id": 227,
+          "text": "ఆయనే (ప్రతిదానిని) సృష్టించాడు మరియు తగిన ప్రమాణంలో రూపొందించాడు."
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550388,
           "resource_id": 831,
           "text": "Jisne taqdeer banayi phir raah dikhayi"
+        },
+        {
+          "id": -1005951,
+          "resource_id": "ur.maududi",
+          "text": "جس نے تقدیر بنائی پھر راہ دکھائی"
+        },
+        {
+          "id": -2005951,
+          "resource_id": 227,
+          "text": "మరియు ఆయనే దాని ప్రకృతి లక్షణాలను నిర్ణయించాడు, మరియు మార్గం చూపాడు!"
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550389,
           "resource_id": 831,
           "text": "Jisne nabataat(pasture) ugayi"
+        },
+        {
+          "id": -1005952,
+          "resource_id": "ur.maududi",
+          "text": "جس نے نباتات اگائیں"
+        },
+        {
+          "id": -2005952,
+          "resource_id": 227,
+          "text": "మరియు ఆయనే పచ్చికను మొలిపింప జేశాడు."
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550390,
           "resource_id": 831,
           "text": "Phir unko siyah kuda karkat bana diya"
+        },
+        {
+          "id": -1005953,
+          "resource_id": "ur.maududi",
+          "text": "پھر اُن کو سیاہ کوڑا کرکٹ بنا دیا"
+        },
+        {
+          "id": -2005953,
+          "resource_id": 227,
+          "text": "మరల దానిని నల్లని చెత్తాచెదారంగా చేశాడు."
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1550391,
           "resource_id": 831,
           "text": "Hum tumhey padhwa dengey phir tum nahin bhuloge"
+        },
+        {
+          "id": -1005954,
+          "resource_id": "ur.maududi",
+          "text": "ہم تمہیں پڑھوا دیں گے، پھر تم نہیں بھولو گے"
+        },
+        {
+          "id": -2005954,
+          "resource_id": 227,
+          "text": "మేము నీచేత (ఖుర్ఆన్ ను) చదివింప జేస్తాము, తరువాత నీవు (దానిని) మరచిపోవు -"
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1550392,
           "resource_id": 831,
           "text": "Siwaye uske jo Allah chahey.Woh zahir ko bhi jaanta hai aur jo kuch posheeda(hidden) hai usko bhi"
+        },
+        {
+          "id": -1005955,
+          "resource_id": "ur.maududi",
+          "text": "سوائے اُس کے جو اللہ چاہے، وہ ظاہر کو بھی جانتا ہے اور جو کچھ پوشیدہ ہے اُس کو بھی"
+        },
+        {
+          "id": -2005955,
+          "resource_id": 227,
+          "text": "అల్లాహ్ కోరింది తప్ప! నిశ్చయంగా, బహిరంగంగా ఉన్నదీ మరియు గోప్యంగా ఉన్నదీ అన్నీ ఆయనకు బాగా తెలుసు."
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1550393,
           "resource_id": 831,
           "text": "Aur hum tumhein aasaan tarikey ki sahoolat dete hain"
+        },
+        {
+          "id": -1005956,
+          "resource_id": "ur.maududi",
+          "text": "اور ہم تمہیں آسان طریقے کی سہولت دیتے ہیں"
+        },
+        {
+          "id": -2005956,
+          "resource_id": 227,
+          "text": "మరియు మేము నీ మార్గాన్ని సులభం చేయడానికి నీకు సౌలభ్యాన్ని కలుగజేస్తాము."
         }
       ]
     },
@@ -241,6 +321,16 @@
           "id": 1550394,
           "resource_id": 831,
           "text": "lihaza tum naseehat karo agar naseehat nafey(faiydamand) ho"
+        },
+        {
+          "id": -1005957,
+          "resource_id": "ur.maududi",
+          "text": "لہٰذا تم نصیحت کرو اگر نصیحت نافع ہو"
+        },
+        {
+          "id": -2005957,
+          "resource_id": 227,
+          "text": "కావున నీవు హితోపదేశం చేస్తూ ఉండు; వారికి హితోపదేశం లాభదాయకం కావచ్చు!"
         }
       ]
     },
@@ -266,6 +356,16 @@
           "id": 1550395,
           "resource_id": 831,
           "text": "Jo shaks darta hai wo naseehat qabool karlega"
+        },
+        {
+          "id": -1005958,
+          "resource_id": "ur.maududi",
+          "text": "جو شخص ڈرتا ہے وہ نصیحت قبول کر لے گا"
+        },
+        {
+          "id": -2005958,
+          "resource_id": 227,
+          "text": "(అల్లాహ్ కు) భయపడే వాడు హితోపదేశాన్ని స్వీకరిస్తాడు."
         }
       ]
     },
@@ -291,6 +391,16 @@
           "id": 1550396,
           "resource_id": 831,
           "text": "Aur ussey guraiz karega woh intehayi bad-bakht"
+        },
+        {
+          "id": -1005959,
+          "resource_id": "ur.maududi",
+          "text": "اور اس سے گریز کریگا وہ انتہائی بد بخت"
+        },
+        {
+          "id": -2005959,
+          "resource_id": 227,
+          "text": "మరియు దౌర్భాగ్యుడు దానికి దూరమై పోతాడు."
         }
       ]
     },
@@ -316,6 +426,16 @@
           "id": 1550397,
           "resource_id": 831,
           "text": "Jo badi aag mei jayega"
+        },
+        {
+          "id": -1005960,
+          "resource_id": "ur.maududi",
+          "text": "جو بڑی آگ میں جائے گا"
+        },
+        {
+          "id": -2005960,
+          "resource_id": 227,
+          "text": "అలాంటి వాడే ఘోరమైన నరకాగ్నిలో పడి కాలుతాడు."
         }
       ]
     },
@@ -341,6 +461,16 @@
           "id": 1550398,
           "resource_id": 831,
           "text": "phir na usmein marega aur na jiyega"
+        },
+        {
+          "id": -1005961,
+          "resource_id": "ur.maududi",
+          "text": "پھر نہ اس میں مرے گا نہ جیے گا"
+        },
+        {
+          "id": -2005961,
+          "resource_id": 227,
+          "text": "అప్పుడు, అతడు అందులో చావనూ లేడు, బ్రతకనూ లేడు."
         }
       ]
     },
@@ -366,6 +496,16 @@
           "id": 1550399,
           "resource_id": 831,
           "text": "Falah paa gaya woh jisne pakizgi ikhtiyar ki"
+        },
+        {
+          "id": -1005962,
+          "resource_id": "ur.maududi",
+          "text": "فلاح پا گیا وہ جس نے پاکیزگی اختیار کی"
+        },
+        {
+          "id": -2005962,
+          "resource_id": 227,
+          "text": "సుశీలతను (పవిత్రతను) పాటించే వాడు తప్పక సాఫల్యం పొందుతాడు."
         }
       ]
     },
@@ -391,6 +531,16 @@
           "id": 1550400,
           "resource_id": 831,
           "text": "Aur apne Rubb ka naam yaad kiya phir namaz padhi"
+        },
+        {
+          "id": -1005963,
+          "resource_id": "ur.maududi",
+          "text": "اور اپنے رب کا نام یاد کیا پھر نماز پڑھی"
+        },
+        {
+          "id": -2005963,
+          "resource_id": 227,
+          "text": "మరియు తన ప్రభువు నామాన్ని స్మరిస్తూ, నమాజ్ చేస్తూ ఉండేవాడు."
         }
       ]
     },
@@ -416,6 +566,16 @@
           "id": 1550401,
           "resource_id": 831,
           "text": "Magar tumlog duniya ki zindagi ko tarjeeh detay ho"
+        },
+        {
+          "id": -1005964,
+          "resource_id": "ur.maududi",
+          "text": "مگر تم لوگ دنیا کی زندگی کو ترجیح دیتے ہو"
+        },
+        {
+          "id": -2005964,
+          "resource_id": 227,
+          "text": "అలా కాదు! మీరు ఐహిక జీవితానికి ప్రాధాన్యత నిస్తున్నారు;"
         }
       ]
     },
@@ -441,6 +601,16 @@
           "id": 1550402,
           "resource_id": 831,
           "text": "halaanke aakhirat behtar hai aur baqi rehne wali hai"
+        },
+        {
+          "id": -1005965,
+          "resource_id": "ur.maududi",
+          "text": "حالانکہ آخرت بہتر ہے اور باقی رہنے والی ہے"
+        },
+        {
+          "id": -2005965,
+          "resource_id": 227,
+          "text": "కాని పరలోక జీవితమే మేలైనది మరియు చిరకాలముండేది."
         }
       ]
     },
@@ -466,6 +636,16 @@
           "id": 1550403,
           "resource_id": 831,
           "text": "Yahi baat pehle aaey huey saheefon(scriptures) mei bhi kahi gayi thi"
+        },
+        {
+          "id": -1005966,
+          "resource_id": "ur.maududi",
+          "text": "یہی بات پہلے آئے ہوئے صحیفوں میں بھی کہی گئی تھی"
+        },
+        {
+          "id": -2005966,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, ఈ విషయం పూర్వగ్రంథాలలో (వ్రాయబడి) ఉంది;"
         }
       ]
     },
@@ -491,6 +671,16 @@
           "id": 1550404,
           "resource_id": 831,
           "text": "Ibrahim aur Moosa ke saheefon mein"
+        },
+        {
+          "id": -1005967,
+          "resource_id": "ur.maududi",
+          "text": "ابراہیمؑ اور موسیٰؑ کے صحیفوں میں"
+        },
+        {
+          "id": -2005967,
+          "resource_id": 227,
+          "text": "ఇబ్రాహీమ్ మరియు మూసాలపై (అవతరింపజేయబడిన) గ్రంథాలలో."
         }
       ]
     }

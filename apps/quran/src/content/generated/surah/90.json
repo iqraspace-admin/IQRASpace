@@ -41,6 +41,16 @@
           "id": 1550461,
           "resource_id": 831,
           "text": "Nahin mai kasam khata hoon is shehar(city) ki"
+        },
+        {
+          "id": -1006024,
+          "resource_id": "ur.maududi",
+          "text": "نہیں، میں قسم کھاتا ہوں اِس شہر کی"
+        },
+        {
+          "id": -2006024,
+          "resource_id": 227,
+          "text": "కాదు, నేను ఈ నగరం (మక్కా) సాక్షిగా (అంటున్నాను)!"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550462,
           "resource_id": 831,
           "text": "Aur haal yeh hai ke (Aey nabi) is shehar mein tumko halal kar liya gaya hai"
+        },
+        {
+          "id": -1006025,
+          "resource_id": "ur.maududi",
+          "text": "اور حال یہ ہے کہ (اے نبیؐ) اِس شہر میں تم کو حلال کر لیا گیا ہے"
+        },
+        {
+          "id": -2006025,
+          "resource_id": 227,
+          "text": "మరియు నీకు ఈ నగరంలో (మక్కాలో) స్వేచ్ఛ ఉంది."
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550463,
           "resource_id": 831,
           "text": "Aur kasam khata hoon baap(Adam) ki aur us aulad ki jo ussey paida hui"
+        },
+        {
+          "id": -1006026,
+          "resource_id": "ur.maududi",
+          "text": "اور قسم کھاتا ہوں باپ کی اور اس اولاد کی جو اس سے پیدا ہوئی"
+        },
+        {
+          "id": -2006026,
+          "resource_id": 227,
+          "text": "మరియు తండ్రి (మూలపురుషుడు) మరియు అతని సంతానం సాక్షిగా!"
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550464,
           "resource_id": 831,
           "text": "Dar haqeeqat humne Insan ko mushakkat mein paida kiya hai"
+        },
+        {
+          "id": -1006027,
+          "resource_id": "ur.maududi",
+          "text": "درحقیقت ہم نے انسان کو مشقت میں پیدا کیا ہے"
+        },
+        {
+          "id": -2006027,
+          "resource_id": 227,
+          "text": "వాస్తవానికి, మేము మానవుణ్ణి శ్రమజీవిగా పుట్టించాము."
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550465,
           "resource_id": 831,
           "text": "Kya usne yeh samajh rakhha hai kay uspar koi qaabu na paa sakega"
+        },
+        {
+          "id": -1006028,
+          "resource_id": "ur.maududi",
+          "text": "کیا اُس نے یہ سمجھ رکھا ہے کہ اُس پر کوئی قابو نہ پا سکے گا؟"
+        },
+        {
+          "id": -2006028,
+          "resource_id": 227,
+          "text": "ఏమిటి? తనను ఎవ్వడూ వశపరచుకో లేడని అతడు భావిస్తున్నాడా?"
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1550466,
           "resource_id": 831,
           "text": "Kehta hai ke maine dhairon maal udaa diya"
+        },
+        {
+          "id": -1006029,
+          "resource_id": "ur.maududi",
+          "text": "کہتا ہے کہ میں نے ڈھیروں مال اڑا دیا"
+        },
+        {
+          "id": -2006029,
+          "resource_id": 227,
+          "text": "అతడు: \"నేను విపరీత ధనాన్ని ఖర్చు పెట్టాను!\" అని అంటాడు."
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1550467,
           "resource_id": 831,
           "text": "Kya woh samajhta hai kay kisi ne usko nahin dekha"
+        },
+        {
+          "id": -1006030,
+          "resource_id": "ur.maududi",
+          "text": "کیا وہ سمجھتا ہے کہ کسی نے اُس کو نہیں دیکھا؟"
+        },
+        {
+          "id": -2006030,
+          "resource_id": 227,
+          "text": "ఏమిటి? తనను ఎవ్వడూ చూడటం లేదని అతడు భావిస్తున్నాడా?"
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1550468,
           "resource_id": 831,
           "text": "Kya humne usey do aankhein"
+        },
+        {
+          "id": -1006031,
+          "resource_id": "ur.maududi",
+          "text": "کیا ہم نے اُسے دو آنکھیں"
+        },
+        {
+          "id": -2006031,
+          "resource_id": 227,
+          "text": "ఏమిటి? మేము అతనికి రెండు కళ్ళు ఇవ్వలేదా?"
         }
       ]
     },
@@ -241,6 +321,16 @@
           "id": 1550469,
           "resource_id": 831,
           "text": "Aur ek zubaan aur do honth nahin diye"
+        },
+        {
+          "id": -1006032,
+          "resource_id": "ur.maududi",
+          "text": "اور ایک زبان اور دو ہونٹ نہیں دیے؟"
+        },
+        {
+          "id": -2006032,
+          "resource_id": 227,
+          "text": "మరియు నాలుకను మరియు రెండు పెదవులను."
         }
       ]
     },
@@ -266,6 +356,16 @@
           "id": 1550470,
           "resource_id": 831,
           "text": "Aur dono numayan raste usey (nahin) dikha diye"
+        },
+        {
+          "id": -1006033,
+          "resource_id": "ur.maududi",
+          "text": "اور دونوں نمایاں راستے اُسے (نہیں) دکھا دیے؟"
+        },
+        {
+          "id": -2006033,
+          "resource_id": 227,
+          "text": "మరియు అతనికి (మంచీ - చెడూ) అనే స్పష్టమైన రెండు మార్గాలను చూపాము."
         }
       ]
     },
@@ -291,6 +391,16 @@
           "id": 1550471,
           "resource_id": 831,
           "text": "Magar usne dushwar guzar ghati(steep) se guzarne ki himmat na ki"
+        },
+        {
+          "id": -1006034,
+          "resource_id": "ur.maududi",
+          "text": "مگر اس نے دشوار گزار گھاٹی سے گزرنے کی ہمت نہ کی"
+        },
+        {
+          "id": -2006034,
+          "resource_id": 227,
+          "text": "కాని అతడు కష్టతరమైన ఊర్ధ్వ గమనానికి సాహసించలేదు!"
         }
       ]
     },
@@ -316,6 +426,16 @@
           "id": 1550472,
           "resource_id": 831,
           "text": "Aur tum kya jaano kay kya hai woh dushwar guzar ghaati"
+        },
+        {
+          "id": -1006035,
+          "resource_id": "ur.maududi",
+          "text": "اور تم کیا جانو کہ کیا ہے وہ دشوار گزار گھاٹی؟"
+        },
+        {
+          "id": -2006035,
+          "resource_id": 227,
+          "text": "మరియు ఆ ఊర్ధ్వగమనం అంటే ఏమిటో నీకు తెలుసా?"
         }
       ]
     },
@@ -341,6 +461,16 @@
           "id": 1550473,
           "resource_id": 831,
           "text": "Kisi gardan ko gulami se chudana"
+        },
+        {
+          "id": -1006036,
+          "resource_id": "ur.maududi",
+          "text": "کسی گردن کو غلامی سے چھڑانا"
+        },
+        {
+          "id": -2006036,
+          "resource_id": 227,
+          "text": "అది ఒకని మెడను (బానిసత్వం నుండి) విడిపించడం."
         }
       ]
     },
@@ -366,6 +496,16 @@
           "id": 1550474,
           "resource_id": 831,
           "text": "Ya faake ke din"
+        },
+        {
+          "id": -1006037,
+          "resource_id": "ur.maududi",
+          "text": "یا فاقے کے دن"
+        },
+        {
+          "id": -2006037,
+          "resource_id": 227,
+          "text": "లేదా! (స్వయంగా) ఆకలి గొని ఉన్న రోజు కూడా (ఇతరులకు) అన్నం పెట్టడం."
         }
       ]
     },
@@ -391,6 +531,16 @@
           "id": 1550475,
           "resource_id": 831,
           "text": "kisi qareebi yateem"
+        },
+        {
+          "id": -1006038,
+          "resource_id": "ur.maududi",
+          "text": "کسی قریبی یتیم"
+        },
+        {
+          "id": -2006038,
+          "resource_id": 227,
+          "text": "సమీప అనాథునికి గానీ;"
         }
       ]
     },
@@ -416,6 +566,16 @@
           "id": 1550476,
           "resource_id": 831,
           "text": "Ya khaak nasheen miskeen ko khana khilana"
+        },
+        {
+          "id": -1006039,
+          "resource_id": "ur.maududi",
+          "text": "یا خاک نشین مسکین کو کھانا کھلانا"
+        },
+        {
+          "id": -2006039,
+          "resource_id": 227,
+          "text": "లేక, దిక్కులేని నిరుపేదకు గానీ!"
         }
       ]
     },
@@ -441,6 +601,16 @@
           "id": 1550477,
           "resource_id": 831,
           "text": "Phir (iske saath yeh kay) aadmi un logon mein shamil ho jo imaan laye aur jinhon ne ek dusrey ko sabr aur (khalq-e-khuda par) raham ki talqeen ki"
+        },
+        {
+          "id": -1006040,
+          "resource_id": "ur.maududi",
+          "text": "پھر (اس کے ساتھ یہ کہ) آدمی اُن لوگوں میں شامل ہو جو ایمان لائے اور جنہوں نے ایک دوسرے کو صبر اور (خلق خدا پر) رحم کی تلقین کی"
+        },
+        {
+          "id": -2006040,
+          "resource_id": 227,
+          "text": "మరియు విశ్వసించి, సహనాన్ని బోధించేవారిలో! మరియు కరుణను ఒకరి కొకరు బోధించుకునే వారిలో చేరిపోవడం."
         }
       ]
     },
@@ -466,6 +636,16 @@
           "id": 1550478,
           "resource_id": 831,
           "text": "Yeh log hain dayein baazu(right hand) waley"
+        },
+        {
+          "id": -1006041,
+          "resource_id": "ur.maududi",
+          "text": "یہ لوگ ہیں دائیں بازو والے"
+        },
+        {
+          "id": -2006041,
+          "resource_id": 227,
+          "text": "ఇలాంటి వారే కుడిపక్షం వారు."
         }
       ]
     },
@@ -491,6 +671,16 @@
           "id": 1550479,
           "resource_id": 831,
           "text": "Aur jinhon ne hamari aayat ko mann-ney se inkar kiya woh bayen bazu(left hand) waley hain"
+        },
+        {
+          "id": -1006042,
+          "resource_id": "ur.maududi",
+          "text": "اور جنہوں نے ہماری آیات کو ماننے سے انکار کیا وہ بائیں بازو والے ہیں"
+        },
+        {
+          "id": -2006042,
+          "resource_id": 227,
+          "text": "ఇక మా సందేశాలను తిరస్కరించిన వారు, ఎడమ పక్షానికి చెందినవారు."
         }
       ]
     },
@@ -516,6 +706,16 @@
           "id": 1550480,
           "resource_id": 831,
           "text": "Un par aag chaayi hui hogi"
+        },
+        {
+          "id": -1006043,
+          "resource_id": "ur.maududi",
+          "text": "ان پر آگ چھائی ہوئی ہوگی"
+        },
+        {
+          "id": -2006043,
+          "resource_id": 227,
+          "text": "వారిని నరకాగ్ని చుట్టుకుంటుంది."
         }
       ]
     }

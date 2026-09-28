@@ -41,6 +41,16 @@
           "id": 1550645,
           "resource_id": 831,
           "text": "Kehdo ke aey kafiron"
+        },
+        {
+          "id": -1006208,
+          "resource_id": "ur.maududi",
+          "text": "کہہ دو کہ اے کافرو"
+        },
+        {
+          "id": -2006208,
+          "resource_id": 227,
+          "text": "ఇలా అను: \"ఓ సత్యతిరస్కారులారా!"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550646,
           "resource_id": 831,
           "text": "Main unki ibadat nahin karta jinki ibadat tum karte ho"
+        },
+        {
+          "id": -1006209,
+          "resource_id": "ur.maududi",
+          "text": "میں اُن کی عبادت نہیں کرتا جن کی عبادت تم کرتے ہو"
+        },
+        {
+          "id": -2006209,
+          "resource_id": 227,
+          "text": "మీరు ఆరాధిస్తున్న వాటిని నేను ఆరాధించను;"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550647,
           "resource_id": 831,
           "text": "Aur na tum uski ibadat karne wale ho jiski ibadat mai karta hoon"
+        },
+        {
+          "id": -1006210,
+          "resource_id": "ur.maududi",
+          "text": "اور نہ تم اُس کی عبادت کرنے والے ہو جس کی عبادت میں کرتا ہوں"
+        },
+        {
+          "id": -2006210,
+          "resource_id": 227,
+          "text": "మరియు నేను ఆరాధిస్తున్న ఆయనను (అల్లాహ్ ను) మీరు ఆరాధించేవారు కారు."
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550648,
           "resource_id": 831,
           "text": "Aur na mai unki ibadat karne wala hoon jinki ibadat tum ne ki hai"
+        },
+        {
+          "id": -1006211,
+          "resource_id": "ur.maududi",
+          "text": "اور نہ میں اُن کی عبادت کرنے والا ہوں جن کی عبادت تم نے کی ہے"
+        },
+        {
+          "id": -2006211,
+          "resource_id": 227,
+          "text": "మరియు మీరు ఆరాధిస్తున్న వాటిని నేను ఆరాధించేవాణ్ణి కాను;"
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550649,
           "resource_id": 831,
           "text": "Aur na tum uski ibadat karne waley ho jiski ibadat main karta hoon"
+        },
+        {
+          "id": -1006212,
+          "resource_id": "ur.maududi",
+          "text": "اور نہ تم اُس کی عبادت کرنے والے ہو جس کی عبادت میں کرتا ہوں"
+        },
+        {
+          "id": -2006212,
+          "resource_id": 227,
+          "text": "మరియు నేను ఆరాధిస్తున్న ఆయనను మీరు ఆరాధించేవారు కారు."
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1550650,
           "resource_id": 831,
           "text": "Tumhare liye tumhara deen hai aur mere liye mera deen"
+        },
+        {
+          "id": -1006213,
+          "resource_id": "ur.maududi",
+          "text": "تمہارے لیے تمہارا دین ہے اور میرے لیے میرا دین"
+        },
+        {
+          "id": -2006213,
+          "resource_id": 227,
+          "text": "మీ ధర్మం మీకూ మరియు నా ధర్మం నాకు!\""
         }
       ]
     }

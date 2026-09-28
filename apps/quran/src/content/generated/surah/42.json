@@ -41,6 +41,16 @@
           "id": 1548710,
           "resource_id": 831,
           "text": "Haa Meem"
+        },
+        {
+          "id": -1004273,
+          "resource_id": "ur.maududi",
+          "text": "ح م"
+        },
+        {
+          "id": -2004273,
+          "resource_id": 227,
+          "text": "హా - మీమ్."
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1548711,
           "resource_id": 831,
           "text": "Ain seen Qaaf"
+        },
+        {
+          "id": -1004274,
+          "resource_id": "ur.maududi",
+          "text": "ع س ق"
+        },
+        {
+          "id": -2004274,
+          "resource_id": 227,
+          "text": "ఐన్ - సీన్ - ఖాఫ్,"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1548712,
           "resource_id": 831,
           "text": "Isi tarah Allah galib o hakeem (Most Mighty, the Most Wise) tumhari taraf aur tumse pehle guzre huey (Rasoolon) ki taraf wahee karta raha hai"
+        },
+        {
+          "id": -1004275,
+          "resource_id": "ur.maududi",
+          "text": "اِسی طرح اللہ غالب و حکیم تمہاری طرف اور تم سے پہلے گزرے ہوئے (رسولوں) کی طرف وحی کرتا رہا ہے"
+        },
+        {
+          "id": -2004275,
+          "resource_id": 227,
+          "text": "(ఓ ముహమ్మద్!) సర్వశక్తిమంతుడూ, మహావివేకవంతుడూ అయిన అల్లాహ్, ఇదే విధంగా నీకూ మరియు నీ కంటే ముందు వచ్చిన వారికి కూడా దివ్యజ్ఞానం (వహీ) అవతరింపజేశాడు."
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1548713,
           "resource_id": 831,
           "text": "Aasmaano aur zameen mein jo kuch bhi hai usi ka hai, woh baratar aur azeem hai"
+        },
+        {
+          "id": -1004276,
+          "resource_id": "ur.maududi",
+          "text": "آسمانوں اور زمین میں جو کچھ بھی ہے اُسی کا ہے، وہ برتر اور عظیم ہے"
+        },
+        {
+          "id": -2004276,
+          "resource_id": 227,
+          "text": "ఆకాశాలలో మరియు భూమిలో ఉన్నదంతా ఆయనకు చెందినదే. ఆయన మహోన్నతుడు, సర్వోత్తముడు."
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1548714,
           "resource_id": 831,
           "text": "Qareeb hai ke aasmaan upar se phatt padein farishtey apne Rubb ki hamd ke saath uski tasbeeh kar rahey hain, aur zameen walon ke haqq mein darguzar ki darkhwastein kiye jaate hain. Aagah raho, haqeeqat mein Allah gafoor o Raheem hi hai"
+        },
+        {
+          "id": -1004277,
+          "resource_id": "ur.maududi",
+          "text": "قریب ہے کہ آسمان اوپر سے پھٹ پڑیں فرشتے اپنے رب کی حمد کے ساتھ اُس کی تسبیح کر رہے ہیں اور زمین والوں کے حق میں درگزر کی درخواستیں کیے جاتے ہیں آگاہ رہو، حقیقت میں اللہ غفور و رحیم ہی ہے"
+        },
+        {
+          "id": -2004277,
+          "resource_id": 227,
+          "text": "ఆకాశాలు, పై నుండి దాదాపు ప్రేలి పోనున్నాయి. మరియు దేవదూతలు తమ ప్రభువు పవిత్రతను కొనియాడుతూ, ఆయనను స్తుతిస్తూ ఉన్నారు మరియు భూమిలో ఉన్నవారి కొరకు క్షమాపణ కోరుతున్నారు. చూడండి, నిశ్చయంగా అల్లాహ్! ఆయనే క్షమాశీలుడు, అపార కరుణా ప్రదాత."
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1548715,
           "resource_id": 831,
           "text": "Jin logon ne usko chodh kar apne kuch dusre sarparast bana rakkhe hain, Allah hi unpar nigraan hai, tum unke hawala daar nahin ho"
+        },
+        {
+          "id": -1004278,
+          "resource_id": "ur.maududi",
+          "text": "جن لوگوں نے اُس کو چھوڑ کر اپنے کچھ دوسرے سرپرست بنا رکھے ہیں، اللہ ہی اُن پر نگراں ہے، تم ان کے حوالہ دار نہیں ہو"
+        },
+        {
+          "id": -2004278,
+          "resource_id": 227,
+          "text": "మరియు ఎవరైతే ఆయనను వదలి ఇతరులను తమ సంరక్షకులుగా చేసుకుంటారో, వారిని అల్లాహ్ కనిపెట్టుకొని ఉన్నాడు. మరియు నీవు వారికి బాధ్యుడవు కావు."
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1548716,
           "resource_id": 831,
           "text": "Haan, isi tarah aey Nabi, yeh Quraan e arabi humne tumhari taraf wahee (revelation) kiya hai taa-ke tum bastiyaon ke markaz (shehar e Makkah) aur uske gird o pesh rehne walon ko khabardar kardo, aur jamaa honay ke din se dara do jiske aane mein koi shakk nahin.Ek girooh ko jannat mein jaana hai aur dusre girooh ko dozakh mein"
+        },
+        {
+          "id": -1004279,
+          "resource_id": "ur.maududi",
+          "text": "ہاں، اِسی طرح اے نبیؐ، یہ قرآن عربی ہم نے تمہاری طرف وحی کیا ہے تاکہ تم بستیوں کے مرکز (شہر مکہ) اور اُس کے گرد و پیش رہنے والوں کو خبردار کر دو، اور جمع ہونے کے دن سے ڈرا دو جن کے آنے میں کوئی شک نہیں ایک گروہ کو جنت میں جانا ہے اور دوسرے گروہ کو دوزخ میں"
+        },
+        {
+          "id": -2004279,
+          "resource_id": 227,
+          "text": "మరియు ఈ విధంగా మేము నీపై ఈ ఖుర్ఆన్ ను, అరబ్బీ భాషలో, దివ్యజ్ఞానం (వహీ) ద్వారా అవతరింపజేశాము. దానితో నీవు ఉమ్ముల్ ఖురా (మక్కా) మరియు దాని చుట్టుప్రక్కల వారిని హెచ్చరించటానికి మరియు - దానిని గురించి ఎలాంటి సందేహం లేని - ఆ సమావేశ దినాన్ని గురించి హెచ్చరించేందుకు కూడా. (ఆ రోజు) ఒక వర్గం వారు స్వర్గానికి పోతారు, మరొక వర్గం వారు మండే నరకాగ్నిలోకి పోతారు."
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1548717,
           "resource_id": 831,
           "text": "Agar Allah chahta to in sab ko ek hi ummat bana deta, magar woh jisey chahta hai apni rehmat mein dakhil karta hai. Aur zaalimon ka na koi wali hai na madadgaar"
+        },
+        {
+          "id": -1004280,
+          "resource_id": "ur.maududi",
+          "text": "اگر اللہ چاہتا تو اِن سب کو ایک ہی امت بنا دیتا، مگر وہ جسے چاہتا ہے اپنی رحمت میں داخل کرتا ہے، اور ظالموں کا نہ کوئی ولی ہے نہ مدد گار"
+        },
+        {
+          "id": -2004280,
+          "resource_id": 227,
+          "text": "మరియు ఒకవేళ అల్లాహ్ కోరితే వారందరినీ ఒకే సమాజంగా చేసి ఉండేవాడు! కాని ఆయన తాను కోరిన వారిని తన కరుణకు పాత్రులుగా చేసుకుంటాడు. మరియు దుర్మార్గుల కొరకు, రక్షించేవాడు గానీ సహాయపడేవాడు గానీ ఎవ్వడూ ఉండడు."
         }
       ]
     },
@@ -241,6 +321,16 @@
           "id": 1548718,
           "resource_id": 831,
           "text": "Kya yeh (aisey naadaan hain ke) inhon ne usey chodh kar dusre wali(protectors) bana rakkhe hain? Wali(protector) to Allah hi hai, wahi murdon (dead) ko zinda karta hai, aur woh har cheez par qadir hai"
+        },
+        {
+          "id": -1004281,
+          "resource_id": "ur.maududi",
+          "text": "کیا یہ (ایسے نادان ہیں کہ) اِنہوں نے اُسے چھوڑ کر دوسرے ولی بنا رکھے ہیں؟ ولی تو اللہ ہی ہے، وہی مُردوں کو زندہ کرتا ہے، اور وہ ہر چیز پر قادر ہے"
+        },
+        {
+          "id": -2004281,
+          "resource_id": 227,
+          "text": "లేక వారు ఆయనను వదలి ఇతరులను సంరక్షకులుగా చేసుకున్నారా? కానీ అల్లాహ్! కేవలం ఆయనే సంరక్షకుడు మరియు ఆయనే మృతులను బ్రతికించేవాడు మరియు ఆయనే ప్రతిదీ చేయగల సమర్ధుడు."
         }
       ]
     },
@@ -266,6 +356,16 @@
           "id": 1548719,
           "resource_id": 831,
           "text": "Tumhare darmiyan jis maamle mein bhi ikhtilaf ho, uska faisla karna Allah ka kaam hai. Wahi Allah mera Rubb hai, usi par maine bharosa kiya, aur usi ki taraf main rujoo karta hoon"
+        },
+        {
+          "id": -1004282,
+          "resource_id": "ur.maududi",
+          "text": "تمہارے درمیان جس معاملہ میں بھی اختلاف ہو، اُس کا فیصلہ کرنا اللہ کا کام ہے وہی اللہ میرا رب ہے، اُسی پر میں نے بھروسہ کیا، اور اُسی کی طرف میں رجوع کرتا ہوں"
+        },
+        {
+          "id": -2004282,
+          "resource_id": 227,
+          "text": "మరియు మీరు ఏ విషయాన్ని గురించి భేదాభిప్రాయాలు కలిగి వున్నారో, దాని తీర్పు అల్లాహ్ వద్దనే ఉంది. ఆయనే అల్లాహ్! నా ప్రభువు, నేను ఆయననే నమ్ముకున్నాను మరియు నేను పశ్చాత్తాపంతో ఆయన వైపునకే మరలుతాను."
         }
       ]
     },
@@ -291,6 +391,16 @@
           "id": 1548720,
           "resource_id": 831,
           "text": "Aasmaano aur zameen ka banane waala, jisne tumhari apni jins se tumhare liye jodey (pairs) paida kiye, aur isi tarah jaanwaron mein bhi (unhi ke hum jins) jodey(pairs) banaye, aur is tareeqe se woh tumhari naslein (generations) phailata hai. Qayanat ki koi cheez uske mushabeh nahin, woh sab kuch sunnay aur dekhne wala hai"
+        },
+        {
+          "id": -1004283,
+          "resource_id": "ur.maududi",
+          "text": "آسمانوں اور زمین کا بنانے والا، جس نے تمہاری اپنی جنس سے تمہارے لیے جوڑے پیدا کیے، اور اسی طرح جانوروں میں بھی (اُنہی کے ہم جنس) جوڑے بنائے، اور اِس طریقہ سے وہ تمہاری نسلیں پھیلاتا ہے کائنات کی کوئی چیز اس کے مشابہ نہیں، وہ سب کچھ سننے اور دیکھنے والا ہے"
+        },
+        {
+          "id": -2004283,
+          "resource_id": 227,
+          "text": "ఆయనే ఆకాశాలు మరియు భూమి యొక్క సృష్టికి మూలాధారి. ఆయన మీలో నుండే మీ కొరకు జంటల్ని మరియు పశువులలో కూడా జంటల్ని చేశాడు. ఈ విధంగా, ఆయన మిమ్మల్ని వ్యాపింప జేస్తున్నాడు. ఆయనకు పోలింది ఏదీ లేదు. మరియు ఆయన సర్వం వినేవాడు, సర్వం చూసేవాడు."
         }
       ]
     },
@@ -316,6 +426,16 @@
           "id": 1548721,
           "resource_id": 831,
           "text": "Aasmaano aur zameen ke khazano ki kunjiyan usi ke paas hain. Jisey chahta hai khula rizq deta hai aur jisey chahta hai napa tula deta hai. Usey har cheez ka ilm hai"
+        },
+        {
+          "id": -1004284,
+          "resource_id": "ur.maududi",
+          "text": "آسمانوں اور زمین کے خزانوں کی کنجیاں اُسی کے پاس ہیں، جسے چاہتا ہے کھلا رزق دیتا ہے اور جسے چاہتا ہے نپا تلا دیتا ہے، اُسے ہر چیز کا علم ہے"
+        },
+        {
+          "id": -2004284,
+          "resource_id": 227,
+          "text": "ఆకాశాల యొక్క మరియు భూమి యొక్క తాళపు చెవులు ఆయన వద్దనే వున్నాయి. ఆయన తాను కోరిన వానికి జీవనోపాధిని పుష్కలంగా ప్రసాదిస్తాడు మరియు (తాను కోరిన వానికి) దానిని మితంగా ఇస్తాడు. నిశ్చయంగా, ఆయనకు ప్రతిదానిని గురించి బాగా తెలుసు."
         }
       ]
     },
@@ -341,6 +461,16 @@
           "id": 1548722,
           "resource_id": 831,
           "text": "Usne tumhare liye deen ka wahi tareeqa muqarrar kiya hai jiska hukum usne Nooh ko diya tha, aur jisey (aey Muhammad) ab tumhari taraf humne wahee ke zariye se bheja hai, aur jiski hidayat hum Ibrahim aur Moosa aur Isa ko de chuke hain, is takeed ke saath ke qayam karo is deen ko aur us mein mutafarriq na ho jao. Yahi baat in mushrikin ko sakht nagawaar hui hai jiski taraf aey Muhammad tum inhein dawat de rahey ho. Allah jisey chahta hai apna kar leta hai, aur woh apni taraf aane ka raasta usi ko dikhata hai jo uski taraf rujoo karey"
+        },
+        {
+          "id": -1004285,
+          "resource_id": "ur.maududi",
+          "text": "اُس نے تمہارے لیے دین کا وہی طریقہ مقرر کیا ہے جس کا حکم اُس نے نوحؑ کو دیا تھا، اور جسے (اے محمدؐ) اب تمہاری طرف ہم نے وحی کے ذریعہ سے بھیجا ہے، اور جس کی ہدایت ہم ابراہیمؑ اور موسیٰؑ اور عیسیٰؑ کو دے چکے ہیں، اِس تاکید کے ساتھ کہ قائم کرو اِس دین کو اور اُس میں متفرق نہ ہو جاؤ یہی بات اِن مشرکین کو سخت ناگوار ہوئی ہے جس کی طرف اے محمدؐ تم انہیں دعوت دے رہے ہو اللہ جسے چاہتا ہے اپنا کر لیتا ہے، اور وہ اپنی طرف آنے کا راستہ اُسی کو دکھاتا ہے جو اُس کی طرف رجوع کرے"
+        },
+        {
+          "id": -2004285,
+          "resource_id": 227,
+          "text": "ఆయన, నూహ్ కు విధించిన (ఇస్లాం) ధర్మాన్నే, మీ కొరకు శాసించాడు; మరియు దానినే (ఓ ముహమ్మద్!) మేము నీకు దివ్యజ్ఞానం (వహీ) ద్వారా అవతరింపజేశాము; మరియు మేము దానినే ఇబ్రాహీమ్, మూసా మరియు ఈసాలకు కూడా విధిగా చేశాము. ఈ ధర్మాన్నే స్థాపించాలని మరియు దానిని గురించి భేదాభిప్రాయాలకు గురి కాకుండా ఉండాలని. నీవు దాని వైపునకు పిలిచేది బహుదైవారాధకులకు ఎంతో సహింపలేనిదిగా ఉంది. అల్లాహ్ తాను కోరిన వానిని తన వైపునకు ఆకర్షిస్తాడు మరియు పశ్చాత్తాపంతో తన వైపునకు మరలేవానికి మార్గదర్శకత్వం చేస్తాడు."
         }
       ]
     },
@@ -366,6 +496,16 @@
           "id": 1548723,
           "resource_id": 831,
           "text": "Logon mein jo tafraqa(ikhtilaf) runuma hua woh iske baad hua ke unke paas ilm aa chuka tha aur is bina par hua ke woh aapas mein ek dusre par zyadati karna chahte thay. Agar tera Rubb pehle hi yeh na farma chuka hota ke ek waqt e muqarrar tak faisla multawi rakkha jayega to inka qaziya chuka diya gaya hota. Aur haqeeqat yeh hai ke aglon ke baad jo log kitab ke waaris banaye gaye woh uski taraf se badey istarab angez shakk mein padey huey hain"
+        },
+        {
+          "id": -1004286,
+          "resource_id": "ur.maududi",
+          "text": "لوگوں میں جو تفرقہ رو نما ہوا وہ اِس کے بعد ہوا کہ اُن کے پاس علم آ چکا تھا، اور اس بنا پر ہوا کہ وہ آپس میں ایک دوسرے پر زیادتی کرنا چاہتے تھے اگر تیرا رب پہلے ہی یہ نہ فرما چکا ہوتا کہ ایک وقت مقرر تک فیصلہ ملتوی رکھا جائے گا تو ان کا قضیہ چکا دیا گیا ہوتا اور حقیقت یہ ہے کہ اگلوں کے بعد جو لوگ کتاب کے وارث بنائے گئے وہ اُس کی طرف سے بڑے اضطراب انگیز شک میں پڑے ہوئے ہیں"
+        },
+        {
+          "id": -2004286,
+          "resource_id": 227,
+          "text": "మరియు వారి వద్దకు (సత్య) జ్ఞానం వచ్చిన తరువాతనే - వారి పరస్పర ద్వేషం వల్ల - వారి మధ్య భేదాభిప్రాయాలు వచ్చాయి. మరియు ఒక నిర్ణీత కాలపు వాగ్దానం నీ ప్రభువు తరపు నుండి చేయబడి ఉండకపోతే, వారి మధ్య తీర్పు ఎప్పుడో జరిగి ఉండేది. మరియు నిశ్చయంగా, వారి తర్వాత గ్రంథాన్ని వారసత్వంలో పొందిన వారు దానిని (ఇస్లాంను) గురించి గొప్ప సంశయంలో పడి ఉన్నారు."
         }
       ]
     },
@@ -391,6 +531,16 @@
           "id": 1548724,
           "resource_id": 831,
           "text": "Junke yeh halat paida ho chuki hai isliye aey Muhammad (s.a.s.) ab tum usi deen ki taraf dawat do, aur jis tarah tumhein hukum diya gaya hai us par mazbooti ke saath qayam ho jaao, aur in logon ki khwaishat ki ittiba na karo. Aur inse kehdo ke: “Allah ne jo kitaab bhi nazil ki hai main uspar imaan laya, mujhe hukum diya gaya hai ke main tumahre darmiyan insaaf karoon. Allah hi hamara Rubb bhi hai aur tumhara Rubb bhi. Hamare aamal hamare liye hain aur tumhare aamal tumhare liye. Hamare aur tumhare darmiyan koi jhagda nahin. Allah ek roz hum sab ko jamaa karega aur usi ki taraf sab ko jana hai”"
+        },
+        {
+          "id": -1004287,
+          "resource_id": "ur.maududi",
+          "text": "چونکہ یہ حالت پیدا ہو چکی ہے اس لیے اے محمدؐ، اب تم اُسی دین کی طرف دعوت دو، اور جس طرح تمہیں حکم دیا گیا ہے اُس پر مضبوطی کے ساتھ قائم ہو جاؤ، اور اِن لوگو ں کی خواہشات کا اتباع نہ کرو، اور اِن سے کہہ دو کہ: \"اللہ نے جو کتاب بھی نازل کی ہے میں اُس پر ایمان لایا مجھے حکم دیا گیا ہے کہ میں تمہارے درمیان انصاف کروں اللہ ہی ہمارا رب بھی ہے اور تمہارا رب بھی ہمارے اعمال ہمارے لیے ہیں اور تمہارے اعمال تمہارے لیے ہمارے اور تمہارے درمیان کوئی جھگڑا نہیں اللہ ایک روز ہم سب کو جمع کرے گا اور اُسی کی طرف سب کو جانا ہے\""
+        },
+        {
+          "id": -2004287,
+          "resource_id": 227,
+          "text": "కావున నీవు (ఓ ముహమ్మద్!) దీని (ఈ సత్యధర్మం) వైపునకే వారిని పిలువు. మరియు నీకు ఆజ్ఞాపించబడిన విధంగా దానిపై స్థిరంగా ఉండు. మరియు వారి కోరికలను అనుసరించకు. మరియు వారితో ఇలా అను: \"అల్లాహ్ అవతరింపజేసిన గ్రంథాన్నే నేను విశ్వసించాను. మరియు మీ మధ్య న్యాయం చేయమని నేను ఆజ్ఞాపించబడ్డాను. అల్లాహ్ యే మా ప్రభువు! మరియు మీ ప్రభువు కూడాను, మా కర్మలు మాకూ మరియు మీ కర్మలు మీకూ, మా మధ్య మరియు మీ మధ్య ఎలాంటి వివాదం ఉండనవసరం లేదు. అల్లాహ్ మనందరినీ సమావేశపరుస్తాడు. మరియు ఆయన వైపే (మనందరి) గమ్యస్థానముంది.\""
         }
       ]
     },
@@ -416,6 +566,16 @@
           "id": 1548725,
           "resource_id": 831,
           "text": "Allah ki dawat par labbaik kahey jaane ke baad jo log (labbaik kehne walon se) Allah ke deen ke muaamle mein jhagde karte hain, unki hujjat baazi unke Rubb ke nazdeek baatil hai, aur unpar uska gazab hai aur unke liye sakht azaab hai"
+        },
+        {
+          "id": -1004288,
+          "resource_id": "ur.maududi",
+          "text": "اللہ کی دعوت پر لبیک کہے جانے کے بعد جو لوگ (لبیک کہنے والوں سے) اللہ کے دین کے معاملہ میں جھگڑے کرتے ہیں، اُن کی حجت بازی اُن کے رب کے نزدیک باطل ہے، اور اُن پر اس کا غضب ہے اور اُن کے لیے سخت عذاب ہے"
+        },
+        {
+          "id": -2004288,
+          "resource_id": 227,
+          "text": "మరియు అల్లాహ్ సందేశం స్వీకరించిన తర్వాత, (స్వీకరించిన వారితో) ఆయనను గురించి ఎవరు వాదిస్తారో, వారి వాదం వారి ప్రభువు సన్నిధిలో నిరర్థకమైనది; మరియు వారిపై ఆయన (అల్లాహ్) ఆగ్రహం విరుచుకు పడుతుంది మరియు వారికి కఠిన శిక్ష పడుతుంది."
         }
       ]
     },
@@ -441,6 +601,16 @@
           "id": 1548726,
           "resource_id": 831,
           "text": "Woh Allah hi hai jisne haqq ke saath yeh kitaab aur mizaan nazil ki hai aur tumhein kya khabar, shayad ke faisley ki ghadi qareeb hi aa lagi ho"
+        },
+        {
+          "id": -1004289,
+          "resource_id": "ur.maududi",
+          "text": "وہ اللہ ہی ہے جس نے حق کے ساتھ یہ کتاب اور میزان نازل کی ہے اور تمہیں کیا خبر، شاید کہ فیصلے کی گھڑی قریب ہی آ لگی ہو"
+        },
+        {
+          "id": -2004289,
+          "resource_id": 227,
+          "text": "అల్లాహ్ యే సత్యంతో గ్రంథాన్ని మరియు (న్యాయానికి) త్రాసును అవతరింపజేశాడు. మరి నీవు ఏ విధంగా గ్రహించగలవు. బహుశా తీర్పు ఘడియ సమీపంలోనే ఉండవచ్చు!"
         }
       ]
     },
@@ -466,6 +636,16 @@
           "id": 1548727,
           "resource_id": 831,
           "text": "Jo log uske aane par imaan nahin rakhte woh to us ke liye jaldi machate hain, magar jo uspar imaan rakhte hain woh ussey darte hain aur jaante hain ke yaqeenan woh aane wali hai.Khoob sunlo, jo log us ghadi ke aane mein shakk daalne wali behsain (arguments) karte hain woh gumrahi mein bahut dur nikal gaye hain"
+        },
+        {
+          "id": -1004290,
+          "resource_id": "ur.maududi",
+          "text": "جو لوگ اس کے آنے پر ایمان نہیں رکھتے وہ تو اس کے لیے جلدی مچاتے ہیں، مگر جو اس پر ایمان رکھتے ہیں وہ اس سے ڈرتے ہیں اور جانتے ہیں کہ یقیناً وہ آنے والی ہے خوب سن لو، جو لوگ اُس گھڑی کے آنے میں شک ڈالنے والی بحثیں کرتے ہیں وہ گمراہی میں بہت دور نکل گئے ہیں"
+        },
+        {
+          "id": -2004290,
+          "resource_id": 227,
+          "text": "దానిని నమ్మని వారే దాని కొరకు తొందర పెడతారు. మరియు విశ్వసించిన వారు, దానిని గురించి భయపడతారు మరియు అది రావటం నిశ్చయంగా, సత్యమేనని తెలుసుకుంటారు. వినండి! నిశ్చయంగా ఎవరైతే తీర్పు ఘడియను గురించి వాదులాడుతారో, వారు మార్గభ్రష్టత్వంలో చాలా దూరం పోయిన వారే!"
         }
       ]
     },
@@ -491,6 +671,16 @@
           "id": 1548728,
           "resource_id": 831,
           "text": "Allah apne bandon par bahut meharban hai jisey jo kuch chahta hai deta hai. Woh badi quwwat wala aur zabardast hai"
+        },
+        {
+          "id": -1004291,
+          "resource_id": "ur.maududi",
+          "text": "اللہ اپنے بندوں پر بہت مہربان ہے جسے جو کچھ چاہتا ہے دیتا ہے، وہ بڑی قوت والا اور زبردست ہے"
+        },
+        {
+          "id": -2004291,
+          "resource_id": 227,
+          "text": "అల్లాహ్ తన దాసుల పట్ల ఎంతో మృదుహృదయుడు; ఆయన తాను కోరిన వారికి జీవనోపాధిని ప్రసాదిస్తాడు. మరియు ఆయన మహా బలవంతుడు, సర్వశక్తి సంపన్నుడు."
         }
       ]
     },
@@ -516,6 +706,16 @@
           "id": 1548729,
           "resource_id": 831,
           "text": "Jo koi aakhirat ki kheti chahta hai uski kheti ko hum badhate hain, aur jo duniya ki kheti chahta hai usey duniya hi mein se detay hain magar aakhirat mein uska koi hissa nahin hai"
+        },
+        {
+          "id": -1004292,
+          "resource_id": "ur.maududi",
+          "text": "جو کوئی آخرت کی کھیتی چاہتا ہے اُس کی کھیتی کو ہم بڑھاتے ہیں، اور جو دنیا کی کھیتی چاہتا ہے اُسے دنیا ہی میں سے دیتے ہیں مگر آخرت میں اُس کا کوئی حصہ نہیں ہے"
+        },
+        {
+          "id": -2004292,
+          "resource_id": 227,
+          "text": "ఎవడు పరలోక ఫలాన్ని కోరుకుంటాడో మేము అతనికి అతని ఫలంలో వృద్ధి కలిగిస్తాము. మరియు ఎవడైతే ఇహలోక ఫలాన్ని కోరుకుంటాడో, మేము అతనికి దాని నొసంగుతాము మరియు అతనికి పరలోక (ప్రతిఫలంలో) ఎలాంటి భాగముండదు."
         }
       ]
     },
@@ -541,6 +741,16 @@
           "id": 1548730,
           "resource_id": 831,
           "text": "Kya yeh log kuch aisey sharik e khuda rakhte hain jinhon ne inke liye deen ki noiyat rakhne wala ek aisa tareeka muqarrar kardiya hai jiska Allah ne izan nahin diya? Agar faislay ki baat pehle tai na ho gayi hoti to inka qaziya chuka diya gaya hota. Yaqeenan in zaalimon ke liye dardnaak azaab hai"
+        },
+        {
+          "id": -1004293,
+          "resource_id": "ur.maududi",
+          "text": "کیا یہ لوگ کچھ ایسے شریک خدا رکھتے ہیں جنہوں نے اِن کے لیے دین کی نوعیت رکھنے والا ایک ایسا طریقہ مقرر کر دیا ہے جس کا اللہ نے اِذن نہیں دیا؟ اگر فیصلے کی بات پہلے طے نہ ہو گئی ہوتی تو ان کا قضیہ چکا دیا گیا ہوتا یقیناً اِن ظالموں کے لیے درد ناک عذاب ہے"
+        },
+        {
+          "id": -2004293,
+          "resource_id": 227,
+          "text": "ఏమీ? అల్లాహ్ అనుమతించని ధర్మాన్ని వారి కొరకు విధించగల, ఆయన భాగస్వాములు ఎవరైనా వారి దగ్గర ఉన్నారా? ఒకవేళ తీర్పుదినపు వాగ్దానం ముందే చేయబడి ఉండకపోతే, వారి మధ్య తీర్పు ఎప్పుడో జరిగి వుండేదే. మరియు నిశ్చయంగా, ఈ దుర్మార్గులకు బాధాకరమైన శిక్ష పడుతుంది."
         }
       ]
     },
@@ -566,6 +776,16 @@
           "id": 1548731,
           "resource_id": 831,
           "text": "Tum dekhoge ke yeh zaalim us waqt apne kiye ke anjaam se darr rahey hongey aur woh inpar aa kar rahega. Ba-khilaf iske jo log imaan le aaye hain aur jinhon ne neik aamal kiye hain woh jannat ke gulistano mein honge, jo kuch bhi woh chahenge apne Rubb ke haan paayenge, yahi bada fazal hai"
+        },
+        {
+          "id": -1004294,
+          "resource_id": "ur.maududi",
+          "text": "تم دیکھو گے کہ یہ ظالم اُس وقت اپنے کیے کے انجام سے ڈر رہے ہوں گے اور وہ اِن پر آ کر رہے گا بخلاف اِس کے جو لوگ ایمان لے آئے ہیں اور جنہوں نے نیک عمل کیے ہیں وہ جنت کے گلستانوں میں ہوں گے، جو کچھ بھی وہ چاہیں گے اپنے رب کے ہاں پائیں گے، یہی بڑا فضل ہے"
+        },
+        {
+          "id": -2004294,
+          "resource_id": 227,
+          "text": "ఈ దుర్మార్గులు (పునరుత్థాన దినాన) తాము చేసిన కర్మల ఫలితాన్ని చూసి భయపడటాన్ని, నీవు చూస్తావు మరియు అది వారిపై తప్పక పడుతుంది. మరియు ఎవరైతే విశ్వసించి, సత్కార్యాలు చేస్తారో, వారు స్వర్గపు పచ్చిక మైదానాలలో ఉంటారు. వారికి తాము కోరేదంతా తమ ప్రభువు తరఫు నుండి లభిస్తుంది అదే ఆ గొప్ప అనుగ్రహం."
         }
       ]
     },
@@ -591,6 +811,16 @@
           "id": 1548732,
           "resource_id": 831,
           "text": "Yeh hai woh cheez jiski khush khabri Allah apne un bandon ko deta hai jinhon ne maan liya aur neik amal kiye. Aey Nabi, in logon se kehdo ke main is kaam par tumse kisi ajar ka taalib nahin hoon. Albatta qarabat (kinsfolk) ki muhabbat zaroor chahta hoon. Jo koi bhalayi kamayega hum uske liye us bhalayi mein khoobi ka izafa kar dengey. Beshak Allah bada darguzar karne wala aur qadardaan hai"
+        },
+        {
+          "id": -1004295,
+          "resource_id": "ur.maududi",
+          "text": "یہ ہے وہ چیز جس کی خوش خبری اللہ اپنے اُن بندوں کو دیتا ہے جنہوں نے مان لیا اور نیک عمل کیے اے نبیؐ، اِن لوگوں سے کہہ دو کہ میں اِس کام پر تم سے کسی اجر کا طالب نہیں ہوں، البتہ قرابت کی محبت ضرور چاہتا ہوں جو کوئی بھلائی کمائے گا ہم اس کے لیے اس بھلائی میں خوبی کا اضافہ کر دیں گے بے شک اللہ بڑا در گزر کرنے والا اور قدر دان ہے"
+        },
+        {
+          "id": -2004295,
+          "resource_id": 227,
+          "text": "ఆ (స్వర్గపు) శుభవార్తనే, అల్లాహ్ విశ్వసించి సత్కార్యాలు చేసే తన దాసులకు తెలియజేస్తున్నాడు. (ఓ ప్రవక్తా!) వారితో ఇలా అను: \"నేను దీనికి బదులుగా మీ నుండి బంధుత్వ ప్రేమ తప్ప వేరే ప్రతిఫలాన్ని కోరడం లేదు!\" మరియు ఎవడు మంచిని సంపాదించుకుంటాడో, అతనికి దానిలో మేము మరింత మంచిని పెంచుతాము. నిశ్చయంగా, అల్లాహ్ క్షమాశీలుడు, కృతజ్ఞతలను ఆమోదించేవాడు."
         }
       ]
     },
@@ -616,6 +846,16 @@
           "id": 1548733,
           "resource_id": 831,
           "text": "Kya yeh log kehte hain ke is shaks ne Allah par jhoota bohtan ghadh liya hai? Agar Allah chahe to tumhare dil par mohar karde. Woh baatil ko mita deta hai aur haq ko apne farmaano se haqq kar dikhata hai. Woh seeno ke chupey huey raaz jaanta hai"
+        },
+        {
+          "id": -1004296,
+          "resource_id": "ur.maududi",
+          "text": "کیا یہ لوگ کہتے ہیں کہ اِس شخص نے اللہ پر جھوٹا بہتان گھڑ لیا ہے؟ اگر اللہ چاہے تو تمہارے دل پر مہر کر دے وہ باطل کو مٹا دیتا ہے اور حق کو اپنے فرمانوں سے حق کر دکھاتا ہے وہ سینوں کے چھپے ہوئے راز جانتا ہے"
+        },
+        {
+          "id": -2004296,
+          "resource_id": 227,
+          "text": "ఏమీ? వారు: \"అతను (ముహమ్మద్!) అల్లాహ్ పేరుతో అసత్యాలు కల్పిస్తున్నాడు\" అని అంటున్నారా? కాని ఒకవేళ అల్లాహ్ తలచుకుంటే, నీ హృదయం మీద ముద్రవేసే వాడు. మరియు అల్లాహ్ అసత్యాన్ని రూపుమాపి, తన ఆజ్ఞతో సత్యాన్ని స్థాపిస్తాడు. నిశ్చయంగా ఆయనకు హృదయాలలో ఉన్నదంతా బాగా తెలుసు."
         }
       ]
     },
@@ -641,6 +881,16 @@
           "id": 1548734,
           "resource_id": 831,
           "text": "Wahi hai jo apne bandon se tawbah qabool karta hai aur buraiyon se darguzar karta hai, halanke tum logon ke sab afaal (jo kuch kar rahe ho) ka usey ilm hai"
+        },
+        {
+          "id": -1004297,
+          "resource_id": "ur.maududi",
+          "text": "وہی ہے جو اپنے بندوں سے توبہ قبول کرتا ہے اور برائیوں سے درگزر کرتا ہے، حالانکہ تم لوگوں کے سب افعال کا اُ سے علم ہے"
+        },
+        {
+          "id": -2004297,
+          "resource_id": 227,
+          "text": "ఆయనే తన దాసుల పశ్చాత్తాపాన్ని స్వీకరించేవాడు. మరియు పాపాలను మన్నించేవాడు. మరియు మీరు చేసేదంతా ఆయనకు బాగా తెలుసు."
         }
       ]
     },
@@ -666,6 +916,16 @@
           "id": 1548735,
           "resource_id": 831,
           "text": "Woh imaan laane walon aur neik amal karne waalon ki dua qabool karta hai aur apne fazal se unko aur zyada deta hai. Rahey inkar karne walay, to unke liye dardnaak saza hai"
+        },
+        {
+          "id": -1004298,
+          "resource_id": "ur.maududi",
+          "text": "وہ ایمان لانے والوں اور نیک عمل کرنے والوں کی دعا قبول کرتا ہے اور اپنے فضل سے ان کو اور زیادہ دیتا ہے رہے انکار کرنے والے، تو ان کے لیے دردناک سزا ہے"
+        },
+        {
+          "id": -2004298,
+          "resource_id": 227,
+          "text": "మరియు ఆయన విశ్వసించి, సత్కార్యాలు చేసేవారి ప్రార్థనలను అంగీకరిస్తాడు మరియు వారిపై తన అనుగ్రహాన్ని మరింత అధికం చేస్తాడు. ఇక సత్యతిరస్కారులు! వారికి కఠిన శిక్ష పడుతుంది."
         }
       ]
     },
@@ -691,6 +951,16 @@
           "id": 1548736,
           "resource_id": 831,
           "text": "Agar Allah apne sab bandon(servants) ko khula rizq de deta to woh zameen mein sarkashi ka toofaan barpa kar detey, Magar woh ek hisaab se jitna chahta hai naazil karta hai, yaqeenan woh apne bandon se ba khabar hai aur un par nigaah rakhta hai"
+        },
+        {
+          "id": -1004299,
+          "resource_id": "ur.maududi",
+          "text": "اگر اللہ اپنے سب بندوں کو کھلا رزق دے دیتا تو وہ زمین میں سرکشی کا طوفان برپا کر دیتے، مگر وہ ایک حساب سے جتنا چاہتا ہے نازل کرتا ہے، یقیناً وہ اپنے بندوں سے با خبر ہے اور اُن پر نگاہ رکھتا ہے"
+        },
+        {
+          "id": -2004299,
+          "resource_id": 227,
+          "text": "మరియు ఒకవేళ అల్లాహ్ తన దాసులందరికీ పుష్కలంగా జీవనోపాధిని ప్రసాదించి ఉంటే, వారు భూమిలో తిరుగుబాటుకు పాల్పడేవారు. కావున ఆయన తన ఇష్టప్రకారం, మితంగా ఇస్తాడు. నిశ్చయంగా, ఆయన తన దాసులను గురించి బాగా ఎరుగును, ఆయన అంతా చూస్తున్నాడు!"
         }
       ]
     },
@@ -716,6 +986,16 @@
           "id": 1548737,
           "resource_id": 831,
           "text": "Wahi hai jo logon ke mayous ho janey ke baad meh (rain) barsata hai aur apni rehmat phaila deta hai, aur wahi qaabil e taareef wali hai"
+        },
+        {
+          "id": -1004300,
+          "resource_id": "ur.maududi",
+          "text": "وہی ہے جو لوگوں کے مایوس ہو جانے کے بعد مینہ برساتا ہے اور اپنی رحمت پھیلا دیتا ہے، اور وہی قابل تعریف ولی ہے"
+        },
+        {
+          "id": -2004300,
+          "resource_id": 227,
+          "text": "మరియు ఆయనే, వారు నిరాశకులోనై ఉన్నప్పుడు వర్షాన్ని కురిపిస్తాడు మరియు తన కారుణ్యాన్ని వ్యాపింపజేస్తాడు. మరియు ఆయనే సంరక్షకుడు, ప్రశంసనీయుడు."
         }
       ]
     },
@@ -741,6 +1021,16 @@
           "id": 1548738,
           "resource_id": 831,
           "text": "Uski nishaniyon mein se hai yeh zameen aur aasmaano ki paidaish, aur yeh jaandaar makhlooqat jo usne dono jagah phayla rakkhi hain. Woh jab chahey inhein ikattha kar sakta hai"
+        },
+        {
+          "id": -1004301,
+          "resource_id": "ur.maududi",
+          "text": "اُس کی نشانیوں میں سے ہے یہ زمین اور آسمانوں کی پیدائش، اور یہ جاندار مخلوقات جو اُس نے دونوں جگہ پھیلا رکھی ہیں وہ جب چاہے انہیں اکٹھا کر سکتا ہے"
+        },
+        {
+          "id": -2004301,
+          "resource_id": 227,
+          "text": "మరియు ఆయన సూచనలలో (ఆయాత్ లలో), ఆకాశాలను మరియు భూమిని మరియు వాటిలో వ్యాపింపజేసిన జీవరాసులను సృష్టించటం కూడా ఉంది. మరియు ఆయన తాను కోరినప్పుడు వాటినన్నింటినీ సమీకరించగల సమర్ధుడు."
         }
       ]
     },
@@ -766,6 +1056,16 @@
           "id": 1548739,
           "resource_id": 831,
           "text": "Tumpar jo musibat bhi aayi hai, tumhare apne haathon ki kamayi se aayi hai, aur bahut se kasooron se woh waise hi darguzar kar jaata hai"
+        },
+        {
+          "id": -1004302,
+          "resource_id": "ur.maududi",
+          "text": "تم پر جو مصیبت بھی آئی ہے، تمہارے اپنے ہاتھوں کی کمائی سے آئی ہے، اور بہت سے قصوروں سے وہ ویسے ہی در گزر کر جاتا ہے"
+        },
+        {
+          "id": -2004302,
+          "resource_id": 227,
+          "text": "మీపై ఏ ఆపద వచ్చినా, అది మీ చేతులారా మీరు సంపాదించుకున్నదే! మరియు ఆయన (మీ తప్పులను) ఎన్నింటినో క్షమిస్తాడు."
         }
       ]
     },
@@ -791,6 +1091,16 @@
           "id": 1548740,
           "resource_id": 831,
           "text": "Tum zameen mein apne khuda ko aajiz (frustrate) kardene waley nahin ho, aur Allah ke muqable mein tum koi haami o naasir (protector or helper) nahin rakhte"
+        },
+        {
+          "id": -1004303,
+          "resource_id": "ur.maududi",
+          "text": "تم زمین میں اپنے خدا کو عاجز کر دینے والے نہیں ہو، اور اللہ کے مقابلے میں تم کوئی حامی و ناصر نہیں رکھتے"
+        },
+        {
+          "id": -2004303,
+          "resource_id": 227,
+          "text": "మరియు మీరు భూమిలో ఆయన నుంచి తప్పించుకోలేరు. మరియు మీకు అల్లాహ్ తప్ప మరొక సంరక్షకుడు గానీ, సహాయకుడు గానీ లేడు!"
         }
       ]
     },
@@ -816,6 +1126,16 @@
           "id": 1548741,
           "resource_id": 831,
           "text": "Uski nishaniyon mein se hain yeh jahaz (ships) jo samandar mein pahadon ki tarah nazar aate hain"
+        },
+        {
+          "id": -1004304,
+          "resource_id": "ur.maududi",
+          "text": "اُس کی نشانیوں میں سے ہیں یہ جہاز جو سمندر میں پہاڑوں کی طرح نظر آتے ہیں"
+        },
+        {
+          "id": -2004304,
+          "resource_id": 227,
+          "text": "మరియు ఆయన సూచనలలో (ఆయాత్ లలో) సముద్రంలో, కొండల మాదిరిగా పయనించే ఓడలు కూడా వున్నాయి."
         }
       ]
     },
@@ -841,6 +1161,16 @@
           "id": 1548742,
           "resource_id": 831,
           "text": "Allah jab chahey hawa ko saakin (motionless) karde aur yeh samandar ki peeth (back) par khade reh jayein. Ismein badi nishaniyan hain har us shaks ke liye jo kamal darja sabr o shukar karne wala ho"
+        },
+        {
+          "id": -1004305,
+          "resource_id": "ur.maududi",
+          "text": "اللہ جب چاہے ہوا کو ساکن کر دے اور یہ سمندر کی پیٹھ پر کھڑے کے کھڑے رہ جائیں اِس میں بڑی نشانیاں ہیں ہر اُس شخص کے لیے جو کمال درجہ صبر و شکر کرنے والا ہو"
+        },
+        {
+          "id": -2004305,
+          "resource_id": 227,
+          "text": "ఒకవేళ ఆయన కోరితే గాలిని ఆపగలడు. అప్పుడవి దాని (సముద్రపు) వీపు మీద నిలిచిపోతాయి. నిశ్చయంగా, ఇందులో సహనం గలవానికి, కృతజ్ఞునికి ఎన్నో సూచనలున్నాయి."
         }
       ]
     },
@@ -866,6 +1196,16 @@
           "id": 1548743,
           "resource_id": 831,
           "text": "Ya (unpar sawar honay walon ke) bahut se gunahon se dar guzar karte huey unke chandh hi kartooton ki padash mein unhein dubo (drown) de"
+        },
+        {
+          "id": -1004306,
+          "resource_id": "ur.maududi",
+          "text": "یا (اُن پر سوار ہونے والوں کے) بہت سے گناہوں سے در گزر کرتے ہوئے ان کے چند ہی کرتوتوں کی پاداش میں انہیں ڈبو دے"
+        },
+        {
+          "id": -2004306,
+          "resource_id": 227,
+          "text": "లేదా ఆయన వారి కర్మల ఫలితంగా వారిని (ముంచి) నాశనం చేయవచ్చు, కాని ఆయన ఎన్నింటినో క్షమిస్తాడు కూడాను."
         }
       ]
     },
@@ -891,6 +1231,16 @@
           "id": 1548744,
           "resource_id": 831,
           "text": "Aur us waqt hamari aayat mein jhagade karne walon ko pata chal jaaye ke unke liye koi jaaye panaah nahin hai"
+        },
+        {
+          "id": -1004307,
+          "resource_id": "ur.maududi",
+          "text": "اور اُس وقت ہماری آیات میں جھگڑے کرنے والوں کو پتہ چل جائے کہ ان کے لیے کوئی جائے پناہ نہیں ہے"
+        },
+        {
+          "id": -2004307,
+          "resource_id": 227,
+          "text": "మరియు మా సూచన (ఆయాత్) లను గురించి వాదులాడేవారు, తమకు తప్పించుకునే చోటు లేదని తెలుసుకుంటారు."
         }
       ]
     },
@@ -916,6 +1266,16 @@
           "id": 1548745,
           "resource_id": 831,
           "text": "Jo kuch bhi tum logon ko diya gaya hai woh mehaz duniya ki chand roza zindagi ka sar o saaman hai, aur jo kuch Allah ke haan hai woh behtar bhi hai aur payedar bhi. Woh un logon ke liye hai jo imaan laye hain aur apne Rubb par bharosa karte hain"
+        },
+        {
+          "id": -1004308,
+          "resource_id": "ur.maududi",
+          "text": "جو کچھ بھی تم لوگوں کو دیا گیا ہے وہ محض دنیا کی چند روزہ زندگی کا سر و سامان ہے، اور جو کچھ اللہ کے ہاں ہے وہ بہتر بھی ہے اور پائدار بھی وہ اُن لوگوں کے لیے ہے جو ایمان لائے ہیں اور اپنے رب پر بھروسہ کرتے ہیں"
+        },
+        {
+          "id": -2004308,
+          "resource_id": 227,
+          "text": "కావున మీకు ఇవ్వబడిందంతా ప్రాపంచిక జీవితపు సుఖసంతోషమే. కనుక అల్లాహ్ వద్దనున్నదే - విశ్వసించి తమ ప్రభువునే నమ్ముకున్న వారి కొరకు - ఉత్తమమైనదీ మరియు శాశ్వతమైనదీను."
         }
       ]
     },
@@ -941,6 +1301,16 @@
           "id": 1548746,
           "resource_id": 831,
           "text": "Jo badey badey gunahon aur be hayayi ke kaamon se parheiz karte hain aur agar gussa aa jaye to darguzar kar jatey hain"
+        },
+        {
+          "id": -1004309,
+          "resource_id": "ur.maududi",
+          "text": "جو بڑے بڑے گناہوں اور بے حیائی کے کاموں سے پرہیز کرتے ہیں اور اگر غصہ آ جائے تو درگزر کر جا تے ہیں"
+        },
+        {
+          "id": -2004309,
+          "resource_id": 227,
+          "text": "మరియు అలాంటి వారు పెద్ద పాపాలు మరియు అశ్లీలమైన పనులకు దూరంగా ఉంటారు మరియు కోపం వచ్చినా క్షమిస్తారు,"
         }
       ]
     },
@@ -966,6 +1336,16 @@
           "id": 1548747,
           "resource_id": 831,
           "text": "Jo apne Rubb ka hukum maante hain, namaz qayam karte hain, apne maamlaat aapas ke mashware se chalate hain, humne jo kuch bhi rizq unhein diya hai us mein se kharch karte hain"
+        },
+        {
+          "id": -1004310,
+          "resource_id": "ur.maududi",
+          "text": "جو اپنے رب کا حکم مانتے ہیں، نماز قائم کرتے ہیں، اپنے معاملات آپس کے مشورے سے چلاتے ہیں، ہم نے جو کچھ بھی رزق انہیں دیا ہے اُس میں سے خرچ کرتے ہیں"
+        },
+        {
+          "id": -2004310,
+          "resource_id": 227,
+          "text": "మరియు అలాంటి వారు తమ ప్రభువు ఆజ్ఞాపాలన చేస్తారు మరియు నమాజ్ ను స్థాపిస్తారు మరియు తమ వ్యవహారాలను పరస్పర సంప్రదింపుల ద్వారా పరిష్కరించు కుంటారు మరియు మేము వారికి ప్రసాదించిన జీనవోపాధి నుండి ఇతరుల మీద ఖర్చు చేస్తారు;"
         }
       ]
     },
@@ -991,6 +1371,16 @@
           "id": 1548748,
           "resource_id": 831,
           "text": "Aur jab unpar zyadati ki jaati hai to uska muqaabla karte hain"
+        },
+        {
+          "id": -1004311,
+          "resource_id": "ur.maududi",
+          "text": "اور جب ان پر زیادتی کی جاتی ہے تو اس کا مقابلہ کرتے ہیں"
+        },
+        {
+          "id": -2004311,
+          "resource_id": 227,
+          "text": "మరియు అలాంటి వారు తమపై దౌర్జన్యం జరిగినపుడు దానికి న్యాయప్రతీకారం మాత్రమే చేస్తారు."
         }
       ]
     },
@@ -1016,6 +1406,16 @@
           "id": 1548749,
           "resource_id": 831,
           "text": "Burayi ka badla waisi hi burayi hai, phir jo koi maaf karde aur islaah karey uska ajar Allah ke zimme hai. Allah zaalimon ko pasand nahin karta"
+        },
+        {
+          "id": -1004312,
+          "resource_id": "ur.maududi",
+          "text": "برائی کا بدلہ ویسی ہی برائی ہے، پھر جو کوئی معاف کر دے اور اصلاح کرے اُس کا اجر اللہ کے ذمہ ہے، اللہ ظالموں کو پسند نہیں کرتا"
+        },
+        {
+          "id": -2004312,
+          "resource_id": 227,
+          "text": "మరియు కీడుకు ప్రతీకారం దానంతటి కీడు మాత్రమే. కాని ఎవడైనా క్షమించి సంధి చేసుకుంటే అతని ప్రతిఫలం అల్లాహ్ దగ్గర ఉంది. నిశ్చయంగా, ఆయన దుర్మార్గులంటే ఇష్టపడడు."
         }
       ]
     },
@@ -1041,6 +1441,16 @@
           "id": 1548750,
           "resource_id": 831,
           "text": "Aur jo log zulm honay ke baad badla lein unko malamat nahin ki ja sakti"
+        },
+        {
+          "id": -1004313,
+          "resource_id": "ur.maududi",
+          "text": "اور جو لوگ ظلم ہونے کے بعد بدلہ لیں اُن کو ملامت نہیں کی جا سکتی"
+        },
+        {
+          "id": -2004313,
+          "resource_id": 227,
+          "text": "కాని ఎవరైనా తమకు అన్యాయం జరిగినప్పుడు దానికి తగినంత న్యాయప్రతీకారం మాత్రమే తీసుకుంటే అలాంటి వారు నిందార్హులు కారు."
         }
       ]
     },
@@ -1066,6 +1476,16 @@
           "id": 1548751,
           "resource_id": 831,
           "text": "Malamat ke mustahiq to woh hain jo dusron par zulm karte hain aur zameen mein na haqq zyadatiyan karte hain. Aisey logon ke liye dardnaak azaab hai"
+        },
+        {
+          "id": -1004314,
+          "resource_id": "ur.maududi",
+          "text": "ملامت کے مستحق تو وہ ہیں جو دوسروں پر ظلم کرتے ہیں اور زمین میں ناحق زیادتیاں کرتے ہیں ایسے لوگوں کے لیے دردناک عذاب ہے"
+        },
+        {
+          "id": -2004314,
+          "resource_id": 227,
+          "text": "కాని, వాస్తవానికి ఎవరైతే ప్రజలపై దౌర్జన్యాలు చేస్తారో మరియు భూమిలో అన్యాయంగా ఉపద్రవాలు రేకెత్తిస్తారో అలాంటి వారు నిందార్హులు. అలాంటి వారు, వారికే! బాధాకరమైన శిక్ష గలదు."
         }
       ]
     },
@@ -1091,6 +1511,16 @@
           "id": 1548752,
           "resource_id": 831,
           "text": "Albatta jo shaks sabr se kaam le aur darguzar karey, to yeh badi ulul azmi ke kaamon mein se hai"
+        },
+        {
+          "id": -1004315,
+          "resource_id": "ur.maududi",
+          "text": "البتہ جو شخص صبر سے کام لے اور درگزر کرے، تو یہ بڑی اولوالعزمی کے کاموں میں سے ہے"
+        },
+        {
+          "id": -2004315,
+          "resource_id": 227,
+          "text": "మరియు ఎవడైతే సహనం వహించి క్షమిస్తాడో! నిశ్చయంగా, అది (అల్లాహ్ దృష్టిలో) ఎంతో సహృదయంతో (సాహసంతో) కూడిన పని!"
         }
       ]
     },
@@ -1116,6 +1546,16 @@
           "id": 1548753,
           "resource_id": 831,
           "text": "Jis ko Allah hi gumraahi mein phenk de us ka koi sambhaalne wala Allah ke baad nahin hai. Tum dekho ge yeh zaalim jab azaab dekhenge to kahenge ab palatne ki bhi koi sabeel hai"
+        },
+        {
+          "id": -1004316,
+          "resource_id": "ur.maududi",
+          "text": "جس کو اللہ ہی گمراہی میں پھینک دے اُس کا کوئی سنبھالنے والا اللہ کے بعد نہیں ہے تم دیکھو گے کہ یہ ظالم جب عذاب دیکھیں گے تو کہیں گے اب پلٹنے کی بھی کوئی سبیل ہے؟"
+        },
+        {
+          "id": -2004316,
+          "resource_id": 227,
+          "text": "మరియు, ఎవడినైతే అల్లాహ్ మార్గభ్రష్టత్వంలో పడనిస్తాడో! దాని తరువాత వాడికి సంరక్షకుడు, ఎవ్వడూ ఉండడు. మరియు ఈ దుర్మార్గులు శిక్షను చూసినపుడు: \"మేము తిరిగి (భూలోకంలోకి) పోయే మార్గమేదైనా ఉందా?\" అని అడగటం నీవు చూస్తావు."
         }
       ]
     },
@@ -1141,6 +1581,16 @@
           "id": 1548754,
           "resource_id": 831,
           "text": "Aur tum dekhoge ke yeh jahannum ke saamne jab laye jayenge to zillat ke maare jhuke jaa rahey hongey aur usko nazar bacha bacha kar kan aankiyon (covert glance) se dekhenge.Us waqt woh log jo iman laye thay kahenge ke waqai asal ziyan kaar ([true] losers) wahi hain jinhon ne aaj qayamat ke din apne aapko aur apne mutaaliqin ko khasare mein daal diya. Khabardar raho, zaalim log mustaqil azaab mein hongey"
+        },
+        {
+          "id": -1004317,
+          "resource_id": "ur.maududi",
+          "text": "اور تم دیکھو گے کہ یہ جہنم کے سامنے جب لائے جائیں گے تو ذلت کے مارے جھکے جا رہے ہوں گے اور اُس کو نظر بچا بچا کر کن آنکھیوں سے دیکھیں گے اُس وقت وہ لوگ جو ایمان لائے تھے کہیں گے کہ واقعی اصل زیاں کار وہی ہیں جنہوں نے آج قیامت کے دن اپنے آپ کو اور اپنے متعلقین کو خسارے میں ڈال دیا خبردار رہو، ظالم لوگ مستقل عذاب میں ہوں گے"
+        },
+        {
+          "id": -2004317,
+          "resource_id": 227,
+          "text": "మరియు వారిని, దాని (నరకం) ముందుకు తీసుకొని వచ్చినప్పుడు, వారు అవమానంతో కృంగిపోతూ, దొంగచూపులతో దానిని చూడటం నీవు గమనిస్తావు. మరియు విశ్వసించిన వారు ఇలా అంటారు: \"నిశ్చయంగా, తమను తాము మరియు తమ సంబంధీకులను (అనుచరులను) నష్టానికి గురి చేసుకున్నవారే, ఈ పునరుత్థాన దినమున నష్టపోయే వారు. జాగ్రత్త! నిశ్చయంగా, దుర్మార్గులే శాశ్వతమైన శిక్షకు గురి అవుతారు.\""
         }
       ]
     },
@@ -1166,6 +1616,16 @@
           "id": 1548755,
           "resource_id": 831,
           "text": "Aur unke koi haami o sarparast na hongey jo Allah ke muqaable mein unki madad ko aayein. Jisey Allah gumraahi mein phenk de uske liye bachao ki koi sabeel nahin"
+        },
+        {
+          "id": -1004318,
+          "resource_id": "ur.maududi",
+          "text": "اور ان کے کوئی حامی و سرپرست نہ ہوں گے جو اللہ کے مقابلے میں ان کی مدد کو آئیں جسے اللہ گمراہی میں پھینک دے اس کے لیے بچاؤ کی کوئی سبیل نہیں"
+        },
+        {
+          "id": -2004318,
+          "resource_id": 227,
+          "text": "మరియు అల్లాహ్ తప్ప, ఇతరులెవ్వరూ వారికి రక్షకులుగా గానీ, సహాయకులుగా గానీ ఉండరు. మరియు అల్లాహ్ మార్గభ్రష్టత్వంలో వదిలిన వారికి (దాని నుండి బయటపడే) మార్గమేదీ వుండదు."
         }
       ]
     },
@@ -1191,6 +1651,16 @@
           "id": 1548756,
           "resource_id": 831,
           "text": "Maan lo apne Rubb ki baat qabl iske ke woh din aaye jiske talne ki koi surat Allah ki taraf se nahin hai. Us din tumhare liye koi jaaye panaah na hogi aur na koi tumhare haal ko badalne ki koshish karne wala hoga"
+        },
+        {
+          "id": -1004319,
+          "resource_id": "ur.maududi",
+          "text": "مان لو اپنے رب کی بات قبل اس کے کہ وہ دن آئے جس کے ٹلنے کی کوئی صورت اللہ کی طرف سے نہیں ہے اُس دن تمہارے لیے کوئی جائے پناہ نہ ہوگی اور نہ کوئی تمہارے حال کو بدلنے کی کوشش کرنے والا ہو گا"
+        },
+        {
+          "id": -2004319,
+          "resource_id": 227,
+          "text": "(కావున ఓ మానవులారా మరియు జిన్నాతులారా!) మీరు, తొలగింపబడే అవకాశం లేనటువంటి ఆ దినం అల్లాహ్ తరఫు నుండి రాకముందే, మీ ప్రభువు ఆజ్ఞను శిరసావహించండి. ఆ రోజున మీకు ఎక్కడా ఆశ్రయం లభించదు. మరియు మీకు (మీ పాపాలను) నిరాకరించటానికి కూడా వీలుండదు."
         }
       ]
     },
@@ -1216,6 +1686,16 @@
           "id": 1548757,
           "resource_id": 831,
           "text": "Ab agar yeh log mooh moadte hain to aey Nabi humne tumko unpar nigehbaan bana kar to nahin bheja hai. Tumpar to sirf baat pahuncha dene ki zimmedari hai.Insaan ka haal yeh hai ke jab hum usey apni rehmat ka maza chakhate hain to uspar phool jata hai. Aur agar uske apne haathon ka kiya dhara kisi musibat ki shakal mein uspar ulat padta hai to sakht na shukra ban jata hai"
+        },
+        {
+          "id": -1004320,
+          "resource_id": "ur.maududi",
+          "text": "اب اگر یہ لوگ منہ موڑتے ہیں تو اے نبیؐ، ہم نے تم کو ان پر نگہبان بنا کر تو نہیں بھیجا ہے تم پر تو صرف بات پہنچا دینے کی ذمہ داری ہے انسان کا حال یہ ہے کہ جب ہم اسے اپنی رحمت کا مزا چکھاتے ہیں تو اُس پر پھول جاتا ہے، اور اگر اس کے اپنے ہاتھوں کا کیا دھرا کسی مصیبت کی شکل میں اُس پر الٹ پڑتا ہے تو سخت ناشکرا بن جاتا ہے"
+        },
+        {
+          "id": -2004320,
+          "resource_id": 227,
+          "text": "(ఓ ప్రవక్తా!) ఒకవేళ వారు విముఖులైతే మేము నిన్ను వారిపై రక్షకునిగా చేసి పంపలేదు. నీ పని కేవలం (సందేశాన్ని) అందజేయటం మాత్రమే. మరియు మేము మానవునికి మా కారుణ్యాన్ని రుచి చూపిస్తే, దానికి అతడు సంతోషంతో పొంగిపోతాడు. కాని ఒకవేళ వారికి తమ చేతులారా చేసుకున్న దానికి ఫలితంగా, కీడు కలిగినట్లయితే! నిశ్చయంగా, అప్పుడు మానవుడు కృతఘ్ను డవుతాడు!"
         }
       ]
     },
@@ -1241,6 +1721,16 @@
           "id": 1548758,
           "resource_id": 831,
           "text": "Allah zameen aur aasmaano ki baadshahi ka maalik hai. Jo kuch chahta hai paida karta hai. Jisey chahta hai ladkiyan deta hai, jisey chahta hai ladke deta hai"
+        },
+        {
+          "id": -1004321,
+          "resource_id": "ur.maududi",
+          "text": "اللہ زمین اور آسمانوں کی بادشاہی کا مالک ہے، جو کچھ چاہتا ہے پیدا کرتا ہے، جسے چاہتا ہے لڑکیاں دیتا ہے، جسے چاہتا ہے لڑکے دیتا ہے"
+        },
+        {
+          "id": -2004321,
+          "resource_id": 227,
+          "text": "భూమ్యాకాశాల సామ్రాజ్యాధికారం అల్లాహ్ దే! ఆయన తాను కోరింది సృష్టిస్తాడు. ఆయన తాను కోరిన వారికి కుమార్తెలను ప్రసాదిస్తాడు మరియు తాను కోరిన వారికి కుమారులను ప్రసాదిస్తుడు."
         }
       ]
     },
@@ -1266,6 +1756,16 @@
           "id": 1548759,
           "resource_id": 831,
           "text": "Jisey chahta hai ladke aur ladkiyan mila-jula kar deta hai aur jisey chahta hai baanjh (barren) kardeta hai. Woh sab kuch jaanta hai aur har cheez par qadir hai"
+        },
+        {
+          "id": -1004322,
+          "resource_id": "ur.maududi",
+          "text": "جسے چاہتا ہے لڑکے اور لڑکیاں ملا جلا کر دیتا ہے، اور جسے چاہتا ہے بانجھ کر دیتا ہے وہ سب کچھ جانتا اور ہر چیز پر قادر ہے"
+        },
+        {
+          "id": -2004322,
+          "resource_id": 227,
+          "text": "లేదా! వారికి కుమారులను మరియు కుమార్తెలను కలిపి ప్రసాదిస్తాడు. మరియు తాను కోరిన వారికి అసలు సంతానమే ఇవ్వడు. నిశ్చయంగా, ఆయన సర్వజ్ఞుడు, అంతా చేయగల సమర్ధుడు."
         }
       ]
     },
@@ -1291,6 +1791,16 @@
           "id": 1548760,
           "resource_id": 831,
           "text": "Kisi bashar (Insaan) ka yeh muqaam nahin hai ke Allah us se ru-baru baat karey, uski baat ya to wahee (isharey/ revelation) ke taur par hoti hai, ya purday ke piche se, ya phir woh koi paigaambar (farishta) bhejta hai aur woh uske hukum se jo kuch woh chahta hai, wahi karta hai. Woh bartar aur Hakeem(wise) hai"
+        },
+        {
+          "id": -1004323,
+          "resource_id": "ur.maududi",
+          "text": "کسی بشر کا یہ مقام نہیں ہے کہ اللہ اُس سے روبرو بات کرے اُس کی بات یا تو وحی (اشارے) کے طور پر ہوتی ہے، یا پردے کے پیچھے سے، یا پھر وہ کوئی پیغام بر (فرشتہ) بھیجتا ہے اور وہ اُس کے حکم سے جو کچھ وہ چاہتا ہے، وحی کرتا ہے، وہ برتر اور حکیم ہے"
+        },
+        {
+          "id": -2004323,
+          "resource_id": 227,
+          "text": "మరియు అల్లాహ్ తో మాట్లాడగలిగే శక్తి ఏ మానవునికీ లేదు; కేవలం దివ్యజ్ఞానం (వహీ) ద్వారా లేదా తెర వెనుక నుండి, లేదా ఆయన పంపిన సందేశహరుని ద్వారా, ఆయన అనుమతితో, ఆయన కోరిన (వహీ) అవతరింప జేయబడటం తప్ప! నిశ్చయంగా, ఆయన మహోన్నతుడు, మహా వివేకవంతుడు."
         }
       ]
     },
@@ -1316,6 +1826,16 @@
           "id": 1548761,
           "resource_id": 831,
           "text": "Aur isi tarah (aey Muhammad s.a.s) humne apne hukum se ek rooh tumhari tarf wahee ki hai. Tumhein kuch pata na tha ke kitaab kya hoti hai aur Imaan kya hota hai, Magar us rooh ko humne ek roshni bana diya jissey hum raah dikhate hain apne bandon mein se jisey chahte hain. Yaqeenan tum seedhey raaste ki taraf rehnumayi kar rahey ho"
+        },
+        {
+          "id": -1004324,
+          "resource_id": "ur.maududi",
+          "text": "اور اِسی طرح (اے محمدؐ) ہم نے اپنے حکم سے ایک روح تمہاری طرف وحی کی ہے تمہیں کچھ پتہ نہ تھا کہ کتاب کیا ہوتی ہے اور ایمان کیا ہوتا ہے، مگر اُس روح کو ہم نے ایک روشنی بنا دیا جس سے ہم راہ دکھاتے ہیں اپنے بندوں میں سے جسے چاہتے ہیں یقیناً تم سیدھے راستے کی طرف رہنمائی کر رہے ہو"
+        },
+        {
+          "id": -2004324,
+          "resource_id": 227,
+          "text": "మరియు ఇదే విధంగా (ఓ ముహమ్మద్!) మేము మా ఆజ్ఞతో నీ వద్దకు దివ్యజ్ఞానం (రూహ్) అవతరింపజేశాము. (దీనికి ముందు) నీకు గ్రంథమేమిటో మరియు విశ్వాసమేమిటో తెలియదు. కాని మేము దీనిని (ఈ ఖుర్ఆన్ ను) జ్యోతిగా జేసి, దీని ద్వారా మా దాసులలో మేము కోరిన వారికి, మార్గదర్శకత్వం చేస్తాము. మరియు నిశ్చయంగా, నీవు (ప్రజలకు) ఋజుమార్గం వైపునకు దారి చూపుతున్నావు."
         }
       ]
     },
@@ -1341,6 +1861,16 @@
           "id": 1548762,
           "resource_id": 831,
           "text": "Us khuda ke raaste ki taraf jo zameen aur aasmaano ki har cheez ka maalik hai. khabardar raho, saarey muaamlaat Allah hi ki taraf rujoo karte hain"
+        },
+        {
+          "id": -1004325,
+          "resource_id": "ur.maududi",
+          "text": "اُس خدا کے راستے کی طرف جو زمین اور آسمانوں کی ہر چیز کا مالک ہے خبردار رہو، سارے معاملات اللہ ہی کی طرف رجوع کرتے ہیں"
+        },
+        {
+          "id": -2004325,
+          "resource_id": 227,
+          "text": "అల్లాహ్ మార్గం! భూమ్యాకాశాలలో నున్న ప్రతిదీ ఆయనకే చెందుతుంది. వాస్తవానికి, వ్యవహారాలన్నీ చివరకు (తీర్పు కొరకు) అల్లాహ్ వద్దకే చేరుతాయి."
         }
       ]
     }

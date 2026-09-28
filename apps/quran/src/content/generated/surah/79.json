@@ -41,6 +41,16 @@
           "id": 1550150,
           "resource_id": 831,
           "text": "Kasam hai un (Farishton) ki jo doob kar khinchte hain"
+        },
+        {
+          "id": -1005713,
+          "resource_id": "ur.maududi",
+          "text": "قسم ہے اُن (فرشتوں کی) جو ڈوب کر کھینچتے ہیں"
+        },
+        {
+          "id": -2005713,
+          "resource_id": 227,
+          "text": "(అవిశ్వాసుల ప్రాణాలను) కఠినంగా లాగి తీసే వారి (దేవదూతల) సాక్షిగా!"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550151,
           "resource_id": 831,
           "text": "aur aahistagi se (gently) nikaal le jataey hain"
+        },
+        {
+          "id": -1005714,
+          "resource_id": "ur.maududi",
+          "text": "اور آہستگی سے نکال لے جاتے ہیں"
+        },
+        {
+          "id": -2005714,
+          "resource_id": 227,
+          "text": "(విశ్వాసుల ప్రాణాలను) నెమ్మదిగా తీసేవారి (దేవదూతల) సాక్షిగా!"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550152,
           "resource_id": 831,
           "text": "Aur (un farishton ki jo qayinaat mein) tezi se tairtey phirtay hain"
+        },
+        {
+          "id": -1005715,
+          "resource_id": "ur.maududi",
+          "text": "اور (اُن فرشتوں کی جو کائنات میں) تیزی سے تیرتے پھرتے ہیں"
+        },
+        {
+          "id": -2005715,
+          "resource_id": 227,
+          "text": "(విశ్వంలో) తేలియాడుతూ పోయే వారి సాక్షిగా!"
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550153,
           "resource_id": 831,
           "text": "phir (hukum baja laane mein) sabqat karte hain"
+        },
+        {
+          "id": -1005716,
+          "resource_id": "ur.maududi",
+          "text": "پھر (حکم بجا لانے میں) سبقت کرتے ہیں"
+        },
+        {
+          "id": -2005716,
+          "resource_id": 227,
+          "text": "మరియు పందెంలో వలే (ఒకరితో నొకరు) పోటీ పడే వారి సాక్షిగా!"
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550154,
           "resource_id": 831,
           "text": "phir (ehkam-ilahi ke mutabiq) maamlaat ka intizam chalate hain"
+        },
+        {
+          "id": -1005717,
+          "resource_id": "ur.maududi",
+          "text": "پھر (احکام الٰہی کے مطابق) معاملات کا انتظام چلاتے ہیں"
+        },
+        {
+          "id": -2005717,
+          "resource_id": 227,
+          "text": "మరియు (తమ ప్రభువు) ఆజ్ఞానుసారం వ్యవహారాలు నిర్వహించేవారి (దేవదూతల) సాక్షిగా!"
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1550155,
           "resource_id": 831,
           "text": "Jis roz hila marey ga zalzalay ka jhatka"
+        },
+        {
+          "id": -1005718,
+          "resource_id": "ur.maududi",
+          "text": "جس روز ہلا مارے گا زلزلے کا جھٹکا"
+        },
+        {
+          "id": -2005718,
+          "resource_id": 227,
+          "text": "ఆ రోజు (మొదటి) బాకా ధ్వని భూగోళాన్ని తీవ్రంగా కంపింపజేస్తుంది."
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1550156,
           "resource_id": 831,
           "text": "Aur uske pichey ek aur jhatka padega"
+        },
+        {
+          "id": -1005719,
+          "resource_id": "ur.maududi",
+          "text": "اور اس کے پیچھے ایک اور جھٹکا پڑے گا"
+        },
+        {
+          "id": -2005719,
+          "resource_id": 227,
+          "text": "దాని తర్వాత రెండవ సారి బాకా ఊదబడుతుంది. (అప్పుడు అందరూ పునరుత్థరింప బడతారు)."
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1550157,
           "resource_id": 831,
           "text": "Kuch dil hongey jo us roz khauf se kaanp rahey hongey"
+        },
+        {
+          "id": -1005720,
+          "resource_id": "ur.maududi",
+          "text": "کچھ دل ہوں گے جو اُس روز خوف سے کانپ رہے ہوں گے"
+        },
+        {
+          "id": -2005720,
+          "resource_id": 227,
+          "text": "ఆ రోజు (కొన్ని) హృదయాలు (భయంతో) దడదడలాడుతూ ఉంటాయి."
         }
       ]
     },
@@ -241,6 +321,16 @@
           "id": 1550158,
           "resource_id": 831,
           "text": "Nigahein unki sehmi(downcast) hui hogi"
+        },
+        {
+          "id": -1005721,
+          "resource_id": "ur.maududi",
+          "text": "نگاہیں اُن کی سہمی ہوئی ہوں گی"
+        },
+        {
+          "id": -2005721,
+          "resource_id": 227,
+          "text": "వారి చూపులు క్రిందికి వాలి ఉంటాయి."
         }
       ]
     },
@@ -266,6 +356,16 @@
           "id": 1550159,
           "resource_id": 831,
           "text": "Yeh log kehte hain “Kya waqai hum palta kar phir wapas laaye jayenge?”"
+        },
+        {
+          "id": -1005722,
+          "resource_id": "ur.maududi",
+          "text": "یہ لوگ کہتے ہیں \"کیا واقعی ہم پلٹا کر پھر واپس لائے جائیں گے؟"
+        },
+        {
+          "id": -2005722,
+          "resource_id": 227,
+          "text": "వారు ఇలా అంటున్నారు: \"ఏమీ? మనం మన పూర్వ స్థితిలోకి మళ్ళీ తీసుకు రాబడతామా?"
         }
       ]
     },
@@ -291,6 +391,16 @@
           "id": 1550160,
           "resource_id": 831,
           "text": "“Kya jab hum khokli boseeda (hollow and rotten) haddiyan ban chuke hongey?”"
+        },
+        {
+          "id": -1005723,
+          "resource_id": "ur.maududi",
+          "text": "کیا جب ہم کھوکھلی بوسیدہ ہڈیاں بن چکے ہوں گے؟\""
+        },
+        {
+          "id": -2005723,
+          "resource_id": 227,
+          "text": "మనం శిథిలమైన ఎముకలుగా మారి పోయిన తరువాత కూడానా?\""
         }
       ]
     },
@@ -316,6 +426,16 @@
           "id": 1550161,
           "resource_id": 831,
           "text": "Kehne lagey “yeh wapsi to phir badey ghatey(nuksan) ki hogi”"
+        },
+        {
+          "id": -1005724,
+          "resource_id": "ur.maududi",
+          "text": "کہنے لگے \"یہ واپسی تو پھر بڑے گھاٹے کی ہوگی!\""
+        },
+        {
+          "id": -2005724,
+          "resource_id": 227,
+          "text": "వారు (ఇంకా ఇలా) అంటారు: \"అయితే ఈ తిరిగి రావటమనేది చాల నష్టదాయకమైనదే!\""
         }
       ]
     },
@@ -341,6 +461,16 @@
           "id": 1550162,
           "resource_id": 831,
           "text": "Halaanke yeh bas itna kaam hai ke ek zoar ki daant padegi"
+        },
+        {
+          "id": -1005725,
+          "resource_id": "ur.maududi",
+          "text": "حالانکہ یہ بس اتنا کام ہے کہ ایک زور کی ڈانٹ پڑے گی"
+        },
+        {
+          "id": -2005725,
+          "resource_id": 227,
+          "text": "కాని అది వాస్తవానికి, ఒకే ఒక (తీవ్రమైన) ధ్వని."
         }
       ]
     },
@@ -366,6 +496,16 @@
           "id": 1550163,
           "resource_id": 831,
           "text": "Aur yakayk yeh khule maidan mein maujood hongey"
+        },
+        {
+          "id": -1005726,
+          "resource_id": "ur.maududi",
+          "text": "اور یکایک یہ کھلے میدان میں موجود ہوں گے"
+        },
+        {
+          "id": -2005726,
+          "resource_id": 227,
+          "text": "అప్పుడు వారందరూ, ఒకేసారి లేచి మైదానంలోకి వచ్చి ఉంటారు."
         }
       ]
     },
@@ -391,6 +531,16 @@
           "id": 1550164,
           "resource_id": 831,
           "text": "Kya tumhein Moosa ke qissey ki khabar pahunchi hai"
+        },
+        {
+          "id": -1005727,
+          "resource_id": "ur.maududi",
+          "text": "کیا تمہیں موسیٰؑ کے قصے کی خبر پہنچی ہے؟"
+        },
+        {
+          "id": -2005727,
+          "resource_id": 227,
+          "text": "ఏమీ? నీకు మూసా వృత్తాంతం అందిందా?"
         }
       ]
     },
@@ -416,6 +566,16 @@
           "id": 1550165,
           "resource_id": 831,
           "text": "Jab uske Rubb ne usey Tuwa ke muqaddas wadi(valley) mein pukara tha"
+        },
+        {
+          "id": -1005728,
+          "resource_id": "ur.maududi",
+          "text": "جب اس کے رب نے اُسے طویٰ کی مقدس وادی میں پکارا تھا"
+        },
+        {
+          "id": -2005728,
+          "resource_id": 227,
+          "text": "అతని ప్రభువు పవిత్ర తువా లోయలో అతనిని పిలిచినప్పుడు,"
         }
       ]
     },
@@ -441,6 +601,16 @@
           "id": 1550166,
           "resource_id": 831,
           "text": "Ke Firaun ke paas ja, woh sarkash ho gaya hai"
+        },
+        {
+          "id": -1005729,
+          "resource_id": "ur.maududi",
+          "text": "کہ \"فرعون کے پاس جا، وہ سرکش ہو گیا ہے"
+        },
+        {
+          "id": -2005729,
+          "resource_id": 227,
+          "text": "(ఇలా అన్నాడు): \"ఫిర్ఔన్ వద్దకు వెళ్ళు, నిశ్చయంగా, అతడు ధిక్కారుడయ్యాడు."
         }
       ]
     },
@@ -466,6 +636,16 @@
           "id": 1550167,
           "resource_id": 831,
           "text": "Aur ussey keh, kya tu iske liye tayyar hai ke pakeezgi ikhtiyar karey"
+        },
+        {
+          "id": -1005730,
+          "resource_id": "ur.maududi",
+          "text": "اور اس سے کہہ کیا تو اِس کے لیے تیار ہے کہ پاکیزگی اختیار کرے"
+        },
+        {
+          "id": -2005730,
+          "resource_id": 227,
+          "text": "\"ఇక (అతనితో) ఇట్లను: 'ఏమీ? నీవు పాపరహితుడవు అవటానికి ఇష్టపడతావా?"
         }
       ]
     },
@@ -491,6 +671,16 @@
           "id": 1550168,
           "resource_id": 831,
           "text": "Aur mai terey Rubb ki taraf teri rehnumai karoon to (uska) khauf terey andar paida ho?”"
+        },
+        {
+          "id": -1005731,
+          "resource_id": "ur.maududi",
+          "text": "اور میں تیرے رب کی طرف تیری رہنمائی کروں تو (اُس کا) خوف تیرے اندر پیدا ہو؟\""
+        },
+        {
+          "id": -2005731,
+          "resource_id": 227,
+          "text": "మరియు నేను నీకు నీ ప్రభువు వైపునకు మార్గదర్శకత్వం చేస్తాను, మరి నీవు ఆయన పట్ల భీతి కలిగి ఉంటావా?'\""
         }
       ]
     },
@@ -516,6 +706,16 @@
           "id": 1550169,
           "resource_id": 831,
           "text": "Phir Moosa ne (Firaun ke paas ja kar) usko badi nishani dikhai"
+        },
+        {
+          "id": -1005732,
+          "resource_id": "ur.maududi",
+          "text": "پھر موسیٰؑ نے (فرعون کے پاس جا کر) اُس کو بڑی نشانی دکھائی"
+        },
+        {
+          "id": -2005732,
+          "resource_id": 227,
+          "text": "తరువాత అతను (మూసా) అతడికి (ఫిర్ఔన్ కు) గొప్ప అద్భుత నిదర్శనాన్ని చూపాడు."
         }
       ]
     },
@@ -541,6 +741,16 @@
           "id": 1550170,
           "resource_id": 831,
           "text": "Magar usne jhutla diya aur na mana"
+        },
+        {
+          "id": -1005733,
+          "resource_id": "ur.maududi",
+          "text": "مگر اُس نے جھٹلا دیا اور نہ مانا"
+        },
+        {
+          "id": -2005733,
+          "resource_id": 227,
+          "text": "కాని అతడు (ఫిర్ఔన్) దానిని అబద్ధమని తిరస్కరించాడు మరియు (అతని మాటను) ఉల్లంఘించాడు."
         }
       ]
     },
@@ -566,6 +776,16 @@
           "id": 1550171,
           "resource_id": 831,
           "text": "Phir chaal baaziyan karne ke liye palta"
+        },
+        {
+          "id": -1005734,
+          "resource_id": "ur.maududi",
+          "text": "پھر چالبازیاں کرنے کے لیے پلٹا"
+        },
+        {
+          "id": -2005734,
+          "resource_id": 227,
+          "text": "ఆ తర్వాత అతడు (ఫిర్ఔన్) వెనక్కి మరలి పోయి, (కుట్రలు) పన్నసాగాడు."
         }
       ]
     },
@@ -591,6 +811,16 @@
           "id": 1550172,
           "resource_id": 831,
           "text": "Aur logon ko jama karke usne pukaar kar kaha"
+        },
+        {
+          "id": -1005735,
+          "resource_id": "ur.maududi",
+          "text": "اور لوگوں کو جمع کر کے اس نے پکار کر کہا"
+        },
+        {
+          "id": -2005735,
+          "resource_id": 227,
+          "text": "పిదప (ప్రజలను) సమావేశపరచి, ఎలుగెత్తి చాటుతూ;"
         }
       ]
     },
@@ -616,6 +846,16 @@
           "id": 1550173,
           "resource_id": 831,
           "text": "“Main tumhara sabse bada Rubb hoon”"
+        },
+        {
+          "id": -1005736,
+          "resource_id": "ur.maududi",
+          "text": "\"میں تمہارا سب سے بڑا رب ہوں\""
+        },
+        {
+          "id": -2005736,
+          "resource_id": 227,
+          "text": "ఇలా అన్నాడు: \"నేనే మీ యొక్క మహాన్నత ప్రభువును!\""
         }
       ]
     },
@@ -641,6 +881,16 @@
           "id": 1550174,
           "resource_id": 831,
           "text": "Aakhir-e-kaar Allah ne usey aakhirat aur duniya ke azaab mei pakad liya"
+        },
+        {
+          "id": -1005737,
+          "resource_id": "ur.maududi",
+          "text": "آخرکار اللہ نے اسے آخرت اور دنیا کے عذاب میں پکڑ لیا"
+        },
+        {
+          "id": -2005737,
+          "resource_id": 227,
+          "text": "కావున అల్లాహ్ అతనిని ఇహపరలోకాల శిక్షకు గురి చేశాడు."
         }
       ]
     },
@@ -666,6 +916,16 @@
           "id": 1550175,
           "resource_id": 831,
           "text": "Dar haqeeqat is mein badi ibrat hai har us shaks ke liye jo darey"
+        },
+        {
+          "id": -1005738,
+          "resource_id": "ur.maududi",
+          "text": "درحقیقت اِس میں بڑی عبرت ہے ہر اُس شخص کے لیے جو ڈرے"
+        },
+        {
+          "id": -2005738,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, ఇందులో (అల్లాహ్ కు) భయపడే ప్రతి వ్యక్తి కొరకు గుణపాఠముంది."
         }
       ]
     },
@@ -691,6 +951,16 @@
           "id": 1550176,
           "resource_id": 831,
           "text": "Kya tum logon ki takhleeq(paidaish) zyada sakht kaam hai ya aasmaan ki? Allah ne usko banaya"
+        },
+        {
+          "id": -1005739,
+          "resource_id": "ur.maududi",
+          "text": "کیا تم لوگوں کی تخلیق زیادہ سخت کام ہے یا آسمان کی؟ اللہ نے اُس کو بنایا"
+        },
+        {
+          "id": -2005739,
+          "resource_id": 227,
+          "text": "ఏమీ? మిమ్మల్ని సృష్టించడం కఠినమయిన పనా? లేక ఆకాశాన్నా? ఆయనే కదా దానిని నిర్మించింది!"
         }
       ]
     },
@@ -716,6 +986,16 @@
           "id": 1550177,
           "resource_id": 831,
           "text": "Uski chhat(ceiling) khoob unchi uthayi phir uska tawazun qayam kiya(proportioned it)"
+        },
+        {
+          "id": -1005740,
+          "resource_id": "ur.maududi",
+          "text": "اُس کی چھت خوب اونچی اٹھائی پھر اُس کا توازن قائم کیا"
+        },
+        {
+          "id": -2005740,
+          "resource_id": 227,
+          "text": "ఆయన దాని కప్పు (ఎత్తు)ను చాలా పైకి లేపాడు. తరువాత దానిని క్రమపరిచాడు;"
         }
       ]
     },
@@ -741,6 +1021,16 @@
           "id": 1550178,
           "resource_id": 831,
           "text": "Aur uski raat dhaanki aur uska din nikala"
+        },
+        {
+          "id": -1005741,
+          "resource_id": "ur.maududi",
+          "text": "اور اُس کی رات ڈھانکی اور اُس کا دن نکالا"
+        },
+        {
+          "id": -2005741,
+          "resource_id": 227,
+          "text": "మరియు ఆయన దాని రాత్రిని చీకటిగా చేశాడు. మరియు దాని పగటిని (వెలుగును) బహిర్గతం చేశాడు."
         }
       ]
     },
@@ -766,6 +1056,16 @@
           "id": 1550179,
           "resource_id": 831,
           "text": "Iske baad zameen ko usne bichaya"
+        },
+        {
+          "id": -1005742,
+          "resource_id": "ur.maududi",
+          "text": "اِس کے بعد زمین کو اس نے بچھایا"
+        },
+        {
+          "id": -2005742,
+          "resource_id": 227,
+          "text": "మరియు ఆ పిదప భూమిని పరచినట్లు చేశాడు."
         }
       ]
     },
@@ -791,6 +1091,16 @@
           "id": 1550180,
           "resource_id": 831,
           "text": "Uske andar se uska paani aur chara nikala"
+        },
+        {
+          "id": -1005743,
+          "resource_id": "ur.maududi",
+          "text": "اُس کے اندر سے اُس کا پانی اور چارہ نکالا"
+        },
+        {
+          "id": -2005743,
+          "resource_id": 227,
+          "text": "దాని నుండి దాని నీళ్ళను మరియు దాని పచ్చికను బయటికి తీశాడు;"
         }
       ]
     },
@@ -816,6 +1126,16 @@
           "id": 1550181,
           "resource_id": 831,
           "text": "Aur pahad usmein gaadh diye"
+        },
+        {
+          "id": -1005744,
+          "resource_id": "ur.maududi",
+          "text": "اور پہاڑ اس میں گاڑ دیے"
+        },
+        {
+          "id": -2005744,
+          "resource_id": 227,
+          "text": "మరియు పర్వతాలను (దానిలో) స్థిరంగా నాటాడు;"
         }
       ]
     },
@@ -841,6 +1161,16 @@
           "id": 1550182,
           "resource_id": 831,
           "text": "Saaman-e-zeist(provision) ke taur par tumharay liye aur tumharey maweshion ke liye"
+        },
+        {
+          "id": -1005745,
+          "resource_id": "ur.maududi",
+          "text": "سامان زیست کے طور پر تمہارے لیے اور تمہارے مویشیوں کے لیے"
+        },
+        {
+          "id": -2005745,
+          "resource_id": 227,
+          "text": "మీకు మరియు మీ పశువులకు జీవన సామగ్రిగా!"
         }
       ]
     },
@@ -866,6 +1196,16 @@
           "id": 1550183,
           "resource_id": 831,
           "text": "Phir jab woh hungama-e-azeem barpa hoga"
+        },
+        {
+          "id": -1005746,
+          "resource_id": "ur.maududi",
+          "text": "پھر جب وہ ہنگامہ عظیم برپا ہوگا"
+        },
+        {
+          "id": -2005746,
+          "resource_id": 227,
+          "text": "ఇక ఆ గొప్ప దుర్ఘటన (పునరుత్థాన దినం) వచ్చినప్పుడు;"
         }
       ]
     },
@@ -891,6 +1231,16 @@
           "id": 1550184,
           "resource_id": 831,
           "text": "Jis roz Insan apna sab kiya dhara yaad karega"
+        },
+        {
+          "id": -1005747,
+          "resource_id": "ur.maududi",
+          "text": "جس روز انسان اپنا سب کیا دھرا یاد کرے گا"
+        },
+        {
+          "id": -2005747,
+          "resource_id": 227,
+          "text": "ఆ రోజు మానవుడు తాను చేసిందంతా జ్ఞాపకం చేసుకుంటాడు;"
         }
       ]
     },
@@ -916,6 +1266,16 @@
           "id": 1550185,
           "resource_id": 831,
           "text": "Aur har dekhne wale ke samney dozak khol kar rakh di jayegi"
+        },
+        {
+          "id": -1005748,
+          "resource_id": "ur.maududi",
+          "text": "اور ہر دیکھنے والے کے سامنے دوزخ کھول کر رکھ دی جائے گی"
+        },
+        {
+          "id": -2005748,
+          "resource_id": 227,
+          "text": "మరియు చూసే వారి యెదుటకు, నరకాగ్ని స్పష్టంగా కనబడేటట్లు తేబడుతుంది."
         }
       ]
     },
@@ -941,6 +1301,16 @@
           "id": 1550186,
           "resource_id": 831,
           "text": "To jisne sarkashi(transgress) ki thi"
+        },
+        {
+          "id": -1005749,
+          "resource_id": "ur.maududi",
+          "text": "تو جس نے سرکشی کی تھی"
+        },
+        {
+          "id": -2005749,
+          "resource_id": 227,
+          "text": "ఇక ధిక్కారంతో హద్దులు మీరి ప్రవర్తించిన వాడికి;"
         }
       ]
     },
@@ -966,6 +1336,16 @@
           "id": 1550187,
           "resource_id": 831,
           "text": "Aur dunya ki zindagi ko tarjeeh di thi"
+        },
+        {
+          "id": -1005750,
+          "resource_id": "ur.maududi",
+          "text": "اور دنیا کی زندگی کو ترجیح دی تھی"
+        },
+        {
+          "id": -2005750,
+          "resource_id": 227,
+          "text": "మరియు ఐహిక జీవితానికి ప్రాధాన్యత నిచ్చిన వాడికి;"
         }
       ]
     },
@@ -991,6 +1371,16 @@
           "id": 1550188,
           "resource_id": 831,
           "text": "dozakh hi uska thikana hogi"
+        },
+        {
+          "id": -1005751,
+          "resource_id": "ur.maududi",
+          "text": "دوزخ ہی اس کا ٹھکانا ہوگی"
+        },
+        {
+          "id": -2005751,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, నరకాగ్నియే, వాని నివాస స్థానమవుతుంది!"
         }
       ]
     },
@@ -1016,6 +1406,16 @@
           "id": 1550189,
           "resource_id": 831,
           "text": "Aur jisne apne Rubb ke samney khade honay ka khauf kiya tha aur nafs ko buri khwaishaat se baaz rakha tha"
+        },
+        {
+          "id": -1005752,
+          "resource_id": "ur.maududi",
+          "text": "اور جس نے اپنے رب کے سامنے کھڑے ہونے کا خوف کیا تھا اور نفس کو بری خواہشات سے باز رکھا تھا"
+        },
+        {
+          "id": -2005752,
+          "resource_id": 227,
+          "text": "మరియు తన ప్రభువు ముందు నిలబడ వలసి వుంటుందన్న భయంతో తన మనస్సును దుష్టవాంఛలకు దూరంగా ఉంచిన వ్యక్తికి;"
         }
       ]
     },
@@ -1041,6 +1441,16 @@
           "id": 1550190,
           "resource_id": 831,
           "text": "Jannat uska thikana hogi"
+        },
+        {
+          "id": -1005753,
+          "resource_id": "ur.maududi",
+          "text": "جنت اس کا ٹھکانا ہوگی"
+        },
+        {
+          "id": -2005753,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, స్వర్గమే, అతని నివాస స్థానమవుతుంది!"
         }
       ]
     },
@@ -1066,6 +1476,16 @@
           "id": 1550191,
           "resource_id": 831,
           "text": "Yeh log tumse puchte hain ke aakhir woh ghadi kab aakar thehre gi"
+        },
+        {
+          "id": -1005754,
+          "resource_id": "ur.maududi",
+          "text": "یہ لوگ تم سے پوچھتے ہیں کہ \"آخر وہ گھڑی کب آ کر ٹھیرے گی؟\""
+        },
+        {
+          "id": -2005754,
+          "resource_id": 227,
+          "text": "(ఓ ముహమ్మద్!) వీరు నిన్ను - ఆ ఘడియను గురించి: \"అసలు అది ఎప్పుడొస్తుంది?\" అని అడుగుతున్నారు."
         }
       ]
     },
@@ -1091,6 +1511,16 @@
           "id": 1550192,
           "resource_id": 831,
           "text": "Tumhara kya kaam ke us ka waqt batao"
+        },
+        {
+          "id": -1005755,
+          "resource_id": "ur.maududi",
+          "text": "تمہارا کیا کام کہ اس کا وقت بتاؤ"
+        },
+        {
+          "id": -2005755,
+          "resource_id": 227,
+          "text": "దాని గురించి చెప్పడానికి దాంతో నీకేమి సంబంధం?"
         }
       ]
     },
@@ -1116,6 +1546,16 @@
           "id": 1550193,
           "resource_id": 831,
           "text": "Us ka ilm to Allah par khatm hai"
+        },
+        {
+          "id": -1005756,
+          "resource_id": "ur.maududi",
+          "text": "اس کا علم تو اللہ پر ختم ہے"
+        },
+        {
+          "id": -2005756,
+          "resource_id": 227,
+          "text": "దాని వాస్తవ జ్ఞానం నీ ప్రభువుకే ఉంది!"
         }
       ]
     },
@@ -1141,6 +1581,16 @@
           "id": 1550194,
           "resource_id": 831,
           "text": "Tum sirf khabardar karne waley ho har us shaks ko jo uska khauff karey"
+        },
+        {
+          "id": -1005757,
+          "resource_id": "ur.maududi",
+          "text": "تم صرف خبردار کرنے والے ہو ہر اُس شخص کو جو اُس کا خوف کرے"
+        },
+        {
+          "id": -2005757,
+          "resource_id": 227,
+          "text": "(ఓ ముహమ్మద్!) నిశ్చయంగా, నీవు, దానికి భయపడే వారిని హెచ్చరించే వాడవు మాత్రమే!"
         }
       ]
     },
@@ -1166,6 +1616,16 @@
           "id": 1550195,
           "resource_id": 831,
           "text": "Jis roz yeh log usey dekh lengey to inhein yun mehsoos hoga ke (yeh duniya mein ya halat-e-mout mei) bas ek din ke pichle pehar ya aglay pehar tak thehrey hai"
+        },
+        {
+          "id": -1005758,
+          "resource_id": "ur.maududi",
+          "text": "جس روز یہ لوگ اسے دیکھ لیں گے تو انہیں یوں محسوس ہوگا کہ (یہ دنیا میں یا حالت موت میں) بس ایک دن کے پچھلے پہر یا اگلے پہر تک ٹھیرے ہیں"
+        },
+        {
+          "id": -2005758,
+          "resource_id": 227,
+          "text": "వారు దానిని చూసిన రోజు (తాము ప్రపంచంలో) కేవలం ఒక సాయంత్రమో లేక ఒక ఉదయమో గడిపినట్లు భావిస్తారు."
         }
       ]
     }

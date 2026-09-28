@@ -41,6 +41,16 @@
           "id": 1550528,
           "resource_id": 831,
           "text": "(Aey Nabi) kya humne tumhara seena tumhare liye khol nahin diya"
+        },
+        {
+          "id": -1006091,
+          "resource_id": "ur.maududi",
+          "text": "(اے نبیؐ) کیا ہم نے تمہارا سینہ تمہارے لیے کھول نہیں دیا؟"
+        },
+        {
+          "id": -2006091,
+          "resource_id": 227,
+          "text": "(ఓ ముహమ్మద్!) ఏమీ? మేము నీ కొరకు నీ హృదయాన్ని తెరువలేదా?"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550529,
           "resource_id": 831,
           "text": "Aur tumpar se woh bhari bojh utar diya"
+        },
+        {
+          "id": -1006092,
+          "resource_id": "ur.maududi",
+          "text": "اور تم پر سے وہ بھاری بوجھ اتار دیا"
+        },
+        {
+          "id": -2006092,
+          "resource_id": 227,
+          "text": "మరియు మేము నీ భారాన్ని నీ పై నుండి దించి వేయలేదా?"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550530,
           "resource_id": 831,
           "text": "Jo tumhari qamar todhe daal raha tha"
+        },
+        {
+          "id": -1006093,
+          "resource_id": "ur.maududi",
+          "text": "جو تمہاری کمر توڑے ڈال رہا تھا"
+        },
+        {
+          "id": -2006093,
+          "resource_id": 227,
+          "text": "ఏదైతే నీ వెన్నును విరుస్తూ ఉండిందో?"
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550531,
           "resource_id": 831,
           "text": "Aur tumhare khatir tumharey zikr ka awazah buland kar diya"
+        },
+        {
+          "id": -1006094,
+          "resource_id": "ur.maududi",
+          "text": "اور تمہاری خاطر تمہارے ذکر کا آوازہ بلند کر دیا"
+        },
+        {
+          "id": -2006094,
+          "resource_id": 227,
+          "text": "మరియు నీ పేరు ప్రతిష్ఠను పైకెత్తలేదా?"
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550532,
           "resource_id": 831,
           "text": "Pas haqeeqat yeh hai kay tangi kay saat farakhi bhi hai"
+        },
+        {
+          "id": -1006095,
+          "resource_id": "ur.maududi",
+          "text": "پس حقیقت یہ ہے کہ تنگی کے ساتھ فراخی بھی ہے"
+        },
+        {
+          "id": -2006095,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, ఎల్లప్పుడు కష్టంతో పాటు సుఖం కూడా ఉంటుంది;"
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1550533,
           "resource_id": 831,
           "text": "Beshak tangi kay saath farakhi bhi hai"
+        },
+        {
+          "id": -1006096,
+          "resource_id": "ur.maududi",
+          "text": "بے شک تنگی کے ساتھ فراخی بھی ہے"
+        },
+        {
+          "id": -2006096,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, కష్టంతో పాటు సుఖం కూడా ఉంటుంది."
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1550534,
           "resource_id": 831,
           "text": "Lihaza jab tum faarig ho to Ibadat ki mushakkat mei lag jao"
+        },
+        {
+          "id": -1006097,
+          "resource_id": "ur.maududi",
+          "text": "لہٰذا جب تم فارغ ہو تو عبادت کی مشقت میں لگ جاؤ"
+        },
+        {
+          "id": -2006097,
+          "resource_id": 227,
+          "text": "కావున నీకు తీరిక లభించినప్పుడు ఆరాధనలో నిమగ్నుడవైపో!"
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1550535,
           "resource_id": 831,
           "text": "Aur apne Rubb ki taraf raagib ho"
+        },
+        {
+          "id": -1006098,
+          "resource_id": "ur.maududi",
+          "text": "اور اپنے رب ہی کی طرف راغب ہو"
+        },
+        {
+          "id": -2006098,
+          "resource_id": 227,
+          "text": "మరియు నీ ప్రభువు నందే ధ్యానం నిలుపు."
         }
       ]
     }

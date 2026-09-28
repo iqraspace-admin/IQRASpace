@@ -41,6 +41,16 @@
           "id": 1547907,
           "resource_id": 831,
           "text": "Alif Laam Meem"
+        },
+        {
+          "id": -1003470,
+          "resource_id": "ur.maududi",
+          "text": "الم"
+        },
+        {
+          "id": -2003470,
+          "resource_id": 227,
+          "text": "అలిఫ్-లామ్-మీమ్"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1547908,
           "resource_id": 831,
           "text": "Yeh kitab-e-hakeem(book of wisdon) ki aayat hain"
+        },
+        {
+          "id": -1003471,
+          "resource_id": "ur.maududi",
+          "text": "یہ کتاب حکیم کی آیات ہیں"
+        },
+        {
+          "id": -2003471,
+          "resource_id": 227,
+          "text": "ఇవి వివేకంతో నిండి ఉన్న గ్రంథ సూచనలు (ఆయాత్)"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1547909,
           "resource_id": 831,
           "text": "Hidayat aur rehmat neikukar logon ke liye"
+        },
+        {
+          "id": -1003472,
+          "resource_id": "ur.maududi",
+          "text": "ہدایت اور رحمت نیکو کار لوگوں کے لیے"
+        },
+        {
+          "id": -2003472,
+          "resource_id": 227,
+          "text": "(ఇందులో) సజ్జనులకు మార్గదర్శకత్వమూ మరియు కారుణ్యమూ ఉన్నాయి."
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1547910,
           "resource_id": 831,
           "text": "Jo namaz qayam karte hai, zakaat detey hain aur aakhirat par yaqeen rakhte hain"
+        },
+        {
+          "id": -1003473,
+          "resource_id": "ur.maududi",
+          "text": "جو نماز قائم کرتے ہیں، زکوٰۃ دیتے ہیں اور آخرت پر یقین رکھتے ہیں"
+        },
+        {
+          "id": -2003473,
+          "resource_id": 227,
+          "text": "(వారికే) ఎవరైతే నమాజ్ ను స్థాపించి విధిదానం (జకాత్) ఇస్తారో మరియు పరలోక జీవితం మీద దృఢమైన నమ్మకం కలిగి ఉంటారో;"
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1547911,
           "resource_id": 831,
           "text": "Yahi log apne Rubb ki taraf se raah-e-raast par hain aur yahi falaah paney waley hain"
+        },
+        {
+          "id": -1003474,
+          "resource_id": "ur.maududi",
+          "text": "یہی لوگ اپنے رب کی طرف سے راہِ راست پر ہیں اور یہی فلاح پانے والے ہیں"
+        },
+        {
+          "id": -2003474,
+          "resource_id": 227,
+          "text": "అలాంటి వారే, తమ ప్రభువు తరఫు నుండి (వచ్చిన) మార్గదర్శకత్వం మీద ఉన్నవారు. మరియు అలాంటి వారే సాఫల్యం పొందేవారు."
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1547912,
           "resource_id": 831,
           "text": "Aur Insano hi mein se koi aisa bhi hai jo kalaam-e-dil fareb [lagv baaton ko/idle talks (i.e.music, singing, etc)] khareed kar laata hai taa-ke logon ko Allah ke raaste se ilm ke bagair bhatka dey aur is raaste ki dawat ko mazaaq mein udaday. Aise logon ke liye sakht zaleel karne wala azaab hai"
+        },
+        {
+          "id": -1003475,
+          "resource_id": "ur.maududi",
+          "text": "اور انسانوں ہی میں سے کوئی ایسا بھی ہے جو کلام دلفریب خرید کر لاتا ہے تاکہ لوگوں کو اللہ کے راستہ سے علم کے بغیر بھٹکا دے اور اس راستے کی دعوت کو مذاق میں اڑا دے ایسے لوگوں کے لیے سخت ذلیل کرنے والا عذاب ہے"
+        },
+        {
+          "id": -2003475,
+          "resource_id": 227,
+          "text": "మరియు మానవులలో కొందరు - జ్ఞానం లేక, వ్యర్థ కాలక్షేపం చేసే మాటలను కొని - ప్రజలను అల్లాహ్ మార్గం నుండి తప్పించే వారున్నారు మరియు వారు దానిని (అల్లాహ్ మార్గాన్ని) పరిహాసం చేస్తుంటారు. అలాంటి వారికి అవమానకరమైన శిక్ష పడుతుంది."
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1547913,
           "resource_id": 831,
           "text": "Usey jab hamari aayat sunayi jati hain to woh badey ghamand ke saath is tarah rukh pher leta hai goya ke usne unhein suna hi nahin, goya ke uske kaan behre hain.Accha mushda (tidings) suna do usey ek dardnaak azaab ka"
+        },
+        {
+          "id": -1003476,
+          "resource_id": "ur.maududi",
+          "text": "اسے جب ہماری آیات سنائی جاتی ہیں تو وہ بڑے گھمنڈ کے ساتھ اس طرح رخ پھیر لیتا ہے گویا کہ اس نے انہیں سنا ہی نہیں، گویا کہ اس کے کان بہرے ہیں اچھا، مژدہ سُنا دو اسے ایک درد ناک عذاب کا"
+        },
+        {
+          "id": -2003476,
+          "resource_id": 227,
+          "text": "అలాంటి వానికి, మా సూచనలు (ఆయాత్) వినిపింప జేసినప్పుడు, అతని రెండు చెవులలో చెవుడు ఉన్నట్లుగా, అతడు వాటిని విననే లేదన్నట్లుగా, అహంకారంతో మరలిపోతాడు. వానికి అతి బాధాకరమైన శిక్ష పడుతుందనే వార్తను వినిపించు."
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1547914,
           "resource_id": 831,
           "text": "Albatta jo log iman le aayein aur neik amal karein, unke liye niyamat bhari jannatein hain"
+        },
+        {
+          "id": -1003477,
+          "resource_id": "ur.maududi",
+          "text": "البتہ جو لوگ ایمان لے آئیں اور نیک عمل کریں، اُن کے لیے نعمت بھری جنتیں ہیں"
+        },
+        {
+          "id": -2003477,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, ఎవరైతే విశ్వసించి, సత్కార్యాలు చేస్తారో, వారి కొరకు పరమానందకరమైన స్వర్గ వనాలుంటాయి."
         }
       ]
     },
@@ -241,6 +321,16 @@
           "id": 1547915,
           "resource_id": 831,
           "text": "Jinmein woh hamesha rahenge. Yeh Allah ka pukhta wada hai, aur woh zabardast aur hakeem hai"
+        },
+        {
+          "id": -1003478,
+          "resource_id": "ur.maududi",
+          "text": "جن میں وہ ہمیشہ رہیں گے یہ اللہ کا پختہ وعدہ ہے اور وہ زبردست اور حکیم ہے"
+        },
+        {
+          "id": -2003478,
+          "resource_id": 227,
+          "text": "వారు, శాశ్వతంగా వాటిలో ఉంటారు. ఇది అల్లాహ్ యొక్క సత్య వాగ్దానం. మరియు ఆయన సర్వశక్తిమంతుడు, మహా వివేకవంతుడు."
         }
       ]
     },
@@ -266,6 +356,16 @@
           "id": 1547916,
           "resource_id": 831,
           "text": "Usne aasmaano ko paida kiya bagair sutuno (pillars) ke jo tumko nazar aayein .Usne zameen mein pahadh jamaa diye taa-ke woh tumhein lekar dhulak (turn /shake) na jaye. Usne har tarah ke jaanwar zameen mein phayla diye aur aasmaan se pani barsaya aur zameen mein qisam qisam ke umda cheezein uga di"
+        },
+        {
+          "id": -1003479,
+          "resource_id": "ur.maududi",
+          "text": "اس نے آسمانوں کو پیدا کیا بغیر ستونوں کے جو تم کو نظر آئیں اُس نے زمین میں پہاڑ جما دیے تاکہ وہ تمہیں لے کر ڈھلک نہ جائے اس نے ہر طرح کے جانور زمین میں پھیلا دیے اور آسمان سے پانی برسایا اور زمین میں قسم قسم کی عمدہ چیزیں اگا دیں"
+        },
+        {
+          "id": -2003479,
+          "resource_id": 227,
+          "text": "మీరు చూస్తున్నారు కదా! ఆయన ఆకాశాలను స్థంభాలు లేకుండానే సృష్టించాడు. మరియు భూమిలో పర్వతాలను నాటాడు, అది మీతో పాటు కదలకుండా ఉండాలని; మరియు దానిలో ప్రతి రకమైన ప్రాణిని నివసింపజేసాడు. మరియు మేము ఆకాశం నుండి నీటిని కురిపించి, దానిలో రకరకాల శ్రేష్ఠమైన (పదార్థాలను) ఉత్పత్తి చేశాము."
         }
       ]
     },
@@ -291,6 +391,16 @@
           "id": 1547917,
           "resource_id": 831,
           "text": "Yeh to hai Allah ki takhleeq, ab zara mujhey dikhao, in dusron ne kya paida kiya hai? Asal baat yeh hai ke yeh zaalim log sareeh gumraahi mein padey huey hain"
+        },
+        {
+          "id": -1003480,
+          "resource_id": "ur.maududi",
+          "text": "یہ تو ہے اللہ کی تخلیق، اب ذرا مجھے دکھاؤ، ان دوسروں نے کیا پیدا کیا ہے؟ اصل بات یہ ہے کہ یہ ظالم لوگ صریح گمراہی میں پڑے ہوئے ہیں"
+        },
+        {
+          "id": -2003480,
+          "resource_id": 227,
+          "text": "ఇదంతా అల్లాహ్ సృష్టియే! ఇక ఆయన తప్ప ఇతరులు ఏమి సృష్టించారో నాకు చూపండి. అలా కాదు ఈ దుర్మార్గులు స్పష్టంగా మార్గభ్రష్టత్వంలో పడి ఉన్నారు."
         }
       ]
     },
@@ -316,6 +426,16 @@
           "id": 1547918,
           "resource_id": 831,
           "text": "Humne Luqman ko hikmat ata ki thi ke Allah ka shukar guzar ho. Jo koi shukar karey uska shukar uske apne hi liye mufeed(faiydamand) hai aur jo koi kufr karey to haqeeqat mein Allah be-niyaz aur aap se aap mehmood (Immensely Praiseworthy) hai"
+        },
+        {
+          "id": -1003481,
+          "resource_id": "ur.maududi",
+          "text": "ہم نے لقمان کو حکمت عطا کی تھی کہ اللہ کا شکر گزار ہو جو کوئی شکر کرے اُس کا شکر اُس کے اپنے ہی لیے مفید ہے اور جو کوئی کفر کرے تو حقیقت میں اللہ بے نیاز اور آپ سے آپ محمود ہے"
+        },
+        {
+          "id": -2003481,
+          "resource_id": 227,
+          "text": "మరియు నిశ్చయంగా, మేము లుఖ్మాన్ కు వివేకాన్ని ప్రసాదించాము, అతను అల్లాహ్ కు కృతజ్ఞుడుగా ఉండాలని. మరియు ఎవడైతే ఆయనకు కృతజ్ఞతలు తెలుపుతాడో, అతడు నిశ్చయంగా, తన మేలు కొరకే కృతజ్ఞతలు తెలుపుతాడు. మరియు కృతఘ్నతకు పాల్పడిన వాడు, నిశ్చయంగా అల్లాహ్ స్వయం సమృద్ధుడు, సర్వస్తోత్రాలకు అర్హుడని (తెలుసుకోవాలి)."
         }
       ]
     },
@@ -341,6 +461,16 @@
           "id": 1547919,
           "resource_id": 831,
           "text": "Yaad karo jab Luqman apne bete ko naseehat kar raha tha to usne kaha “beta! Khuda ke saath kisi ko shareek na karna, haqq yeh hai ke shirk bahut bada zulm hai”"
+        },
+        {
+          "id": -1003482,
+          "resource_id": "ur.maududi",
+          "text": "یاد کرو جب لقمان اپنے بیٹے کو نصیحت کر رہا تھا تو اس نے کہا \"بیٹا! خدا کے ساتھ کسی کو شریک نہ کرنا، حق یہ ہے کہ شرک بہت بڑا ظلم ہے\""
+        },
+        {
+          "id": -2003482,
+          "resource_id": 227,
+          "text": "మరియు (జ్ఞాపకం చేసుకోండి) లుఖ్మాన్ తన కుమారునికి హితబోధ చేస్తూ ఇలా అన్నాడు: \"ఓ నా పుత్రుడా! అల్లాహ్ కు సాటి (భాగస్వాములను) కల్పించకు. నిశ్చయంగా, అల్లాహ్ కు భాగస్వాములను కల్పించటం (బహుదైవారాధన) మహా దుర్మార్గము.\""
         }
       ]
     },
@@ -366,6 +496,16 @@
           "id": 1547920,
           "resource_id": 831,
           "text": "Aur yeh haqeeqat yeh hai ke humne Insaan ko apne walidain (parents) ka haqq pehchanne ki khud taakeed ki hai. Uski Maa ne zoaf par zoaf(weakness upon weakness) utha kar usey apne pait mein rakkha aur do saal uska doodh chootne mein lagey. (Isi liye humne usko naseehat ki ke) mera shukar kar aur apne walidain ka shukar baja la. Meri hi taraf tujhey palatna hai"
+        },
+        {
+          "id": -1003483,
+          "resource_id": "ur.maududi",
+          "text": "اور حقیقت یہ ہے کہ ہم نے انسان کو اپنے والدین کا حق پہچاننے کی خود تاکید کی ہے اُس کی ماں نے ضعف پر ضعف اُٹھا کر اسے اپنے پیٹ میں رکھا اور دو سال اُس کا دودھ چھوٹنے میں لگے (اِسی لیے ہم نے اُس کو نصیحت کی کہ) میرا شکر کر اور اپنے والدین کا شکر بجا لا، میری ہی طرف تجھے پلٹنا ہے"
+        },
+        {
+          "id": -2003483,
+          "resource_id": 227,
+          "text": "మరియు (అల్లాహ్ ఇలా ఆదేశిస్తున్నాడు): \"మేము మానవునకు తన తల్లిదండ్రుల యెడల మంచితనంతో మెలగటం విధిగా జేశాము. అతని తల్లి అతనిని బలహీనతపై బలహీనతను సహిస్తూ (తన గర్భంలో) భరిస్తుంది మరియు ఆ బిడ్డ చనుపాలు మాన్పించే గడువు రెండు సంవత్సరాలు. నీవు నాకు మరియు నీ తల్లిదండ్రులకు కృతజ్ఞుడవై ఉండు. నీకు నా వైపునకే మరలి రావలసి ఉన్నది.\""
         }
       ]
     },
@@ -391,6 +531,16 @@
           "id": 1547921,
           "resource_id": 831,
           "text": "Lekin agar woh tujhpar dabao dalein ke mere saath tu kisi aisey ko shareek karey jisey tu nahin jaanta to unki baat hargiz na maan. Duniya mein unke saath neik bartao karta reh, magar pairvi(follow) us shaks ke raaste ki kar jisne meri taraf rujoo kiya hai. Phir tum sabko palatna meri hi taraf hai, us waqt main tumhein bata dunga ke tum kaise amal karte rahey ho"
+        },
+        {
+          "id": -1003484,
+          "resource_id": "ur.maududi",
+          "text": "لیکن اگر وہ تجھ پر دباؤ ڈالیں کہ میرے ساتھ تو کسی ایسے کو شریک کرے جسے تو نہیں جانتا تو ان کی بات ہرگز نہ مان دُنیا میں ان کے ساتھ نیک برتاؤ کرتا رہ مگر پیروی اُس شخص کے راستے کی کر جس نے میری طرف رجوع کیا ہے پھر تم سب کو پلٹنا میری ہی طرف ہے، اُس وقت میں تمہیں بتا دوں گا کہ تم کیسے عمل کرتے رہے ہو"
+        },
+        {
+          "id": -2003484,
+          "resource_id": 227,
+          "text": "\"మరియు ఒకవేళ వారిరువురు - నీవు ఎరగని దానిని - నాకు (అల్లాహ్ కు) భాగస్వామిగా చేర్చమని, నిన్ను బలవంతం చేస్తే, వారి మాటను నీవు ఏ మాత్రం వినకు. మరియు ఇహలోక విషయాలలో ధర్మసమ్మతమైన వాటిలో వారికి తోడుగా ఉండు. మరియు పశ్చాత్తాపంతో నా వైపుకు మరలేవాని మార్గాన్ని అనుసరించు. తరువాత మీరంతా నా వైపునకే మరలి రావలసి ఉన్నది. అప్పుడు నేను మీరు చేసే కర్మలను గురించి మీకు తెలుపుతాను.\""
         }
       ]
     },
@@ -416,6 +566,16 @@
           "id": 1547922,
           "resource_id": 831,
           "text": "(Aur Luqman ne kaha tha ke) “Beta, koi cheez rai ke dana (mustard seed) barabar bhi ho aur kisi chattan (rock) mein ya aasmaano ya zameen mein kahin chupi hui ho, Allah usey nikal layega. Woh bareek been aur bakhabar hai"
+        },
+        {
+          "id": -1003485,
+          "resource_id": "ur.maududi",
+          "text": "(اور لقمان نے کہا تھا کہ) \"بیٹا، کوئی چیز رائی کے دانہ برابر بھی ہو اور کسی چٹان میں یا آسمانوں یا زمین میں کہیں چھپی ہوئی ہو، اللہ اُسے نکال لائے گا وہ باریک بیں اور باخبر ہے"
+        },
+        {
+          "id": -2003485,
+          "resource_id": 227,
+          "text": "\"ఓ నా కుమారా! ఒకవేళ నీ కర్మ ఆవగింజంత ఉండి, అది ఒక పెద్ద రాతిబండలో గానీ, ఆకాశంలో గానీ లేదా భూమిలో గానీ దాగివున్నా, అల్లాహ్ దానిని తప్పక (వెలుగులోకి) తెస్తాడు. నిశ్చయంగా, అల్లాహ్ ఎంతో సూక్ష్మగ్రాహి, సర్వం తెలిసినవాడు.\""
         }
       ]
     },
@@ -441,6 +601,16 @@
           "id": 1547923,
           "resource_id": 831,
           "text": "Beta, namaz qayam kar, neki ka hukum de, badee (burai) se manah kar, aur jo museebat bhi padey uspar sabr kar, yeh woh baatein hain jinki badi takeed ki gayi hai"
+        },
+        {
+          "id": -1003486,
+          "resource_id": "ur.maududi",
+          "text": "بیٹا، نماز قائم کرنے کا حکم دے، بدی سے منع کر، اور جو مصیبت بھی پڑے اس پر صبر کر یہ وہ باتیں ہیں جن کی بڑی تاکید کی گئی ہے"
+        },
+        {
+          "id": -2003486,
+          "resource_id": 227,
+          "text": "\"ఓ నా కుమారా! నమాజ్ స్థాపించు మరియు ధర్మాన్ని ఆదేశించు మరియు అధర్మాన్ని నిషేధించు, ఆపదలో సహనం వహించు. నిశ్చయంగా, ఇవి ఎంతో గట్టిగా ఆజ్ఞాపించబడిన విషయాలు.\""
         }
       ]
     },
@@ -466,6 +636,16 @@
           "id": 1547924,
           "resource_id": 831,
           "text": "Aur logon se mooh pher kar baat na kar, na zameen mein akad kar chal. Allah kisi khud-pasand aur faqar jataney waley shaks ko pasand nahin karta"
+        },
+        {
+          "id": -1003487,
+          "resource_id": "ur.maududi",
+          "text": "اور لوگوں سے منہ پھیر کر بات نہ کر، نہ زمین میں اکڑ کر چل، اللہ کسی خود پسند اور فخر جتانے والے شخص کو پسند نہیں کرتا"
+        },
+        {
+          "id": -2003487,
+          "resource_id": 227,
+          "text": "\"మరియు నీ చెంపలను గర్వంతో ప్రజల యెదుట ఉబ్బించకు. మరియు భూమిపై అహంకారంతో నడవకు. నిశ్చయంగా, అల్లాహ్ డాంబికాలు చెప్పుకొని, విర్రవీగే వాడంటే ఇష్టపడడు.\""
         }
       ]
     },
@@ -491,6 +671,16 @@
           "id": 1547925,
           "resource_id": 831,
           "text": "Apni chaal mein aitadal (moderate) ikhtiyar kar, aur apni aawaz zara past rakh, sab aawazon se zyada buri aawaz gadhon ki aawaz hoti hai"
+        },
+        {
+          "id": -1003488,
+          "resource_id": "ur.maududi",
+          "text": "اپنی چال میں اعتدال اختیار کر، اور اپنی آواز ذرا پست رکھ، سب آوازوں سے زیادہ بُری آواز گدھوں کی آواز ہوتی ہے"
+        },
+        {
+          "id": -2003488,
+          "resource_id": 227,
+          "text": "\"మరియు నీ నడకలలో నమ్రత పాటించు. మరియు నీ స్వరాన్ని తగ్గించు. నిశ్చయంగా, స్వరాలలో అన్నిటికంటే కరకైన (వినసొంపుకానిది) గాడిద స్వరమే!\""
         }
       ]
     },
@@ -516,6 +706,16 @@
           "id": 1547926,
           "resource_id": 831,
           "text": "Kya tumlog nahin dekhte ke Allah ne zameen aur aasmaano ki saari cheezein tumhare liye musakkhar kar rakkhi hai aur apni khuli aur chupi niyamatein tumpar tamaam kardi hain? Ispar haal yeh hai ke Insano mein se kuch log hain jo Allah ke barey mein jhagadte hain bagair iske ke unke paas koi ilm ho, ya hidayat, ya koi roshni dikhane wali kitaab"
+        },
+        {
+          "id": -1003489,
+          "resource_id": "ur.maududi",
+          "text": "کیا تم لوگ نہیں دیکھتے کہ اللہ نے زمین اور آسمانوں کی ساری چیزیں تمہارے لیے مسخر کر رکھی ہیں اور اپنی کھلی اور چھپی نعمتیں تم پر تمام کر دی ہیں؟ اِس پر حال یہ ہے کہ انسانوں میں سے کچھ لوگ ہیں جو اللہ کے بارے میں جھگڑتے ہیں بغیر اس کے کہ ان کے پاس کوئی عِلم ہو، یا ہدایت، یا کوئی روشنی دکھانے والی کتاب"
+        },
+        {
+          "id": -2003489,
+          "resource_id": 227,
+          "text": "ఏమీ? ఆకాశాలలో మరియు భూమిలో ఉన్న సకల వస్తువులను వాస్తవానికి అల్లాహ్ మీకు ఉపయుక్తంగా చేశాడనీ మరియు ఆయన బహిరంగంగానూ మరియు గోప్యంగానూ తన అనుగ్రహాలను, మీకు ప్రసాదించాడనీ, మీకు తెలియదా? మరియు ప్రజలలో కొందరు ఎలాంటి జ్ఞానం, మార్గదర్శకత్వం మరియు వెలుగు చూపే స్పష్టమైన గ్రంథం లేనిదే అల్లాహ్ ను గురించి వాదులాడే వారున్నారు!"
         }
       ]
     },
@@ -541,6 +741,16 @@
           "id": 1547927,
           "resource_id": 831,
           "text": "Aur jab unsey kaha jaata hai ke pairwi karo us cheez ki jo Allah ne nazil ki hai to kehte hain ke hum to us cheez ki pairwi karenge jispar humne apne baap dada ko paya hai. Kya yeh unhi ki pairvi karenge khwah shaytan unko bhadakti hui aag hi ki taraf kyun na bulata raha ho"
+        },
+        {
+          "id": -1003490,
+          "resource_id": "ur.maududi",
+          "text": "اور جب ان سے کہا جاتا ہے کہ پیروی کرو اُس چیز کی جو اللہ نے نازل کی ہے تو کہتے ہیں کہ ہم تو اُس چیز کی پیروی کریں گے جس پر ہم نے اپنے باپ دادا کو پایا ہے کیا یہ انہی کی پیروی کریں گے خواہ شیطان اُن کو بھڑکتی ہوئی آگ ہی کی طرف کیوں نہ بلاتا رہا ہو؟"
+        },
+        {
+          "id": -2003490,
+          "resource_id": 227,
+          "text": "మరియు వారితో: \"అల్లాహ్ అవతరింపజేసిన దానిని అనుసరించండి!\" అని అన్నప్పుడు, వారు: \"కాదు మా తండ్రితాతలు నడిచిన మార్గాన్నే మేము అనుసరిస్తాము.\" అని అంటారు. ఏమీ? షైతాన్ వారిని భగభగమండే అగ్ని వైపునకు ఆహ్వానిస్తున్నప్పటికీ, (వారు అలాంటి మార్గాన్నే అనుసరిస్తారా)?"
         }
       ]
     },
@@ -566,6 +776,16 @@
           "id": 1547928,
           "resource_id": 831,
           "text": "Jo shaks apne aap ko Allah ke hawale karde aur amalan woh neik ho, usne fil-waqayi ek bharose ke qabil sahara thaam liya, aur saarey maamlaat ka aakhri faisla Allah hi ke haath hai"
+        },
+        {
+          "id": -1003491,
+          "resource_id": "ur.maududi",
+          "text": "جو شخص اپنے آپ کو اللہ کے حوالہ کر دے اور عملاً وہ نیک ہو، اس نے فی الواقع ایک بھروسے کے قابل سہارا تھام لیا، اور سارے معاملات کا آخری فیصلہ اللہ ہی کے ہاتھ ہے"
+        },
+        {
+          "id": -2003491,
+          "resource_id": 227,
+          "text": "ఎవడైతే, తన ముఖాన్ని (తనను తాను) అల్లాహ్ కు సమర్పించుకొని సజ్జనుడై ఉంటాడో, అలాంటి వాడు నిస్సందేహంగా దృఢమైన ఆధారాన్ని పట్టుకున్నవాడే! మరియు సకల వ్యవహారాల ముగింపు (తీర్పు) అల్లాహ్ వద్దనే ఉంది."
         }
       ]
     },
@@ -591,6 +811,16 @@
           "id": 1547929,
           "resource_id": 831,
           "text": "Ab jo kufr karta hai uska kufr tumhein gham mein mubtala na karey. Unhein palat kar aana to hamari hi taraf hai, phir hum unhein bata denge ke woh kya kuch karke aaye hain. Yaqeenan Allah seeno(chest) ke chupe huey raaz tak jaanta hai"
+        },
+        {
+          "id": -1003492,
+          "resource_id": "ur.maududi",
+          "text": "اب جو کفر کرتا ہے اس کا کفر تمہیں غم میں مبتلا نہ کرے، انہیں پلٹ کر آنا تو ہماری ہی طرف ہے، پھر ہم انہیں بتا دیں گے کہ وہ کیا کچھ کر کے آئے ہیں یقیناً اللہ سینوں کے چھپے ہوئے راز تک جانتا ہے"
+        },
+        {
+          "id": -2003492,
+          "resource_id": 227,
+          "text": "మరియు సత్యాన్ని తిరస్కరించేవాని, తిరస్కారం నిన్ను దుఃఖానికి గురి చేయకూడదు. వారందరి మరలింపు మా వైపునకే ఉంది; అప్పుడు మేము వారు చేసిన కర్మలను వారికి తెలుపుతాము. నిశ్చయంగా, అల్లాహ్ కు హృదయాలలో ఉన్న విషయాలు సైతం బాగా తెలుసు."
         }
       ]
     },
@@ -616,6 +846,16 @@
           "id": 1547930,
           "resource_id": 831,
           "text": "Hum thodi muddat unhein duniya mein mazey karne ka mauqa de rahey hain, phir unko bebas karke ek sakht azaab ki taraf kheench le jayenge"
+        },
+        {
+          "id": -1003493,
+          "resource_id": "ur.maududi",
+          "text": "ہم تھوڑی مدت انہیں دُنیا میں مزے کرنے کا موقع دے رہے ہیں، پھر ان کو بے بس کر کے ایک سخت عذاب کی طرف کھینچ لے جائیں گے"
+        },
+        {
+          "id": -2003493,
+          "resource_id": 227,
+          "text": "మేము వారిని కొంత కాలం సుఖాలను అనుభవించనిస్తాము. ఆ తరువాత మేము వారిని కఠినమైన శిక్ష వైపుకు త్రోస్తాము."
         }
       ]
     },
@@ -641,6 +881,16 @@
           "id": 1547931,
           "resource_id": 831,
           "text": "Agar tum insey pucho ke zameen aur aasmaano ko kisne paida kya hai, to yeh zaroor kahenge ke Allah ne. Kaho alhamdulillah, magar inmein se aksar log jaante nahin hain"
+        },
+        {
+          "id": -1003494,
+          "resource_id": "ur.maududi",
+          "text": "اگر تم اِن سے پوچھو کہ زمین اور آسمانوں کو کس نے پیدا کیا ہے، تو یہ ضرور کہیں گے کہ اللہ نے کہو الحمدللہ مگر ان میں سے اکثر لوگ جانتے نہیں ہیں"
+        },
+        {
+          "id": -2003494,
+          "resource_id": 227,
+          "text": "ఒకవేళ మీరు వారిని: \"ఆకాశాలనూ మరియు భూమినీ సృష్టించింది ఎవరు?\" అని అడిగితే! వారు నిస్సంకోచంగా అంటారు: \"అల్లాహ్!\" అని. వారితో అను: \"సర్వస్తోత్రాలకు అర్హుడు అల్లాహ్ మాత్రమే!\" కాని వారిలో చాలా మందికి ఇది తెలియదు."
         }
       ]
     },
@@ -666,6 +916,16 @@
           "id": 1547932,
           "resource_id": 831,
           "text": "Aasmaano aur zameen mein jo kuch hai Allah hi ka hai. Beshak Allah be-niyaz (free of need) aur aap se aap mehmood (praiseworthy) hai"
+        },
+        {
+          "id": -1003495,
+          "resource_id": "ur.maududi",
+          "text": "آسمانوں اور زمین میں جو کچھ ہے اللہ ہی کا ہے، بے شک اللہ بے نیاز اور آپ سے آپ محمود ہے"
+        },
+        {
+          "id": -2003495,
+          "resource_id": 227,
+          "text": "ఆకాశాలలో మరియు భూమిలో నున్న సమస్తమూ అల్లాహ్ కే చెందుతుంది. నిశ్చయంగా, అల్లాహ్! కేవలం ఆయనే సర్వసంపన్నుడు, సర్వస్తోత్రాలకు అర్హుడు."
         }
       ]
     },
@@ -691,6 +951,16 @@
           "id": 1547933,
           "resource_id": 831,
           "text": "Zameen mein jitne darakht hain agar woh sab ke sab qalam ban jayein aur samandar (dwaat (ink) ban jaaye) jisey saat (seven) mazeed samandar roshnayi(ink) muhayya karein tab bhi Allah ki baatein (likhne se) khatam na hongi. Beshak Allah zabardast aur hakeem hai"
+        },
+        {
+          "id": -1003496,
+          "resource_id": "ur.maududi",
+          "text": "زمین میں جتنے درخت ہیں اگر وہ سب کے سب قلم بن جائیں اور سمندر (دوات بن جائے) جسے سات مزید سمندر روشنائی مہیا کریں تب بھی اللہ کی باتیں (لکھنے سے) ختم نہ ہوں گی بے شک اللہ زبردست اور حکیم ہے"
+        },
+        {
+          "id": -2003496,
+          "resource_id": 227,
+          "text": "ఒకవేళ వాస్తవానికి, భూమిలో ఉన్న వృక్షాలన్నీ కలములై ఈ సముద్రం మరియు దానితో పాటు అటువంటి ఏడు సముద్రాల (నీళ్ళంతా) సిరాగా ఉన్నా, అల్లాహ్ మాటలు (సూచనలు వ్రాయటానికి) పూర్తి కావు. నిశ్చయంగా, అల్లాహ్ సర్వశక్తిమంతుడు, మహా వివేకవంతుడు."
         }
       ]
     },
@@ -716,6 +986,16 @@
           "id": 1547934,
           "resource_id": 831,
           "text": "Tum sarey Insano ko paida karna aur phir dobara jila uthana (zinda karna) to (uske liye) bas aisa hai jaise ek mutanaffis (single person) ko (paida karna aur jila uthana). Haqeeqat yeh hai ke Allah sabkuch sunne aur dekhne wala hai"
+        },
+        {
+          "id": -1003497,
+          "resource_id": "ur.maududi",
+          "text": "تم سارے انسانوں کو پیدا کرنا اور پھر دوبارہ جِلا اُٹھانا تو (اُس کے لیے) بس ایسا ہے جیسے ایک متنفس کو (پیدا کرنا اور جِلا اٹھانا) حقیقت یہ ہے کہ اللہ سب کچھ سُننے اور دیکھنے والا ہے"
+        },
+        {
+          "id": -2003497,
+          "resource_id": 227,
+          "text": "మీ అందరినీ సృష్టించటం మరియు తిరిగి (సజీవులుగా) లేపటం ఆయనకు ఒక మానవుణ్ణి (సృష్టించి, తిరిగి లేపడం వంటిదే). నిశ్చయంగా, అల్లాహ్ సర్వం వినేవాడు, సర్వ చూసేవాడు."
         }
       ]
     },
@@ -741,6 +1021,16 @@
           "id": 1547935,
           "resource_id": 831,
           "text": "Kya tum dekhte nahin ho ke Allah raat ko din mein pirota hua le aata hai aur din ko raat mein? Usne Suraj aur chand ko musakkhar (subjected) kar rakkha hai. Sab ek waqt e muqarrar tak chale jaa rahey hain. Aur (kya tum nahin jantey) ke jo kuch bhi tum karte ho Allah ussey ba-kharbar hai"
+        },
+        {
+          "id": -1003498,
+          "resource_id": "ur.maududi",
+          "text": "کیا تم دیکھتے نہیں ہو کہ اللہ رات کو دن میں پروتا ہوا لے آتا ہے اور دن کو رات میں؟ اُس نے سُورج اور چاند کو مسخر کر رکھا ہے، سب ایک وقت مقرر تک چلے جا رہے ہیں، اور (کیا تم نہیں جانتے) کہ جو کچھ بھی تم کرتے ہو اللہ اُس سے باخبر ہے"
+        },
+        {
+          "id": -2003498,
+          "resource_id": 227,
+          "text": "ఏమీ? నీకు తెలియదా (చూడటం లేదా)? నిశ్చయంగా, అల్లాహ్ రాత్రిని పగటిలోనికి ప్రవేశింప జేస్తున్నాడని మరియు పగటిని రాత్రిలోకి ప్రవేశింప జేస్తున్నాడని. మరియు సూర్యుణ్ణి మరియు చంద్రుణ్ణి నియమబద్దులుగా చేసి ఉంచాడనీ ప్రతి ఒక్కటీ ఒక నిర్ణీత కాలంలో మరియు (పరిధిలో) తిరుగుతూ ఉంటాయనీ! మరియు నిశ్చయంగా, మీరు చేసేదంతా అల్లాహ్ ఎరుగునని?"
         }
       ]
     },
@@ -766,6 +1056,16 @@
           "id": 1547936,
           "resource_id": 831,
           "text": "Yeh sabkuch is wajah se hai ke Allah hi haqq hai aur usey chodh kar jin dusri cheezon ko yeh log pukarte hain woh sab baatil hain.Aur (is wajah se ke) Allah hi buzurg o bartar hai"
+        },
+        {
+          "id": -1003499,
+          "resource_id": "ur.maududi",
+          "text": "یہ سب کچھ اس وجہ سے ہے کہ اللہ ہی حق ہے اور اسے چھوڑ کر جن دُوسری چیزوں کو یہ لوگ پکارتے ہیں وہ سب باطل ہیں، اور (اس وجہ سے کہ) اللہ ہی بزرگ و برتر ہے"
+        },
+        {
+          "id": -2003499,
+          "resource_id": 227,
+          "text": "ఇదంతా ఎందుకంటే! నిశ్చయంగా, అల్లాహ్ కేవలం ఆయనే సత్యం. మరియు ఆయనను వదలి వారు ఆరాధించేవన్నీ అసత్యాలు మరియు నిశ్చయంగా అల్లాహ్! కేవలం ఆయనే మహోన్నతుడు, మహనీయుడు (గొప్పవాడు)."
         }
       ]
     },
@@ -791,6 +1091,16 @@
           "id": 1547937,
           "resource_id": 831,
           "text": "Kya tum dekhte nahin ho ke kashti samandar mein Allah ke fazal se chalti hai taa-ke woh tumhein apni kuch nishaniyan dikhaye? Dar haqeeqat is mein bahut si nishaniyan hain har us shaks ke liye jo sabr aur shukar karne wala ho"
+        },
+        {
+          "id": -1003500,
+          "resource_id": "ur.maududi",
+          "text": "کیا تم دیکھتے نہیں ہو کہ کشتی سمندر میں اللہ کے فضل سے چلتی ہے تاکہ وہ تمہیں اپنی کچھ نشانیاں دکھائے؟ در حقیقت اس میں بہت سی نشانیاں ہیں ہر اُس شخص کے لیے جو صبر اور شکر کرنے والا ہو"
+        },
+        {
+          "id": -2003500,
+          "resource_id": 227,
+          "text": "ఏమీ? నీకు తెలియదా? మీకు కొన్ని సూచనలను తెలుపటానికి, అల్లాహ్ అనుగ్రహంతో, ఓడ సముద్రంలో పయనం చేస్తున్నదనీ? నిశ్చయంగా, ఇందులో సహనం వహించే ప్రతివానికి, కృతజ్ఞునికి, ఎన్నో సూచనలున్నాయి."
         }
       ]
     },
@@ -816,6 +1126,16 @@
           "id": 1547938,
           "resource_id": 831,
           "text": "Aur jab (samandar mein ) in logon par ek mauj saayebaano(like canopies) ki tarah chaaa jaati hai to yeh Allah ko pukarte hain apne deen ko bilkul usi ke liye khaalis karke. Phir jab woh bacha kar inhein khushki (land) tak pahuncha deta hai to inmein se koi iqtesad baratta (lukewarm) hai.Aur hamari nishaniyon ka inkar nahin karta magar har woh shaks jo gaddaar aur nashukra hai"
+        },
+        {
+          "id": -1003501,
+          "resource_id": "ur.maududi",
+          "text": "اور جب (سمندر میں) اِن لوگوں پر ایک موج سائبانوں کی طرح چھا جاتی ہے تو یہ اللہ کو پکارتے ہیں اپنے دین کو بالکل اسی کے لیے خالص کر کے، پھر جب وہ بچا کر انہیں خشکی تک پہنچا دیتا ہے تو ان میں سے کوئی اقتصاد برتتا ہے، اور ہماری نشانیوں کا انکار نہیں کرتا مگر ہر وہ شخص جو غدّار اور ناشکرا ہے"
+        },
+        {
+          "id": -2003501,
+          "resource_id": 227,
+          "text": "మరియు వారిని సముద్రపు అల, మేఘంగా క్రమ్ముకున్నప్పుడు, వారు పరిపూర్ణ భక్తితో అల్లాహ్ నే వేడుకుంటారు. కాని ఆయన వారిని రక్షించి ఒడ్డుకు చేర్చిన తరువాత వారిలో కొందరు (విశ్వాస-అవిశ్వాసాల) మధ్య ఆగిపోతారు. మరియు మా సూచనలను, కేవలం విశ్వాసఘాతకులు, కృతఘ్నులైన వారు మాత్రమే, తిరస్కరిస్తారు."
         }
       ]
     },
@@ -841,6 +1161,16 @@
           "id": 1547939,
           "resource_id": 831,
           "text": "Logon, bacho apne Rubb ke gazab se aur daro us din se jabke koi baap apne bete ki taraf se badla na dega aur na koi beta hi apne baap ki taraf se kuch badla dene wala hoga. Filwaqeh Allah ka wada sachha hai. Pas yeh duniya ki zindagi tumhein dhoke mein na daale, aur na dhoke-baaz tumko Allah ke maamle mein dhoka dene paye"
+        },
+        {
+          "id": -1003502,
+          "resource_id": "ur.maududi",
+          "text": "لوگو، بچو اپنے رب کے غضب سے اور ڈرو اُس دن سے جبکہ کوئی باپ اپنے بیٹے کی طرف سے بدلہ نہ دے گا اور نہ کوئی بیٹا ہی اپنے باپ کی طرف سے کچھ بدلہ دینے والا ہوگا فی الواقع اللہ کا وعدہ سچا ہے پس یہ دنیا کی زندگی تمہیں دھوکے میں نہ ڈالے اور نہ دھوکہ باز تم کو اللہ کے معاملے میں دھوکا دینے پائے"
+        },
+        {
+          "id": -2003502,
+          "resource_id": 227,
+          "text": "ఓ మానవులారా! మీ ప్రభువు నందే భయభక్తులు కలిగి ఉండండి. మరియు ఆ దినానికి భయపడండి, (ఏనాడైతే) తండ్రి తన కుమారునికి నష్టపరిహారం చెల్లించలేడో మరియు ఏ కుమారుడు కూడా తన తండ్రికి ఎలాంటి నష్టపరిహారం చెల్లించలేడో! నిశ్చయంగా, అల్లాహ్ వాగ్దానం సత్యం! కావున ఈ ప్రాపంచిక జీవితం మిమ్మల్ని మోసానికి గురి చేయనివ్వకూడదు. మరియు ఆ వంచకుణ్ణి (షైతానును) మిమ్మల్ని అల్లాహ్ విషయంలో వంచనకు గురి చేయనివ్వకూడదు సుమా!"
         }
       ]
     },
@@ -866,6 +1196,16 @@
           "id": 1547940,
           "resource_id": 831,
           "text": "Us ghadi ka ilm Allah hi ke paas hai, wahi baarish barsata hai, wahi jaanta hai ke maaon ke paithon mein kya parwarish paa raha hai, koi mutanaffis nahin jaanta ke kal woh kya kamayi karne wala hai aur na kisi shaks ko yeh khabar hai ke kis sar-zameen mein usko maut aani hai. Allah hi sabkuch jaanney wala aur bakhabar hai"
+        },
+        {
+          "id": -1003503,
+          "resource_id": "ur.maududi",
+          "text": "اُس گھڑی کا علم اللہ ہی کے پاس ہے، وہی بارش برساتا ہے، وہی جانتا ہے کہ ماؤں کے پیٹوں میں کیا پرورش پا رہا ہے، کوئی متنفس نہیں جانتا کہ کل وہ کیا کمائی کرنے والا ہے اور نہ کسی شخص کو یہ خبر ہے کہ کس سرزمین میں اس کی موت آنی ہے، اللہ ہی سب کچھ جاننے والا اور باخبر ہے"
+        },
+        {
+          "id": -2003503,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, ఆ (అంతిమ) ఘడియ జ్ఞానం, కేవలం అల్లాహ్ కు మాత్రమే ఉంది. మరియు ఆయనే వర్షం కురిపించేవాడు మరియు గర్భాలలో ఉన్నదాని విషయం తెలిసినవాడు. మరియు తాను రేపు ఏమి సంపాదిస్తాడో, ఏ మానవుడు కూడా ఎరుగడు. మరియు ఏ మానవుడు కూడా తాను ఏ భూభాగంలో మరణిస్తాడో కూడా ఎరుగడు. నిశ్చయంగా, అల్లాహ్ మాత్రమే సర్వజ్ఞుడు, సమస్తం తెలిసినవాడు (ఎరిగినవాడు)."
         }
       ]
     }

@@ -41,6 +41,16 @@
           "id": 1550563,
           "resource_id": 831,
           "text": "Humne is (Quran) ko shab-e-qadr mei nazil kiya hai"
+        },
+        {
+          "id": -1006126,
+          "resource_id": "ur.maududi",
+          "text": "ہم نے اِس (قرآن) کو شب قدر میں نازل کیا ہے"
+        },
+        {
+          "id": -2006126,
+          "resource_id": 227,
+          "text": "నిశ్చయంగా, మేము దీనిని (ఈ ఖుర్ఆన్ ను) ఘనతగల ఆ రాత్రి (అల్ ఖదర్)లో అవతరింపజేశాము."
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550564,
           "resource_id": 831,
           "text": "Aur tum kya jano kay shab-e-qadr kya hai"
+        },
+        {
+          "id": -1006127,
+          "resource_id": "ur.maududi",
+          "text": "اور تم کیا جانو کہ شب قدر کیا ہے؟"
+        },
+        {
+          "id": -2006127,
+          "resource_id": 227,
+          "text": "మరియు ఆ ఘనత గల రాత్రి అంటే ఏమిటో నీకేం తెలుసు?"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550565,
           "resource_id": 831,
           "text": "Shab-e-qadr hazar mahino se zyada behtar hai"
+        },
+        {
+          "id": -1006128,
+          "resource_id": "ur.maududi",
+          "text": "شب قدر ہزار مہینوں سے زیادہ بہتر ہے"
+        },
+        {
+          "id": -2006128,
+          "resource_id": 227,
+          "text": "ఆ ఘనత గల రాత్రి వేయి నెలల కంటే శ్రేష్ఠమైనది."
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550566,
           "resource_id": 831,
           "text": "Farishtey aur rooh(Jibrael) us mein apne Rubb ke izn(permission) se har hukm le kar utarte hai"
+        },
+        {
+          "id": -1006129,
+          "resource_id": "ur.maududi",
+          "text": "فرشتے اور روح اُس میں اپنے رب کے اذن سے ہر حکم لے کر اترتے ہیں"
+        },
+        {
+          "id": -2006129,
+          "resource_id": 227,
+          "text": "ఆ రాత్రిలో దేవదూతలు మరియు ఆత్మ (జిబ్రీల్), తమ ప్రభువు అనుమతితో, ప్రతి వ్యవహారానికి సంబంధించిన) ఆజ్ఞలు తీసుకుని దిగి వస్తారు."
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550567,
           "resource_id": 831,
           "text": "Woh raat sarasar salamati hai tulu e fajr tak"
+        },
+        {
+          "id": -1006130,
+          "resource_id": "ur.maududi",
+          "text": "وہ رات سراسر سلامتی ہے طلوع فجر تک"
+        },
+        {
+          "id": -2006130,
+          "resource_id": 227,
+          "text": "ఆ రాత్రిలో తెల్లవారే వరకు శాంతి వర్ధిల్లుతుంది."
         }
       ]
     }

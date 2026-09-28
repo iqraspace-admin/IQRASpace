@@ -88,6 +88,49 @@ Both pre-live and production credentials are kept side by side in `.env.local` (
 3. Read the full Developer Terms of Service end-to-end (this document reviewed key sections via automated fetch, not the complete legal text) and confirm they're comfortable with them for a public NGO-style deployment — still outstanding, worth doing before public launch.
 4. Ask Quran Foundation support (contact listed in their docs) for the actual numeric rate limits — the full sync ran clean with zero 429s at this volume (§4b), but the real published number is still unconfirmed.
 
+## 6. Secondary translations (Urdu, Telugu) — added 2026-09-28
+
+Two more translation languages were added to match what the IqraSpace
+Flutter app (`apps/mobile/android`) already ships, using the exact same
+sources (see that app's `lib/core/network/dio_client.dart` and
+`lib/features/quran_reader/data/datasources/surah_remote_datasource.dart`):
+
+- **Urdu (Arabic script)** — Al Quran Cloud (`api.alquran.cloud`, public,
+  no auth), edition `ur.maududi` (Abul Ala Maududi's Urdu-script
+  translation). Neither the Quran Foundation Content API nor Quran.com v4
+  has an Arabic-script Urdu edition under any resource id found while
+  building this — the Flutter app reached the same conclusion
+  independently, which is why it also sources this one from Al Quran
+  Cloud instead.
+- **Telugu** — Quran.com's public v4 API (`api.quran.com`, no auth),
+  resource id `227` ("Maulana Abder-Rahim ibn Muhammad") — the one Telugu
+  translation that host has. **Not confirmed to also exist in the Quran
+  Foundation Content API's own catalog** — that would need a live
+  `GET /resources/translations` query against real production
+  credentials, which this pass didn't have on hand. Using Quran.com v4
+  directly (same as the Flutter app already does) sidesteps that gap
+  rather than guessing at a Content-API id.
+
+**Implementation differs from §1-5 above on purpose:** these two are
+merged into the already-synced `src/content/generated/surah/*.json`
+files by a separate script, `scripts/sync-secondary-translations.mjs`,
+rather than being added to `sync-content.mjs`'s
+`TRANSLATION_RESOURCE_IDS` — that array is Quran Foundation
+Content-API-only (OAuth2), and neither of these two sources lives there.
+The new script needs no credentials (both hosts are public) and never
+touches `text_uthmani` or the existing English (`85`)/Roman Urdu (`831`)
+translation entries — purely additive to each verse's `translations[]`
+array, and safely re-runnable. Run it with `npm run
+sync:secondary-translations` any time these two translations need
+refreshing; it's independent of `sync:content`'s Quran-Foundation-specific
+weekly re-sync obligation (§3), since that obligation is specifically
+about QF Content API data.
+
+See `src/lib/content/translations.ts` for the single source of truth
+mapping each `TranslationLanguageId` to its `resource_id`, and
+`src/components/reader/AyahBlock.tsx` for how the reader renders each
+language's script/direction/font.
+
 ## Sources
 
 - [Quick Start Guide](https://api-docs.quran.com/docs/quickstart/)

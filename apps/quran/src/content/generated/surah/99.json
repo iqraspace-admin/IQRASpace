@@ -41,6 +41,16 @@
           "id": 1550576,
           "resource_id": 831,
           "text": "Jab zameen apni puri shiddat kay saath hila daali jayegi"
+        },
+        {
+          "id": -1006139,
+          "resource_id": "ur.maududi",
+          "text": "جب زمین اپنی پوری شدت کے ساتھ ہلا ڈالی جائے گی"
+        },
+        {
+          "id": -2006139,
+          "resource_id": 227,
+          "text": "భూమి తన అతి తీవ్రమైన (అంతిమ) భూకంపంతో కంపింపజేయబడినప్పుడు!"
         }
       ]
     },
@@ -66,6 +76,16 @@
           "id": 1550577,
           "resource_id": 831,
           "text": "Aur zameen apne andar kay sarey bojh nikal kar bahar daal degi"
+        },
+        {
+          "id": -1006140,
+          "resource_id": "ur.maududi",
+          "text": "اور زمین اپنے اندر کے سارے بوجھ نکال کر باہر ڈال دے گی"
+        },
+        {
+          "id": -2006140,
+          "resource_id": 227,
+          "text": "మరియు భూమి తన భారాన్నంతా తీసి బయట పడ వేసినప్పుడు!"
         }
       ]
     },
@@ -91,6 +111,16 @@
           "id": 1550578,
           "resource_id": 831,
           "text": "Aur Insan kahega ke yeh isko kya ho raha hai"
+        },
+        {
+          "id": -1006141,
+          "resource_id": "ur.maududi",
+          "text": "اور انسان کہے گا کہ یہ اِس کو کیا ہو رہا ہے"
+        },
+        {
+          "id": -2006141,
+          "resource_id": 227,
+          "text": "మరియు మానవుడు: \"దీనికి ఏమయింది?\" అని అన్నప్పుడు."
         }
       ]
     },
@@ -116,6 +146,16 @@
           "id": 1550579,
           "resource_id": 831,
           "text": "Us roz woh apne (upar guzre huey) halaat bayan karegi"
+        },
+        {
+          "id": -1006142,
+          "resource_id": "ur.maududi",
+          "text": "اُس روز وہ اپنے (اوپر گزرے ہوئے) حالات بیان کرے گی"
+        },
+        {
+          "id": -2006142,
+          "resource_id": 227,
+          "text": "ఆ రోజు అది తన సమాచారాలను వివరిస్తుంది."
         }
       ]
     },
@@ -141,6 +181,16 @@
           "id": 1550580,
           "resource_id": 831,
           "text": "Kyunke tere Rubb ne usey (aisa karne ka) hukm diya hoga"
+        },
+        {
+          "id": -1006143,
+          "resource_id": "ur.maududi",
+          "text": "کیونکہ تیرے رب نے اُسے (ایساکرنے کا) حکم دیا ہوگا"
+        },
+        {
+          "id": -2006143,
+          "resource_id": 227,
+          "text": "ఎందుకంటే, నీ ప్రభువు దానిని ఆదేశించి ఉంటాడు."
         }
       ]
     },
@@ -166,6 +216,16 @@
           "id": 1550581,
           "resource_id": 831,
           "text": "Us roz log mutafarrik halat mein paltenge taakay unke aamal unko dikhaey jayein"
+        },
+        {
+          "id": -1006144,
+          "resource_id": "ur.maududi",
+          "text": "اُس روز لوگ متفرق حالت میں پلٹیں گے تاکہ اُن کے اعمال اُن کو دکھائے جائیں"
+        },
+        {
+          "id": -2006144,
+          "resource_id": 227,
+          "text": "ఆ రోజు ప్రజలు తమ తమ కర్మలు చూపించబడటానికి వేర్వేరు గుంపులలో వెళ్తారు."
         }
       ]
     },
@@ -191,6 +251,16 @@
           "id": 1550582,
           "resource_id": 831,
           "text": "Phir jisne zarra barabar neki ki hogi woh usko dekh lega"
+        },
+        {
+          "id": -1006145,
+          "resource_id": "ur.maududi",
+          "text": "پھر جس نے ذرہ برابر نیکی کی ہوگی وہ اس کو دیکھ لے گا"
+        },
+        {
+          "id": -2006145,
+          "resource_id": 227,
+          "text": "అప్పుడు, ప్రతివాడు తాను, రవ్వంత (పరమాణువంత) మంచిని చేసి ఉన్నా, దానిని చూసుకుంటాడు."
         }
       ]
     },
@@ -216,6 +286,16 @@
           "id": 1550583,
           "resource_id": 831,
           "text": "Aur jisne zarra barabar badi ki hogi woh usko dekh lega"
+        },
+        {
+          "id": -1006146,
+          "resource_id": "ur.maududi",
+          "text": "اور جس نے ذرہ برابر بدی کی ہوگی وہ اس کو دیکھ لے گا"
+        },
+        {
+          "id": -2006146,
+          "resource_id": 227,
+          "text": "మరియు అలాగే, ప్రతివాడు తాను రవ్వంత (పరమాణువంత) చెడును చేసి ఉన్నా, దానిని చూసుకుంటాడు."
         }
       ]
     }
