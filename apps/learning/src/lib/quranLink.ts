@@ -14,15 +14,20 @@
  * "/quran" prefix would only resolve via apps/landing's Multi-Zones rewrite
  * on the eventual custom domain (iqraspace.org) — this pilot is currently
  * live only at its bare https://iqraspace.vercel.app, which has no such
- * rewrite, so a relative default 404s there (confirmed in production).
- * Override with NEXT_PUBLIC_QURAN_URL for local dev (apps/quran's own dev
- * server, unprefixed on its own port — see apps/quran/package.json's `dev`
- * script, `next dev -p 3001` — set NEXT_PUBLIC_QURAN_URL=http://localhost:3001
- * in `.env.local`, see .env.local.example) or, once iqraspace.org is
- * actually live, to switch back to a same-origin "/quran" for a nicer
- * single-domain UX.
+ * rewrite, so a relative default 404s there (confirmed in production). The
+ * alias itself must still include the trailing "/quran" — apps/quran is
+ * built with NEXT_BASE_PATH=/quran (see apps/quran/next.config.ts), and a
+ * basePath applies to every URL that build is reachable at, including its
+ * own *.vercel.app alias, not just the custom-domain rewrite; a bare-alias
+ * link 404s for the same reason a bare "/" does (apps/quran/ARCHITECTURE.md
+ * §8). Override with NEXT_PUBLIC_QURAN_URL for local dev (apps/quran's own
+ * dev server, unprefixed on its own port — see apps/quran/package.json's
+ * `dev` script, `next dev -p 3001` — set
+ * NEXT_PUBLIC_QURAN_URL=http://localhost:3001 in `.env.local`, see
+ * .env.local.example) or, once iqraspace.org is actually live, to switch
+ * back to a same-origin "/quran" for a nicer single-domain UX.
  */
-const QURAN_BASE = process.env.NEXT_PUBLIC_QURAN_URL || "https://iqraspace-quran.vercel.app";
+const QURAN_BASE = process.env.NEXT_PUBLIC_QURAN_URL || "https://iqraspace-quran.vercel.app/quran";
 
 /** The Quran Reader's home — used by the always-visible "Open Quran" nav
  * entry, with no particular Surah/Ayah in mind. */
