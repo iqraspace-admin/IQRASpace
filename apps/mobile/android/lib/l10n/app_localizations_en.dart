@@ -342,7 +342,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsAttribution =>
-      'Text, Tajweed, translation, and audio: Al Quran Cloud (alquran.cloud). Roman Urdu translation: Quran.com. Fonts: the Amiri family (SIL OFL 1.1).';
+      'Text, Tajweed, translation, and audio: Al Quran Cloud (alquran.cloud). Roman Urdu and Telugu translations: Quran.com. Fonts: the Amiri family (SIL OFL 1.1).';
 
   @override
   String get translationLangOff => 'Off';
@@ -352,6 +352,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get translationLangRomanUrdu => 'Roman Urdu (Abul Ala Maududi)';
+
+  @override
+  String get translationLangUrdu => 'Urdu (Abul Ala Maududi)';
+
+  @override
+  String get translationLangTelugu => 'Telugu (Abder-Rahim ibn Muhammad)';
 
   @override
   String get arabicFontAmiriQuran => 'Amiri Quran (Uthmani)';

@@ -62,7 +62,7 @@ void main() {
     expect(find.text('Tajweed Rules'), findsOneWidget);
   });
 
-  testWidgets('lists Off, English, and Roman Urdu translation options', (tester) async {
+  testWidgets('lists Off, English, Roman Urdu, Urdu, and Telugu translation options', (tester) async {
     await pumpAndOpenSheet(tester);
 
     // Translation language now lives in its own picker sheet, opened by
@@ -84,6 +84,14 @@ void main() {
       find.widgetWithText(RadioListTile<TranslationLanguage>, 'Roman Urdu (Abul Ala Maududi)'),
       findsOneWidget,
     );
+    expect(
+      find.widgetWithText(RadioListTile<TranslationLanguage>, 'Urdu (Abul Ala Maududi)'),
+      findsOneWidget,
+    );
+    expect(
+      find.widgetWithText(RadioListTile<TranslationLanguage>, 'Telugu (Abder-Rahim ibn Muhammad)'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('selecting Roman Urdu persists translationLanguage=romanUrdu', (tester) async {
@@ -103,6 +111,29 @@ void main() {
     });
 
     expect(HiveBoxes.settingsBox.get('translationLanguage'), 'romanUrdu');
+  });
+
+  testWidgets('selecting Telugu persists translationLanguage=telugu', (tester) async {
+    await pumpAndOpenSheet(tester);
+    expect(HiveBoxes.settingsBox.get('translationLanguage'), isNull);
+
+    await tester.tap(find.text('Translation'));
+    await tester.pumpAndSettle();
+
+    // Telugu is the last option in the list — dragUntilVisible in case
+    // the picker sheet's initial size doesn't fit all 5 options without
+    // scrolling (same reasoning as pumpAndOpenSheet's doc comment).
+    await tester.runAsync(() async {
+      await tester.dragUntilVisible(
+        find.widgetWithText(RadioListTile<TranslationLanguage>, 'Telugu (Abder-Rahim ibn Muhammad)'),
+        find.byType(ListView),
+        const Offset(0, -100),
+      );
+      await tester.tap(find.text('Telugu (Abder-Rahim ibn Muhammad)'));
+      await tester.pumpAndSettle();
+    });
+
+    expect(HiveBoxes.settingsBox.get('translationLanguage'), 'telugu');
   });
 
   testWidgets('toggling Tajweed coloring persists tajweedEnabled=false', (tester) async {

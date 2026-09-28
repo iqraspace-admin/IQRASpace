@@ -344,7 +344,7 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get settingsAttribution =>
-      'వచనం, తజ్వీద్, అనువాదం, మరియు ఆడియో: Al Quran Cloud (alquran.cloud). రోమన్ ఉర్దూ అనువాదం: Quran.com. ఫాంట్‌లు: Amiri కుటుంబం (SIL OFL 1.1).';
+      'వచనం, తజ్వీద్, అనువాదం, మరియు ఆడియో: Al Quran Cloud (alquran.cloud). రోమన్ ఉర్దూ మరియు తెలుగు అనువాదాలు: Quran.com. ఫాంట్‌లు: Amiri కుటుంబం (SIL OFL 1.1).';
 
   @override
   String get translationLangOff => 'ఆఫ్';
@@ -354,6 +354,12 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get translationLangRomanUrdu => 'రోమన్ ఉర్దూ (అబుల్ అలా మౌదూదీ)';
+
+  @override
+  String get translationLangUrdu => 'ఉర్దూ (అబుల్ అలా మౌదూదీ)';
+
+  @override
+  String get translationLangTelugu => 'తెలుగు (అబ్దుర్ రహీమ్ ఇబ్న్ ముహమ్మద్)';
 
   @override
   String get arabicFontAmiriQuran => 'అమిరి ఖురాన్ (ఉస్మానీ)';

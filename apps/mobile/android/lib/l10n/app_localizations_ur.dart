@@ -342,7 +342,7 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get settingsAttribution =>
-      'متن، تجوید، ترجمہ، اور آڈیو: Al Quran Cloud (alquran.cloud)۔ رومن اردو ترجمہ: Quran.com۔ فونٹس: Amiri فیملی (SIL OFL 1.1)۔';
+      'متن، تجوید، ترجمہ، اور آڈیو: Al Quran Cloud (alquran.cloud)۔ رومن اردو اور تیلگو ترجمے: Quran.com۔ فونٹس: Amiri فیملی (SIL OFL 1.1)۔';
 
   @override
   String get translationLangOff => 'بند';
@@ -352,6 +352,12 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get translationLangRomanUrdu => 'رومن اردو (ابوالاعلیٰ مودودی)';
+
+  @override
+  String get translationLangUrdu => 'اردو (ابوالاعلیٰ مودودی)';
+
+  @override
+  String get translationLangTelugu => 'تیلگو (عبدالرحیم بن محمد)';
 
   @override
   String get arabicFontAmiriQuran => 'امیری قرآن (عثمانی)';

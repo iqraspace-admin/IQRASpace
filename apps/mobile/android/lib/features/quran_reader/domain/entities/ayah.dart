@@ -5,17 +5,21 @@ import 'package:quran_flutter/features/quran_reader/domain/entities/tajweed_span
 /// time (see TajweedParser) — nothing in the presentation layer re-parses
 /// tagged text on every rebuild.
 ///
-/// Two translations are fetched alongside the Tajweed edition: English
-/// (Sahih International, via Al Quran Cloud) and Roman Urdu (Abul Ala
-/// Maududi, via the Quran.com v4 API — see SurahRemoteDataSource for why
-/// two different hosts). Either can be null if that part of a response
-/// was ever missing.
+/// Four translations are fetched alongside the Tajweed edition: English
+/// (Sahih International) and Urdu (Abul Ala Maududi, Urdu script) both
+/// come from Al Quran Cloud's combined-editions call; Roman Urdu (Abul
+/// Ala Maududi, Latin script) and Telugu (Abder-Rahim ibn Muhammad) come
+/// from the Quran.com v4 API instead (see SurahRemoteDataSource for why
+/// two different hosts). Any of them can be null if that part of a
+/// response was ever missing.
 class Ayah {
   final int numberInSurah;
   final String plainText;
   final List<TajweedSpan> tajweedSpans;
   final String? translationTextEn;
   final String? translationTextRomanUrdu;
+  final String? translationTextUrdu;
+  final String? translationTextTelugu;
   final String? audioUrl;
 
   const Ayah({
@@ -24,6 +28,8 @@ class Ayah {
     required this.tajweedSpans,
     this.translationTextEn,
     this.translationTextRomanUrdu,
+    this.translationTextUrdu,
+    this.translationTextTelugu,
     this.audioUrl,
   });
 
@@ -37,6 +43,10 @@ class Ayah {
         return translationTextEn;
       case TranslationLanguage.romanUrdu:
         return translationTextRomanUrdu;
+      case TranslationLanguage.urdu:
+        return translationTextUrdu;
+      case TranslationLanguage.telugu:
+        return translationTextTelugu;
     }
   }
 }

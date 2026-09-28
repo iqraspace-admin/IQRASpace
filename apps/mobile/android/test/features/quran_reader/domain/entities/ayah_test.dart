@@ -9,6 +9,8 @@ void main() {
     tajweedSpans: [],
     translationTextEn: 'In the name of God, the Lord of Mercy, the Giver of Mercy!',
     translationTextRomanUrdu: 'Allah ke naam se jo Rehman o Raheem hai',
+    translationTextUrdu: 'اللہ کے نام سے جو رحمان و رحیم ہے',
+    translationTextTelugu: 'అనంత కరుణామయుడు అపార కరుణా ప్రదాత అయిన అల్లాహ్ పేరుతో',
   );
 
   group('Ayah.translationFor', () {
@@ -27,6 +29,20 @@ void main() {
       expect(
         ayah.translationFor(TranslationLanguage.romanUrdu),
         'Allah ke naam se jo Rehman o Raheem hai',
+      );
+    });
+
+    test('returns the Urdu text for TranslationLanguage.urdu', () {
+      expect(
+        ayah.translationFor(TranslationLanguage.urdu),
+        'اللہ کے نام سے جو رحمان و رحیم ہے',
+      );
+    });
+
+    test('returns the Telugu text for TranslationLanguage.telugu', () {
+      expect(
+        ayah.translationFor(TranslationLanguage.telugu),
+        'అనంత కరుణామయుడు అపార కరుణా ప్రదాత అయిన అల్లాహ్ పేరుతో',
       );
     });
 

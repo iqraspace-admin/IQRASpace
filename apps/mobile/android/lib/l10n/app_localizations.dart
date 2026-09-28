@@ -721,7 +721,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsAttribution.
   ///
   /// In en, this message translates to:
-  /// **'Text, Tajweed, translation, and audio: Al Quran Cloud (alquran.cloud). Roman Urdu translation: Quran.com. Fonts: the Amiri family (SIL OFL 1.1).'**
+  /// **'Text, Tajweed, translation, and audio: Al Quran Cloud (alquran.cloud). Roman Urdu and Telugu translations: Quran.com. Fonts: the Amiri family (SIL OFL 1.1).'**
   String get settingsAttribution;
 
   /// No description provided for @translationLangOff.
@@ -741,6 +741,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Roman Urdu (Abul Ala Maududi)'**
   String get translationLangRomanUrdu;
+
+  /// No description provided for @translationLangUrdu.
+  ///
+  /// In en, this message translates to:
+  /// **'Urdu (Abul Ala Maududi)'**
+  String get translationLangUrdu;
+
+  /// No description provided for @translationLangTelugu.
+  ///
+  /// In en, this message translates to:
+  /// **'Telugu (Abder-Rahim ibn Muhammad)'**
+  String get translationLangTelugu;
 
   /// No description provided for @arabicFontAmiriQuran.
   ///

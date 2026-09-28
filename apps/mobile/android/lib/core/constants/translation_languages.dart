@@ -4,7 +4,7 @@ import 'package:quran_flutter/l10n/app_localizations.dart';
 /// [off] hides the translation line entirely — the reader's default, so
 /// a fresh install shows Arabic-only until a reader opts in via Reader
 /// Settings.
-enum TranslationLanguage { off, english, romanUrdu }
+enum TranslationLanguage { off, english, romanUrdu, urdu, telugu }
 
 /// Display metadata for the Reader Settings sheet's Translation picker.
 class TranslationLanguageOption {
@@ -26,6 +26,14 @@ List<TranslationLanguageOption> translationLanguageOptions(AppLocalizations l10n
       TranslationLanguageOption(
         language: TranslationLanguage.romanUrdu,
         displayName: l10n.translationLangRomanUrdu,
+      ),
+      TranslationLanguageOption(
+        language: TranslationLanguage.urdu,
+        displayName: l10n.translationLangUrdu,
+      ),
+      TranslationLanguageOption(
+        language: TranslationLanguage.telugu,
+        displayName: l10n.translationLangTelugu,
       ),
     ];
 

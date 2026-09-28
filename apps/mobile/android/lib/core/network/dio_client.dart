@@ -26,11 +26,14 @@ Dio buildDioClient() {
 /// product from the Content API above, run by the same Quran Foundation,
 /// and confirmed reachable with no API key or OAuth token for the
 /// `resources/translations` and `quran/translations/{id}` endpoints this
-/// app calls. Used only to fetch the Roman Urdu translation (resource id
-/// 831, "Abul Ala Maududi (Roman Urdu)") — the one text apps/quran's own
-/// generated content also ships — since Al Quran Cloud has no Roman
-/// Urdu/Latin-script edition (only Urdu-script ones, e.g. `ur.maududi`,
-/// which is a different script entirely, not a substitute).
+/// app calls. Used to fetch two translations Al Quran Cloud doesn't
+/// offer: Roman Urdu (resource id 831, "Abul Ala Maududi (Roman Urdu)")
+/// — the one text apps/quran's own generated content also ships — since
+/// Al Quran Cloud has no Roman Urdu/Latin-script edition (only
+/// Urdu-script ones, e.g. `ur.maududi`, which is a different script
+/// entirely, not a substitute); and Telugu (resource id 227, "Maulana
+/// Abder-Rahim ibn Muhammad") — confirmed via Al Quran Cloud's
+/// `/edition` list that it has no Telugu content at all, in any script.
 Dio buildQuranComDioClient() {
   return Dio(
     BaseOptions(

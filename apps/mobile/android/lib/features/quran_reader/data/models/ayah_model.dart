@@ -16,19 +16,24 @@ class AyahModel extends Ayah {
     required super.tajweedSpans,
     super.translationTextEn,
     super.translationTextRomanUrdu,
+    super.translationTextUrdu,
+    super.translationTextTelugu,
     super.audioUrl,
   });
 
   /// Builds from one ayah of Al Quran Cloud's combined
-  /// `/v1/surah/{n}/editions/quran-tajweed,en.sahih,ar.alafasy` response,
-  /// plus the matching ayah (by array index) from Quran.com's separate
-  /// `/api/v4/quran/translations/831` (Roman Urdu) response — see
-  /// SurahRemoteDataSource.fetchSurah for how these three/four sources
-  /// are zipped together.
+  /// `/v1/surah/{n}/editions/quran-tajweed,en.sahih,ur.maududi,ar.alafasy`
+  /// response, plus the matching ayah (by array index) from Quran.com's
+  /// separate `/api/v4/quran/translations/831` (Roman Urdu) and
+  /// `/api/v4/quran/translations/227` (Telugu) responses — see
+  /// SurahRemoteDataSource.fetchSurah for how these sources are zipped
+  /// together.
   factory AyahModel.fromApiJson({
     required Map<String, dynamic> tajweedJson,
     Map<String, dynamic>? translationJson,
     Map<String, dynamic>? romanUrduJson,
+    Map<String, dynamic>? urduJson,
+    Map<String, dynamic>? teluguJson,
     Map<String, dynamic>? audioJson,
   }) {
     final spans = TajweedParser.parse(tajweedJson['text'] as String);
@@ -38,6 +43,8 @@ class AyahModel extends Ayah {
       tajweedSpans: spans,
       translationTextEn: translationJson?['text'] as String?,
       translationTextRomanUrdu: romanUrduJson?['text'] as String?,
+      translationTextUrdu: urduJson?['text'] as String?,
+      translationTextTelugu: teluguJson?['text'] as String?,
       audioUrl: audioJson?['audio'] as String?,
     );
   }
@@ -57,6 +64,12 @@ class AyahModel extends Ayah {
         translationTextEn:
             (json['translationTextEn'] ?? json['translationText']) as String?,
         translationTextRomanUrdu: json['translationTextRomanUrdu'] as String?,
+        // Both null-default gracefully for a surah cached before this app
+        // update added Urdu/Telugu — same pattern as translationTextEn's
+        // legacy-key fallback above, just with no legacy key to fall back
+        // to (these are new fields, not renamed ones).
+        translationTextUrdu: json['translationTextUrdu'] as String?,
+        translationTextTelugu: json['translationTextTelugu'] as String?,
         audioUrl: json['audioUrl'] as String?,
       );
 
@@ -66,6 +79,8 @@ class AyahModel extends Ayah {
         'tajweedSpans': tajweedSpans.map((s) => s.toJson()).toList(),
         'translationTextEn': translationTextEn,
         'translationTextRomanUrdu': translationTextRomanUrdu,
+        'translationTextUrdu': translationTextUrdu,
+        'translationTextTelugu': translationTextTelugu,
         'audioUrl': audioUrl,
       };
 }

@@ -114,11 +114,13 @@
   "settingsUserGuideDesc": "ప్రతి ఫీచర్ యొక్క స్క్రీన్‌షాట్ వాక్‌త్రూ",
   "settingsAboutIqraSpace": "ఇక్రాస్పేస్ గురించి",
   "settingsAboutIqraSpaceDesc": "మా లక్ష్యం, దృష్టి, మరియు విలువలు",
-  "settingsAttribution": "వచనం, తజ్వీద్, అనువాదం, మరియు ఆడియో: Al Quran Cloud (alquran.cloud). రోమన్ ఉర్దూ అనువాదం: Quran.com. ఫాంట్‌లు: Amiri కుటుంబం (SIL OFL 1.1).",
+  "settingsAttribution": "వచనం, తజ్వీద్, అనువాదం, మరియు ఆడియో: Al Quran Cloud (alquran.cloud). రోమన్ ఉర్దూ మరియు తెలుగు అనువాదాలు: Quran.com. ఫాంట్‌లు: Amiri కుటుంబం (SIL OFL 1.1).",
 
   "translationLangOff": "ఆఫ్",
   "translationLangEnglish": "ఇంగ్లీష్ (సహీహ్ ఇంటర్నేషనల్)",
   "translationLangRomanUrdu": "రోమన్ ఉర్దూ (అబుల్ అలా మౌదూదీ)",
+  "translationLangUrdu": "ఉర్దూ (అబుల్ అలా మౌదూదీ)",
+  "translationLangTelugu": "తెలుగు (అబ్దుర్ రహీమ్ ఇబ్న్ ముహమ్మద్)",
 
   "arabicFontAmiriQuran": "అమిరి ఖురాన్ (ఉస్మానీ)",
   "arabicFontAmiri": "అమిరి (సాధారణ ప్రయోజన)",

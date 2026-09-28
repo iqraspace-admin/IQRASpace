@@ -114,11 +114,13 @@
   "settingsUserGuideDesc": "ہر خصوصیت کا تصویری جائزہ",
   "settingsAboutIqraSpace": "اقرا اسپیس کے بارے میں",
   "settingsAboutIqraSpaceDesc": "ہمارا مشن، وژن، اور اقدار",
-  "settingsAttribution": "متن، تجوید، ترجمہ، اور آڈیو: Al Quran Cloud (alquran.cloud)۔ رومن اردو ترجمہ: Quran.com۔ فونٹس: Amiri فیملی (SIL OFL 1.1)۔",
+  "settingsAttribution": "متن، تجوید، ترجمہ، اور آڈیو: Al Quran Cloud (alquran.cloud)۔ رومن اردو اور تیلگو ترجمے: Quran.com۔ فونٹس: Amiri فیملی (SIL OFL 1.1)۔",
 
   "translationLangOff": "بند",
   "translationLangEnglish": "انگریزی (صحیح انٹرنیشنل)",
   "translationLangRomanUrdu": "رومن اردو (ابوالاعلیٰ مودودی)",
+  "translationLangUrdu": "اردو (ابوالاعلیٰ مودودی)",
+  "translationLangTelugu": "تیلگو (عبدالرحیم بن محمد)",
 
   "arabicFontAmiriQuran": "امیری قرآن (عثمانی)",
   "arabicFontAmiri": "امیری (عام مقصد)",

@@ -114,11 +114,13 @@
   "settingsUserGuideDesc": "A screenshot walkthrough of every feature",
   "settingsAboutIqraSpace": "About IqraSpace",
   "settingsAboutIqraSpaceDesc": "Our mission, vision, and values",
-  "settingsAttribution": "Text, Tajweed, translation, and audio: Al Quran Cloud (alquran.cloud). Roman Urdu translation: Quran.com. Fonts: the Amiri family (SIL OFL 1.1).",
+  "settingsAttribution": "Text, Tajweed, translation, and audio: Al Quran Cloud (alquran.cloud). Roman Urdu and Telugu translations: Quran.com. Fonts: the Amiri family (SIL OFL 1.1).",
 
   "translationLangOff": "Off",
   "translationLangEnglish": "English (Sahih International)",
   "translationLangRomanUrdu": "Roman Urdu (Abul Ala Maududi)",
+  "translationLangUrdu": "Urdu (Abul Ala Maududi)",
+  "translationLangTelugu": "Telugu (Abder-Rahim ibn Muhammad)",
 
   "arabicFontAmiriQuran": "Amiri Quran (Uthmani)",
   "arabicFontAmiri": "Amiri (general-purpose)",
