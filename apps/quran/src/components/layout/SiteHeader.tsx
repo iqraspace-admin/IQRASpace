@@ -56,18 +56,31 @@ export function SiteHeader() {
         top: 0,
         zIndex: 50,
         borderBottom: "1px solid var(--color-border)",
-        background: "var(--color-surface)",
+        // Translucent page-background + blur, matching apps/site's
+        // .site-header treatment (design spec §2.5: rgba(ivory, .94) +
+        // 8px blur) rather than this app's previous solid --color-surface
+        // fill — the two products' headers now share the same "floating
+        // glass" feel. Built from --color-bg (not a hardcoded ivory rgba
+        // like apps/site's, which has no theme variants to worry about):
+        // this app has a real Dark/Sepia toggle, and hardcoding light
+        // ivory here would put light text-on-dark-surface header content
+        // on a light header background in Dark mode — color-mix keeps the
+        // glass effect theme-correct in all three themes.
+        background: "color-mix(in srgb, var(--color-bg) 94%, transparent)",
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
       }}
     >
       <div
         style={{
           maxWidth: "var(--content-max-width)",
           margin: "0 auto",
-          padding: "0.75rem 1rem",
+          padding: "1rem",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           gap: "1rem",
+          minHeight: "3.5rem",
         }}
       >
         <Link

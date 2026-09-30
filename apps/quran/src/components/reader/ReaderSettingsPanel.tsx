@@ -167,7 +167,7 @@ export function ReaderSettingsPanel({
         }}
         aria-haspopup="dialog"
         aria-label={triggerLabel ? triggerLabel : t("settingsReadingSettings")}
-        className={triggerClassName}
+        className={triggerClassName ?? "settings-trigger"}
         style={triggerStyleOverride ?? triggerStyle}
       >
         {triggerStyleOverride ? (
@@ -939,17 +939,23 @@ function HelpIcon() {
   );
 }
 
+// Matches apps/site's .btn-secondary exactly (design spec §3.1): a pill
+// outline button in the brand color, filling with a soft tint on hover
+// (see globals.css's .settings-trigger:hover) rather than this app's
+// previous plain-bordered/neutral rectangle.
 const triggerStyle: CSSProperties = {
   display: "inline-flex",
   alignItems: "center",
   gap: "0.4rem",
-  border: "1px solid var(--color-border)",
-  borderRadius: "0.375rem",
-  padding: "0.4rem 0.75rem",
-  background: "var(--color-bg)",
-  color: "var(--color-text)",
+  border: "1.5px solid var(--color-primary)",
+  borderRadius: "var(--radius-pill)",
+  padding: "0.4rem 0.85rem",
+  background: "transparent",
+  color: "var(--color-primary)",
   cursor: "pointer",
   fontSize: "0.85rem",
+  fontWeight: 600,
+  transition: "background 0.15s",
 };
 
 // Matches QuickLinks.tsx's own tile badge/label styling (not imported —

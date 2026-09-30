@@ -61,11 +61,13 @@ const tileStyle: CSSProperties = {
   flexDirection: "column",
   alignItems: "flex-start",
   minHeight: "7rem",
-  borderRadius: "1rem",
+  borderRadius: "var(--radius-lg)",
   border: "1px solid var(--color-border)",
   background: "var(--color-surface)",
   color: "var(--color-text)",
   textDecoration: "none",
+  boxShadow: "var(--shadow-1)",
+  transition: "box-shadow 0.2s, border-color 0.2s",
 };
 
 function badgeStyle(tintFrom: string): CSSProperties {
@@ -75,7 +77,7 @@ function badgeStyle(tintFrom: string): CSSProperties {
     justifyContent: "center",
     width: "2.75rem",
     height: "2.75rem",
-    borderRadius: "0.75rem",
+    borderRadius: "var(--radius-md)",
     background: `color-mix(in srgb, ${tintFrom} 14%, var(--color-surface))`,
     color: tintFrom === "var(--color-accent)" ? "var(--color-accent-text)" : "var(--color-primary)",
   };

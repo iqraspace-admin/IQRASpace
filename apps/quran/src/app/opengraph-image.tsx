@@ -10,7 +10,7 @@ export const contentType = "image/png";
 // Matches globals.css's --color-bg (light theme) — OG images are static
 // files with no access to CSS custom properties, so this is duplicated
 // deliberately rather than shared as a token.
-const IVORY_BACKGROUND = "#faf7f0";
+const IVORY_BACKGROUND = "#faf8f2";
 
 export default function OpengraphImage() {
   const fullImageCrop = { left: 0, top: 0, width: LOGO_SOURCE_SIZE, height: LOGO_SOURCE_SIZE };

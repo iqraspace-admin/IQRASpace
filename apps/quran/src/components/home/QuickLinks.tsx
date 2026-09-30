@@ -102,12 +102,14 @@ const tileStyle: CSSProperties = {
   justifyContent: "center",
   aspectRatio: "1",
   padding: "1rem",
-  borderRadius: "1rem",
+  borderRadius: "var(--radius-lg)",
   border: "1px solid var(--color-border)",
   background: "var(--color-surface)",
   color: "var(--color-text)",
   cursor: "pointer",
   textDecoration: "none",
+  boxShadow: "var(--shadow-1)",
+  transition: "box-shadow 0.2s, border-color 0.2s",
 };
 
 const badgeStyle: CSSProperties = {

@@ -42,7 +42,7 @@ export function ContinueReadingCard({ chapters }: Props) {
   if (!position) {
     const first = chapters[0];
     return (
-      <Link href={first ? `/surah/${first.id}` : "/surah"} style={ctaStyle}>
+      <Link href={first ? `/surah/${first.id}` : "/surah"} className="home-cta" style={ctaStyle}>
         <span>{t("homeBeginWith", { name: chapters[0]?.name_simple ?? "Al-Fatihah" })}</span>
         <ArrowIcon />
       </Link>
@@ -53,6 +53,7 @@ export function ContinueReadingCard({ chapters }: Props) {
   return (
     <Link
       href={`/surah/${position.surahNumber}?verse=${position.surahNumber}:${position.ayahNumber}`}
+      className="home-cta"
       style={ctaStyle}
     >
       <span>
@@ -85,9 +86,10 @@ function ArrowIcon() {
 }
 
 // Full-width, bold pill — the site's one big "do this next" moment,
-// matching the IqraSpace Flutter app's Home CTA exactly (a big rounded
-// button, bold text, trailing arrow) rather than the small inline link
-// this used to be.
+// matching the IqraSpace Flutter app's Home CTA in spirit (bold text,
+// trailing arrow) but now a true pill (var(--radius-pill)) rather than a
+// rounded rectangle, matching apps/site's .btn-primary shape exactly
+// (design spec §3.1 — every button variant there is pill-radius).
 const ctaStyle: CSSProperties = {
   display: "flex",
   alignItems: "center",
@@ -95,10 +97,11 @@ const ctaStyle: CSSProperties = {
   gap: "1rem",
   width: "100%",
   padding: "1.1rem 1.5rem",
-  borderRadius: "1.25rem",
+  borderRadius: "var(--radius-pill)",
   background: "var(--color-primary)",
   color: "var(--color-primary-contrast)",
   textDecoration: "none",
   fontWeight: 700,
   fontSize: "1.05rem",
+  transition: "background 0.15s",
 };

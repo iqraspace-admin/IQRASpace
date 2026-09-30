@@ -2,9 +2,9 @@ import type { Metadata, Viewport } from "next";
 import {
   Amiri,
   Amiri_Quran,
-  Fraunces,
   Inter,
   Lateef,
+  Newsreader,
   Noto_Naskh_Arabic,
   Noto_Nastaliq_Urdu,
   Noto_Sans_Telugu,
@@ -24,9 +24,11 @@ import "./globals.css";
 // faces offered in Settings' Arabic font picker (lib/content/arabicFonts.ts)
 // alongside Amiri — all sustained-reading Quran faces, not display fonts.
 // Inter: a calm, legible Latin body face for UI chrome.
-// Fraunces: warm display serif matching the IqraSpace wordmark/logo's
-// lettering (see components/layout/SiteHeader.tsx) — used only for the
-// brand name and headings, never body text or Quran content.
+// Newsreader: the editorial display serif apps/site (iqraspace.org's main
+// site) uses for its wordmark/headings — used here for the same purpose
+// (brand name + headings, never body text or Quran content) so both
+// products read as one typographic identity instead of two close-but-
+// different serifs.
 const amiri = Amiri({
   variable: "--font-amiri",
   subsets: ["arabic"],
@@ -82,10 +84,11 @@ const inter = Inter({
   display: "swap",
 });
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
   weight: ["500", "600"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -106,7 +109,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#faf7f0" },
+    { media: "(prefers-color-scheme: light)", color: "#faf8f2" },
     { media: "(prefers-color-scheme: dark)", color: "#101512" },
   ],
 };
@@ -131,7 +134,7 @@ export default function RootLayout({
       // browser's getComputedStyle showed `--font-arabic` computing to
       // an empty string, and every styled font-family with it). `:root`
       // in CSS IS this <html> element, so the className belongs right here.
-      className={`${amiri.variable} ${amiriQuran.variable} ${scheherazade.variable} ${lateef.variable} ${notoNaskh.variable} ${notoSansTelugu.variable} ${notoNastaliqUrdu.variable} ${inter.variable} ${fraunces.variable}`}
+      className={`${amiri.variable} ${amiriQuran.variable} ${scheherazade.variable} ${lateef.variable} ${notoNaskh.variable} ${notoSansTelugu.variable} ${notoNastaliqUrdu.variable} ${inter.variable} ${newsreader.variable}`}
     >
       <body>
         <ReaderPreferencesProvider>

@@ -4,20 +4,27 @@
  * doesn't exist yet (Phase 9). Plus "Reach Us" — the same handles the
  * IqraSpace Flutter app's About screen links to, so both platforms point
  * to one place. Server component: no interactivity needed.
+ *
+ * Styled as a constant dark-green band (apps/site's --green-900), not
+ * tied to this app's own Light/Dark/Sepia reading theme — matches
+ * apps/site's own .site-footer (which has no theme variants at all) so
+ * both products' footers read as the same "brand band" regardless of
+ * which reading theme is active, the same way apps/site's footer always
+ * looks the same regardless of the visitor's OS color scheme.
  */
 export function SiteFooter() {
   return (
     <footer
       style={{
-        borderTop: "1px solid var(--color-border)",
         marginTop: "3rem",
-        padding: "1.5rem 1rem",
+        padding: "2.5rem 1rem 2rem",
         textAlign: "center",
-        color: "var(--color-text-muted)",
-        fontSize: "0.8rem",
+        background: "#0f2e25",
+        color: "#cfd9d1",
+        fontSize: "0.85rem",
       }}
     >
-      <p style={{ margin: 0 }}>
+      <p style={{ margin: "0 auto", maxWidth: "40rem", lineHeight: 1.6 }}>
         Quran text, English, and Roman Urdu translation data provided by the{" "}
         <a href="https://quran.foundation" style={{ color: "inherit" }}>
           Quran Foundation
@@ -26,7 +33,7 @@ export function SiteFooter() {
         platform — Sadaqah Jariyah, not a commercial product.
       </p>
 
-      <div style={{ display: "flex", justifyContent: "center", gap: "1.25rem", marginTop: "1rem" }}>
+      <div style={{ display: "flex", justifyContent: "center", gap: "1.5rem", marginTop: "1.25rem", flexWrap: "wrap" }}>
         <a
           href="https://x.com/IqraspaceOrg"
           target="_blank"
@@ -65,7 +72,7 @@ const reachUsLinkStyle = {
   display: "inline-flex",
   alignItems: "center",
   gap: "0.35rem",
-  color: "var(--color-text-muted)",
+  color: "#cfd9d1",
   textDecoration: "none",
 } as const;
 

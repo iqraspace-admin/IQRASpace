@@ -44,8 +44,10 @@ export const cardStyle: CSSProperties = {
   gap: "0.25rem",
   width: "9.5rem",
   padding: "0.75rem 0.9rem",
-  borderRadius: "0.5rem",
+  borderRadius: "var(--radius-md)",
   border: "1px solid var(--color-border)",
   background: "var(--color-surface)",
   textDecoration: "none",
+  boxShadow: "var(--shadow-1)",
+  transition: "box-shadow 0.2s, border-color 0.2s",
 };

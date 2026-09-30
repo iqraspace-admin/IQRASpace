@@ -7,10 +7,14 @@
  * no excessive gold/ornamentation, generous whitespace, the Quran text
  * itself stays the visual focus.
  *
- * --color-primary/--color-accent are deliberately close to the real
- * IqraSpace logo's teal/gold (components/layout/SiteHeader.tsx's
- * wordmark) — the palette was already a good match when the logo was
- * shared, so it wasn't redrawn from scratch.
+ * --color-primary/--color-accent now match apps/site's design system
+ * exactly (resources/design/IQRASPACE_WEBSITE_DESIGN_SPEC.md §2.1's
+ * --green-700/--gold) — apps/site was built after this app, using a
+ * palette already close to this one's teal/gold, then refined for exact
+ * WCAG AA contrast; bringing that back here keeps both products reading
+ * as one brand instead of two close-but-different greens. Only the LIGHT
+ * and SEPIA palettes below were updated this way — dark mode's colors are
+ * deliberately left as they were (see that section's own comment).
  *
  * Light palette lives on bare :root. Dark overrides are declared under a
  * prefers-color-scheme guard, with an explicit [data-theme] override in
@@ -19,22 +23,38 @@
  */
 
 :root {
-  --color-bg: #faf7f0; /* warm ivory paper */
+  --color-bg: #faf8f2; /* warm ivory paper — apps/site's --ivory */
   --color-surface: #ffffff;
-  --color-text: #1f2a24;
-  --color-text-muted: #5b6b62;
-  --color-primary: #0f5c4f; /* deep emerald/teal — matches the logo */
+  --color-text: #202923; /* apps/site's --text */
+  --color-text-muted: #5b665f; /* apps/site's --text-2 */
+  --color-primary: #205746; /* deep forest green — apps/site's --green-700 */
+  --color-primary-hover: #163d32; /* apps/site's --green-800, for hover/pressed states */
+  --color-primary-active: #0f2e25; /* apps/site's --green-900 */
   --color-primary-contrast: #ffffff;
-  --color-accent: #b8873a; /* muted gold — matches the logo, used sparingly */
-  /* Same gold, darkened for use AS TEXT: #b8873a only reaches 3.2:1 on
-     white (fails WCAG AA's 4.5:1 for normal text) — confirmed by an axe-core
-     scan, not assumed. Fine for backgrounds/borders/decorative rules
-     (contrast rules don't apply the same way there); anywhere gold is a
-     text color, use this token instead. Dark mode's gold already passes
-     (8.18:1+), so it doesn't need a separate text variant. */
-  --color-accent-text: #8a6420;
-  --color-border: #e4ddcc;
-  --color-focus-ring: #0f5c4f;
+  --color-accent: #c6a66b; /* muted gold — apps/site's --gold, used sparingly */
+  /* Same gold, darkened for use AS TEXT: apps/site's design spec §2.2
+     confirms this exact pair (gold for decoration, gold-text for text) is
+     the AA-safe split — #c6a66b alone reaches only 2.32:1 on white, well
+     under WCAG AA's 4.5:1, so anywhere gold is a text color, use this
+     token instead. Dark mode's gold already passes (8.18:1+), so it
+     doesn't need a separate text variant. */
+  --color-accent-text: #8a6d2f; /* apps/site's --gold-text */
+  --color-border: #e4e8e2; /* apps/site's --border */
+  --color-border-strong: #c9d1ca; /* apps/site's --border-strong */
+  --color-tint: #f2f6f2; /* apps/site's --sage-50 — soft tinted section bg */
+  --color-tint-strong: #e7eee8; /* apps/site's --sage-100 — icon tiles, chips */
+  --color-focus-ring: #205746;
+
+  /* Card/panel radius + elevation scale — apps/site's design spec §2.5,
+     reused here so this app's cards/panels lift the same way apps/site's
+     do instead of each component picking its own one-off values. */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+  --shadow-1: 0 1px 2px rgba(22, 61, 50, 0.06);
+  --shadow-2: 0 8px 24px -8px rgba(22, 61, 50, 0.14);
+  --shadow-3: 0 24px 48px -16px rgba(22, 61, 50, 0.22);
 
   /* Arabic Quran-text font choices (lib/content/arabicFonts.ts). Amiri is
      the default/fallback — data-arabic-font (set by
@@ -51,7 +71,11 @@
      data-arabic-font never flashes the wrong font for a new reader. */
   --font-arabic: var(--font-arabic-amiriquran);
   --font-body: var(--font-inter), system-ui, -apple-system, sans-serif;
-  --font-display: var(--font-fraunces), Georgia, serif; /* wordmark + headings only */
+  /* Newsreader — apps/site's editorial display serif (design spec §2.3),
+     swapped in for the previous Fraunces so the wordmark/headings read as
+     the same typeface across both products. Wordmark + headings only,
+     same as before — never body or Quran text. */
+  --font-display: var(--font-newsreader), Georgia, serif;
 
   /* Supplications' transliteration-script fonts (lib/preferences/types.ts's
      TransliterationScript) — Latin reuses --font-body (plain Latin text
@@ -123,6 +147,21 @@
 
 /* System preference — only takes effect when no explicit choice
    (data-theme) has been made, matching the "system" default. */
+/* Dark mode's colors are deliberately UNCHANGED by the apps/site rebrand
+   above — this exact teal/gold pairing was verified AA-compliant with a
+   real axe-core scan (see --color-accent-text's comment), and apps/site
+   itself has no dark theme (out of scope for its v1, per its own design
+   spec §6) to use as a source of truth for a rebranded dark palette here.
+   Re-deriving new dark-mode brand colors without re-running that same
+   contrast verification risked a real accessibility regression for a
+   theme real readers already rely on, for a cosmetic-consistency gain
+   that only shows up in one specific theme choice — not a good trade.
+   If dark mode ever needs the exact new green/gold too, that's a
+   deliberate follow-up with its own contrast pass, not a byproduct of
+   this one. The new --color-primary-hover/-active/-border-strong/-tint*
+   tokens below are still given sensible dark-appropriate values so
+   components using them don't break in dark mode — just not retuned to
+   the new light-mode hue family. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --color-bg: #101512;
@@ -130,10 +169,15 @@
     --color-text: #eef1ee;
     --color-text-muted: #a3b0a8;
     --color-primary: #3ba98e;
+    --color-primary-hover: #52bfa4;
+    --color-primary-active: #2f8a73;
     --color-primary-contrast: #0a1210;
     --color-accent: #d3a55c;
     --color-accent-text: #d3a55c; /* already AA-compliant in dark mode */
     --color-border: #2a352e;
+    --color-border-strong: #3a473e;
+    --color-tint: #161e19;
+    --color-tint-strong: #1c2620;
     --color-focus-ring: #3ba98e;
 
     color-scheme: dark;
@@ -147,10 +191,15 @@
   --color-text: #eef1ee;
   --color-text-muted: #a3b0a8;
   --color-primary: #3ba98e;
+  --color-primary-hover: #52bfa4;
+  --color-primary-active: #2f8a73;
   --color-primary-contrast: #0a1210;
   --color-accent: #d3a55c;
   --color-accent-text: #d3a55c; /* already AA-compliant in dark mode */
   --color-border: #2a352e;
+  --color-border-strong: #3a473e;
+  --color-tint: #161e19;
+  --color-tint-strong: #1c2620;
   --color-focus-ring: #3ba98e;
 
   color-scheme: dark;
@@ -159,18 +208,25 @@
 /* Sepia — a warm "paper" reading mode, matching the IqraSpace Flutter
    app's Sepia theme colors exactly (core/theme/app_theme.dart's
    ReaderColors.sepia). Light-brightness (color-scheme: light), so it
-   reuses the light theme's brand teal/gold rather than dark's. */
+   reuses the light theme's brand green/gold rather than dark's — now the
+   new apps/site-matched values, same reasoning as :root's own comment
+   above (sepia has always mirrored light's brand colors, not dark's). */
 :root[data-theme="sepia"] {
   --color-bg: #f4ecd8;
   --color-surface: #e9dfc4;
   --color-text: #3b2f1e;
   --color-text-muted: #6b5c42;
-  --color-primary: #0f5c4f;
+  --color-primary: #205746;
+  --color-primary-hover: #163d32;
+  --color-primary-active: #0f2e25;
   --color-primary-contrast: #ffffff;
-  --color-accent: #b8873a;
-  --color-accent-text: #8a6420;
+  --color-accent: #c6a66b;
+  --color-accent-text: #8a6d2f;
   --color-border: #d9cba6;
-  --color-focus-ring: #0f5c4f;
+  --color-border-strong: #c7b58a;
+  --color-tint: #eee2c8;
+  --color-tint-strong: #e5d6b3;
+  --color-focus-ring: #205746;
 
   color-scheme: light;
 }
@@ -357,6 +413,45 @@ body {
 @media (min-width: 640px) {
   .entry-tile {
     padding: 1.5rem;
+  }
+}
+/* Hover lift, matching apps/site's .card:hover (shadow-1 -> shadow-2 +
+   a stronger border) — inline styles (tileStyle in EntryTiles.tsx) can't
+   express :hover, so this lives here instead. */
+.entry-tile:hover {
+  box-shadow: var(--shadow-2);
+  border-color: var(--color-border-strong);
+}
+/* Home page scroll-row cards (BookmarksPreview/LastReadsRow, via
+   HomeCard.tsx + homeRowStyles.ts) — same hover treatment. */
+.home-card:hover {
+  box-shadow: var(--shadow-2);
+  border-color: var(--color-border-strong);
+}
+/* Home page primary CTA (ContinueReadingCard.tsx) — matches apps/site's
+   .btn-primary:hover (design spec §3.1: bg steps to --green-800). */
+.home-cta:hover {
+  background: var(--color-primary-hover);
+}
+/* Quick Links tiles (QuickLinks.tsx) — same card hover as entry-tile/home-card. */
+.quick-link-tile:hover {
+  box-shadow: var(--shadow-2);
+  border-color: var(--color-border-strong);
+}
+/* Header Settings trigger (ReaderSettingsPanel.tsx's default trigger) —
+   matches apps/site's .btn-secondary:hover (design spec §3.1: fills with
+   a soft sage/brand tint rather than a solid color, since this stays an
+   outline button). */
+.settings-trigger:hover {
+  background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .entry-tile,
+  .home-card,
+  .home-cta,
+  .quick-link-tile,
+  .settings-trigger {
+    transition: none;
   }
 }
 

@@ -21,8 +21,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Read. Listen. Learn. Reflect. A free, fast, and accessible way to read the Quran.",
     start_url: `${base}/`,
     display: "standalone",
-    background_color: "#faf7f0",
-    theme_color: "#0f5c4f",
+    background_color: "#faf8f2",
+    theme_color: "#205746",
     lang: "en",
     icons: [
       { src: `${base}/apple-icon`, sizes: "180x180", type: "image/png" },
