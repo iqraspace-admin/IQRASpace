@@ -295,6 +295,7 @@ a.card{text-decoration:none;color:inherit}
 @media (max-width:639px){.form-grid{grid-template-columns:1fr}}
 /* alerts */
 .alert{display:grid;grid-template-columns:24px 1fr;gap:12px;padding:var(--s4) var(--s5);border-radius:var(--r-md);border:1px solid;font-size:15px;line-height:1.5}
+.alert[hidden]{display:none}
 .alert svg{width:22px;height:22px;margin-top:1px}
 .alert strong{display:block;margin-bottom:2px}
 .alert.success{background:var(--success-bg);border-color:#B9DCC8;color:#14482F}

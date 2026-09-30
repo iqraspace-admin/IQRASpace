@@ -144,6 +144,20 @@
     }
 
     var captchaField = document.getElementById('captcha-e') ? document.getElementById('captcha-e').closest('.field') : null;
+    var turnstileEl = form.querySelector('.cf-turnstile');
+    // The widget can only ever produce a token once a real Cloudflare
+    // Turnstile site key replaces this placeholder (see ADMIN.md §4) —
+    // until then it can't render a checkbox at all, so don't block
+    // submitting on something that's physically impossible to complete.
+    var turnstileConfigured = Boolean(turnstileEl) && turnstileEl.getAttribute('data-sitekey') !== 'YOUR_TURNSTILE_SITE_KEY';
+    if (turnstileEl && !turnstileConfigured) {
+      // Cloudflare's widget can't render anything useful with a
+      // placeholder site key (it shows its own "Troubleshooting" error
+      // UI) — hide the whole row rather than show a visibly broken
+      // widget while ADMIN.md's setup is still pending.
+      var turnstileWrapper = turnstileEl.closest('.field');
+      if (turnstileWrapper) turnstileWrapper.hidden = true;
+    }
 
     function getTurnstileToken() {
       var input = form.querySelector('[name="cf-turnstile-response"]');
@@ -189,11 +203,11 @@
       }
 
       var turnstileToken = getTurnstileToken();
-      var captchaBad = !turnstileToken;
+      var captchaBad = turnstileConfigured && !turnstileToken;
       setCaptchaError(captchaBad);
       if (captchaBad) {
         ok = false;
-        firstInvalid = firstInvalid || document.querySelector('.cf-turnstile');
+        firstInvalid = firstInvalid || turnstileEl;
       }
 
       if (!ok) {
