@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ReaderSettingsPanel } from "@/components/reader/ReaderSettingsPanel";
 import { useModalA11y } from "@/lib/reader/useModalA11y";
-import { useT } from "@/lib/i18n/useT";
 import { BrandWordmark } from "./BrandWordmark";
 
 type NavItem = { href: string; label: string; external?: boolean };
@@ -43,7 +42,6 @@ export function SiteHeader() {
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const pathname = usePathname();
-  const { t } = useT();
 
   // Keeps --site-header-height (globals.css) in sync with this header's
   // REAL rendered height, not a guessed constant — see ReaderNavBar's
@@ -97,17 +95,8 @@ export function SiteHeader() {
             minHeight: "3.5rem",
           }}
         >
-          <Link
-            href="/"
-            style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", minWidth: 0, textDecoration: "none" }}
-            aria-label="IqraSpace Quran — home"
-          >
-            <span style={{ flexShrink: 0 }}>
-              <BrandWordmark showProductLabel={false} />
-            </span>
-            <span className="header-tagline" style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>
-              {t("headerTagline")}
-            </span>
+          <Link href="/" style={{ textDecoration: "none", minWidth: 0 }} aria-label="IqraSpace Quran — home">
+            <BrandWordmark />
           </Link>
 
           <nav className="qr-nav" aria-label="Primary" style={{ marginLeft: "auto" }}>
@@ -151,9 +140,7 @@ export function SiteHeader() {
           tabIndex={-1}
         >
           <div className="qr-sheet-top">
-            <span style={{ display: "flex", alignItems: "center" }}>
-              <BrandWordmark showProductLabel={false} />
-            </span>
+            <BrandWordmark showTagline={false} />
             <button type="button" className="qr-menu-btn" style={{ display: "inline-flex" }} aria-label="Close menu" onClick={() => setSheetOpen(false)}>
               <CloseIcon />
             </button>

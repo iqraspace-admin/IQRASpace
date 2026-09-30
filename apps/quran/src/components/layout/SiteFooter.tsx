@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandWordmark } from "./BrandWordmark";
 
 /**
  * Structural rebuild (not the earlier dark-band-only recolor) — now a
@@ -21,20 +22,8 @@ export function SiteFooter() {
         }}
       >
         <div className="qr-footer-grid" style={gridStyle}>
-          <div className="qr-footer-brand">
-            <span style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
-              {/* eslint-disable-next-line @next/next/no-img-element -- see BrandWordmark.tsx's own comment on why a plain <img> is used for this generated route */}
-              <img
-                src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/icon`}
-                alt=""
-                width={512}
-                height={512}
-                style={{ width: 32, height: 32, borderRadius: 8 }}
-              />
-              <span style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1.1rem", color: "#ffffff" }}>
-                IqraSpace Quran
-              </span>
-            </span>
+          <div className="qr-footer-brand qr-brand-on-dark">
+            <BrandWordmark showTagline={false} />
             <p style={{ margin: "0.85rem 0 0", maxWidth: "38rem", lineHeight: 1.6, fontSize: "0.9rem" }}>
               A free, ad-free space to read, listen to, and reflect on the Quran — Sadaqah Jariyah, not a commercial
               product.

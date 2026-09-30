@@ -844,20 +844,79 @@ body {
   }
 }
 
-/* SiteHeader's tagline, next to the wordmark — hidden below 480px rather
-   than left to truncate down to one or two stray characters (which reads
-   as a glitch, not a graceful degrade) once the Settings trigger and a
-   narrow viewport leave it no real room. */
-.header-tagline {
+/* Brand lockup (BrandWordmark.tsx) — matching apps/site's .brand family
+   exactly (design spec §3.2): mark + stacked name/tagline, not this
+   app's previous two-tone "IQRA"+"SPACE" inline wordmark. */
+.qr-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--color-primary-hover); /* apps/site's --green-800 */
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
+}
+.qr-brand-mark {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 10px;
+  object-fit: contain;
+}
+.qr-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  min-width: 0;
+}
+.qr-brand-name {
+  font: 600 22px/1 var(--font-display);
+  letter-spacing: -0.01em;
   white-space: nowrap;
 }
-@media (max-width: 480px) {
-  .header-tagline {
+.qr-brand-tag {
+  font: 500 11px/1.2 var(--font-body);
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+  margin-top: 4px;
+}
+/* Tagline hidden below 1280px, same breakpoint apps/site's .brand-tag
+   uses — not the old 480px threshold, which left it showing (and
+   crowding the new nav row) at every width this header's nav/Settings/
+   menu-button cluster actually needs the room. */
+@media (max-width: 1279px) {
+  .qr-brand-tag {
     display: none;
   }
+}
+@media (max-width: 639px) {
+  .qr-brand-mark {
+    width: 36px;
+    height: 36px;
+  }
+  .qr-brand-name {
+    font-size: 20px;
+  }
+}
+/* not-found.tsx's standalone centered use only — see BrandWordmark.tsx's
+   own comment on why this size has no apps/site equivalent to match. */
+.qr-brand.lg {
+  justify-content: center;
+}
+.qr-brand.lg .qr-brand-mark {
+  width: 72px;
+  height: 72px;
+}
+.qr-brand.lg .qr-brand-name {
+  font-size: 32px;
+}
+.qr-brand.lg .qr-brand-tag {
+  display: block;
+  font-size: 13px;
+}
+/* Footer's brand block — white wordmark on the dark-green band, matching
+   apps/site's .foot-brand .brand{color:#fff} exactly. */
+.qr-brand-on-dark .qr-brand {
+  color: #ffffff;
 }
 
 /* Surah reader nav row: Previous/Next Surah names drop to arrow-only
