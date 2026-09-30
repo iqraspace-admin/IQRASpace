@@ -174,12 +174,22 @@
       }
     }
 
+    var errorDetailEl = document.getElementById('form-error-detail');
+    var errorDetailDefault = errorDetailEl ? errorDetailEl.innerHTML : '';
+
+    function setErrorDetail(message) {
+      if (!errorDetailEl) return;
+      errorDetailEl.innerHTML = message ? '' : errorDetailDefault;
+      if (message) errorDetailEl.textContent = message;
+    }
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var successEl = document.getElementById('form-success');
       var errorEl = document.getElementById('form-error');
       successEl.hidden = true;
       errorEl.hidden = true;
+      setErrorDetail(null);
 
       var ok = true;
       var firstInvalid = null;
@@ -252,8 +262,12 @@
               setFieldError(key, Boolean(result.data.errors[key]));
             });
             setCaptchaError(Boolean(result.data.errors.captcha));
+            if (result.data.errors.captcha) setErrorDetail(result.data.errors.captcha);
             errorEl.hidden = false;
           } else {
+            if (result.data && typeof result.data.error === 'string') {
+              setErrorDetail(result.data.error);
+            }
             errorEl.hidden = false;
           }
         })
