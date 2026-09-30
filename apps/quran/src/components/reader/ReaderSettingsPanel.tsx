@@ -178,7 +178,7 @@ export function ReaderSettingsPanel({
         ) : (
           <>
             {triggerIcon ?? <GearIcon />}
-            <span>{resolvedTriggerLabel}</span>
+            <span className="settings-trigger-label">{resolvedTriggerLabel}</span>
           </>
         )}
       </button>

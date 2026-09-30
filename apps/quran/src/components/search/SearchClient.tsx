@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { useT } from "@/lib/i18n/useT";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 
 type SearchEntry = { key: string; surahId: number; surahName: string; ayah: number; text: string };
 type SearchIndex = { generatedAt: string; entries: SearchEntry[] };
@@ -45,11 +46,13 @@ export function SearchClient() {
   }, [index, query]);
 
   return (
-    <div>
-      <h1 style={headingStyle}>{t("searchTitle")}</h1>
-      <p style={{ margin: "0 0 1rem", color: "var(--color-text-muted)", fontSize: "0.9rem" }}>
-        {t("searchSubtitle")}
-      </p>
+    <div className="qr-pattern">
+      <Breadcrumbs trail={[{ href: "/search", label: t("searchTitle") }]} />
+      <div className="qr-page-hero">
+        <div className="qr-eyebrow">Find an Ayah</div>
+        <h1>{t("searchTitle")}</h1>
+        <p className="qr-lead">{t("searchSubtitle")}</p>
+      </div>
       <input
         type="search"
         value={query}
@@ -76,10 +79,10 @@ export function SearchClient() {
         </p>
       )}
 
-      <ol style={{ listStyle: "none", margin: 0, padding: 0 }}>
+      <ol className="qr-card-list" style={{ listStyle: "none", margin: 0, padding: 0 }}>
         {results.map((entry) => (
           <li key={entry.key}>
-            <Link href={`/surah/${entry.surahId}?verse=${entry.key}`} style={resultRowStyle}>
+            <Link href={`/surah/${entry.surahId}?verse=${entry.key}`} className="qr-card row">
               <span style={badgeStyle}>{entry.key}</span>
               <span style={{ minWidth: 0 }}>
                 <span style={{ fontWeight: 600 }}>{entry.surahName}</span>
@@ -112,32 +115,17 @@ function highlightMatch(text: string, query: string) {
   );
 }
 
-const headingStyle: CSSProperties = {
-  fontFamily: "var(--font-display)",
-  fontWeight: 600,
-  fontSize: "1.5rem",
-  margin: "0 0 0.5rem",
-  color: "var(--color-text)",
-};
-
+// Matches apps/site's .input exactly (design spec §3.10): min-height
+// 52px, --radius-md, border-strong, focus ring + halo.
 const inputStyle: CSSProperties = {
   width: "100%",
-  padding: "0.75rem 1rem",
-  borderRadius: "0.5rem",
-  border: "1px solid var(--color-border)",
+  minHeight: "3.25rem",
+  padding: "0.85rem 1rem",
+  borderRadius: "var(--radius-md)",
+  border: "1.5px solid var(--color-border-strong)",
   background: "var(--color-surface)",
   color: "var(--color-text)",
   fontSize: "1rem",
-};
-
-const resultRowStyle: CSSProperties = {
-  display: "flex",
-  gap: "0.75rem",
-  alignItems: "flex-start",
-  padding: "0.85rem 0.5rem",
-  borderBottom: "1px solid var(--color-border)",
-  textDecoration: "none",
-  color: "var(--color-text)",
 };
 
 const badgeStyle: CSSProperties = {

@@ -24,9 +24,12 @@ export const UI_LANGUAGES: readonly { id: UiLanguageId; nativeName: string }[] =
 
 const en = {
   headerTagline: "Read. Listen. Learn. Reflect.",
+  navHome: "Home",
 
   entryReadQuranTitle: "Read Quran",
   entryReadQuranSubtitle: "114 Surahs, Tajweed & translation",
+  entryAudioTitle: "Listen",
+  entryAudioSubtitle: "Recitation & Listening Mode",
   entryLearningTitle: "Learning",
   entryLearningSubtitle: "Courses & guided lessons",
   entrySupplicationsTitle: "Supplications",
@@ -40,6 +43,11 @@ const en = {
   homeContinueReading: "Continue Reading",
   homeBeginWith: "Begin with {name}",
   homeAyah: "Ayah {n}",
+  homeBrowseAllSurahs: "Browse all Surahs",
+  homeExploreEyebrow: "Explore",
+  homeServicesHeading: "Four ways to spend time with the Quran",
+  homeCtaTitle: "One platform for your whole Quran journey.",
+  homeCtaBody: "Explore reading, learning, and reflection tools across IqraSpace.",
 
   quickLinkSearch: "Search",
   quickLinkBrowsePages: "Browse Pages",
@@ -166,9 +174,12 @@ type Dictionary = Record<keyof typeof en, string>;
 
 const te: Dictionary = {
   headerTagline: "చదవండి. వినండి. నేర్చుకోండి. ఆలోచించండి.",
+  navHome: "హోమ్",
 
   entryReadQuranTitle: "ఖురాన్ చదవండి",
   entryReadQuranSubtitle: "114 సూరాలు, తజ్వీద్ & అనువాదం",
+  entryAudioTitle: "వినండి",
+  entryAudioSubtitle: "పారాయణం & లిజనింగ్ మోడ్",
   entryLearningTitle: "అభ్యాసం",
   entryLearningSubtitle: "కోర్సులు & మార్గదర్శిత పాఠాలు",
   entrySupplicationsTitle: "దుఆలు",
@@ -182,6 +193,11 @@ const te: Dictionary = {
   homeContinueReading: "చదవడం కొనసాగించండి",
   homeBeginWith: "{name} తో ప్రారంభించండి",
   homeAyah: "ఆయత్ {n}",
+  homeBrowseAllSurahs: "అన్ని సూరాలు చూడండి",
+  homeExploreEyebrow: "అన్వేషించండి",
+  homeServicesHeading: "ఖురాన్‌తో సమయం గడపడానికి నాలుగు మార్గాలు",
+  homeCtaTitle: "మీ పూర్తి ఖురాన్ ప్రయాణం కోసం ఒకే వేదిక.",
+  homeCtaBody: "IqraSpace అంతటా పఠనం, అభ్యాసం మరియు ధ్యాన సాధనాలను అన్వేషించండి.",
 
   quickLinkSearch: "శోధన",
   quickLinkBrowsePages: "పేజీలు చూడండి",
@@ -305,9 +321,12 @@ const te: Dictionary = {
 
 const ur: Dictionary = {
   headerTagline: "پڑھیں۔ سنیں۔ سیکھیں۔ غور کریں۔",
+  navHome: "ہوم",
 
   entryReadQuranTitle: "قرآن پڑھیں",
   entryReadQuranSubtitle: "114 سورتیں، تجوید اور ترجمہ",
+  entryAudioTitle: "سنیں",
+  entryAudioSubtitle: "تلاوت اور لسننگ موڈ",
   entryLearningTitle: "تعلیم",
   entryLearningSubtitle: "کورسز اور رہنما اسباق",
   entrySupplicationsTitle: "دعائیں",
@@ -321,6 +340,11 @@ const ur: Dictionary = {
   homeContinueReading: "پڑھنا جاری رکھیں",
   homeBeginWith: "{name} سے شروع کریں",
   homeAyah: "آیت {n}",
+  homeBrowseAllSurahs: "تمام سورتیں دیکھیں",
+  homeExploreEyebrow: "دریافت کریں",
+  homeServicesHeading: "قرآن کے ساتھ وقت گزارنے کے چار طریقے",
+  homeCtaTitle: "آپ کے پورے قرآنی سفر کے لیے ایک پلیٹ فارم۔",
+  homeCtaBody: "IqraSpace بھر میں پڑھنے، سیکھنے اور غور و فکر کے ٹولز دریافت کریں۔",
 
   quickLinkSearch: "تلاش",
   quickLinkBrowsePages: "صفحات دیکھیں",

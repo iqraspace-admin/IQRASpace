@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default function BookmarksPage() {
   const chapters = getAllChapters();
   return (
-    <div style={{ maxWidth: "var(--content-max-width)", margin: "0 auto", padding: "2rem 1rem" }}>
+    <div className="qr-pattern" style={{ maxWidth: "var(--content-max-width)", margin: "0 auto", padding: "0 1rem 3rem" }}>
       <BookmarksHeader />
       <BookmarksList chapters={chapters} />
     </div>

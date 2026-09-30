@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getSupplicationCategories, getSupplicationsMeta } from "@/lib/content/supplications";
 import { canonicalUrl } from "@/lib/site";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { ArrowIcon } from "@/components/ui/ArrowIcon";
 
 export const metadata: Metadata = {
   title: "Supplications — IqraSpace Quran",
@@ -14,49 +16,45 @@ export const metadata: Metadata = {
  * (not a replacement for it), reusing the IqraSpace Flutter app's own
  * "Hisn al-Qalb" dataset (see lib/content/supplications.ts). Category list
  * mirrors the Flutter app's supplications_categories_screen.dart.
+ *
+ * Structurally rebuilt around the same page-hero + card-grid shell as the
+ * Surah list (design spec §3.2/§4.4) — categories are now `.qr-card`
+ * tiles with a link-arrow CTA, not a flat bordered list.
  */
 export default function SupplicationsPage() {
   const meta = getSupplicationsMeta();
   const categories = getSupplicationCategories();
 
   return (
-    <div style={{ maxWidth: "var(--content-max-width)", margin: "0 auto", padding: "1.5rem 1rem 3rem" }}>
-      <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1.5rem", margin: "0 0 0.5rem" }}>
-        {meta.title}
-      </h1>
-      <p style={{ margin: "0 0 0.5rem", color: "var(--color-text-muted)", fontSize: "0.9rem" }}>{meta.description}</p>
-      <details style={{ margin: "0 0 1.5rem", fontSize: "0.8rem", color: "var(--color-text-muted)" }}>
-        <summary style={{ cursor: "pointer" }}>About this collection&apos;s sources</summary>
-        <p style={{ marginTop: "0.5rem" }}>{meta.sources_note}</p>
-        <p>{meta.coverage_note}</p>
-      </details>
+    <div className="qr-pattern" style={{ maxWidth: "var(--content-max-width)", margin: "0 auto", padding: "0 1rem 3rem" }}>
+      <Breadcrumbs trail={[{ href: "/supplications", label: meta.title }]} />
+      <div className="qr-page-hero">
+        <div className="qr-eyebrow">Duas &amp; Athkar</div>
+        <h1>{meta.title}</h1>
+        <p className="qr-lead">{meta.description}</p>
+        <details style={{ margin: "1rem 0 0", fontSize: "0.8rem", color: "var(--color-text-muted)" }}>
+          <summary style={{ cursor: "pointer" }}>About this collection&apos;s sources</summary>
+          <p style={{ marginTop: "0.5rem" }}>{meta.sources_note}</p>
+          <p>{meta.coverage_note}</p>
+        </details>
+      </div>
 
-      <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "grid", gap: "0.65rem" }}>
+      <div className="qr-card-grid cols-3">
         {categories.map((category) => (
-          <li key={category.id}>
-            <Link
-              href={`/supplications/${category.id}`}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.2rem",
-                padding: "0.9rem 1rem",
-                borderRadius: "0.75rem",
-                border: "1px solid var(--color-border)",
-                background: "var(--color-surface)",
-                color: "var(--color-text)",
-                textDecoration: "none",
-              }}
-            >
-              <span style={{ fontWeight: 600 }}>{category.label}</span>
-              <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>{category.description}</span>
-              <span style={{ fontSize: "0.75rem", color: "var(--color-text-muted)" }}>
-                {category.duas.length} dua{category.duas.length === 1 ? "" : "s"}
-              </span>
-            </Link>
-          </li>
+          <Link key={category.id} href={`/supplications/${category.id}`} className="qr-card">
+            <h3 style={{ fontSize: "1rem", fontWeight: 700, margin: "0 0 0.3rem", color: "var(--color-text)" }}>
+              {category.label}
+            </h3>
+            <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", margin: "0 0 0.4rem" }}>
+              {category.description}
+            </p>
+            <span className="qr-link-arrow">
+              {category.duas.length} dua{category.duas.length === 1 ? "" : "s"}
+              <ArrowIcon />
+            </span>
+          </Link>
         ))}
-      </ol>
+      </div>
     </div>
   );
 }

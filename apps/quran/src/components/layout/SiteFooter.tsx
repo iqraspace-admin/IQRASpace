@@ -1,79 +1,186 @@
+import Link from "next/link";
+
 /**
- * Content-attribution line (Readme.md §23/§28, QURAN-CONTENT.md §3) — kept
- * here rather than only on a dedicated attribution page, since that page
- * doesn't exist yet (Phase 9). Plus "Reach Us" — the same handles the
- * IqraSpace Flutter app's About screen links to, so both platforms point
- * to one place. Server component: no interactivity needed.
- *
- * Styled as a constant dark-green band (apps/site's --green-900), not
- * tied to this app's own Light/Dark/Sepia reading theme — matches
- * apps/site's own .site-footer (which has no theme variants at all) so
- * both products' footers read as the same "brand band" regardless of
- * which reading theme is active, the same way apps/site's footer always
- * looks the same regardless of the visitor's OS color scheme.
+ * Structural rebuild (not the earlier dark-band-only recolor) — now a
+ * real multi-column footer matching apps/site's .site-footer shape
+ * (design spec §3.4: brand+blurb, then link columns, then a bottom
+ * legal/attribution bar), not just a centered attribution paragraph.
+ * Still a constant dark-green band regardless of this app's own Light/
+ * Dark/Sepia reading theme, same reasoning as the previous pass: matches
+ * apps/site's footer, which has no theme variants of its own either.
+ * Server component: no interactivity needed.
  */
 export function SiteFooter() {
   return (
-    <footer
-      style={{
-        marginTop: "3rem",
-        padding: "2.5rem 1rem 2rem",
-        textAlign: "center",
-        background: "#0f2e25",
-        color: "#cfd9d1",
-        fontSize: "0.85rem",
-      }}
-    >
-      <p style={{ margin: "0 auto", maxWidth: "40rem", lineHeight: 1.6 }}>
-        Quran text, English, and Roman Urdu translation data provided by the{" "}
-        <a href="https://quran.foundation" style={{ color: "inherit" }}>
-          Quran Foundation
-        </a>
-        . Urdu translation: Al Quran Cloud. Telugu translation: Quran.com. IqraSpace Quran is a free, ad-free reading
-        platform — Sadaqah Jariyah, not a commercial product.
-      </p>
+    <footer style={{ background: "#0f2e25", color: "#cfd9d1", marginTop: "3rem" }}>
+      <div
+        style={{
+          maxWidth: "var(--content-max-width)",
+          margin: "0 auto",
+          padding: "2.5rem 1rem 1.5rem",
+        }}
+      >
+        <div className="qr-footer-grid" style={gridStyle}>
+          <div className="qr-footer-brand">
+            <span style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
+              {/* eslint-disable-next-line @next/next/no-img-element -- see BrandWordmark.tsx's own comment on why a plain <img> is used for this generated route */}
+              <img
+                src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/icon`}
+                alt=""
+                width={512}
+                height={512}
+                style={{ width: 32, height: 32, borderRadius: 8 }}
+              />
+              <span style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1.1rem", color: "#ffffff" }}>
+                IqraSpace Quran
+              </span>
+            </span>
+            <p style={{ margin: "0.85rem 0 0", maxWidth: "38rem", lineHeight: 1.6, fontSize: "0.9rem" }}>
+              A free, ad-free space to read, listen to, and reflect on the Quran — Sadaqah Jariyah, not a commercial
+              product.
+            </p>
+          </div>
 
-      <div style={{ display: "flex", justifyContent: "center", gap: "1.5rem", marginTop: "1.25rem", flexWrap: "wrap" }}>
-        <a
-          href="https://x.com/IqraspaceOrg"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={reachUsLinkStyle}
-          aria-label="IqraSpace on X"
-        >
-          <XIcon />X
-        </a>
-        <a
-          href="https://instagram.com/IqraspaceOrg"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={reachUsLinkStyle}
-          aria-label="IqraSpace on Instagram"
-        >
-          <InstagramIcon />
-          Instagram
-        </a>
-        <a
-          href="https://iqraspace.org"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={reachUsLinkStyle}
-          aria-label="IqraSpace website"
-        >
-          <GlobeIcon />
-          iqraspace.org
-        </a>
+          <div>
+            <h2 style={headingStyle}>Explore</h2>
+            <ul style={listStyle}>
+              <li>
+                <Link href="/" style={linkStyle}>
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/surah" style={linkStyle}>
+                  Surahs
+                </Link>
+              </li>
+              <li>
+                <Link href="/bookmarks" style={linkStyle}>
+                  Bookmarks
+                </Link>
+              </li>
+              <li>
+                <Link href="/supplications" style={linkStyle}>
+                  Supplications
+                </Link>
+              </li>
+              <li>
+                <Link href="/search" style={linkStyle}>
+                  Search
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 style={headingStyle}>IqraSpace</h2>
+            <ul style={listStyle}>
+              <li>
+                <a href="/learning" style={linkStyle}>
+                  Learning App
+                </a>
+              </li>
+              <li>
+                <a href="https://iqraspace.org" style={linkStyle}>
+                  Main website
+                </a>
+              </li>
+              <li>
+                <a href="https://iqraspace.org/mobile-app" style={linkStyle}>
+                  Mobile app
+                </a>
+              </li>
+              <li>
+                <a href="https://iqraspace.org/privacy" style={linkStyle}>
+                  Privacy Policy
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h2 style={headingStyle}>Reach us</h2>
+            <ul style={listStyle}>
+              <li>
+                <a href="https://x.com/IqraspaceOrg" target="_blank" rel="noopener noreferrer" style={linkStyle}>
+                  <XIcon />X
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://instagram.com/IqraspaceOrg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={linkStyle}
+                >
+                  <InstagramIcon />
+                  Instagram
+                </a>
+              </li>
+              <li>
+                <a href="https://iqraspace.org" target="_blank" rel="noopener noreferrer" style={linkStyle}>
+                  <GlobeIcon />
+                  iqraspace.org
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div style={bottomBarStyle}>
+          <span>
+            Quran text, English, and Roman Urdu translation data provided by the{" "}
+            <a href="https://quran.foundation" style={{ color: "inherit" }}>
+              Quran Foundation
+            </a>
+            . Urdu translation: Al Quran Cloud. Telugu translation: Quran.com.
+          </span>
+        </div>
       </div>
     </footer>
   );
 }
 
-const reachUsLinkStyle = {
+// grid-template-columns lives in globals.css's .qr-footer-grid instead of
+// here — see that rule's own comment for why.
+const gridStyle = {
+  display: "grid",
+  gap: "2rem 1.5rem",
+} as const;
+
+const headingStyle = {
+  fontSize: "0.75rem",
+  fontWeight: 600,
+  letterSpacing: "0.1em",
+  textTransform: "uppercase",
+  color: "#e9d9b0",
+  margin: "0 0 0.85rem",
+} as const;
+
+const listStyle = {
+  listStyle: "none",
+  margin: 0,
+  padding: 0,
+  display: "grid",
+  gap: "0.5rem",
+} as const;
+
+const linkStyle = {
   display: "inline-flex",
   alignItems: "center",
-  gap: "0.35rem",
+  gap: "0.4rem",
   color: "#cfd9d1",
   textDecoration: "none",
+  fontSize: "0.9rem",
+} as const;
+
+const bottomBarStyle = {
+  marginTop: "2rem",
+  paddingTop: "1.25rem",
+  borderTop: "1px solid rgba(255, 255, 255, 0.14)",
+  fontSize: "0.8rem",
+  color: "#a9b6ae",
+  lineHeight: 1.6,
 } as const;
 
 function XIcon() {

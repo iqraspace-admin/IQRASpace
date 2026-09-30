@@ -5,6 +5,7 @@ import Link from "next/link";
 import { loadBookmarks, toggleBookmark, type BookmarkKey } from "@/lib/preferences/storage";
 import { useT } from "@/lib/i18n/useT";
 import type { Chapter } from "@/lib/content/types";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 
 type Props = {
   chapters: Chapter[];
@@ -14,22 +15,26 @@ type Props = {
  * Client-rendered bookmarks list — hydrates the bookmark keys
  * (`"surah:ayah"` strings, unchanged storage shape) from localStorage and
  * resolves each one's Surah name from `chapters`, the same
- * already-proven pattern ContinueReadingCard uses for its last position.
+ * already-proven pattern HomeHero uses for its last reading position.
  * Deliberately doesn't change the bookmark storage format (no snippet/
  * name caching) — see the implementation plan for why.
  */
 /** Page heading/subtitle — a tiny client component (not the Server
     Component page itself) purely so it can call useT(); split out rather
     than making the whole /bookmarks page client-side, which would lose
-    its server-side chapters lookup. */
+    its server-side chapters lookup. Now a real page-hero (breadcrumb +
+    eyebrow + H1 + lead), matching every other list page's shell instead
+    of a bare <h1>. */
 export function BookmarksHeader() {
   const { t } = useT();
   return (
     <>
-      <h1 style={{ marginBottom: "0.25rem", fontFamily: "var(--font-display)", fontWeight: 600 }}>
-        {t("bookmarksTitle")}
-      </h1>
-      <p style={{ color: "var(--color-text-muted)", marginTop: 0 }}>{t("bookmarksSubtitle")}</p>
+      <Breadcrumbs trail={[{ href: "/bookmarks", label: t("bookmarksTitle") }]} />
+      <div className="qr-page-hero">
+        <div className="qr-eyebrow">Your Ayahs</div>
+        <h1>{t("bookmarksTitle")}</h1>
+        <p className="qr-lead">{t("bookmarksSubtitle")}</p>
+      </div>
     </>
   );
 }
@@ -65,16 +70,16 @@ export function BookmarksList({ chapters }: Props) {
   }
 
   return (
-    <ol aria-label="Bookmarked Ayahs" style={{ listStyle: "none", margin: 0, padding: 0 }}>
+    <ol aria-label="Bookmarked Ayahs" className="qr-card-list" style={{ listStyle: "none", margin: 0, padding: 0 }}>
       {entries.map(({ key, surahNumber, ayahNumber, chapter }) => (
-        <li key={key} style={rowStyle}>
+        <li key={key} className="qr-card row" style={{ padding: "0.85rem 1rem" }}>
           <Link href={`/surah/${surahNumber}?verse=${surahNumber}:${ayahNumber}`} style={linkStyle}>
             <span>
               <strong>{chapter?.name_simple ?? `Surah ${surahNumber}`}</strong>
               <span style={{ color: "var(--color-text-muted)" }}> — Ayah {ayahNumber}</span>
             </span>
             {chapter && (
-              <span dir="rtl" lang="ar" style={{ fontFamily: "var(--font-arabic)", fontSize: "1.1rem" }}>
+              <span dir="rtl" lang="ar" style={{ fontFamily: "var(--font-arabic)", fontSize: "1.1rem", color: "var(--color-primary)" }}>
                 {chapter.name_arabic}
               </span>
             )}
@@ -93,15 +98,6 @@ export function BookmarksList({ chapters }: Props) {
   );
 }
 
-const rowStyle: CSSProperties = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  gap: "1rem",
-  padding: "0.85rem 0",
-  borderBottom: "1px solid var(--color-border)",
-};
-
 const linkStyle: CSSProperties = {
   flex: 1,
   minWidth: 0,
@@ -116,10 +112,11 @@ const linkStyle: CSSProperties = {
 const removeButtonStyle: CSSProperties = {
   flexShrink: 0,
   background: "none",
-  border: "1px solid var(--color-border)",
-  borderRadius: "0.375rem",
-  padding: "0.35rem 0.65rem",
+  border: "1.5px solid var(--color-border-strong)",
+  borderRadius: "var(--radius-pill)",
+  padding: "0.4rem 0.85rem",
   color: "var(--color-text-muted)",
   fontSize: "0.8rem",
+  fontWeight: 600,
   cursor: "pointer",
 };

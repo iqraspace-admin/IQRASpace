@@ -404,6 +404,387 @@ body {
   }
 }
 
+/*
+ * ==========================================================================
+ * Shared apps/site-derived layout primitives (structural rebuild, not just
+ * the earlier token pass) — reused across SiteHeader, SiteFooter, the home
+ * page, and every list page (Surah list, Bookmarks, Supplications, Search)
+ * so this app's chrome finally follows one shared pattern set instead of
+ * each page hand-rolling its own header/card/grid shape. Named `.qr-*` to
+ * stay unambiguous next to this file's older, component-specific classes
+ * above (.entry-tile etc., some of which now build on these too).
+ * ==========================================================================
+ */
+
+/* Star-pattern background — identical data URI to apps/site's .pattern
+   (design spec §2.5): safe to reuse verbatim since this app's
+   --color-primary now IS apps/site's --green-700 (#205746), the exact
+   stroke color baked into this SVG. */
+.qr-pattern {
+  position: relative;
+  isolation: isolate;
+}
+.qr-pattern::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.5;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23205746' stroke-opacity='.10' stroke-width='1'%3E%3Cpath d='M40 6l9.5 14.5L66 14l-2.5 17.5L80 40l-16.5 8.5L66 66l-16.5-6.5L40 74l-9.5-14.5L14 66l2.5-17.5L0 40l16.5-8.5L14 14l16.5 6.5z'/%3E%3C/g%3E%3C/svg%3E");
+  -webkit-mask-image: linear-gradient(115deg, transparent 30%, #000 100%);
+  mask-image: linear-gradient(115deg, transparent 30%, #000 100%);
+}
+/* Dark-background variant (white stroke, not green) — matching
+   apps/site's .cta-band.pattern::before exactly (design spec §3.15). A
+   dark-green stroke at 10% opacity would be nearly invisible on the
+   already-dark-green .qr-cta-band it's paired with. */
+.qr-cta-band.qr-pattern::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.08' stroke-width='1'%3E%3Cpath d='M40 6l9.5 14.5L66 14l-2.5 17.5L80 40l-16.5 8.5L66 66l-16.5-6.5L40 74l-9.5-14.5L14 66l2.5-17.5L0 40l16.5-8.5L14 14l16.5 6.5z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Eyebrow label (small caps + gold rule), matching apps/site §2.3. */
+.qr-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: 600 13px/1 var(--font-body);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent-text);
+  margin-bottom: 12px;
+}
+.qr-eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background: var(--color-accent);
+  flex-shrink: 0;
+}
+
+/* Breadcrumbs, matching apps/site's .crumbs. */
+.qr-crumbs {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  padding: 1rem 0 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.qr-crumbs a {
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+.qr-crumbs a:hover {
+  color: var(--color-primary);
+}
+.qr-crumbs li {
+  display: flex;
+  gap: 8px;
+}
+.qr-crumbs li + li::before {
+  content: "/";
+  color: var(--color-border-strong);
+}
+.qr-crumbs [aria-current] {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+/* Page hero — breadcrumb + eyebrow + H1 + lead, the shell every list page
+   (Surah list, Bookmarks, Supplications, Search) now opens with instead
+   of a bare <h1>, matching apps/site's .page-hero (design spec §3.2). */
+.qr-page-hero {
+  padding: 1.5rem 0 2.5rem;
+}
+.qr-page-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  line-height: 1.15;
+  color: var(--color-text);
+  margin: 0 0 0.5rem;
+}
+.qr-page-hero .qr-lead {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  max-width: 60ch;
+  margin: 0;
+}
+@media (min-width: 640px) {
+  .qr-page-hero {
+    padding: 2rem 0 3rem;
+  }
+}
+
+/* Section heading — eyebrow + H2 + optional lead, matching apps/site's
+   .section-head (design spec §3.5). */
+.qr-section-head {
+  max-width: 720px;
+  margin-bottom: 1.25rem;
+}
+.qr-section-head h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.4rem, 3vw, 1.75rem);
+  color: var(--color-text);
+  margin: 0 0 0.4rem;
+}
+.qr-section-head .qr-lead {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* Card grid — matching apps/site's .grid.g-* (design spec §2.5): 2-up on
+   phone, 3 or 4-up from tablet depending on `.cols-3`/`.cols-4`. */
+.qr-card-grid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 640px) {
+  .qr-card-grid {
+    gap: 1.1rem;
+  }
+  .qr-card-grid.cols-3,
+  .qr-card-grid.cols-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 960px) {
+  .qr-card-grid.cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+/* A single-column list variant for content that reads better as rows
+   (Surah list, Supplications categories) than square tiles. */
+.qr-card-list {
+  display: grid;
+  gap: 0.6rem;
+}
+
+/* Canonical card — matching apps/site's .card exactly (design spec
+   §3.6): white surface, 1px border, --radius-lg, shadow-1 lifting to
+   shadow-2 + a stronger border on hover. */
+.qr-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 1.1rem;
+  box-shadow: var(--shadow-1);
+  color: var(--color-text);
+  text-decoration: none;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.qr-card:hover {
+  box-shadow: var(--shadow-2);
+  border-color: var(--color-border-strong);
+}
+@media (min-width: 640px) {
+  .qr-card {
+    padding: 1.4rem;
+  }
+}
+/* Row variant — icon left, text right, for list-style cards. */
+.qr-card.row {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.qr-icon-tile {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-md);
+  background: var(--color-tint-strong);
+  color: var(--color-primary);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  margin-bottom: 0.9rem;
+}
+.qr-card.row .qr-icon-tile {
+  margin-bottom: 0;
+}
+
+.qr-link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  margin-top: auto;
+  padding-top: 0.75rem;
+}
+.qr-link-arrow svg {
+  transition: transform 0.15s;
+}
+.qr-link-arrow:hover svg {
+  transform: translateX(3px);
+}
+
+/* Dark CTA band, matching apps/site's .cta-band (design spec §3.15). */
+.qr-cta-band {
+  background: var(--color-primary-active);
+  color: #ffffff;
+  border-radius: var(--radius-lg);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.qr-cta-band h2 {
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.3rem, 3vw, 1.6rem);
+  margin: 0 0 0.5rem;
+}
+.qr-cta-band p {
+  color: #cfd9d1;
+  max-width: 44ch;
+  margin: 0 auto 1.25rem;
+}
+@media (min-width: 640px) {
+  .qr-cta-band {
+    padding: 3rem 2.5rem;
+  }
+}
+
+/* Header nav (desktop) — matching apps/site's .nav (design spec §3.2),
+   collapsing below 1024px to the menu button + sheet (same breakpoint
+   apps/site's own nav collapses at). */
+.qr-nav {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+.qr-nav a {
+  font: 500 0.9rem/1 var(--font-body);
+  color: var(--color-text);
+  text-decoration: none;
+  padding: 0.55rem 0.8rem;
+  border-radius: var(--radius-pill);
+  position: relative;
+  white-space: nowrap;
+}
+.qr-nav a:hover {
+  background: var(--color-tint-strong);
+}
+.qr-nav a[aria-current="page"] {
+  font-weight: 600;
+  color: var(--color-primary);
+}
+.qr-nav a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0.8rem;
+  right: 0.8rem;
+  bottom: 0.15rem;
+  height: 2px;
+  background: var(--color-accent);
+  border-radius: 2px;
+}
+.qr-menu-btn {
+  display: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-border-strong);
+  background: var(--color-surface);
+  color: var(--color-text);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+@media (max-width: 1023px) {
+  .qr-nav {
+    display: none;
+  }
+  .qr-menu-btn {
+    display: inline-flex;
+  }
+}
+
+/* Mobile nav sheet — full-screen overlay, matching apps/site's .sheet
+   (design spec §3.3). useModalA11y (lib/reader/useModalA11y.ts) supplies
+   the Escape/focus-trap/scroll-lock behavior, same hook the Settings and
+   Jump-to-Surah dialogs already use. */
+.qr-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  animation: settings-fade-in 0.15s ease;
+}
+.qr-sheet-top {
+  height: 3.5rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+.qr-sheet nav {
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.qr-sheet nav a {
+  font: 500 1.2rem/1.2 var(--font-display);
+  color: var(--color-text);
+  text-decoration: none;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 3.5rem;
+}
+.qr-sheet nav a[aria-current="page"] {
+  color: var(--color-primary);
+}
+@media (prefers-reduced-motion: reduce) {
+  .qr-sheet {
+    animation: none;
+  }
+}
+
+/* Footer grid (SiteFooter.tsx) — brand block spans full width until
+   there's room for a real 4-column layout (matching apps/site's
+   .foot-grid: brand + 3 link columns side by side, design spec §3.4).
+   grid-template-columns lives here (not SiteFooter.tsx's inline
+   gridStyle) specifically so this breakpoint can override it — an
+   inline style can't be overridden by a CSS media query. */
+.qr-footer-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+.qr-footer-brand {
+  grid-column: 1 / -1;
+}
+@media (min-width: 860px) {
+  .qr-footer-grid {
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  }
+  .qr-footer-brand {
+    grid-column: auto;
+  }
+}
+
 /* Home page entry tiles (Read Quran / Learning) — a bit more breathing
    room once there's room to give it, same 640px breakpoint the settings
    panel above already established as this file's convention. */
@@ -444,6 +825,14 @@ body {
    outline button). */
 .settings-trigger:hover {
   background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+}
+/* Icon-only below 640px — SiteHeader now shares this row with the menu
+   button on mobile, same "hide the label, keep the icon" treatment
+   .header-tagline already uses just above. */
+@media (max-width: 639px) {
+  .settings-trigger-label {
+    display: none;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .entry-tile,

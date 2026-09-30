@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getSupplicationCategories, getSupplicationCategory } from "@/lib/content/supplications";
+import { getSupplicationCategories, getSupplicationCategory, getSupplicationsMeta } from "@/lib/content/supplications";
 import { canonicalUrl } from "@/lib/site";
-import { ScriptSwitch, SupplicationsBackLink } from "@/components/supplications/ScriptSwitch";
+import { ScriptSwitch } from "@/components/supplications/ScriptSwitch";
 import { DuaCard } from "@/components/supplications/DuaCard";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 
 export function generateStaticParams() {
   return getSupplicationCategories().map((c) => ({ categoryId: c.id }));
@@ -29,15 +30,20 @@ export default async function SupplicationCategoryPage({ params }: { params: Pro
   const category = getSupplicationCategory(categoryId);
   if (!category) notFound();
 
+  const supplicationsTitle = getSupplicationsMeta().title;
+
   return (
-    <div style={{ maxWidth: "var(--reader-max-width)", margin: "0 auto", padding: "1.5rem 1rem 3rem" }}>
-      <SupplicationsBackLink />
-      <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: "1.4rem", margin: "0.5rem 0 0.25rem" }}>
-        {category.label}
-      </h1>
-      <p style={{ margin: "0 0 1.25rem", color: "var(--color-text-muted)", fontSize: "0.9rem" }}>
-        {category.description}
-      </p>
+    <div style={{ maxWidth: "var(--reader-max-width)", margin: "0 auto", padding: "0 1rem 3rem" }}>
+      <Breadcrumbs
+        trail={[
+          { href: "/supplications", label: supplicationsTitle },
+          { href: `/supplications/${categoryId}`, label: category.label },
+        ]}
+      />
+      <div className="qr-page-hero" style={{ padding: "1.25rem 0 1.75rem" }}>
+        <h1>{category.label}</h1>
+        <p className="qr-lead">{category.description}</p>
+      </div>
 
       <ScriptSwitch />
 

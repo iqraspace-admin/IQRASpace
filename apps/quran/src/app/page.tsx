@@ -1,43 +1,45 @@
 import { getAllChapters } from "@/lib/content/quran";
-import { ContinueReadingCard } from "@/components/home/ContinueReadingCard";
-import { EntryTiles } from "@/components/home/EntryTiles";
+import { HomeHero } from "@/components/home/HomeHero";
+import { ServicesGrid } from "@/components/home/ServicesGrid";
 import { QuickLinks } from "@/components/home/QuickLinks";
 import { LastReadsRow } from "@/components/home/LastReadsRow";
 import { BookmarksPreview } from "@/components/home/BookmarksPreview";
+import { HomeCtaBand } from "@/components/home/HomeCtaBand";
 
 /**
- * Home page. Reading requires no account (Readme.md §9) — the primary
- * action is always reachable in one click, whether that's "start reading"
- * (first visit) or "continue reading" (returning visitor, tracked
- * locally — see ContinueReadingCard).
- *
- * Structure mirrors the IqraSpace Flutter app's own Home screen: the big
- * Continue-Reading CTA, an entry-tile row (Read Quran / Learning), Quick
- * Links, Last Reads, then a Bookmarks preview. No separate big logo/
- * tagline hero above all this any more — SiteHeader now carries the
- * wordmark + tagline persistently on every page, so repeating a full
- * logo image here was pure duplication that pushed real content down
- * the page for no reason.
+ * Home page — structurally rebuilt (not the earlier token/color-only
+ * pass) around apps/site's own home page shape (design spec §4.1): a
+ * full hero band, a primary "services" card grid, then secondary
+ * sections, then a closing CTA band — replacing the old flat stack of
+ * same-weight tile grids (a big CTA pill + 3 disconnected grids) with a
+ * real visual hierarchy. Reading requires no account (Readme.md §9) — the
+ * primary action is always reachable in one click via the hero, whether
+ * that's "start reading" (first visit) or "continue reading" (returning
+ * visitor, tracked locally — see HomeHero).
  */
 export default function Home() {
   const chapters = getAllChapters();
 
   return (
-    <div
-      style={{
-        maxWidth: "var(--content-max-width)",
-        margin: "0 auto",
-        display: "flex",
-        flexDirection: "column",
-        gap: "2rem",
-        padding: "2rem 1rem 3rem",
-      }}
-    >
-      <ContinueReadingCard chapters={chapters} />
-      <EntryTiles />
-      <QuickLinks chapters={chapters} />
-      <LastReadsRow chapters={chapters} />
-      <BookmarksPreview chapters={chapters} />
+    <div>
+      <HomeHero chapters={chapters} />
+
+      <div
+        style={{
+          maxWidth: "var(--content-max-width)",
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: "column",
+          gap: "2.5rem",
+          padding: "0 1rem 3rem",
+        }}
+      >
+        <ServicesGrid />
+        <QuickLinks chapters={chapters} />
+        <LastReadsRow chapters={chapters} />
+        <BookmarksPreview chapters={chapters} />
+        <HomeCtaBand />
+      </div>
     </div>
   );
 }

@@ -1,9 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import Link from "next/link";
 import { useReaderPreferences } from "@/lib/preferences/ReaderPreferencesProvider";
-import { useT } from "@/lib/i18n/useT";
 import type { TransliterationScript } from "@/lib/preferences/types";
 
 const OPTIONS: { value: TransliterationScript; label: string }[] = [
@@ -11,18 +9,6 @@ const OPTIONS: { value: TransliterationScript; label: string }[] = [
   { value: "telugu", label: "Telugu" },
   { value: "urdu", label: "Urdu" },
 ];
-
-/** "← All categories" back link — a tiny client component (like
-    BookmarksHeader) purely so it can call useT() without making the
-    whole Server Component category page client-side. */
-export function SupplicationsBackLink() {
-  const { t } = useT();
-  return (
-    <Link href="/supplications" style={{ color: "var(--color-primary)", fontSize: "0.85rem", textDecoration: "none" }}>
-      {t("supplicationsBackToAll")}
-    </Link>
-  );
-}
 
 /** App-wide transliteration-script switch (Latin/Telugu/Urdu-script) for
     the Supplications feature — matches the IqraSpace Flutter app's own

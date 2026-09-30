@@ -35,8 +35,12 @@ export function QuickLinks({ chapters }: Props) {
   const { t } = useT();
 
   return (
-    <section style={{ width: "100%" }}>
-      <h2 style={headingStyle}>{t("homeQuickLinks")}</h2>
+    <section style={{ width: "100%" }} aria-labelledby="quick-links-heading">
+      <div className="qr-section-head">
+        <h2 id="quick-links-heading" style={headingStyle}>
+          {t("homeQuickLinks")}
+        </h2>
+      </div>
       <div style={gridStyle}>
         <Link href="/search" className="quick-link-tile" style={tileStyle}>
           <span style={badgeStyle}>

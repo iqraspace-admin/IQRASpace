@@ -18,7 +18,7 @@ export const metadata: Metadata = {
  */
 export default function SearchPage() {
   return (
-    <div style={{ maxWidth: "var(--content-max-width)", margin: "0 auto", padding: "1.5rem 1rem 3rem" }}>
+    <div style={{ maxWidth: "var(--content-max-width)", margin: "0 auto", padding: "0 1rem 3rem" }}>
       <SearchClient />
     </div>
   );
