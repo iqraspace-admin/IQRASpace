@@ -11,7 +11,7 @@ This is a monorepo of **four fully independent apps** under `apps/`, stitched to
 | `apps/learning` | Next.js 16 (App Router, TS, Tailwind) + Supabase | Quranic Teacher — tutoring LMS for a solo tutor and students (auth, lessons, PDF viewer, attendance, scheduling) | `iqraspace.org/learning` |
 | `apps/quran` | Next.js 16 (App Router, TS, Tailwind) + Capacitor | IqraSpace Quran — free public, anonymous-first Quran reader (SSG, PWA, own Supabase project for bookmarks/progress only) | `iqraspace.org/quran`, and an Android app via Capacitor |
 | `apps/mobile/android` | Flutter (Dart), Riverpod, Hive | IqraSpace Quran Flutter reader — Tajweed-colored reading, separate data source, Android + Web only. Isolated from `apps/quran` (different `applicationId`s: `org.iqraspace.app` vs `org.iqraspace.quran`, no shared code), except for one deliberate exception: Listening Mode's whole-Surah audio is hosted on its own **dedicated** Cloudflare R2 bucket (S3-compatible object storage, public via a custom subdomain, no DB/auth) — see `apps/mobile/android/AUDIO.md` | Android app (Play Console), not yet deployed to web |
-| `apps/landing` | Static HTML, no framework/build step | Owns the `iqraspace.org` domain root; single page + Vercel `rewrites()` that proxy `/quran/*` and `/learning/*` to the other two apps' own Vercel deployments (Next.js Multi-Zones pattern) | `iqraspace.org` |
+| `apps/site` | Static HTML pages, no framework, + two small Vercel serverless functions (`api/`) and its own Supabase project (contact form only) | Owns the `iqraspace.org` domain root; a multi-page marketing/info site (home, about, mission, explore, quran-reader, mobile-app, get-involved, contact, faq, privacy, terms, 404) + Vercel `rewrites()` that proxy `/quran/*` and `/learning/*` to the other two apps' own Vercel deployments (Next.js Multi-Zones pattern) | `iqraspace.org` |
 
 Root `package.json` only has a Supabase CLI devDependency (for `apps/learning`'s DB) and thin `--prefix` delegator scripts (`npm run dev`, `npm run quran:dev`, etc.) — there is no root build/test/lint that does anything real across apps. Always `cd` into (or `--prefix` into) the specific app you're working on.
 
@@ -54,8 +54,8 @@ flutter build apk --debug
 ```
 Before any real release build (`flutter build appbundle --release` / `apk --release`) bump the `+N` build number in `pubspec.yaml`'s `version:` line — Play Console permanently rejects a reused `versionCode` even from a build that was never published. See `apps/mobile/android/CLAUDE.md` and `DEPLOYMENT.md` for the rest of the release checklist.
 
-### apps/landing
-No build tooling by design (single static HTML page). CI only validates the HTML and that `vercel.json` is valid JSON.
+### apps/site
+The pages themselves have no build tooling by design (hand-authored static HTML sharing `styles.css`/`site.js`). CI only validates `index.html` and that `vercel.json` is valid JSON. The one exception is the `/contact` form: `api/contact.js` (a Vercel Node serverless function, deps declared in `apps/site/package.json`) validates and stores submissions in a small, dedicated Supabase project (`supabase/migrations/` here — separate from `apps/quran`'s and `apps/learning`'s own projects) and emails an alert via Gmail SMTP. There is no custom admin UI — "managing" messages means the Supabase dashboard's Table Editor. See `apps/site/ADMIN.md` for the full setup (new Supabase project, Gmail App Password, Vercel env vars — all manual, owner-only steps).
 
 ## CI/CD
 
@@ -64,13 +64,13 @@ Each app has its own path-filtered GitHub Actions workflow in `.github/workflows
 - `ci-quran.yml` → `apps/quran` web/Vercel pipeline (path-filtered to `apps/quran/**`, `main` only)
 - `ci-quran-mobile.yml` → `apps/quran`'s Capacitor Android debug APK build (only on `mobile/android` branch, never `main`)
 - `ci-flutter.yml` → `apps/mobile/android` (`flutter analyze`/`flutter test` only, only on `mobile/android` branch; no build-APK job yet)
-- `ci-landing.yml` → `apps/landing`
+- `ci-site.yml` → `apps/site`
 
 Each Vercel deploy job uses that app's own dedicated secrets (e.g. `QURAN_VERCEL_*` vs. the default `VERCEL_*`) — never share secrets across apps. `apps/quran`'s deploy step deliberately uses `vercel deploy --prod` (remote build) rather than the local `vercel build` + `--prebuilt` flow `apps/learning` uses, because of a Next.js 16/Vercel CLI SSG lambda-tracing incompatibility — see the comment in `ci-quran.yml` before changing that.
 
 ## Architecture notes that span files
 
-- **Multi-Zones routing**: `apps/quran` and `apps/learning` each run with `basePath` set (`/quran`, `/learning` respectively, via `NEXT_BASE_PATH`) and deploy as fully independent Vercel projects. `apps/landing`'s `vercel.json` `rewrites()` is the only thing that stitches them under one domain — routing changes to `/quran/*` or `/learning/*` almost always mean editing `apps/landing/vercel.json`, not the target app.
+- **Multi-Zones routing**: `apps/quran` and `apps/learning` each run with `basePath` set (`/quran`, `/learning` respectively, via `NEXT_BASE_PATH`) and deploy as fully independent Vercel projects. `apps/site`'s `vercel.json` `rewrites()` is the only thing that stitches them under one domain — routing changes to `/quran/*` or `/learning/*` almost always mean editing `apps/site/vercel.json`, not the target app.
 - **Why two separate Quran apps exist** (`apps/quran` and `apps/mobile/android`): different scope by design, not duplication. `apps/quran` does API-rendered text plus a scanned-PDF reading mode, no Tajweed coloring. `apps/mobile/android` is Tajweed-focused colored reading from a different data source (Al Quran Cloud, chosen because it needs no server-held OAuth secret, unlike the Quran Foundation Content API `apps/quran` uses). Neither app depends on the other or shares code.
 - **`apps/learning` and `apps/quran` are deliberately unconnected products**: different audience (authenticated tutor/student vs. anonymous public reader), different Supabase projects, different privacy posture (minors' PII lives only in `apps/learning`'s DB). Do not introduce a shared dependency between them without a documented reason — see `apps/quran/ARCHITECTURE.md` §2.
 - **`apps/learning` route structure**: `src/app/(public)` (`/`, `/login`, `/signup`) vs `src/app/(app)` (dashboard, classes, lessons, students, materials, schedule, attendance, progress, notes, meet, notifications, settings, `teach/[lessonId]`) plus a separate `share/[lessonId]` route. Components split into `ui/` (design-system primitives), `shell/` (Sidebar/Topbar/AppShell), `pdf/` (PdfViewer), `teach/` (TeachClient/ShareClient), `lessons/`.

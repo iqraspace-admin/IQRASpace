@@ -1,28 +1,41 @@
-name: CI/CD (Landing)
+name: CI/CD (Site)
 
-# apps/landing is the plain static page that owns the domain root
-# (ARCHITECTURE.md §8 — apps/quran owns only /quran) and rewrites
-# /quran/* to apps/quran's own deployment (Next.js Multi-Zones). Fully
-# independent of ci.yml (apps/web) and ci-quran.yml (apps/quran) — a
-# change to one app never triggers or blocks another's pipeline.
+# apps/site (renamed from apps/landing) is the plain static page that
+# owns the domain root (ARCHITECTURE.md §8 — apps/quran owns only
+# /quran) and rewrites /quran/* to apps/quran's own deployment (Next.js
+# Multi-Zones). Fully independent of ci.yml (apps/web) and ci-quran.yml
+# (apps/quran) — a change to one app never triggers or blocks another's
+# pipeline.
 #
-# No lint/typecheck applies — there's no framework/build tooling here on
-# purpose (a single static HTML page, per the "no unnecessary
-# infrastructure" deployment objective). `validate` still runs a real,
-# if minimal, check: HTML must actually be valid and vercel.json must be
-# valid JSON, so a broken edit fails CI instead of silently deploying.
+# No framework/build tooling for the pages themselves, on purpose (a
+# multi-page static site, per the "no unnecessary infrastructure"
+# deployment objective). The one exception is api/contact.js, a small
+# Vercel Node serverless function for the /contact form (see
+# apps/site/ADMIN.md) — its dependencies (package.json) are installed
+# here so `node -c` can at least catch a syntax error before it deploys;
+# it isn't unit-tested. `validate` also checks HTML validity and that
+# vercel.json/package.json are valid JSON, so a broken edit fails CI
+# instead of silently deploying.
+#
+# NOTE (folder renamed from apps/landing to apps/site): the secrets
+# below (LANDING_VERCEL_*), the `vercel-landing` environment name, and
+# the `iqraspace-landing.vercel.app` alias in the health check are
+# unchanged on purpose — they're the actual GitHub secret names and the
+# actual Vercel project's settings, which this file can't rename by
+# itself. Renaming those is a manual step in GitHub repo settings and
+# the Vercel dashboard; until that's done, keep these names as-is.
 
 on:
   push:
     branches: [main]
     paths:
-      - "apps/landing/**"
-      - ".github/workflows/ci-landing.yml"
+      - "apps/site/**"
+      - ".github/workflows/ci-site.yml"
   pull_request:
     branches: [main]
     paths:
-      - "apps/landing/**"
-      - ".github/workflows/ci-landing.yml"
+      - "apps/site/**"
+      - ".github/workflows/ci-site.yml"
   # Lets a maintainer re-run validate+deploy from the Actions tab without
   # needing an empty/no-op commit.
   workflow_dispatch:
@@ -33,7 +46,7 @@ concurrency:
 
 defaults:
   run:
-    working-directory: apps/landing
+    working-directory: apps/site
 
 jobs:
   validate:
@@ -50,6 +63,15 @@ jobs:
 
       - name: Validate vercel.json is valid JSON
         run: node -e "JSON.parse(require('fs').readFileSync('vercel.json','utf8')); console.log('vercel.json OK')"
+
+      - name: Validate package.json is valid JSON
+        run: node -e "JSON.parse(require('fs').readFileSync('package.json','utf8')); console.log('package.json OK')"
+
+      - name: Install api/ function dependencies
+        run: npm install
+
+      - name: Check api/contact.js syntax
+        run: node -c api/contact.js
 
       - name: Validate index.html
         run: npx --yes html-validate index.html

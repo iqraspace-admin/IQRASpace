@@ -1,12 +1,12 @@
 ---
 name: iqs-deploy
-description: Run IqraSpace's full production deployment workflow — validate and deploy the website (apps/quran + apps/landing) to production, and build/upload the Android app (apps/mobile/android) to Play Console's closed testing track. Trigger when the user says "iqs-deploy".
+description: Run IqraSpace's full production deployment workflow — validate and deploy the website (apps/quran + apps/site) to production, and build/upload the Android app (apps/mobile/android) to Play Console's closed testing track. Trigger when the user says "iqs-deploy".
 ---
 
 # iqs-deploy
 
 Runs the full release pipeline for **the website** (`apps/quran` +
-`apps/landing`, both served under `iqraspace.org`) and **the Android
+`apps/site`, both served under `iqraspace.org`) and **the Android
 app** (`apps/mobile/android`, IqraSpace Quran Flutter reader,
 `org.iqraspace.app`): **Inspect → Validate → Build → Deploy → Verify →
 Report**, for each, then one combined final report (see "Combined
@@ -22,11 +22,11 @@ report that half as FAILED with the real reason.
 
 ---
 
-## Website (apps/quran + apps/landing)
+## Website (apps/quran + apps/site)
 
 **Hard rule: this repo's actual deploy mechanism for both apps is
 `vercel deploy --prod` running *inside GitHub Actions* (`ci-quran.yml` /
-`ci-landing.yml`), gated on a push to `main`, using each app's own
+`ci-site.yml`), gated on a push to `main`, using each app's own
 dedicated Vercel secrets (`QURAN_VERCEL_*` / `LANDING_VERCEL_*`) — never
 a locally-run `vercel` command.** This session has no Vercel
 credentials (`vercel whoami` is logged out; no token exists anywhere on
@@ -50,9 +50,9 @@ project-linkage files as a workaround.
   tracked and untracked.
 - `git branch --show-current`, then `git fetch origin --prune` and
   compare local `main` to `origin/main` (ahead/behind).
-- Determine which of `apps/quran/**` and `apps/landing/**` actually have
+- Determine which of `apps/quran/**` and `apps/site/**` actually have
   pending changes — either uncommitted locally, or committed locally but
-  not yet on `origin/main`. Both `ci-quran.yml` and `ci-landing.yml` are
+  not yet on `origin/main`. Both `ci-quran.yml` and `ci-site.yml` are
   path-filtered, so a push only redeploys the app(s) whose files
   actually changed; if **neither** app has anything pending, skip
   straight to reporting `Website: NOTHING TO DEPLOY` rather than forcing
@@ -73,7 +73,7 @@ npm run test --if-present    # currently a no-op; kept anyway, matches CI exactl
 npm run build
 ```
 
-For **apps/landing**, only if it has pending changes, from `apps/landing`:
+For **apps/site**, only if it has pending changes, from `apps/site`:
 ```
 node -e "JSON.parse(require('fs').readFileSync('vercel.json','utf8')); console.log('vercel.json OK')"
 npx --yes html-validate index.html
@@ -115,7 +115,7 @@ secret/generated-file screening list) before committing anything:
 
 ### W3. Deploy (automatic — the push in W2 *is* the trigger)
 
-`ci-quran.yml` and/or `ci-landing.yml` (whichever app(s) had files in
+`ci-quran.yml` and/or `ci-site.yml` (whichever app(s) had files in
 the push) now run their own `validate` job again and, because this is a
 push to `main`, their `deploy` job — `vercel deploy --prod` against
 each app's real Vercel project, using CI-only secrets this session
@@ -133,7 +133,7 @@ for path in /quran /quran/surah /quran/sitemap.xml; do
   curl -s -o /dev/null -w "%{http_code} $path\n" "https://iqraspace-quran.vercel.app$path"
 done
 
-# apps/landing — only if it was deployed
+# apps/site — only if it was deployed
 for path in / /robots.txt /sitemap.xml; do
   curl -s -o /dev/null -w "%{http_code} $path\n" "https://iqraspace-landing.vercel.app$path"
 done
@@ -292,9 +292,9 @@ iqs-deploy: SUCCESS / PARTIAL / FAILED
 
 Website
   Status: SUCCESS / FAILED / NOTHING TO DEPLOY
-  Apps deployed: apps/quran / apps/landing / both / none
+  Apps deployed: apps/quran / apps/site / both / none
   Commit pushed: <sha> <subject>  (or "n/a")
-  Validate: <apps/quran and/or apps/landing check results>
+  Validate: <apps/quran and/or apps/site check results>
   Production URL(s): https://iqraspace.org , https://iqraspace.org/quran
   Health check: <per-path HTTP codes>
   Note: <the "cannot confirm the exact GitHub Actions run" caveat from W4,

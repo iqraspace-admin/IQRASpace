@@ -10,7 +10,7 @@ Determine Target → Merge → Resolve Conflicts → Test Again → Push (target
 → Report**
 
 This repo is a monorepo of **four fully independent apps**
-(`apps/learning`, `apps/quran`, `apps/mobile/android`, `apps/landing` — see root
+(`apps/learning`, `apps/quran`, `apps/mobile/android`, `apps/site` — see root
 `CLAUDE.md`), each with its own CI workflow, path-filtered to that app's
 files. This skill mirrors that: it figures out which app(s) a change
 touches and only runs the checks relevant to those apps — the same thing
@@ -53,7 +53,7 @@ git diff main...HEAD     # everything this branch adds relative to main (adjust 
 
 Read the actual diff, not just filenames. Identify which app(s) it
 touches by path prefix (`apps/learning/`, `apps/quran/`, `apps/mobile/android/`,
-`apps/landing/`, or repo-root files like `CLAUDE.md`/`DEPLOYMENT.md`/
+`apps/site/`, or repo-root files like `CLAUDE.md`/`DEPLOYMENT.md`/
 root `package.json`). Per root `CLAUDE.md`, changes spanning multiple
 apps in one commit are unusual (apps share nothing) — if the diff
 touches more than one app and that doesn't look deliberate (e.g. it's
@@ -108,8 +108,8 @@ don't skip an app's checks because "it's probably fine":
   `npm run lint` → `npm run typecheck` → `npm run build`
 - **apps/mobile/android**: `flutter analyze` → `flutter test` (from
   `apps/mobile/android`)
-- **apps/landing**: validate the HTML and confirm `vercel.json` is valid
-  JSON (no real build step, matching `ci-landing.yml`)
+- **apps/site**: validate the HTML and confirm `vercel.json` is valid
+  JSON (no real build step, matching `ci-site.yml`)
 - **Root-only changes** (e.g. root `CLAUDE.md`, `package.json`
   delegator scripts): no app build is required; just sanity-check any
   changed script actually runs.
@@ -170,7 +170,7 @@ This repo's actual branching pattern (see `git branch -a` /
 `git log --all --oneline`): short-lived, scoped feature branches per
 app or concern — `feat/...`, `fix/...`, `chore/...`, `mobile/android`,
 `landing/...`, `quran/...` — merge into `main`, which is the branch each
-app's CI deploys from (`ci.yml`, `ci-quran.yml`, `ci-landing.yml` all
+app's CI deploys from (`ci.yml`, `ci-quran.yml`, `ci-site.yml` all
 gate/deploy on `main`; `ci-flutter.yml`/`ci-quran-mobile.yml` only run on
 `mobile/android` and never touch `main` directly — see root `CLAUDE.md`
 CI/CD section).

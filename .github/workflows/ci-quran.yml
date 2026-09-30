@@ -1,12 +1,12 @@
 name: CI/CD (Quran)
 
 # Fully independent of .github/workflows/ci.yml (apps/web's tutoring app
-# pipeline) and ci-landing.yml (apps/landing) — see
+# pipeline) and ci-site.yml (apps/site) — see
 # apps/quran/ARCHITECTURE.md §8. Path-filtered so a change to one app
 # never triggers or blocks another's pipeline.
 #
 # `deploy` gated to a push on main, using this app's own dedicated
-# QURAN_VERCEL_*/QURAN_ secrets — never apps/web's or apps/landing's
+# QURAN_VERCEL_*/QURAN_ secrets — never apps/web's or apps/site's
 # Vercel project or secrets (ARCHITECTURE.md §2). Unlike ci.yml
 # (apps/web), it uses `vercel deploy --prod` directly (remote build) —
 # NOT the "vercel pull → vercel build --prod → vercel deploy --prebuilt"
