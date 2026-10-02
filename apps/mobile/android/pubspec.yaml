@@ -5,7 +5,7 @@ description: >
   search, bookmarks, offline-first caching, Light/TrueBlack-Dark/Sepia
   themes. Android + Web only for this pass.
 publish_to: "none"
-version: 0.3.0+16
+version: 0.3.0+17
 
 environment:
   # Verified locally via `flutter --version`: Flutter 3.47.3, Dart
@@ -51,6 +51,9 @@ dependencies:
   # browser or app — the official Flutter-team plugin, the standard way
   # to open a URL since core Flutter has no built-in API for it.
   url_launcher: ^6.3.1
+  # Duas reading screen's share button: the official Flutter-team plugin
+  # for the OS-level share sheet (no equivalent in core Flutter).
+  share_plus: ^13.3.1
 
 dev_dependencies:
   flutter_test:
