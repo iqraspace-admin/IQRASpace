@@ -494,12 +494,6 @@ function BrowseSection({ close }: { close: () => void }) {
           <ChevronIcon />
         </span>
       </Link>
-      <Link href="/supplications" onClick={close} style={navRowStyle}>
-        <span>{t("browseSupplications")}</span>
-        <span style={navRowValueStyle}>
-          <ChevronIcon />
-        </span>
-      </Link>
     </section>
   );
 }

@@ -49,11 +49,6 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="/supplications" style={linkStyle}>
-                  Supplications
-                </Link>
-              </li>
-              <li>
                 <Link href="/search" style={linkStyle}>
                   Search
                 </Link>

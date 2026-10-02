@@ -12,7 +12,6 @@ type NavItem = { href: string; label: string; external?: boolean };
 const NAV_ITEMS: NavItem[] = [
   { href: "/surah", label: "Surahs" },
   { href: "/bookmarks", label: "Bookmarks" },
-  { href: "/supplications", label: "Supplications" },
   { href: "/search", label: "Search" },
   { href: "/learning", label: "Learning", external: true },
 ];

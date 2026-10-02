@@ -77,9 +77,9 @@
      same as before — never body or Quran text. */
   --font-display: var(--font-newsreader), Georgia, serif;
 
-  /* Supplications' transliteration-script fonts (lib/preferences/types.ts's
-     TransliterationScript) — Latin reuses --font-body (plain Latin text
-     needs no embedded font), Telugu/Urdu need their own. */
+  /* Telugu/Urdu translation fonts (AyahBlock.tsx) — Latin-script
+     translations reuse --font-body (plain Latin text needs no embedded
+     font); Telugu and Urdu need their own embedded Noto faces. */
   --font-transliteration-telugu: var(--font-noto-telugu), sans-serif;
   --font-transliteration-urdu: var(--font-noto-nastaliq), "Traditional Arabic", serif;
 
@@ -408,7 +408,7 @@ body {
  * ==========================================================================
  * Shared apps/site-derived layout primitives (structural rebuild, not just
  * the earlier token pass) — reused across SiteHeader, SiteFooter, the home
- * page, and every list page (Surah list, Bookmarks, Supplications, Search)
+ * page, and every list page (Surah list, Bookmarks, Search)
  * so this app's chrome finally follows one shared pattern set instead of
  * each page hand-rolling its own header/card/grid shape. Named `.qr-*` to
  * stay unambiguous next to this file's older, component-specific classes
@@ -494,7 +494,7 @@ body {
 }
 
 /* Page hero — breadcrumb + eyebrow + H1 + lead, the shell every list page
-   (Surah list, Bookmarks, Supplications, Search) now opens with instead
+   (Surah list, Bookmarks, Search) now opens with instead
    of a bare <h1>, matching apps/site's .page-hero (design spec §3.2). */
 .qr-page-hero {
   padding: 1.5rem 0 2.5rem;
@@ -561,7 +561,7 @@ body {
   }
 }
 /* A single-column list variant for content that reads better as rows
-   (Surah list, Supplications categories) than square tiles. */
+   than square tiles. */
 .qr-card-list {
   display: grid;
   gap: 0.6rem;

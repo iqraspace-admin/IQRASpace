@@ -7,7 +7,7 @@ type Crumb = { href: string; label: string };
 
 /**
  * Breadcrumb trail for every list/section page (Surah list, Bookmarks,
- * Supplications, Search) — matching apps/site's .crumbs exactly (design
+ * Search) — matching apps/site's .crumbs exactly (design
  * spec §3.9). Always starts at Home; the current page is the last,
  * non-linked item with aria-current="page". Not shown on the home page
  * itself or the Surah/Page reader (those aren't "list pages" and the

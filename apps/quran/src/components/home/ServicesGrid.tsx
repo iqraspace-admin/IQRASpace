@@ -6,11 +6,12 @@ import { ArrowIcon } from "@/components/ui/ArrowIcon";
 
 /**
  * Structural replacement for EntryTiles.tsx (3 compact icon tiles) — now
- * a 4-up services grid matching apps/site's home services section exactly
+ * a 3-up services grid matching apps/site's home services section exactly
  * (design spec §4.1: icon-tile top-left, H3 title, body copy, a trailing
  * link-arrow CTA pinned to the card's bottom, `.card.service`). Adds a
- * fourth card (Listen/Audio — Listening Mode + per-Ayah recitation) that
- * had no dedicated entry point on Home before, only inside Settings.
+ * dedicated Listen/Audio card (Listening Mode + per-Ayah recitation) that
+ * had no entry point on Home before, only inside Settings. (Supplications
+ * had its own card here too, until the Duas feature moved to apps/site.)
  *
  * "Learning" is a plain <a>, not next/link's <Link>: apps/learning is a
  * separate Vercel project/Next.js "zone" stitched under the same
@@ -28,7 +29,7 @@ export function ServicesGrid() {
         <div className="qr-eyebrow">{t("homeExploreEyebrow")}</div>
         <h2 id="services-heading">{t("homeServicesHeading")}</h2>
       </div>
-      <div className="qr-card-grid cols-4">
+      <div className="qr-card-grid cols-3">
         <Link href="/surah" className="qr-card">
           <span className="qr-icon-tile">
             <BookIcon />
@@ -65,17 +66,6 @@ export function ServicesGrid() {
           </span>
         </a>
 
-        <Link href="/supplications" className="qr-card">
-          <span className="qr-icon-tile">
-            <HandsIcon />
-          </span>
-          <h3 style={titleStyle}>{t("entrySupplicationsTitle")}</h3>
-          <p style={bodyStyle}>{t("entrySupplicationsSubtitle")}</p>
-          <span className="qr-link-arrow">
-            {t("browseSupplications")}
-            <ArrowIcon />
-          </span>
-        </Link>
       </div>
     </section>
   );
@@ -108,17 +98,6 @@ function CapIcon() {
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M22 10 12 5 2 10l10 5 10-5Z" />
       <path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5" />
-    </svg>
-  );
-}
-
-function HandsIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M8 13V6a1.5 1.5 0 0 1 3 0v5" />
-      <path d="M11 11V4a1.5 1.5 0 0 1 3 0v7" />
-      <path d="M14 11V5.5a1.5 1.5 0 0 1 3 0V13" />
-      <path d="M17 8.5a1.5 1.5 0 0 1 3 0V15a7 7 0 0 1-7 7h-1a7 7 0 0 1-6-3.4L4 15" />
     </svg>
   );
 }

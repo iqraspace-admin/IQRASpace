@@ -183,9 +183,8 @@ export function AyahBlock({
             // Urdu (Arabic-script) is the only translation language that's
             // RTL — Roman Urdu is Latin-script (LTR) despite the language,
             // and Telugu/English are both LTR too. Font-family follows the
-            // same DuaCard.tsx pattern used for Supplications'
-            // transliteration script: Telugu/Urdu need their embedded Noto
-            // faces, everything else inherits the body font.
+            // same pattern as apps/site's Duas page: Telugu/Urdu need their
+            // embedded Noto faces, everything else inherits the body font.
             const dir = languageId === "urdu" ? "rtl" : "ltr";
             const lang =
               languageId === "roman-urdu"

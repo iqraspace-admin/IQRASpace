@@ -11,15 +11,11 @@ import { DEFAULT_LISTENING_TRACK, type ListeningTrack } from "@/lib/content/list
  */
 export type Theme = "light" | "dark" | "sepia" | "system";
 export type ReadingWidth = "narrow" | "comfortable" | "wide";
-/** Which script the Supplications feature renders each dua's
-    transliteration line in — matches the IqraSpace Flutter app's own
-    TransliterationScript. A single app-wide choice, not per-card. */
-export type TransliterationScript = "latin" | "telugu" | "urdu";
 /** UI chrome language (nav labels, Settings, headings) — matches the
     IqraSpace Flutter app's own English/Telugu/Urdu app-language setting.
-    Independent of the Quran ayah Translation setting and of
-    TransliterationScript: this only affects this app's own interface
-    text, never the Quran Arabic text or any translation/dua content. */
+    Independent of the Quran ayah Translation setting: this only affects
+    this app's own interface text, never the Quran Arabic text or any
+    translation content. */
 export type UiLanguage = "en" | "te" | "ur";
 /** Which of the IqraSpace Flutter app's 3 Reader Modes this Surah reader
     behaves as — matching Flutter's actual audio architecture, not just
@@ -93,9 +89,6 @@ export type ReaderPreferences = {
       unlike the rest of this app's build-time-synced content, so it's
       opt-in rather than on for every anonymous visitor by default. */
   tajweedEnabled: boolean;
-  /** Supplications feature's transliteration script — see
-      TransliterationScript's own doc comment. */
-  supplicationScript: TransliterationScript;
   /** UI chrome language — see UiLanguage's own doc comment. */
   uiLanguage: UiLanguage;
   /** Reader Mode — see ReaderMode's own doc comment. Defaults to
@@ -127,7 +120,6 @@ export const DEFAULT_PREFERENCES: ReaderPreferences = {
   autoScrollSpeed: 30,
   readModeEnabled: false,
   tajweedEnabled: false,
-  supplicationScript: "latin",
   uiLanguage: "en",
   readerMode: "readingListening",
   listeningTrack: DEFAULT_LISTENING_TRACK,

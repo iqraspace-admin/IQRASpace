@@ -32,8 +32,6 @@ const en = {
   entryAudioSubtitle: "Recitation & Listening Mode",
   entryLearningTitle: "Learning",
   entryLearningSubtitle: "Courses & guided lessons",
-  entrySupplicationsTitle: "Supplications",
-  entrySupplicationsSubtitle: "Duas & Athkar for daily life",
 
   homeQuickLinks: "Quick Links",
   homeLastReads: "Last Reads",
@@ -60,7 +58,6 @@ const en = {
   browsePages: "Pages",
   browseBookmarks: "Bookmarks",
   browseSearch: "Search",
-  browseSupplications: "Supplications",
 
   settingsReadingSettings: "Reading Settings",
   settingsBrowse: "Browse",
@@ -126,8 +123,6 @@ const en = {
   searchSubtitle: "Searches the English (Sahih International) translation across all Surahs.",
   searchPlaceholder: "Search the Quran's English translation…",
 
-  supplicationsBackToAll: "← All categories",
-
   readerModeLabel: "Reader Mode",
   readerModeListening: "Listening",
   readerModeReading: "Reading",
@@ -182,8 +177,6 @@ const te: Dictionary = {
   entryAudioSubtitle: "పారాయణం & లిజనింగ్ మోడ్",
   entryLearningTitle: "అభ్యాసం",
   entryLearningSubtitle: "కోర్సులు & మార్గదర్శిత పాఠాలు",
-  entrySupplicationsTitle: "దుఆలు",
-  entrySupplicationsSubtitle: "రోజువారీ జీవితం కోసం దుఆలు & అజ్కార్",
 
   homeQuickLinks: "త్వరిత లింక్‌లు",
   homeLastReads: "ఇటీవలి పఠనాలు",
@@ -210,7 +203,6 @@ const te: Dictionary = {
   browsePages: "పేజీలు",
   browseBookmarks: "బుక్‌మార్క్‌లు",
   browseSearch: "శోధన",
-  browseSupplications: "దుఆలు",
 
   settingsReadingSettings: "పఠన సెట్టింగ్‌లు",
   settingsBrowse: "బ్రౌజ్",
@@ -276,8 +268,6 @@ const te: Dictionary = {
   searchSubtitle: "అన్ని సూరాలలో ఇంగ్లీష్ (సహీహ్ ఇంటర్నేషనల్) అనువాదాన్ని శోధిస్తుంది.",
   searchPlaceholder: "ఖురాన్ ఇంగ్లీష్ అనువాదంలో శోధించండి…",
 
-  supplicationsBackToAll: "← అన్ని వర్గాలు",
-
   readerModeLabel: "రీడర్ మోడ్",
   readerModeListening: "వినడం",
   readerModeReading: "చదవడం",
@@ -329,8 +319,6 @@ const ur: Dictionary = {
   entryAudioSubtitle: "تلاوت اور لسننگ موڈ",
   entryLearningTitle: "تعلیم",
   entryLearningSubtitle: "کورسز اور رہنما اسباق",
-  entrySupplicationsTitle: "دعائیں",
-  entrySupplicationsSubtitle: "روزمرہ زندگی کے لیے دعائیں اور اذکار",
 
   homeQuickLinks: "فوری روابط",
   homeLastReads: "حالیہ پڑھائی",
@@ -357,7 +345,6 @@ const ur: Dictionary = {
   browsePages: "صفحات",
   browseBookmarks: "بک مارکس",
   browseSearch: "تلاش",
-  browseSupplications: "دعائیں",
 
   settingsReadingSettings: "پڑھنے کی ترتیبات",
   settingsBrowse: "براؤز",
@@ -422,8 +409,6 @@ const ur: Dictionary = {
   searchTitle: "تلاش",
   searchSubtitle: "تمام سورتوں میں انگریزی (صحیح انٹرنیشنل) ترجمہ تلاش کرتا ہے۔",
   searchPlaceholder: "قرآن کے انگریزی ترجمے میں تلاش کریں…",
-
-  supplicationsBackToAll: "← تمام زمرہ جات",
 
   readerModeLabel: "ریڈر موڈ",
   readerModeListening: "سننا",
