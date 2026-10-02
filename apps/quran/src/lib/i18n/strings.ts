@@ -30,6 +30,8 @@ const en = {
   entryReadQuranSubtitle: "114 Surahs, Tajweed & translation",
   entryAudioTitle: "Listen",
   entryAudioSubtitle: "Recitation & Listening Mode",
+  entryDuasTitle: "Duas",
+  entryDuasSubtitle: "Duas & athkar for daily life",
   entryLearningTitle: "Learning",
   entryLearningSubtitle: "Courses & guided lessons",
 
@@ -175,6 +177,8 @@ const te: Dictionary = {
   entryReadQuranSubtitle: "114 సూరాలు, తజ్వీద్ & అనువాదం",
   entryAudioTitle: "వినండి",
   entryAudioSubtitle: "పారాయణం & లిజనింగ్ మోడ్",
+  entryDuasTitle: "దుఆలు",
+  entryDuasSubtitle: "రోజువారీ జీవితం కోసం దుఆలు & అజ్కార్",
   entryLearningTitle: "అభ్యాసం",
   entryLearningSubtitle: "కోర్సులు & మార్గదర్శిత పాఠాలు",
 
@@ -317,6 +321,8 @@ const ur: Dictionary = {
   entryReadQuranSubtitle: "114 سورتیں، تجوید اور ترجمہ",
   entryAudioTitle: "سنیں",
   entryAudioSubtitle: "تلاوت اور لسننگ موڈ",
+  entryDuasTitle: "دعائیں",
+  entryDuasSubtitle: "روزمرہ زندگی کے لیے دعائیں اور اذکار",
   entryLearningTitle: "تعلیم",
   entryLearningSubtitle: "کورسز اور رہنما اسباق",
 

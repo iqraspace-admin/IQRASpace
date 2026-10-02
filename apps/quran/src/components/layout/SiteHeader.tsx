@@ -13,6 +13,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/surah", label: "Surahs" },
   { href: "/bookmarks", label: "Bookmarks" },
   { href: "/search", label: "Search" },
+  { href: "/duas", label: "Duas", external: true },
   { href: "/learning", label: "Learning", external: true },
 ];
 
