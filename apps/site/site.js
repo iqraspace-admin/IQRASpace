@@ -86,6 +86,37 @@
     }
   }
 
+  // ---------- Duas category grid/list view toggle ----------
+  var viewToggle = document.querySelector('.dua-view-toggle');
+  if (viewToggle) {
+    var tiles = document.querySelector('.dua-tiles');
+    var list = document.querySelector('.dua-list');
+    var viewBtns = Array.prototype.slice.call(viewToggle.querySelectorAll('[data-view-btn]'));
+    viewBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var view = btn.getAttribute('data-view-btn');
+        viewBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
+        if (tiles) tiles.classList.toggle('is-hidden', view !== 'grid');
+        if (list) list.classList.toggle('is-active', view === 'list');
+      });
+    });
+  }
+
+  // ---------- Duas transliteration script switch ----------
+  var scriptSwitch = document.getElementById('script-switch');
+  if (scriptSwitch) {
+    var scriptBtns = Array.prototype.slice.call(scriptSwitch.querySelectorAll('[data-script-btn]'));
+    scriptBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var script = btn.getAttribute('data-script-btn');
+        scriptBtns.forEach(function (b) { b.setAttribute('aria-checked', String(b === btn)); });
+        document.querySelectorAll('.translit').forEach(function (p) {
+          p.hidden = p.getAttribute('data-script') !== script;
+        });
+      });
+    });
+  }
+
   // ---------- Legal page TOC active state on scroll ----------
   var toc = document.querySelector('.toc');
   if (toc) {

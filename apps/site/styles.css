@@ -322,6 +322,34 @@ a.card{text-decoration:none;color:inherit}
 .faq-nav a.on{background:var(--sage-100);color:var(--green-800);font-weight:600}
 @media (max-width:1023px){.faq-layout{grid-template-columns:1fr;gap:var(--s6)}.faq-nav{position:static;flex-direction:row;overflow-x:auto;gap:8px;padding-bottom:6px;-webkit-overflow-scrolling:touch}.faq-nav a{border:1px solid var(--border-strong);white-space:nowrap;background:#fff}}
 
+/* ---------- Duas (category grid/tile + list view, matching the
+   official Wa Iyyaka Nasta'in app's grid/list category browser) ---------- */
+.dua-browser-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--s4);margin-bottom:var(--s6)}
+.h4-like{font-size:20px;margin:0}
+.dua-view-toggle{display:inline-flex;gap:4px;padding:4px;background:var(--sage-50);border:1px solid var(--border);border-radius:var(--r-pill)}
+.dua-view-toggle button{border:0;background:transparent;padding:8px 16px;border-radius:var(--r-pill);font:600 13px/1 var(--font-ui);color:var(--text-2);cursor:pointer}
+.dua-view-toggle button[aria-pressed="true"]{background:#fff;color:var(--green-800);box-shadow:var(--shadow-1)}
+.dua-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4)}
+@media (max-width:1023px){.dua-tiles{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:639px){.dua-tiles{grid-template-columns:repeat(2,1fr)}}
+.dua-tile{display:flex;flex-direction:column;gap:4px;padding:var(--s5);background:#fff;border:1px solid var(--border);border-left:4px solid var(--green-700);border-radius:var(--r-md);text-decoration:none;color:inherit;transition:box-shadow .15s,border-color .15s}
+.dua-tile:hover{box-shadow:var(--shadow-1);border-color:var(--border-strong)}
+.dua-tile h4{margin:0;font:600 15px/1.3 var(--font-ui);color:var(--text)}
+.dua-tile .count{font-size:13px;color:var(--text-2)}
+.dua-list{display:none;flex-direction:column;gap:6px}
+.dua-list-row{display:flex;justify-content:space-between;align-items:center;gap:var(--s4);padding:14px 18px;border:1px solid var(--border);border-left:4px solid var(--green-700);border-radius:var(--r-sm);background:#fff;text-decoration:none;color:var(--text);font-weight:500}
+.dua-list-row:hover{background:var(--sage-50)}
+.dua-list-row .count{font-size:13px;font-weight:400;color:var(--text-2)}
+.dua-tiles.is-hidden{display:none}
+.dua-list.is-active{display:flex}
+
+/* ---------- Duas (transliteration script switch) ---------- */
+.translit{font-size:16px;line-height:1.6;margin:0 0 10px;color:var(--text)}
+.translit[data-script="telugu"]{font-family:"Noto Sans Telugu",sans-serif}
+.translit[data-script="urdu"]{font-family:"Noto Nastaliq Urdu","Traditional Arabic",serif}
+#script-switch [aria-checked="true"]{background:var(--green-700);color:#fff;border-color:var(--green-700)}
+.acc-panel .arabic{font-size:22px;margin:0 0 10px}
+
 /* ---------- Legal ---------- */
 .legal{display:grid;grid-template-columns:260px minmax(0,720px);gap:var(--s16);justify-content:center}
 .toc{position:sticky;top:calc(var(--header-h) + 24px);align-self:start;font-size:14px}
