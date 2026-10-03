@@ -1,29 +1,10 @@
 name: CI/CD (Site)
 
-# apps/site (renamed from apps/landing) is the plain static page that
-# owns the domain root (ARCHITECTURE.md §8 — apps/quran owns only
-# /quran) and rewrites /quran/* to apps/quran's own deployment (Next.js
-# Multi-Zones). Fully independent of ci.yml (apps/web) and ci-quran.yml
-# (apps/quran) — a change to one app never triggers or blocks another's
-# pipeline.
-#
-# No framework/build tooling for the pages themselves, on purpose (a
-# multi-page static site, per the "no unnecessary infrastructure"
-# deployment objective). The one exception is api/contact.js, a small
-# Vercel Node serverless function for the /contact form (see
-# apps/site/ADMIN.md) — its dependencies (package.json) are installed
-# here so `node -c` can at least catch a syntax error before it deploys;
-# it isn't unit-tested. `validate` also checks HTML validity and that
-# vercel.json/package.json are valid JSON, so a broken edit fails CI
-# instead of silently deploying.
-#
-# NOTE (folder renamed from apps/landing to apps/site): the secrets
-# below (LANDING_VERCEL_*), the `vercel-landing` environment name, and
-# the `iqraspace-landing.vercel.app` alias in the health check are
-# unchanged on purpose — they're the actual GitHub secret names and the
-# actual Vercel project's settings, which this file can't rename by
-# itself. Renaming those is a manual step in GitHub repo settings and
-# the Vercel dashboard; until that's done, keep these names as-is.
+# apps/site -> Cloudflare Worker `iqraspace-site` (routes iqraspace.org/* and
+# www): static pages via Static Assets plus a Worker script for the /contact
+# form (D1 binding DB; secrets are set on the Worker, never in CI).
+# Path-filtered; `deploy` runs only for a push to main AND only when the
+# repository variable CF_DEPLOY_ENABLED == 'true'. See DEPLOYMENT.md.
 
 on:
   push:
@@ -36,12 +17,10 @@ on:
     paths:
       - "apps/site/**"
       - ".github/workflows/ci-site.yml"
-  # Lets a maintainer re-run validate+deploy from the Actions tab without
-  # needing an empty/no-op commit.
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: site-${{ github.ref }}
   cancel-in-progress: true
 
 defaults:
@@ -50,7 +29,7 @@ defaults:
 
 jobs:
   validate:
-    name: Validate HTML & config
+    name: Validate HTML, config & Worker
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -59,94 +38,98 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20.x"
-
-      - name: Validate vercel.json is valid JSON
-        run: node -e "JSON.parse(require('fs').readFileSync('vercel.json','utf8')); console.log('vercel.json OK')"
+          node-version: "22.x"
 
       - name: Validate package.json is valid JSON
         run: node -e "JSON.parse(require('fs').readFileSync('package.json','utf8')); console.log('package.json OK')"
 
-      - name: Install api/ function dependencies
+      - name: Install dependencies
         run: npm install
 
-      - name: Check api/contact.js syntax
-        run: node -c api/contact.js
+      - name: Run tests (if any)
+        run: npm run test --if-present
+
+      - name: Run Worker tests (if present)
+        run: |
+          if ls worker/*.test.mjs >/dev/null 2>&1; then
+            node --test worker/*.test.mjs
+          else
+            echo "No worker tests found - skipping"
+          fi
 
       - name: Validate index.html
         run: npx --yes html-validate index.html
 
+      - name: Build for Cloudflare
+        run: npm run build:cf
+
   deploy:
-    name: Deploy to Vercel (production)
+    name: Deploy to Cloudflare Workers
     needs: validate
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.CF_DEPLOY_ENABLED == 'true'
     runs-on: ubuntu-latest
-    environment:
-      name: vercel-landing
-      url: ${{ steps.deploy.outputs.url }}
-    env:
-      VERCEL_ORG_ID: ${{ secrets.LANDING_VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.LANDING_VERCEL_PROJECT_ID }}
+    concurrency:
+      group: site-deploy
+      cancel-in-progress: false
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
 
-      # NOT the "vercel pull → vercel build --prod → vercel deploy
-      # --prebuilt --prod" flow ci.yml (apps/web) uses — confirmed on
-      # this project's first real CI run (2026-08-31) that the local
-      # prebuilt/Build Output API packaging serves this static site
-      # differently from Vercel's own remote build: "/" 404'd while
-      # "/robots.txt" served fine (a routing/output-mapping quirk in the
-      # local build step, not this app's code — index.html itself is
-      # correct, confirmed by `vercel deploy --prod` serving it
-      # correctly). Same root cause class as ci-quran.yml's own note on
-      # its Turbopack lambda-tracing failure — the local Build Output API
-      # step is the common factor. Plain `vercel deploy --prod` (remote
-      # build) is proven working for both projects; use it here too for
-      # one consistent, working deploy mechanism.
-      - name: Deploy to Vercel
-        id: deploy
-        run: |
-          url=$(vercel deploy --prod --token="${{ secrets.LANDING_VERCEL_TOKEN }}")
-          echo "Deployed: $url"
-          echo "url=$url" >> "$GITHUB_OUTPUT"
+      - name: Install dependencies
+        run: npm install
 
-      # Checks the STABLE alias, not steps.deploy.outputs.url: confirmed
-      # (first real CI run, 2026-08-31) that this team's Deployment
-      # Protection (SSO) redirects every ephemeral per-deployment URL
-      # (302), same as ci-quran.yml and apps/web's ci.yml already
-      # document — the deploy itself succeeds, only the naive health
-      # check against the ephemeral URL fails.
+      - name: Build for Cloudflare
+        run: npm run build:cf
+
+      - name: Deploy (wrangler)
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: apps/site
+          command: deploy
+
+      # Base URL is the repo variable CF_HEALTHCHECK_BASE (default
+      # https://iqraspace.org). Before DNS cutover point it at the
+      # workers.dev URL for staging.
       - name: Health check
+        env:
+          BASE: ${{ vars.CF_HEALTHCHECK_BASE || 'https://iqraspace.org' }}
         run: |
-          set -e
-          ALIAS_URL="https://iqraspace-landing.vercel.app"
-          for path in "/" "/robots.txt" "/sitemap.xml"; do
-            code=$(curl -s -o /dev/null -w "%{http_code}" "$ALIAS_URL$path")
-            echo "$path -> HTTP $code"
-            if [ "$code" != "200" ]; then
-              echo "::error::Health check failed for $path (HTTP $code)"
-              exit 1
+          set -u
+          fail=0
+          for path in / /robots.txt /sitemap.xml; do
+            ok=0
+            for attempt in 1 2 3 4 5 6 7 8; do
+              code=$(curl -s -o /dev/null -w "%{http_code}" -L "$BASE$path" || echo 000)
+              echo "$path -> HTTP $code (attempt $attempt)"
+              if [ "$code" = "200" ]; then ok=1; break; fi
+              sleep 15
+            done
+            if [ "$ok" != "1" ]; then
+              echo "::error::Health check failed for $BASE$path"
+              fail=1
             fi
           done
+          exit $fail
 
       - name: Deployment summary
         if: always()
         run: |
           {
-            echo "## Deployment Summary"
+            echo "## Deployment Summary (Site)"
             echo ""
             echo "| Field | Value |"
             echo "|---|---|"
             echo "| Status | ${{ job.status }} |"
             echo "| Commit | \`${{ github.sha }}\` |"
-            echo "| Branch | \`${{ github.ref_name }}\` |"
-            echo "| Run | #${{ github.run_number }} (run id ${{ github.run_id }}) |"
+            echo "| Run | #${{ github.run_number }} |"
             echo "| Triggered by | ${{ github.actor }} |"
             echo "| Timestamp (UTC) | $(date -u +'%Y-%m-%d %H:%M:%S') |"
-            echo "| Deployment URL | ${{ steps.deploy.outputs.url }} |"
             echo "| Public URL | https://iqraspace.org |"
           } >> "$GITHUB_STEP_SUMMARY"

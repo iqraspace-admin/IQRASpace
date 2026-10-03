@@ -14,7 +14,7 @@ import { ArrowIcon } from "@/components/ui/ArrowIcon";
  *
  * "Learning" and "Duas" are plain <a>s, not next/link's <Link>: both
  * apps/learning and apps/site (which now owns the Duas feature) are
- * separate Vercel projects/Next.js "zones" stitched under the same
+ * separate deployments, routed under the same
  * iqraspace.org domain only by apps/site's Multi-Zones rewrite (root
  * CLAUDE.md), so these are real cross-zone navigations (a full page
  * load), not an in-app route <Link> would try to resolve within this

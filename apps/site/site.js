@@ -139,8 +139,8 @@
   }
 
   // ---------- Contact form ----------
-  // Posts to /api/contact (a Vercel serverless function — see
-  // apps/site/api/contact.js) which stores the message in Supabase and
+  // Posts to /api/contact (handled by the Cloudflare Worker — see
+  // apps/site/worker/) which stores the message in D1 and optionally
   // emails an alert. Client-side validation runs first either way.
   var form = document.getElementById('contact-form');
   if (form) {

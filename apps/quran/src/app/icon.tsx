@@ -7,6 +7,8 @@ export const contentType = "image/png";
 // See lib/branding/logo.ts for the shared crop math and why a crop is
 // needed at all (the source logo includes the "IQRA SPACE" wordmark,
 // illegible at favicon sizes — this keeps just the icon mark).
+export const dynamic = "force-static";
+
 export default function Icon() {
   return renderCroppedIcon(LOGO_ICON_CROP, size);
 }

@@ -7,6 +7,8 @@
 # next.js
 /.next/
 /out/
+/dist/
+.wrangler/
 
 # Synced Quran content (see scripts/sync-content.mjs) — DELIBERATELY
 # COMMITTED, not gitignored. Reasoning (found during the production
@@ -42,8 +44,7 @@ yarn-error.log*
 .env*
 !.env.local.example
 
-# vercel
-.vercel
+# cloudflare (wrangler local state)
 
 # typescript
 *.tsbuildinfo

@@ -108,8 +108,7 @@ don't skip an app's checks because "it's probably fine":
   `npm run lint` → `npm run typecheck` → `npm run build`
 - **apps/mobile/android**: `flutter analyze` → `flutter test` (from
   `apps/mobile/android`)
-- **apps/site**: validate the HTML and confirm `vercel.json` is valid
-  JSON (no real build step, matching `ci-site.yml`)
+- **apps/site**: `npm run build:cf` and validate the HTML (matching `ci-site.yml`; contact-form Worker tests if present)
 - **Root-only changes** (e.g. root `CLAUDE.md`, `package.json`
   delegator scripts): no app build is required; just sanity-check any
   changed script actually runs.

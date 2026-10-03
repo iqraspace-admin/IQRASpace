@@ -12,6 +12,8 @@ type Props = {
 // SSG for every Surah actually synced (Readme.md §19/§22 — first Quran
 // content should appear extremely quickly, so this is prerendered, not
 // rendered on demand).
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getAllChapters().map((chapter) => ({ surahNumber: String(chapter.id) }));
 }

@@ -10,6 +10,8 @@ const eslintConfig = defineConfig([
     // Default ignores of eslint-config-next:
     ".next/**",
     "out/**",
+    "dist/**",
+    ".wrangler/**",
     "build/**",
     "next-env.d.ts",
     // Vendored pdfjs-dist runtime assets, copied by scripts/copy-pdfjs-assets.mjs

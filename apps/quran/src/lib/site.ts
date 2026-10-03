@@ -6,9 +6,9 @@
  * never drift apart if either ever changes.
  *
  * ARCHITECTURE.md §8: this app is served at https://iqraspace.org/quran
- * via a Multi-Zones rewrite from the root landing app (apps/landing).
- * NEXT_BASE_PATH=/quran is set in this app's own production Vercel
- * project, mirroring next.config.ts's `basePath`. Local dev and CI
+ * as a Cloudflare Worker route on the iqraspace.org zone (wrangler.jsonc).
+ * NEXT_BASE_PATH=/quran is set by `npm run build:cf` (scripts/build-cf.mjs)
+ * for production, mirroring next.config.ts's `basePath`. Local dev and CI
  * builds leave it unset, so URLs built here fall back to the bare
  * origin — correct for those environments too, not just production.
  */

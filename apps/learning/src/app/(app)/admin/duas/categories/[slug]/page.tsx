@@ -1,6 +1,11 @@
-import { CategoryDetailView } from "@/components/admin/duas/CategoryDetailView";
+import { DuaCategoryRoute } from "@/components/RouteEntry";
 
-export default async function DuaCategoryPage(props: PageProps<"/admin/duas/categories/[slug]">) {
-  const { slug } = await props.params;
-  return <CategoryDetailView slug={decodeURIComponent(slug)} />;
+// Static export placeholder shell — see src/lib/routeParam.ts.
+export const dynamicParams = false;
+export function generateStaticParams() {
+  return [{ slug: "_" }];
+}
+
+export default function DuaCategoryPage() {
+  return <DuaCategoryRoute />;
 }

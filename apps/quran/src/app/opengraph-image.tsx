@@ -12,6 +12,8 @@ export const contentType = "image/png";
 // deliberately rather than shared as a token.
 const IVORY_BACKGROUND = "#faf8f2";
 
+export const dynamic = "force-static";
+
 export default function OpengraphImage() {
   const fullImageCrop = { left: 0, top: 0, width: LOGO_SOURCE_SIZE, height: LOGO_SOURCE_SIZE };
   return renderCroppedIcon(fullImageCrop, size, IVORY_BACKGROUND);

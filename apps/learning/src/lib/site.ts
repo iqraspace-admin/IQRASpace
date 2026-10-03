@@ -7,9 +7,9 @@
  * same problem first.
  *
  * This app is served at https://iqraspace.org/learning via a Multi-Zones
- * rewrite from the root landing app (apps/landing) — see
+ * Cloudflare Worker route (iqraspace.org/learning*) — see
  * next.config.ts's basePath comment. NEXT_BASE_PATH=/learning is set in
- * this app's own production Vercel project ("iqraspace"); local dev and
+ * `npm run build:cf` (Cloudflare Workers Static Assets); local dev and
  * CI builds leave it unset, so URLs built here fall back to the bare
  * origin — correct for those environments too, not just production.
  */

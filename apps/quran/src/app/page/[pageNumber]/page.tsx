@@ -8,6 +8,8 @@ type Props = {
   params: Promise<{ pageNumber: string }>;
 };
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getPageNumbers().map((pageNumber) => ({ pageNumber: String(pageNumber) }));
 }

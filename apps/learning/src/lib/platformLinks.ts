@@ -7,7 +7,7 @@ import { quranHomeUrl } from "./quranLink";
  *
  * They are absolute https://iqraspace.org/... URLs on purpose: this app lives
  * under a `/learning` basePath, so a bare "/duas" would resolve to
- * /learning/duas. Absolute links are also correct from the bare Vercel alias
+ * /learning/duas. Absolute links are also correct from the bare workers.dev host
  * and from localhost. Plain `<a>` tags, never next/link — each target is a
  * separate deployment joined only by apps/site's Multi-Zones rewrites.
  * NEXT_PUBLIC_SITE_URL overrides the origin for local dev.

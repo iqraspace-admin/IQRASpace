@@ -1,11 +1,12 @@
-# dependencies (installed by Vercel at deploy time for api/*.js; no need
-# to commit them)
+# dependencies
 /node_modules
 
-# env files — all real .env* files stay untracked, except the
-# placeholder-only example file, which must be committed.
+# env files - real .env* / .dev.vars stay untracked, except the placeholder example.
 .env*
 !.env.local.example
+.dev.vars*
+!.dev.vars.example
 
-# vercel
-.vercel
+# build output / wrangler local state
+/dist
+.wrangler

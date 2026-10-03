@@ -3,6 +3,8 @@
 
 > **Freshness note:** Free-tier limits and OAuth policies for Google, Supabase, Vercel, Netlify, Cloudflare, and Firebase change fairly often. The figures in this document reflect my knowledge as of early 2026. Before you commit to a platform, re-check its current pricing/limits page — I've flagged the numbers most likely to drift, and the ToS clauses (e.g. Vercel's Hobby-plan restriction) that matter most for a paid tutoring service.
 
+> **Historical note (2026):** this document is the original architecture study. Hosting has since moved from Vercel to Cloudflare Workers (one Worker per app on the `iqraspace.org` zone); the Vercel/Netlify comparison below is kept for history only. See `DEPLOYMENT.md` for the current setup.
+
 ---
 
 ## 1. Solution Overview

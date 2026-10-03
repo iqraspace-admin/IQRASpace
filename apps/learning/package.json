@@ -10,13 +10,14 @@
     "dev": "next dev",
     "prebuild": "node scripts/copy-pdfjs-assets.mjs",
     "build": "next build",
-    "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test:duas": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test src/lib/duas/*.test.ts",
     "seed:admins": "node --env-file=.env.local scripts/seed-admin-accounts.mjs",
     "seed:surah-lessons": "node --env-file=.env.local scripts/seed-surah-lessons.mjs",
-    "migrate:storage-to-r2": "node --env-file=.env.local scripts/migrate-storage-to-r2.mjs"
+    "migrate:storage-to-r2": "node --env-file=.env.local scripts/migrate-storage-to-r2.mjs",
+    "build:cf": "node scripts/build-cf.mjs",
+    "test:worker": "node --test worker/*.test.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.4",

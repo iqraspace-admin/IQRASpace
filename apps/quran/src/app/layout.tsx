@@ -15,7 +15,7 @@ import { AudioProvider } from "@/lib/audio/AudioProvider";
 import { MiniPlayerBar } from "@/components/audio/MiniPlayerBar";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
-import { canonicalUrl } from "@/lib/site";
+import { basePath, canonicalUrl } from "@/lib/site";
 import "./globals.css";
 
 // Amiri: the standard open-source Arabic typeface for Quranic-script UI
@@ -101,6 +101,15 @@ export const metadata: Metadata = {
   description:
     "Read. Listen. Learn. Reflect. A free, fast, and accessible way to read the Quran on any device.",
   alternates: { canonical: canonicalUrl("/") },
+  // Explicit icon links: with output: "export" + basePath, Next emits the
+  // file-convention icon hrefs (app/icon.tsx, app/apple-icon.tsx) WITHOUT
+  // the basePath prefix ("/icon?hash"), which on iqraspace.org would hit
+  // the apex site instead of this app. The files themselves are emitted at
+  // <basePath>/icon and <basePath>/apple-icon.
+  icons: {
+    icon: [{ url: `${basePath()}/icon`, type: "image/png", sizes: "512x512" }],
+    apple: [{ url: `${basePath()}/apple-icon`, type: "image/png", sizes: "180x180" }],
+  },
   // No `manifest:` field here — src/app/manifest.ts (a Next.js metadata
   // route) makes Next auto-emit the <link rel="manifest"> tag with the
   // correct basePath-prefixed href itself; a hardcoded "/manifest.webmanifest"

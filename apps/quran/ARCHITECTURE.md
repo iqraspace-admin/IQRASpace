@@ -30,7 +30,7 @@ This mirrors the master prompt's own architecture (§8, §39): the Quran text/tr
 
 ## 2. Decision: independent app, independent infra
 
-**Decision:** `apps/quran` is a new, independent Next.js app inside the existing monorepo — its own `package.json`, own Supabase project, own Vercel project, own CI job. It does not import from or depend on `apps/web`.
+**Decision:** `apps/quran` is a new, independent Next.js app inside the existing monorepo — its own `package.json`, own Supabase project, own Cloudflare Worker deployment, own CI job. It does not import from or depend on `apps/web`.
 
 **Alternatives considered:**
 - Add Quran-reading routes directly into `apps/web`. Rejected — different audience (public/anonymous vs. authenticated tutor-student), different auth model, different privacy posture (minors' PII lives in `apps/web`'s DB; this product should not need to touch that data at all), different deploy cadence and risk profile. Mixing them raises the blast radius of any RLS mistake and couples two products' release cycles for no benefit.
@@ -38,7 +38,7 @@ This mirrors the master prompt's own architecture (§8, §39): the Quran text/tr
 
 **Reason:** matches how `apps/web` itself is already structured (fully self-contained app, root `package.json` just delegates via `--prefix`), and keeps the two products able to fail, scale, and deploy independently.
 
-**Cost impact:** $0 — a second Vercel project and a second Supabase project are both free-tier at this scale. **[NEEDS VERIFICATION: current Supabase free-tier project-count limit per organization]** before assuming a second free project is available without any plan change.
+**Cost impact:** $0 — a Cloudflare Worker (static assets) and a second Supabase project are both free-tier at this scale. **[NEEDS VERIFICATION: current Supabase free-tier project-count limit per organization]** before assuming a second free project is available without any plan change.
 
 **Future impact:** fully reversible — nothing in this design prevents later consolidation (e.g. a shared design-tokens package) if it ever earns its complexity.
 
@@ -65,7 +65,7 @@ This mirrors the master prompt's own architecture (§8, §39): the Quran text/tr
 
 **Reason:** resilience and performance are named as the two highest priorities (§19, §42); a static/CDN-first design satisfies both and costs nothing extra.
 
-**Cost impact:** $0 at this scale — static assets on Vercel's CDN or a Cloudflare-fronted bucket are within any relevant free tier.
+**Cost impact:** $0 at this scale — static assets served from Cloudflare Workers Static Assets (free plan: static asset requests are free and unlimited) are within any relevant free tier.
 
 **Future impact:** fully reversible — a future move to a different provider only touches the sync script and its output format, not the app's read path.
 
@@ -99,16 +99,16 @@ This mirrors the master prompt's own architecture (§8, §39): the Quran text/tr
 
 ## 8. Hosting, CI/CD
 
-- **Hosting:** Vercel, new project, Hobby (free) tier — genuinely compliant here (unlike the existing tutoring app) since this product is explicitly non-commercial/free-for-users, which is exactly what Vercel's Hobby ToS permits.
-- **CI/CD:** a path-filtered addition to (or a second file alongside) `.github/workflows/ci.yml`, scoped to `apps/quran/**`, so this app's pipeline is fully independent of the tutoring app's — a break in one never blocks or redeploys the other. Same `validate` (lint/typecheck/build) → `deploy` (Vercel CLI, prebuilt, prod) → health-check shape as the existing workflow, since it's already proven in this repo.
-- **Environments:** `development` (local), `preview` (per-PR Vercel preview deploys), `production` — per the master prompt's explicit naming rule (§30: "do not use confusing environment names such as 'pilot' for the production deployment environment").
+- **Hosting:** Cloudflare Workers Static Assets (assets-only Worker `iqraspace-quran`, free plan) serving a Next.js static export (`output: "export"`). Migrated from Vercel Hobby; see `DEPLOYMENT.md`.
+- **CI/CD:** a path-filtered workflow scoped to `apps/quran/**` (`.github/workflows/ci-quran.yml`), so this app's pipeline is fully independent of the tutoring app's — a break in one never blocks or redeploys the other. `validate` (lint/typecheck/`npm run build:cf`) → `deploy` (`wrangler deploy`) → health check.
+- **Environments:** `development` (local, `npm run dev`), `production` — per the master prompt's explicit naming rule (§30: "do not use confusing environment names such as 'pilot' for the production deployment environment"). There are no per-PR preview deployments after the Cloudflare migration (a preview Worker version can be added later if wanted).
 - **Domain — decided:** `iqraspace.org/quran` (a path under the main IqraSpace domain, not a subdomain). This means `apps/quran` is not the only thing served from `iqraspace.org` — something else owns the domain root, and this app owns only the `/quran` path.
 
-  **What owns the root — decided 2026-08-31, during the production deployment pass:** a new, minimal, independent static site, `apps/landing` — a single page (brand wordmark, tagline, one link into `/quran`), its own Vercel project, no framework/build step (deliberately — nothing here justifies one). It performs the Multi-Zones rewrite described below. See `apps/landing/vercel.json` and `DEPLOYMENT.md`. This was chosen over the two other options on the table (the tutoring app owning the root; a future ecosystem hub per Readme.md §40 owning it) because both would have blocked getting `iqraspace.org` live now on work that doesn't exist yet — `apps/landing` can be replaced by either later without apps/quran changing at all, since the rewrite is the only thing that points at it.
+  **What owns the root — decided 2026-08-31, during the production deployment pass:** `apps/site` (originally a single-page `apps/landing`), a static site with no framework. Path routing to this app is done on the Cloudflare side: the `iqraspace-quran` Worker has the route `iqraspace.org/quran*` (see `wrangler.jsonc`), so the root site can be replaced later without apps/quran changing at all. This was chosen over the two other options on the table (the tutoring app owning the root; a future ecosystem hub per Readme.md §40 owning it) because both would have blocked getting `iqraspace.org` live now on work that doesn't exist yet.
 
-  **How this gets wired up (Next.js Multi-Zones — do this when the Vercel project is created, not before):** `apps/quran` stays a fully independent app/deployment (per §2 — this decision doesn't change that), but is configured with `basePath: '/quran'` so every route, link, and static asset it generates is automatically prefixed. Whatever serves `iqraspace.org`'s root then adds a rewrite (`rewrites()` in its own `next.config`, or a `vercel.json` rewrite) sending `/quran/:path*` to this app's deployment URL. Each app keeps deploying independently — this is a routing-layer stitch, not a merge.
+  **How this is wired up (Cloudflare Worker routes — replaced the earlier Vercel Multi-Zones rewrite):** `apps/quran` stays a fully independent app/deployment (per §2), configured with `basePath: '/quran'` so every route, link, and static asset it generates is automatically prefixed; the build output is placed under `dist/quran/` so URLs map 1:1 to files. The Worker route `iqraspace.org/quran*` sends matching requests to it; each app keeps deploying independently — this is a routing-layer stitch, not a merge.
 
-  **Prepared now, low-risk:** `next.config.ts` reads `basePath` from `NEXT_BASE_PATH`, defaulting to unset. Local dev and this repo's CI build are unaffected today (the env var isn't set anywhere yet); the production Vercel project, once created, sets `NEXT_BASE_PATH=/quran` and nothing else in the app needs to hardcode the `/quran` prefix — Next.js's own `<Link>`/asset handling does it automatically. This is intentionally the only piece of domain wiring done ahead of time (§37 — avoid building infrastructure that has nothing to attach to yet); the rewrite on the domain-root side, and the Vercel project itself, are done when that project actually exists.
+  **Base path:** `next.config.ts` reads `basePath` from `NEXT_BASE_PATH`, unset for local dev; `npm run build:cf` sets it to `/quran` and nothing else in the app needs to hardcode the `/quran` prefix — Next.js's own `<Link>`/asset handling does it automatically (the one exception is the explicit `metadata.icons` in `layout.tsx`, needed because Next omits the prefix for file-convention icons under static export).
 
 ## 9. Security & privacy posture
 

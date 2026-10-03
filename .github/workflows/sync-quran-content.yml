@@ -1,0 +1,66 @@
+name: Sync Quran content
+
+# Weekly re-sync of Quran Foundation content (licence requires a re-sync at
+# least every 7 days — see apps/quran/QURAN-CONTENT.md). If
+# src/content/generated changed, opens a PR on chore/quran-content-sync
+# rather than pushing to main. Merging that PR triggers ci-quran.yml.
+# Disabled until repository variable QURAN_SYNC_ENABLED == 'true'.
+
+on:
+  schedule:
+    - cron: "17 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: sync-quran-content
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Sync content and open PR
+    if: vars.QURAN_SYNC_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/quran
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: "npm"
+          cache-dependency-path: apps/quran/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Run the script directly (not `npm run sync:content`, which loads
+      # --env-file=.env.local); credentials come from repo secrets.
+      - name: Sync content
+        run: node scripts/sync-content.mjs
+        env:
+          QURAN_FOUNDATION_ENV: ${{ secrets.QURAN_FOUNDATION_ENV }}
+          QURAN_FOUNDATION_CLIENT_ID: ${{ secrets.QURAN_FOUNDATION_CLIENT_ID }}
+          QURAN_FOUNDATION_CLIENT_SECRET: ${{ secrets.QURAN_FOUNDATION_CLIENT_SECRET }}
+          QURAN_FOUNDATION_PROD_CLIENT_ID: ${{ secrets.QURAN_FOUNDATION_PROD_CLIENT_ID }}
+          QURAN_FOUNDATION_PROD_CLIENT_SECRET: ${{ secrets.QURAN_FOUNDATION_PROD_CLIENT_SECRET }}
+
+      - name: Open pull request if content changed
+        uses: peter-evans/create-pull-request@v7
+        with:
+          add-paths: apps/quran/src/content/generated
+          branch: chore/quran-content-sync
+          base: main
+          commit-message: "chore(quran): weekly content re-sync"
+          title: "chore(quran): weekly content re-sync"
+          body: |
+            Automated weekly re-sync of Quran Foundation content
+            (`apps/quran/src/content/generated`). Merging deploys it via ci-quran.yml.
+          delete-branch: true
