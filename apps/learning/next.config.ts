@@ -20,6 +20,12 @@ const nextConfig: NextConfig = {
   // `npm run build:cf`); unset for local dev, which serves from the bare origin.
   basePath: process.env.NEXT_BASE_PATH || undefined,
 
+  // Expose the same basePath to client-bundled code as NEXT_PUBLIC_BASE_PATH
+  // (inlined at build time): plain <img> and pdf.js asset URLs under public/
+  // need the explicit prefix because next/image is not used. This used to be a
+  // Vercel dashboard env var.
+  env: { NEXT_PUBLIC_BASE_PATH: process.env.NEXT_BASE_PATH ?? "" },
+
 };
 
 export default nextConfig;
