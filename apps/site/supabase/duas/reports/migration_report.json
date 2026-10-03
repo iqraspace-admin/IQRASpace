@@ -1,0 +1,1672 @@
+{
+ "generated_at": "2026-10-03T10:28:27.561Z",
+ "counts": {
+  "legacy_entries_imported": 106,
+  "legacy_mappings_preserved": 106,
+  "canonical_duas_from_legacy": 102,
+  "merged_legacy_entries": 4,
+  "corrected": 3,
+  "same_category_duplicates_kept": 1,
+  "titles_cleaned": 20,
+  "repeat_counts_structured": 6,
+  "repeat_counts_need_manual_structuring": 3,
+  "urdu_translit_copies_dropped": 106,
+  "categories_total": 41,
+  "categories_from_legacy": 25,
+  "duas_total": 197,
+  "duas_published": 102,
+  "duas_draft": 95,
+  "mappings_total": 213,
+  "verification_verified": 9,
+  "verification_unchecked": 82,
+  "verification_needs_review": 106,
+  "translation_ur_populated": 10,
+  "hadith_number_populated": 73,
+  "invalid": 0,
+  "wyn_entries_audited": 178,
+  "wyn_new_categories": 16,
+  "wyn_matched_and_tagged": 44,
+  "wyn_category_mappings_added": 11,
+  "wyn_missing_total": 110,
+  "wyn_missing_instruction_or_narration_not_stubbed": 14,
+  "wyn_missing_stubs_created": 95,
+  "wyn_missing_entries_folded_into_other_stub": 1,
+  "wyn_stubs_with_quran_arabic_prefilled": 9,
+  "wyn_incomplete_iqs_duas_flagged": 8,
+  "wyn_hadith_numbers_filled": 13
+ },
+ "corrections": [
+  {
+   "id": "A-istikhara",
+   "slug": "knowledge-istikharah-seeking-guidance-in-a-decision",
+   "legacy_key": "knowledge#2",
+   "source": "Sahih al-Bukhari 1166",
+   "arabic_chars_before": 204,
+   "arabic_chars_after": 641,
+   "legacy_first_part_matches_source": true,
+   "status": "applied"
+  },
+  {
+   "id": "B-ayat-al-kursi",
+   "slug": "ayat-al-kursi",
+   "source": "Qur'an 2:255",
+   "arabic_chars_after": 427,
+   "legacy_prefix_consistent": true,
+   "status": "applied"
+  },
+  {
+   "id": "C-three-quls",
+   "slug": "three-quls",
+   "source": "Qur'an 112-114",
+   "arabic_chars_after": 432,
+   "legacy_prefix_consistent": true,
+   "status": "applied"
+  }
+ ],
+ "merged": [
+  {
+   "canonical_slug": "ayat-al-kursi",
+   "reason": "Same Qur'anic verse (2:255); sleep#2 was a truncated copy of evening#2",
+   "members": [
+    "evening#2",
+    "sleep#2"
+   ],
+   "members_with_identical_normalized_arabic": 1,
+   "kept_as_context_overrides": [
+    "title",
+    "title_ur",
+    "note",
+    "reference",
+    "repeat_count"
+   ]
+  },
+  {
+   "canonical_slug": "three-quls",
+   "reason": "Same three Surahs recited in two contexts; both legacy Arabic fields were truncated",
+   "members": [
+    "evening#3",
+    "sleep#3"
+   ],
+   "members_with_identical_normalized_arabic": 1,
+   "kept_as_context_overrides": [
+    "title",
+    "title_ur",
+    "note",
+    "reference",
+    "repeat_count"
+   ]
+  },
+  {
+   "canonical_slug": "bismillah",
+   "reason": "Identical Arabic (Bismillah) before wudu and before eating",
+   "members": [
+    "wudu#0",
+    "food#0"
+   ],
+   "members_with_identical_normalized_arabic": 2,
+   "kept_as_context_overrides": [
+    "title",
+    "title_ur",
+    "note",
+    "reference",
+    "repeat_count"
+   ]
+  },
+  {
+   "canonical_slug": "seeking-refuge-from-the-accursed-devil",
+   "reason": "Identical Arabic (A'udhu billahi minash-shaytanir-rajim) for anger and for whispers in prayer",
+   "members": [
+    "anger#0",
+    "faith#1"
+   ],
+   "members_with_identical_normalized_arabic": 2,
+   "kept_as_context_overrides": [
+    "title",
+    "title_ur",
+    "note",
+    "reference",
+    "repeat_count"
+   ]
+  }
+ ],
+ "same_category_duplicates": [
+  [
+   "hajj#2",
+   "hajj#3"
+  ]
+ ],
+ "title_changes": [
+  {
+   "key": "morning#0",
+   "from": "Morning remembrance (x1)",
+   "to": "Morning remembrance"
+  },
+  {
+   "key": "morning#3",
+   "from": "Protection, said 3 times",
+   "to": "Protection"
+  },
+  {
+   "key": "evening#0",
+   "from": "Evening remembrance (x1)",
+   "to": "Evening remembrance"
+  },
+  {
+   "key": "evening#3",
+   "from": "The three Quls (Ikhlas, Falaq, Nas), x3 each",
+   "to": "The three Quls (Ikhlas, Falaq, Nas)"
+  },
+  {
+   "key": "salah#8",
+   "from": "Prostration of Qur'an recitation, sajdat at-tilawah (ch.21)",
+   "to": "Prostration of Qur'an recitation, sajdat at-tilawah"
+  },
+  {
+   "key": "salah#9",
+   "from": "General remembrance after the salam (ch.25)",
+   "to": "General remembrance after the salam"
+  },
+  {
+   "key": "food#5",
+   "from": "For someone who feeds or gives you drink (ch.72)",
+   "to": "For someone who feeds or gives you drink"
+  },
+  {
+   "key": "travel#3",
+   "from": "The fuller traveling dua (ch.96)",
+   "to": "The fuller traveling dua"
+  },
+  {
+   "key": "travel#4",
+   "from": "The traveler's farewell to the one staying behind (ch.100)",
+   "to": "The traveler's farewell to the one staying behind"
+  },
+  {
+   "key": "travel#5",
+   "from": "The one staying behind, to the traveler (ch.101)",
+   "to": "The one staying behind, to the traveler"
+  },
+  {
+   "key": "weather#5",
+   "from": "If rain becomes excessive or harmful (ch.66)",
+   "to": "If rain becomes excessive or harmful"
+  },
+  {
+   "key": "grief#5",
+   "from": "Upon closing the eyes of one who has died (ch.54)",
+   "to": "Upon closing the eyes of one who has died"
+  },
+  {
+   "key": "grief#6",
+   "from": "Placing the deceased into the grave (ch.58)",
+   "to": "Placing the deceased into the grave"
+  },
+  {
+   "key": "social#4",
+   "from": "Upon sneezing, said by the sneezer himself (ch.77)",
+   "to": "Upon sneezing, said by the sneezer himself"
+  },
+  {
+   "key": "social#5",
+   "from": "Replying to 'may Allah forgive you and us' (ch.86)",
+   "to": "Replying to 'may Allah forgive you and us'"
+  },
+  {
+   "key": "social#6",
+   "from": "For someone who has done you a favor (ch.87)",
+   "to": "For someone who has done you a favor"
+  },
+  {
+   "key": "social#7",
+   "from": "Reply when told 'I love you for Allah's sake' (ch.89)",
+   "to": "Reply when told 'I love you for Allah's sake'"
+  },
+  {
+   "key": "social#8",
+   "from": "To dispel a superstitious omen (ch.94)",
+   "to": "To dispel a superstitious omen"
+  },
+  {
+   "key": "faith#0",
+   "from": "When troubled by doubts about faith (ch.40)",
+   "to": "When troubled by doubts about faith"
+  },
+  {
+   "key": "faith#1",
+   "from": "Seeking refuge from distracting whispers in prayer (ch.45)",
+   "to": "Seeking refuge from distracting whispers in prayer"
+  }
+ ],
+ "repeat_counts_structured": [
+  {
+   "key": "morning#0",
+   "count": 1,
+   "evidence": "occasion '(x1)'"
+  },
+  {
+   "key": "evening#0",
+   "count": 1,
+   "evidence": "occasion '(x1)'"
+  },
+  {
+   "key": "morning#3",
+   "count": 3,
+   "evidence": "occasion 'said 3 times'"
+  },
+  {
+   "key": "evening#3",
+   "count": 3,
+   "evidence": "occasion 'x3 each'"
+  },
+  {
+   "key": "sleep#3",
+   "count": 3,
+   "evidence": "translation 'repeated three times'"
+  },
+  {
+   "key": "witr#1",
+   "count": 3,
+   "evidence": "translation 'said three times'"
+  }
+ ],
+ "repeat_counts_needing_manual_structuring": [
+  {
+   "key": "salah#9",
+   "why": "forgiveness phrase 'three times' inside a multi-part dhikr"
+  },
+  {
+   "key": "sickness#1",
+   "why": "two parts: 'three times' and 'seven times'"
+  },
+  {
+   "key": "faith#1",
+   "why": "'spitting lightly to the left three times' is an instruction, not a recitation count"
+  }
+ ],
+ "needs_review": [
+  {
+   "slug": "ayat-al-kursi",
+   "status": "published",
+   "notes": "Arabic = Qur'an 2:255 from IqraSpace's Quran dataset (text_uthmani); English = Saheeh International; Latin transliteration = Al Quran Cloud en.transliteration. Telugu transliteration removed (the legacy text covered only the first words) — app falls back to Latin until a complete Telugu transliteration is supplied. NEEDS MANUAL VERIFICATION of transliteration only. Wa Iyyaka entry WYN-0006 appears to be longer than this text (Ayat al-Kursi. IQS evening#2 stops at \"la ta'khudhuhu sinatun wa la nawm\" (verified truncation); sleep#2 duplicates it. Qur'an 2:255 reference matches.). Wa Iyyaka entry WYN-0055 appears to be longer than this text (Instruction entry: recite Ayat al-Kursi at night. IQS sleep#2 covers the same practice (Bukhari) but its Arabic is truncated.). translation_ur = Urdu translation of the Qur'an (Al Quran Cloud ur.maududi, Tafheem ul Quran), unmodified."
+  },
+  {
+   "slug": "three-quls",
+   "status": "published",
+   "notes": "Arabic = Surahs 112-114 from IqraSpace's Quran dataset (text_uthmani, Bismillah not prefixed); English = Saheeh International; Latin = Al Quran Cloud en.transliteration. Telugu transliteration removed (legacy covered only 1 ayah) — app falls back to Latin. NEEDS MANUAL VERIFICATION of transliteration only. Wa Iyyaka entry WYN-0019 appears to be longer than this text (Surah al-Ikhlas. IQS evening#3 holds only Al-Ikhlas v1 (verified data error); one IQS entry stands for three WYN entries.). Wa Iyyaka entry WYN-0020 appears to be longer than this text (Surah al-Falaq: IQS evening#3 does not contain its Arabic text (verified data error).). Wa Iyyaka entry WYN-0021 appears to be longer than this text (Surah an-Nas: IQS evening#3 does not contain its Arabic text (verified data error).). translation_ur = Urdu translation of the Qur'an (Al Quran Cloud ur.maududi, Tafheem ul Quran), unmodified."
+  },
+  {
+   "slug": "salah-general-remembrance-after-the-salam",
+   "status": "published",
+   "notes": "Hisnul Muslim chapter 25 (from legacy title). Repetition counts are embedded in the translation text (forgiveness phrase 'three times' inside a multi-part dhikr); structure manually."
+  },
+  {
+   "slug": "home-congratulating-new-parents",
+   "status": "published",
+   "notes": "Reference \"General Sunnah practice\" is descriptive, with no collection or hadith number — find the source."
+  },
+  {
+   "slug": "anxiety-for-anxiety-and-sorrow",
+   "status": "published",
+   "notes": "Wa Iyyaka entry WYN-0152 appears to be longer than this text (Same hadith (Bukhari). The WYN opening continues \"...wa dala'id daini wa ghalabatir rijal\"; IQS ends at \"wal-bukhli wal-jubn\". IQS Arabic appears shorter than the printed WYN text. Confirm.)."
+  },
+  {
+   "slug": "seeking-refuge-from-the-accursed-devil",
+   "status": "published",
+   "notes": "Repetition counts are embedded in the translation text ('spitting lightly to the left three times' is an instruction, not a recitation count); structure manually. Hadith number Sahih Muslim 5738 from the Wa Iyyaka inventory (WYN-0063), reference verified against the hadith corpus in that research; numbering follows that source."
+  },
+  {
+   "slug": "sickness-placing-the-hand-on-the-site-of-pain",
+   "status": "published",
+   "notes": "Repetition counts are embedded in the translation text (two parts: 'three times' and 'seven times'); structure manually. Hadith number Sahih Muslim 5737 from the Wa Iyyaka inventory (WYN-0094), reference verified against the hadith corpus in that research; numbering follows that source."
+  },
+  {
+   "slug": "grief-for-a-deceased-loved-one",
+   "status": "published",
+   "notes": "Wa Iyyaka entry WYN-0111 appears to be longer than this text (Same hadith (Muslim) but the WYN opening continues \"...wa akrim nuzulahu\"; IQS ends at \"wa'fu anhu\". IQS Arabic appears shorter than the printed WYN text. Confirm against the full text.)."
+  },
+  {
+   "slug": "knowledge-istikharah-seeking-guidance-in-a-decision",
+   "status": "published",
+   "notes": "Arabic completed from Sahih al-Bukhari 1166 (fawazahmed0 ara-bukhari corpus; wording preserved, orthography normalised, narrator \"or he said\" in parentheses). The hadith number comes from the corpus numbering and the research inventory (IK1: printed Bukhari 1116 is a different hadith; the Istikhara hadith is 1166). English continuation and Latin transliteration continuation were drafted by IqraSpace — NEEDS MANUAL VERIFICATION against a scholarly translation. Telugu transliteration removed (legacy covered only the first third) — app falls back to Latin. Wa Iyyaka entry WYN-0178 appears to be longer than this text (Istikhara: IQS Arabic stops after \"wa anta allamul ghuyub\" and omits the continuation naming the matter (verified data error). Printed B 1116 flagged in the inventory as probable transposition of 1166. | Inventory: REFERENCE CHECK: Printed B 1116 (sunnah.com confirmed) is a hadith on praying while sitting (Imran bin Husain). The Istikhara hadith of Jabir is Sahih al-Bukhari 1166 (also 6382, 7390; T 480, N 3253, IM 1383). Likely typographical transposition; requires verification.)."
+  },
+  {
+   "slug": "social-greeting-a-fellow-muslim",
+   "status": "published",
+   "notes": "Reference \"Sunnah greeting\" is descriptive, with no collection or hadith number — find the source."
+  },
+  {
+   "slug": "social-replying-to-may-allah-forgive-you-and-us",
+   "status": "published",
+   "notes": "Hisnul Muslim chapter 86 (from legacy title). Reference \"General Sunnah reply\" is descriptive, with no collection or hadith number — find the source."
+  },
+  {
+   "slug": "wyn-0001-subhan-allahi-wa-bi-hamdihi-subhan-allahil-azim",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0001 (Hamd o Sana (Praise and Glorification)); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0002-allahu-akbaru-kabira-n-w-wal-hamdulillahi-kathir",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0002 (Hamd o Sana (Praise and Glorification)); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0005-subhan-allahi-wa-bi-hamdihi-adada-khalqihi-wa-ri",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0005 (Morning and Evening Adhkar); VERIFIED reference check in the research inventory; printed repetition: \"3\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0008-asbahna-ala-fitratil-islam-wa-ala-kalimatil-ikhl",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0008 (Morning and Evening Adhkar); UNCHECKED_SECONDARY reference check in the research inventory; printed repetition: \"1\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0009-allahumma-fatiras-samawati-wal-ard-alimal-ghaibi",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0009 (Morning and Evening Adhkar); VERIFIED reference check in the research inventory; printed repetition: \"1\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0014-allahumma-afini-fi-badani-allahumma-afini-fi-sam",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0014 (Morning and Evening Adhkar); VERIFIED reference check in the research inventory; printed repetition: \"3\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Hasan."
+  },
+  {
+   "slug": "wyn-0015-allahumma-inni-audhu-bika-minal-kufri-wal-faqr",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0015 (Morning and Evening Adhkar); VERIFIED reference check in the research inventory; printed repetition: \"3\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Hasan."
+  },
+  {
+   "slug": "wyn-0016-ya-hayyu-ya-qayyumu-bi-rahmatika-astaghithu-asli",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0016 (Morning and Evening Adhkar); UNCHECKED_SECONDARY reference check in the research inventory; printed repetition: \"1\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Hasan."
+  },
+  {
+   "slug": "wyn-0018-allahumma-inni-asalukal-afiyata-fid-dunya-wal-ak",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0018 (Morning and Evening Adhkar); VERIFIED reference check in the research inventory; printed repetition: \"1\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0023-subhanallahi-wa-bihamdihi",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0023 (Morning and Evening Adhkar); VERIFIED reference check in the research inventory; printed repetition: \"100\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0024-astaghfirullah",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0024 (Morning and Evening Adhkar); UNCHECKED_SECONDARY reference check in the research inventory; printed repetition: \"100\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0025-samia-samiun-bi-hamdillahi-wa-husni-balaihi-alai",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0025 (Morning and Evening Adhkar); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0026-allahumma-inni-audhu-bika-min-munkaratil-akhlaqi",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0026 (Protection and Safety); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0027-allahumma-inni-audhu-bika-min-sharri-ma-amiltu-w",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0027 (Protection and Safety); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0028-allahumma-inni-audhu-bika-minal-barasi-wal-junun",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0028 (Protection and Safety); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0029-allahumma-inni-audhu-bika-min-diqid-dunya-wa-diq",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0029 (Protection and Safety); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Hasan Sahih."
+  },
+  {
+   "slug": "wyn-0030-allahumma-inni-audhu-bika-min-qawlin-la-yusmau-w",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0030 (Protection and Safety); UNCHECKED_SECONDARY reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0032-allahumma-inni-audhu-bika-min-jahdil-balai-wa-da",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0032 (Protection and Safety); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0033-allahumma-inni-audhu-bika-minal-faqri-wal-qillat",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0033 (Protection and Safety); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0034-allahumma-inni-audhu-bika-min-zawali-nimatika-wa",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0034 (Protection and Safety); REFERENCE_MISMATCH reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0035-allahumma-inni-audhu-bika-min-sharri-sami-wa-min",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0035 (Protection and Safety); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0036-allahumma-inni-audhu-bika-min-ilmin-la-yanfau",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0036 (Protection and Safety); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0037-allahumma-inni-audhu-bika-minal-jui-minal-khiyan",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0037 (Protection and Safety); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Hasan."
+  },
+  {
+   "slug": "wyn-0038-allahumma-inni-audhu-bika-minal-ajzi-wal-kasali",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0038 (Protection and Safety); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0039-allahumma-inni-audhu-bika-min-yawmis-sui-wa-min",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0039 (Protection and Safety); UNCHECKED_SECONDARY reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Hasan."
+  },
+  {
+   "slug": "wyn-0040-audhu-billahi-an-uradda-ila-ardhalil-umuri",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0040 (Protection and Safety); UNCHECKED_SECONDARY reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0042-allahumma-inni-audhu-bika-minat-taraddi-wal-hadm",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0042 (Protection and Safety); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0043-allahumma-inni-audhu-bika-minal-ajzi-wal-kasali",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0043 (Protection and Safety); UNCHECKED_SECONDARY reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0044-allahumma-inni-audhu-bika-min-jaris-sui-wa-min-z",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0044 (Protection and Safety); UNCHECKED_SECONDARY reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not printed."
+  },
+  {
+   "slug": "wyn-0045-allahumma-laka-aslamtu-wa-bika-amantu-wa-alaika",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0045 (Protection and Safety); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0046-allahumma-rabbas-samawati-wa-rabbal-ardi-wa-rabb",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0046 (Protection and Safety); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0048-allahummak-finihim-bima-shita",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0048 (Protection from Enemies); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0049-allahumma-inna-najaluka-fi-nuhurihim-wa-naudhubi",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0049 (Protection from Enemies); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0050-inni-udhtu-bi-rabbi-wa-rabbikum-min-kulli-mutaka",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0050 (Protection from Enemies); VERIFIED reference check in the research inventory. Arabic/English are the referenced Qur'an passage from IqraSpace's dataset / Saheeh International; confirm this is the full wording the dua uses and add a transliteration. Printed grade: Not applicable / not printed. translation_ur = Urdu translation of the Qur'an (Al Quran Cloud ur.maududi, Tafheem ul Quran), unmodified."
+  },
+  {
+   "slug": "wyn-0051-allahumma-mattini-bisami-wa-basari-wajalhumal-wa",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0051 (Protection from Enemies); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Hasan."
+  },
+  {
+   "slug": "wyn-0052-allahumma-rabbas-samawatis-sabi-wa-rabbal-arshil",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0052 (Protection from Enemies); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0053-allahu-akbar-allahu-aazzu-min-khalqihi-jamian-th",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0053 (Protection from Enemies); VERIFIED reference check in the research inventory; printed repetition: \"3\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0059-spit-on-the-left-side-three-times-and-read-audhu",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0059 (Bad Dreams); VERIFIED reference check in the research inventory; printed repetition: \"3\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0065-rabbi-audhubika-min-hamazatish-shayatin-wa-audhu",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0065 (Waswasa / Evil Whisperings); VERIFIED reference check in the research inventory; printed repetition: \"3\". Arabic/English are the referenced Qur'an passage from IqraSpace's dataset / Saheeh International; confirm this is the full wording the dua uses and add a transliteration. Printed grade: Not applicable / not printed. translation_ur = Urdu translation of the Qur'an (Al Quran Cloud ur.maududi, Tafheem ul Quran), unmodified."
+  },
+  {
+   "slug": "wyn-0066-audhu-billahis-samiil-alimi-minash-shaitanir-raj",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0066 (Waswasa / Evil Whisperings); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0067-huwal-awwalu-wal-akhiru-waz-zahiru-wal-batinu-wa",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0067 (Waswasa / Evil Whisperings); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Hasan."
+  },
+  {
+   "slug": "wyn-0068-allahu-akbar-allahu-akbar-allahu-akbar-alhamdu-l",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0068 (Waswasa / Evil Whisperings); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0072-bismillahi-arqika-min-kulli-shaiin-yudhika-min-s",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0072 (Evil Eye / Nazar); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0073-bismillahi-yubrika-wa-min-kulli-dain-yashfika-wa",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0073 (Evil Eye / Nazar); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0080-audhu-billahis-samiil-alimi-min-ash-shaitanir-ra",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0080 (Protection from Magic (Black Magic)); VERIFIED reference check in the research inventory; printed repetition: \"3\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0081-audhu-billahil-azimi-biwajhihil-karimi-wa-sultan",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0081 (Protection from Magic (Black Magic)); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0093-anni-massaniyad-durru-wa-anta-arhamur-rahimin",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0093 (Healing); VERIFIED reference check in the research inventory. Arabic/English are the referenced Qur'an passage from IqraSpace's dataset / Saheeh International; confirm this is the full wording the dua uses and add a transliteration. Printed grade: Not applicable / not printed. translation_ur = Urdu translation of the Qur'an (Al Quran Cloud ur.maududi, Tafheem ul Quran), unmodified."
+  },
+  {
+   "slug": "wyn-0095-asalullahal-azima-rabbal-arshil-azimi-an-yashfiy",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0095 (Healing); VERIFIED reference check in the research inventory; printed repetition: \"7\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0101-allahumma-afihi-allahummash-fihi",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0101 (Visiting the Sick); UNCHECKED_SECONDARY reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0105-alhamdu-lillahil-ladhi-afani-mimmabtalaka-bihi-w",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0105 (Trials and Adversity (seeing someone in illness/trial)); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0107-allahumma-abduka-wabnu-amatika-ihtaja-ila-rahmat",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0107 (Forgiveness for the Deceased); UNCHECKED_SECONDARY reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0108-allahumma-inna-fulanabna-fulanin-fi-dhimmatika-w",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0108 (Forgiveness for the Deceased); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0112-allahumma-aidh-hu-min-adhabil-qabr-for-a-decease",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0112 (Forgiveness for the Deceased); UNCHECKED_SECONDARY reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not printed."
+  },
+  {
+   "slug": "wyn-0113-allahummajalhu-lana-salafan-wa-faratan-wa-ajran",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0113 (Forgiveness for the Deceased); UNCHECKED_SECONDARY reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0114-repentance-from-sins-and-seeking-forgiveness-exc",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0114 (Istighfar (Seeking Forgiveness)); VERIFIED reference check in the research inventory; printed repetition: \"Excessively\". Arabic/English are the referenced Qur'an passage from IqraSpace's dataset / Saheeh International; confirm this is the full wording the dua uses and add a transliteration. Printed grade: Not applicable / not printed. translation_ur = Urdu translation of the Qur'an (Al Quran Cloud ur.maududi, Tafheem ul Quran), unmodified."
+  },
+  {
+   "slug": "wyn-0115-allahummaghfirli-dhanbi",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0115 (Istighfar (Seeking Forgiveness)); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0116-rabbighfirli-khatiati-yawmad-din",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0116 (Istighfar (Seeking Forgiveness)); VERIFIED reference check in the research inventory. Arabic/English are the referenced Qur'an passage from IqraSpace's dataset / Saheeh International; confirm this is the full wording the dua uses and add a transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0117-rabbighfir-warham-wa-anta-khairur-rahimin",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0117 (Istighfar (Seeking Forgiveness)); VERIFIED reference check in the research inventory. Arabic/English are the referenced Qur'an passage from IqraSpace's dataset / Saheeh International; confirm this is the full wording the dua uses and add a transliteration. Printed grade: Not applicable / not printed. translation_ur = Urdu translation of the Qur'an (Al Quran Cloud ur.maududi, Tafheem ul Quran), unmodified."
+  },
+  {
+   "slug": "wyn-0118-rabbanaghfirli-wali-walidayya-wa-lil-muminina-ya",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0118 (Istighfar (Seeking Forgiveness)); VERIFIED reference check in the research inventory. Arabic/English are the referenced Qur'an passage from IqraSpace's dataset / Saheeh International; confirm this is the full wording the dua uses and add a transliteration. Printed grade: Not applicable / not printed. translation_ur = Urdu translation of the Qur'an (Al Quran Cloud ur.maududi, Tafheem ul Quran), unmodified."
+  },
+  {
+   "slug": "wyn-0119-rabbana-innana-amanna-faghfirlana-dhunubana-wa-q",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0119 (Istighfar (Seeking Forgiveness)); VERIFIED reference check in the research inventory. Arabic/English are the referenced Qur'an passage from IqraSpace's dataset / Saheeh International; confirm this is the full wording the dua uses and add a transliteration. Printed grade: Not applicable / not printed. translation_ur = Urdu translation of the Qur'an (Al Quran Cloud ur.maududi, Tafheem ul Quran), unmodified."
+  },
+  {
+   "slug": "wyn-0123-rabbighfirli-wa-tub-alayya-innaka-antat-tawwabur",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0123 (Istighfar (Seeking Forgiveness)); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0126-allahummaghfirli-dhanbi-wa-yassirli-amri-wa-bari",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0126 (Istighfar (Seeking Forgiveness)); UNCHECKED_SECONDARY reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not printed."
+  },
+  {
+   "slug": "wyn-0128-allahummaghfirli-warhamni-wa-tub-alayya-innaka-a",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0128 (Istighfar (Seeking Forgiveness)); UNCHECKED_SECONDARY reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0129-allahummaghfirli-ma-akhtatu-wa-ma-taammadtu-wa-m",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0129 (Istighfar (Seeking Forgiveness)); UNCHECKED_SECONDARY reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0130-allahummaghfirli-wakhsa-shaitani-wa-fukka-rihani",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0130 (Istighfar (Seeking Forgiveness)); UNCHECKED_SECONDARY reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0131-allahumma-inni-asaluka-ya-allahul-ahadus-samadul",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0131 (Istighfar (Seeking Forgiveness)); REFERENCE_MISMATCH reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0132-allahummaghfirli-khatiati-wa-jahli-wa-israfi-fi",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0132 (Istighfar (Seeking Forgiveness)); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0133-allahummaghfirli-ma-qaddamtu-wa-ma-akh-khartu-wa",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0133 (Istighfar (Seeking Forgiveness)); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0135-allahumma-inni-asalukath-thabata-fil-amri-wal-az",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0135 (Istighfar (Seeking Forgiveness)); UNCHECKED_SECONDARY reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0137-subhanakallahumma-rabbana-wa-bihamdika-allahumma",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0137 (Istighfar (Seeking Forgiveness)); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0138-allahummaghfirli-dhanbi-kullahu-diqqahu-wa-jilla",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0138 (Istighfar (Seeking Forgiveness)); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0139-allahumma-inni-zalamtu-nafsi-zulman-kathiran-wa",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0139 (Istighfar (Seeking Forgiveness)); REFERENCE_MISMATCH reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0140-rabbighfirli-wa-tub-alaiya-innaka-antat-tawwabul",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0140 (Istighfar (Seeking Forgiveness)); VERIFIED reference check in the research inventory; printed repetition: \"100\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0142-astaghfirullah",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0142 (Sorrow and Distress); UNCHECKED_SECONDARY reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Hasan."
+  },
+  {
+   "slug": "wyn-0143-la-ilaha-illallah",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0143 (Sorrow and Distress); UNCHECKED_SECONDARY reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not printed."
+  },
+  {
+   "slug": "wyn-0144-la-hawla-wa-la-quwwata-illa-billah",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0144 (Sorrow and Distress); UNCHECKED_SECONDARY reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not printed."
+  },
+  {
+   "slug": "wyn-0147-innama-ashku-bath-thi-wa-huzni-ilallah",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0147 (Sorrow and Distress); VERIFIED reference check in the research inventory. Arabic/English are the referenced Qur'an passage from IqraSpace's dataset / Saheeh International; confirm this is the full wording the dua uses and add a transliteration. Printed grade: Not applicable / not printed. translation_ur = Urdu translation of the Qur'an (Al Quran Cloud ur.maududi, Tafheem ul Quran), unmodified."
+  },
+  {
+   "slug": "wyn-0148-allahu-allahu-rabbi-la-ushriku-bihi-shaian",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0148 (Sorrow and Distress); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0149-ya-hayyu-ya-qayyumu-bi-rahmatika-astaghith",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0149 (Sorrow and Distress); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0153-allahumma-rahmataka-arju-fala-takilni-ila-nafsi",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0153 (Sorrow and Distress); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0154-la-ilaha-illallahul-azimul-halimu-la-ilaha-illal",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0154 (Sorrow and Distress); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0155-la-ilaha-illallahul-halimul-karimu-subhanallahi",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0155 (Sorrow and Distress); UNCHECKED_SECONDARY reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0156-allahumma-inni-abduka-ibnu-abdika-ibnu-amatika-n",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0156 (Sorrow and Distress); UNCHECKED_SECONDARY reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not printed | Hasan."
+  },
+  {
+   "slug": "wyn-0157-subhanallahi-wal-hamdulillahi-wa-la-ilaha-illall",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0157 (Accepted Duas); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0159-ya-badias-samawati-ya-hayyu-ya-qayyumu-inni-asal",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0159 (Accepted Duas); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not printed."
+  },
+  {
+   "slug": "wyn-0160-allahumma-inni-asaluka-bi-anni-ash-hadu-annaka-a",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0160 (Accepted Duas); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not printed."
+  },
+  {
+   "slug": "wyn-0161-allahumma-inni-asaluka-bi-anna-lakal-hamda-la-il",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0161 (Accepted Duas); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0162-la-ilaha-illallahu-wahdahu-la-sharika-lahu-alham",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0162 (Accepted Duas); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0163-allahu-akbar",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0163 (Post-Salah Adhkar); REFERENCE_MISMATCH reference check in the research inventory; printed repetition: \"1\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0166-rabbi-ainni-ala-dhikrika-wa-shukrika-wa-husni-ib",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0166 (Post-Salah Adhkar); REFERENCE_MISMATCH reference check in the research inventory; printed repetition: \"1\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0168-la-ilaha-illallahu-wahdahu-la-sharika-lahu-allah",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0168 (Post-Salah Adhkar); VERIFIED reference check in the research inventory; printed repetition: \"1\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0169-allahummaghfirli-ma-qaddamtu-wa-ma-akh-khartu-wa",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0169 (Post-Salah Adhkar); VERIFIED reference check in the research inventory. STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: Sahih."
+  },
+  {
+   "slug": "wyn-0170-la-ilaha-illallahu-wahdahu-la-sharika-lahu-la-ha",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0170 (Post-Salah Adhkar); VERIFIED reference check in the research inventory; printed repetition: \"1\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0171-allahumma-inni-audhu-bika-minal-jubni-wa-audhu-b",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0171 (Post-Salah Adhkar); VERIFIED reference check in the research inventory; printed repetition: \"1\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  },
+  {
+   "slug": "wyn-0172-subhan-allah-33-alhamdulillah-33-allahu-akbar-34",
+   "status": "draft",
+   "notes": "Wa Iyyaka Nasta'in WYN-0172 (Post-Salah Adhkar); VERIFIED reference check in the research inventory; printed repetition: \"33 / 33 / 34 times\". STUB: no Arabic. The source book's text is copyrighted and was not reproduced; supply the Arabic from the cited hadith (verify against a hadith corpus), then translation and transliteration. Printed grade: not graded in book (Sahihayn)."
+  }
+ ],
+ "invalid": [],
+ "urdu_translit_dropped": 106,
+ "wyn": {
+  "new_categories": [
+   "hamd-o-sana",
+   "durood-sharif",
+   "protection-and-safety",
+   "protection-from-enemy",
+   "night-protection",
+   "bad-dream",
+   "evil-eye",
+   "protection-from-magic",
+   "jinn-and-shayateen",
+   "visiting-the-sick",
+   "trials-and-adversity",
+   "deceased-maghfirat",
+   "istighfar",
+   "relief-from-distress",
+   "maqbool-duain",
+   "after-salah"
+  ],
+  "mappings_added": [
+   {
+    "wyn": "WYN-0047",
+    "dua": "salah-before-the-final-salam",
+    "category": "protection-and-safety"
+   },
+   {
+    "wyn": "WYN-0085",
+    "dua": "seeking-refuge-from-the-accursed-devil",
+    "category": "jinn-and-shayateen"
+   },
+   {
+    "wyn": "WYN-0086",
+    "dua": "dressing-entering-the-toilet",
+    "category": "jinn-and-shayateen"
+   },
+   {
+    "wyn": "WYN-0087",
+    "dua": "home-leaving-the-home",
+    "category": "jinn-and-shayateen"
+   },
+   {
+    "wyn": "WYN-0088",
+    "dua": "home-before-marital-relations",
+    "category": "jinn-and-shayateen"
+   },
+   {
+    "wyn": "WYN-0134",
+    "dua": "morning-sayyid-al-istighfar-master-of-seeking-forgiveness",
+    "category": "istighfar"
+   },
+   {
+    "wyn": "WYN-0136",
+    "dua": "salah-general-remembrance-after-the-salam",
+    "category": "istighfar"
+   },
+   {
+    "wyn": "WYN-0141",
+    "dua": "social-expiation-at-the-end-of-a-gathering",
+    "category": "istighfar"
+   },
+   {
+    "wyn": "WYN-0158",
+    "dua": "anxiety-dua-of-yunus-in-the-belly-of-the-whale",
+    "category": "maqbool-duain"
+   },
+   {
+    "wyn": "WYN-0164",
+    "dua": "salah-general-remembrance-after-the-salam",
+    "category": "after-salah"
+   },
+   {
+    "wyn": "WYN-0176",
+    "dua": "market-for-beneficial-provision-after-fajr",
+    "category": "after-salah"
+   }
+  ],
+  "stubs": [
+   {
+    "wyn": "WYN-0001",
+    "slug": "wyn-0001-subhan-allahi-wa-bi-hamdihi-subhan-allahil-azim",
+    "category": "hamd-o-sana",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0002",
+    "slug": "wyn-0002-allahu-akbaru-kabira-n-w-wal-hamdulillahi-kathir",
+    "category": "hamd-o-sana",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0005",
+    "slug": "wyn-0005-subhan-allahi-wa-bi-hamdihi-adada-khalqihi-wa-ri",
+    "category": "morning",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0008",
+    "slug": "wyn-0008-asbahna-ala-fitratil-islam-wa-ala-kalimatil-ikhl",
+    "category": "morning",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0009",
+    "slug": "wyn-0009-allahumma-fatiras-samawati-wal-ard-alimal-ghaibi",
+    "category": "morning",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0014",
+    "slug": "wyn-0014-allahumma-afini-fi-badani-allahumma-afini-fi-sam",
+    "category": "morning",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0015",
+    "slug": "wyn-0015-allahumma-inni-audhu-bika-minal-kufri-wal-faqr",
+    "category": "morning",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0016",
+    "slug": "wyn-0016-ya-hayyu-ya-qayyumu-bi-rahmatika-astaghithu-asli",
+    "category": "morning",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0018",
+    "slug": "wyn-0018-allahumma-inni-asalukal-afiyata-fid-dunya-wal-ak",
+    "category": "morning",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0023",
+    "slug": "wyn-0023-subhanallahi-wa-bihamdihi",
+    "category": "morning",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0024",
+    "slug": "wyn-0024-astaghfirullah",
+    "category": "morning",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0025",
+    "slug": "wyn-0025-samia-samiun-bi-hamdillahi-wa-husni-balaihi-alai",
+    "category": "morning",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0026",
+    "slug": "wyn-0026-allahumma-inni-audhu-bika-min-munkaratil-akhlaqi",
+    "category": "protection-and-safety",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0027",
+    "slug": "wyn-0027-allahumma-inni-audhu-bika-min-sharri-ma-amiltu-w",
+    "category": "protection-and-safety",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0028",
+    "slug": "wyn-0028-allahumma-inni-audhu-bika-minal-barasi-wal-junun",
+    "category": "protection-and-safety",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0029",
+    "slug": "wyn-0029-allahumma-inni-audhu-bika-min-diqid-dunya-wa-diq",
+    "category": "protection-and-safety",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0030",
+    "slug": "wyn-0030-allahumma-inni-audhu-bika-min-qawlin-la-yusmau-w",
+    "category": "protection-and-safety",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0032",
+    "slug": "wyn-0032-allahumma-inni-audhu-bika-min-jahdil-balai-wa-da",
+    "category": "protection-and-safety",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0033",
+    "slug": "wyn-0033-allahumma-inni-audhu-bika-minal-faqri-wal-qillat",
+    "category": "protection-and-safety",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0034",
+    "slug": "wyn-0034-allahumma-inni-audhu-bika-min-zawali-nimatika-wa",
+    "category": "protection-and-safety",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0035",
+    "slug": "wyn-0035-allahumma-inni-audhu-bika-min-sharri-sami-wa-min",
+    "category": "protection-and-safety",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0036",
+    "slug": "wyn-0036-allahumma-inni-audhu-bika-min-ilmin-la-yanfau",
+    "category": "protection-and-safety",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0037",
+    "slug": "wyn-0037-allahumma-inni-audhu-bika-minal-jui-minal-khiyan",
+    "category": "protection-and-safety",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0038",
+    "slug": "wyn-0038-allahumma-inni-audhu-bika-minal-ajzi-wal-kasali",
+    "category": "protection-and-safety",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0039",
+    "slug": "wyn-0039-allahumma-inni-audhu-bika-min-yawmis-sui-wa-min",
+    "category": "protection-and-safety",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0040",
+    "slug": "wyn-0040-audhu-billahi-an-uradda-ila-ardhalil-umuri",
+    "category": "protection-and-safety",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0042",
+    "slug": "wyn-0042-allahumma-inni-audhu-bika-minat-taraddi-wal-hadm",
+    "category": "protection-and-safety",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0043",
+    "slug": "wyn-0043-allahumma-inni-audhu-bika-minal-ajzi-wal-kasali",
+    "category": "protection-and-safety",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0044",
+    "slug": "wyn-0044-allahumma-inni-audhu-bika-min-jaris-sui-wa-min-z",
+    "category": "protection-and-safety",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0045",
+    "slug": "wyn-0045-allahumma-laka-aslamtu-wa-bika-amantu-wa-alaika",
+    "category": "protection-and-safety",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0046",
+    "slug": "wyn-0046-allahumma-rabbas-samawati-wa-rabbal-ardi-wa-rabb",
+    "category": "protection-and-safety",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0048",
+    "slug": "wyn-0048-allahummak-finihim-bima-shita",
+    "category": "protection-from-enemy",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0049",
+    "slug": "wyn-0049-allahumma-inna-najaluka-fi-nuhurihim-wa-naudhubi",
+    "category": "protection-from-enemy",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0050",
+    "slug": "wyn-0050-inni-udhtu-bi-rabbi-wa-rabbikum-min-kulli-mutaka",
+    "category": "protection-from-enemy",
+    "arabic_prefilled": true
+   },
+   {
+    "wyn": "WYN-0051",
+    "slug": "wyn-0051-allahumma-mattini-bisami-wa-basari-wajalhumal-wa",
+    "category": "protection-from-enemy",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0052",
+    "slug": "wyn-0052-allahumma-rabbas-samawatis-sabi-wa-rabbal-arshil",
+    "category": "protection-from-enemy",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0053",
+    "slug": "wyn-0053-allahu-akbar-allahu-aazzu-min-khalqihi-jamian-th",
+    "category": "protection-from-enemy",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0059",
+    "slug": "wyn-0059-spit-on-the-left-side-three-times-and-read-audhu",
+    "category": "bad-dream",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0065",
+    "slug": "wyn-0065-rabbi-audhubika-min-hamazatish-shayatin-wa-audhu",
+    "category": "faith",
+    "arabic_prefilled": true
+   },
+   {
+    "wyn": "WYN-0066",
+    "slug": "wyn-0066-audhu-billahis-samiil-alimi-minash-shaitanir-raj",
+    "category": "faith",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0067",
+    "slug": "wyn-0067-huwal-awwalu-wal-akhiru-waz-zahiru-wal-batinu-wa",
+    "category": "faith",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0068",
+    "slug": "wyn-0068-allahu-akbar-allahu-akbar-allahu-akbar-alhamdu-l",
+    "category": "faith",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0072",
+    "slug": "wyn-0072-bismillahi-arqika-min-kulli-shaiin-yudhika-min-s",
+    "category": "evil-eye",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0073",
+    "slug": "wyn-0073-bismillahi-yubrika-wa-min-kulli-dain-yashfika-wa",
+    "category": "evil-eye",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0080",
+    "slug": "wyn-0080-audhu-billahis-samiil-alimi-min-ash-shaitanir-ra",
+    "category": "protection-from-magic",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0081",
+    "slug": "wyn-0081-audhu-billahil-azimi-biwajhihil-karimi-wa-sultan",
+    "category": "protection-from-magic",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0093",
+    "slug": "wyn-0093-anni-massaniyad-durru-wa-anta-arhamur-rahimin",
+    "category": "sickness",
+    "arabic_prefilled": true
+   },
+   {
+    "wyn": "WYN-0095",
+    "slug": "wyn-0095-asalullahal-azima-rabbal-arshil-azimi-an-yashfiy",
+    "category": "sickness",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0101",
+    "slug": "wyn-0101-allahumma-afihi-allahummash-fihi",
+    "category": "visiting-the-sick",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0105",
+    "slug": "wyn-0105-alhamdu-lillahil-ladhi-afani-mimmabtalaka-bihi-w",
+    "category": "trials-and-adversity",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0107",
+    "slug": "wyn-0107-allahumma-abduka-wabnu-amatika-ihtaja-ila-rahmat",
+    "category": "deceased-maghfirat",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0108",
+    "slug": "wyn-0108-allahumma-inna-fulanabna-fulanin-fi-dhimmatika-w",
+    "category": "deceased-maghfirat",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0112",
+    "slug": "wyn-0112-allahumma-aidh-hu-min-adhabil-qabr-for-a-decease",
+    "category": "deceased-maghfirat",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0113",
+    "slug": "wyn-0113-allahummajalhu-lana-salafan-wa-faratan-wa-ajran",
+    "category": "deceased-maghfirat",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0114",
+    "slug": "wyn-0114-repentance-from-sins-and-seeking-forgiveness-exc",
+    "category": "istighfar",
+    "arabic_prefilled": true
+   },
+   {
+    "wyn": "WYN-0115",
+    "slug": "wyn-0115-allahummaghfirli-dhanbi",
+    "category": "istighfar",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0116",
+    "slug": "wyn-0116-rabbighfirli-khatiati-yawmad-din",
+    "category": "istighfar",
+    "arabic_prefilled": true
+   },
+   {
+    "wyn": "WYN-0117",
+    "slug": "wyn-0117-rabbighfir-warham-wa-anta-khairur-rahimin",
+    "category": "istighfar",
+    "arabic_prefilled": true
+   },
+   {
+    "wyn": "WYN-0118",
+    "slug": "wyn-0118-rabbanaghfirli-wali-walidayya-wa-lil-muminina-ya",
+    "category": "istighfar",
+    "arabic_prefilled": true
+   },
+   {
+    "wyn": "WYN-0119",
+    "slug": "wyn-0119-rabbana-innana-amanna-faghfirlana-dhunubana-wa-q",
+    "category": "istighfar",
+    "arabic_prefilled": true
+   },
+   {
+    "wyn": "WYN-0123",
+    "slug": "wyn-0123-rabbighfirli-wa-tub-alayya-innaka-antat-tawwabur",
+    "category": "istighfar",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0126",
+    "slug": "wyn-0126-allahummaghfirli-dhanbi-wa-yassirli-amri-wa-bari",
+    "category": "istighfar",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0128",
+    "slug": "wyn-0128-allahummaghfirli-warhamni-wa-tub-alayya-innaka-a",
+    "category": "istighfar",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0129",
+    "slug": "wyn-0129-allahummaghfirli-ma-akhtatu-wa-ma-taammadtu-wa-m",
+    "category": "istighfar",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0130",
+    "slug": "wyn-0130-allahummaghfirli-wakhsa-shaitani-wa-fukka-rihani",
+    "category": "istighfar",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0131",
+    "slug": "wyn-0131-allahumma-inni-asaluka-ya-allahul-ahadus-samadul",
+    "category": "istighfar",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0132",
+    "slug": "wyn-0132-allahummaghfirli-khatiati-wa-jahli-wa-israfi-fi",
+    "category": "istighfar",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0133",
+    "slug": "wyn-0133-allahummaghfirli-ma-qaddamtu-wa-ma-akh-khartu-wa",
+    "category": "istighfar",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0135",
+    "slug": "wyn-0135-allahumma-inni-asalukath-thabata-fil-amri-wal-az",
+    "category": "istighfar",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0137",
+    "slug": "wyn-0137-subhanakallahumma-rabbana-wa-bihamdika-allahumma",
+    "category": "istighfar",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0138",
+    "slug": "wyn-0138-allahummaghfirli-dhanbi-kullahu-diqqahu-wa-jilla",
+    "category": "istighfar",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0139",
+    "slug": "wyn-0139-allahumma-inni-zalamtu-nafsi-zulman-kathiran-wa",
+    "category": "istighfar",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0140",
+    "slug": "wyn-0140-rabbighfirli-wa-tub-alaiya-innaka-antat-tawwabul",
+    "category": "istighfar",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0142",
+    "slug": "wyn-0142-astaghfirullah",
+    "category": "relief-from-distress",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0143",
+    "slug": "wyn-0143-la-ilaha-illallah",
+    "category": "relief-from-distress",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0144",
+    "slug": "wyn-0144-la-hawla-wa-la-quwwata-illa-billah",
+    "category": "relief-from-distress",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0147",
+    "slug": "wyn-0147-innama-ashku-bath-thi-wa-huzni-ilallah",
+    "category": "relief-from-distress",
+    "arabic_prefilled": true
+   },
+   {
+    "wyn": "WYN-0148",
+    "slug": "wyn-0148-allahu-allahu-rabbi-la-ushriku-bihi-shaian",
+    "category": "relief-from-distress",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0149",
+    "slug": "wyn-0149-ya-hayyu-ya-qayyumu-bi-rahmatika-astaghith",
+    "category": "relief-from-distress",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0153",
+    "slug": "wyn-0153-allahumma-rahmataka-arju-fala-takilni-ila-nafsi",
+    "category": "relief-from-distress",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0154",
+    "slug": "wyn-0154-la-ilaha-illallahul-azimul-halimu-la-ilaha-illal",
+    "category": "relief-from-distress",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0155",
+    "slug": "wyn-0155-la-ilaha-illallahul-halimul-karimu-subhanallahi",
+    "category": "relief-from-distress",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0156",
+    "slug": "wyn-0156-allahumma-inni-abduka-ibnu-abdika-ibnu-amatika-n",
+    "category": "relief-from-distress",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0157",
+    "slug": "wyn-0157-subhanallahi-wal-hamdulillahi-wa-la-ilaha-illall",
+    "category": "maqbool-duain",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0159",
+    "slug": "wyn-0159-ya-badias-samawati-ya-hayyu-ya-qayyumu-inni-asal",
+    "category": "maqbool-duain",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0160",
+    "slug": "wyn-0160-allahumma-inni-asaluka-bi-anni-ash-hadu-annaka-a",
+    "category": "maqbool-duain",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0161",
+    "slug": "wyn-0161-allahumma-inni-asaluka-bi-anna-lakal-hamda-la-il",
+    "category": "maqbool-duain",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0162",
+    "slug": "wyn-0162-la-ilaha-illallahu-wahdahu-la-sharika-lahu-alham",
+    "category": "maqbool-duain",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0163",
+    "slug": "wyn-0163-allahu-akbar",
+    "category": "after-salah",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0166",
+    "slug": "wyn-0166-rabbi-ainni-ala-dhikrika-wa-shukrika-wa-husni-ib",
+    "category": "after-salah",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0168",
+    "slug": "wyn-0168-la-ilaha-illallahu-wahdahu-la-sharika-lahu-allah",
+    "category": "after-salah",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0169",
+    "slug": "wyn-0169-allahummaghfirli-ma-qaddamtu-wa-ma-akh-khartu-wa",
+    "category": "after-salah",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0170",
+    "slug": "wyn-0170-la-ilaha-illallahu-wahdahu-la-sharika-lahu-la-ha",
+    "category": "after-salah",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0171",
+    "slug": "wyn-0171-allahumma-inni-audhu-bika-minal-jubni-wa-audhu-b",
+    "category": "after-salah",
+    "arabic_prefilled": false
+   },
+   {
+    "wyn": "WYN-0172",
+    "slug": "wyn-0172-subhan-allah-33-alhamdulillah-33-allahu-akbar-34",
+    "category": "after-salah",
+    "arabic_prefilled": false
+   }
+  ],
+  "not_stubbed": [
+   {
+    "wyn": "WYN-0058",
+    "type": "Instruction/practice (no recitation text)",
+    "title": "Change sleeping position (instruction; no dua text)"
+   },
+   {
+    "wyn": "WYN-0069",
+    "type": "Instruction/practice (no recitation text)",
+    "title": "If the person who caused the evil eye is known, ask him/her to perform ablution and wash the place where the waist belt is tied; afflicted person bathes with that water (hadith: Al-'ainu haqq...)"
+   },
+   {
+    "wyn": "WYN-0074",
+    "type": "Instruction/practice (no recitation text)",
+    "title": "Regularly read the supplications for morning, evening, protection and healing"
+   },
+   {
+    "wyn": "WYN-0077",
+    "type": "Instruction/practice (no recitation text)",
+    "title": "Eat seven 'Ajwah dates first thing in the morning"
+   },
+   {
+    "wyn": "WYN-0078",
+    "type": "Instruction/practice (no recitation text)",
+    "title": "Perform cupping (hijamah), a masnun treatment"
+   },
+   {
+    "wyn": "WYN-0079",
+    "type": "Instruction/practice (no recitation text)",
+    "title": "Read Ruqyah Shar'iyyah or play a recording before the afflicted person"
+   },
+   {
+    "wyn": "WYN-0083",
+    "type": "Instruction/practice (no recitation text)",
+    "title": "Recite the Qur'an excessively (Qur'anic verse printed: wa nunazzilu minal Qur'ani ma huwa shifa'un wa rahmatun lil mu'minin)"
+   },
+   {
+    "wyn": "WYN-0084",
+    "type": "Instruction/practice (no recitation text)",
+    "title": "Recite Al-Baqarah; if unable, its recitation can be played"
+   },
+   {
+    "wyn": "WYN-0090",
+    "type": "Instruction/practice (no recitation text)",
+    "title": "Recitation of the Holy Qur'an is a healing (verses printed: a. wa nunazzilu minal Qur'ani... (17:82 wording); b. ya ayyuhan nasu qad ja'atkum maw'izatum mir rabbikum wa shifa'un lima fis sudur (10:57 wording))"
+   },
+   {
+    "wyn": "WYN-0091",
+    "type": "Instruction/practice (no recitation text)",
+    "title": "Benefit from natural nutrients/medicines: honey, Habbat al-Sauda (Nigella), Zam Zam water, rain water, olive oil"
+   },
+   {
+    "wyn": "WYN-0092",
+    "type": "Instruction/practice (no recitation text)",
+    "title": "During sickness recite Al-Fatihah an odd number of times and blow over the afflicted person (Surah al-Fatihah printed in full)"
+   },
+   {
+    "wyn": "WYN-0098",
+    "type": "Hadith narration only",
+    "title": "The command to visit the sick (hadith: At'imul ja'i' wa 'udul marid wa fukkul 'ani)"
+   },
+   {
+    "wyn": "WYN-0099",
+    "type": "Hadith narration only",
+    "title": "Excellence of visiting the sick (narration of 'Ali, seventy thousand angels)"
+   },
+   {
+    "wyn": "WYN-0100",
+    "type": "Hadith narration only",
+    "title": "Hadith Qudsi: 'I was ill and you did not visit Me'"
+   }
+  ],
+  "hadith_enriched": [
+   {
+    "dua": "morning-by-you-we-reach-morning-and-evening",
+    "ref": "Jami' at-Tirmidhi 3391",
+    "wyn": "WYN-0007"
+   },
+   {
+    "dua": "morning-morning-remembrance",
+    "ref": "Sahih Muslim 6908",
+    "wyn": "WYN-0010"
+   },
+   {
+    "dua": "evening-seeking-refuge-at-nightfall",
+    "ref": "Sahih Muslim 6880",
+    "wyn": "WYN-0012"
+   },
+   {
+    "dua": "morning-protection",
+    "ref": "Sunan Abu Dawud 5088",
+    "wyn": "WYN-0013"
+   },
+   {
+    "dua": "morning-sayyid-al-istighfar-master-of-seeking-forgiveness",
+    "ref": "Sahih al-Bukhari 6306",
+    "wyn": "WYN-0017"
+   },
+   {
+    "dua": "seeking-refuge-from-the-accursed-devil",
+    "ref": "Sahih Muslim 5738",
+    "wyn": "WYN-0063"
+   },
+   {
+    "dua": "sickness-placing-the-hand-on-the-site-of-pain",
+    "ref": "Sahih Muslim 5737",
+    "wyn": "WYN-0094"
+   },
+   {
+    "dua": "sickness-for-healing",
+    "ref": "Sahih Muslim 5707",
+    "wyn": "WYN-0096"
+   },
+   {
+    "dua": "grief-the-fuller-dua-for-calamity",
+    "ref": "Sahih Muslim 2126",
+    "wyn": "WYN-0106"
+   },
+   {
+    "dua": "grief-upon-closing-the-eyes-of-one-who-has-died",
+    "ref": "Sahih Muslim 2130",
+    "wyn": "WYN-0109"
+   },
+   {
+    "dua": "grief-in-the-funeral-prayer-more-generally",
+    "ref": "Sunan Abu Dawud 3201",
+    "wyn": "WYN-0110"
+   },
+   {
+    "dua": "repentance-general-seeking-of-forgiveness",
+    "ref": "Jami' at-Tirmidhi 3577",
+    "wyn": "WYN-0127"
+   },
+   {
+    "dua": "anxiety-dua-of-yunus-in-the-belly-of-the-whale",
+    "ref": "Jami' at-Tirmidhi 3505",
+    "wyn": "WYN-0150"
+   }
+  ],
+  "flagged_incomplete": [
+   {
+    "wyn": "WYN-0006",
+    "dua": "ayat-al-kursi"
+   },
+   {
+    "wyn": "WYN-0019",
+    "dua": "three-quls"
+   },
+   {
+    "wyn": "WYN-0020",
+    "dua": "three-quls"
+   },
+   {
+    "wyn": "WYN-0021",
+    "dua": "three-quls"
+   },
+   {
+    "wyn": "WYN-0055",
+    "dua": "ayat-al-kursi"
+   },
+   {
+    "wyn": "WYN-0111",
+    "dua": "grief-for-a-deceased-loved-one"
+   },
+   {
+    "wyn": "WYN-0152",
+    "dua": "anxiety-for-anxiety-and-sorrow"
+   },
+   {
+    "wyn": "WYN-0178",
+    "dua": "knowledge-istikharah-seeking-guidance-in-a-decision"
+   }
+  ]
+ },
+ "urdu": {
+  "filled": [
+   "ayat-al-kursi",
+   "three-quls",
+   "wyn-0050-inni-udhtu-bi-rabbi-wa-rabbikum-min-kulli-mutaka",
+   "wyn-0065-rabbi-audhubika-min-hamazatish-shayatin-wa-audhu",
+   "wyn-0093-anni-massaniyad-durru-wa-anta-arhamur-rahimin",
+   "wyn-0114-repentance-from-sins-and-seeking-forgiveness-exc",
+   "wyn-0117-rabbighfir-warham-wa-anta-khairur-rahimin",
+   "wyn-0118-rabbanaghfirli-wali-walidayya-wa-lil-muminina-ya",
+   "wyn-0119-rabbana-innana-amanna-faghfirlana-dhunubana-wa-q",
+   "wyn-0147-innama-ashku-bath-thi-wa-huzni-ilallah"
+  ],
+  "quran_fragment_not_filled": [
+   "anxiety-dua-of-yunus-in-the-belly-of-the-whale",
+   "grief-upon-hearing-of-a-calamity",
+   "grief-for-patience-and-steadfastness",
+   "knowledge-for-increase-in-knowledge",
+   "repentance-adam-and-hawwas-repentance",
+   "quranic-seeking-forgiveness-for-shortcomings",
+   "quranic-for-mistakes-and-forgetfulness",
+   "quranic-for-ease-and-openness-of-heart",
+   "quranic-for-gratitude"
+  ],
+  "hadith_not_available": 178
+ },
+ "urdu_import": {
+  "applied": [],
+  "rejected": []
+ }
+}

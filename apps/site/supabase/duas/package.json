@@ -1,0 +1,12 @@
+{
+  "name": "iqraspace-duas-tools",
+  "private": true,
+  "description": "Offline tooling for the Duas content pipeline (build canonical dataset, generate seed SQL/bundled snapshot, schema + RLS tests on an in-process Postgres). Not deployed; Vercel never installs this.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.3.0"
+  }
+}

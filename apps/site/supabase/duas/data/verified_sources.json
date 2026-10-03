@@ -1,0 +1,401 @@
+{
+  "generated_at": "2026-10-03T09:14:49.728Z",
+  "quran": {
+    "ayat-al-kursi": {
+      "surah": 2,
+      "ayah_from": 255,
+      "ayah_to": 255,
+      "arabic_uthmani": [
+        "ٱللَّهُ لَآ إِلَـٰهَ إِلَّا هُوَ ٱلْحَىُّ ٱلْقَيُّومُ ۚ لَا تَأْخُذُهُۥ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُۥ مَا فِى ٱلسَّمَـٰوَٰتِ وَمَا فِى ٱلْأَرْضِ ۗ مَن ذَا ٱلَّذِى يَشْفَعُ عِندَهُۥٓ إِلَّا بِإِذْنِهِۦ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَىْءٍ مِّنْ عِلْمِهِۦٓ إِلَّا بِمَا شَآءَ ۚ وَسِعَ كُرْسِيُّهُ ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضَ ۖ وَلَا يَـُٔودُهُۥ حِفْظُهُمَا ۚ وَهُوَ ٱلْعَلِىُّ ٱلْعَظِيمُ"
+      ],
+      "english_sahih": [
+        "Allah - there is no deity except Him, the Ever-Living, the Sustainer of [all] existence. Neither drowsiness overtakes Him nor sleep. To Him belongs whatever is in the heavens and whatever is on the earth. Who is it that can intercede with Him except by His permission? He knows what is [presently] before them and what will be after them, and they encompass not a thing of His knowledge except for what He wills. His Kursi extends over the heavens and the earth, and their preservation tires Him not. And He is the Most High, the Most Great."
+      ],
+      "transliteration": [
+        "Allahu laaa ilaaha illaa Huwal Haiyul Qaiyoom; laa taakhuzuhoo sinatunw wa laa nawm; lahoo maa fissamaawaati wa maa fil ard; man zal lazee yashfa'u indahooo illaa bi-iznih; ya'lamu maa baina aydeehim wa mww khalfahum wa laa yuheetoona bishai'im min 'ilmihee illaa bimaa shaaa'; wasi'a Kursiyyuhus samaawaati wal arda wa laa ya'ooduho hifzuhumaa; wa Huwal Aliyyul 'Azeem"
+      ],
+      "sources": {
+        "arabic": "apps/quran/src/content/generated/surah/*.json (text_uthmani, Quran Foundation content API)",
+        "english": "Al Quran Cloud en.sahih (Saheeh International)",
+        "transliteration": "Al Quran Cloud en.transliteration"
+      }
+    },
+    "al-ikhlas": {
+      "surah": 112,
+      "ayah_from": 1,
+      "ayah_to": 4,
+      "arabic_uthmani": [
+        "قُلْ هُوَ ٱللَّهُ أَحَدٌ",
+        "ٱللَّهُ ٱلصَّمَدُ",
+        "لَمْ يَلِدْ وَلَمْ يُولَدْ",
+        "وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ"
+      ],
+      "english_sahih": [
+        "Say, \"He is Allah, [who is] One,",
+        "Allah, the Eternal Refuge.",
+        "He neither begets nor is born,",
+        "Nor is there to Him any equivalent.\""
+      ],
+      "transliteration": [
+        "Qul huwal laahu ahad",
+        "Allah hus-samad",
+        "Lam yalid wa lam yoolad",
+        "Wa lam yakul-lahu kufuwan ahad"
+      ],
+      "sources": {
+        "arabic": "apps/quran/src/content/generated/surah/*.json (text_uthmani, Quran Foundation content API)",
+        "english": "Al Quran Cloud en.sahih (Saheeh International)",
+        "transliteration": "Al Quran Cloud en.transliteration"
+      }
+    },
+    "al-falaq": {
+      "surah": 113,
+      "ayah_from": 1,
+      "ayah_to": 5,
+      "arabic_uthmani": [
+        "قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ",
+        "مِن شَرِّ مَا خَلَقَ",
+        "وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ",
+        "وَمِن شَرِّ ٱلنَّفَّـٰثَـٰتِ فِى ٱلْعُقَدِ",
+        "وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ"
+      ],
+      "english_sahih": [
+        "Say, \"I seek refuge in the Lord of daybreak",
+        "From the evil of that which He created",
+        "And from the evil of darkness when it settles",
+        "And from the evil of the blowers in knots",
+        "And from the evil of an envier when he envies.\""
+      ],
+      "transliteration": [
+        "Qul a'uzoo bi rabbil-falaq",
+        "Min sharri ma khalaq",
+        "Wa min sharri ghasiqin iza waqab",
+        "Wa min sharrin-naffaa-thaati fil 'uqad",
+        "Wa min shar ri haasidin iza hasad"
+      ],
+      "sources": {
+        "arabic": "apps/quran/src/content/generated/surah/*.json (text_uthmani, Quran Foundation content API)",
+        "english": "Al Quran Cloud en.sahih (Saheeh International)",
+        "transliteration": "Al Quran Cloud en.transliteration"
+      }
+    },
+    "an-nas": {
+      "surah": 114,
+      "ayah_from": 1,
+      "ayah_to": 6,
+      "arabic_uthmani": [
+        "قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ",
+        "مَلِكِ ٱلنَّاسِ",
+        "إِلَـٰهِ ٱلنَّاسِ",
+        "مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ",
+        "ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ",
+        "مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ"
+      ],
+      "english_sahih": [
+        "Say, \"I seek refuge in the Lord of mankind,",
+        "The Sovereign of mankind.",
+        "The God of mankind,",
+        "From the evil of the retreating whisperer -",
+        "Who whispers [evil] into the breasts of mankind -",
+        "From among the jinn and mankind.\""
+      ],
+      "transliteration": [
+        "Qul a'uzu birabbin naas",
+        "Malikin naas",
+        "Ilaahin naas",
+        "Min sharril was waasil khannaas",
+        "Al lazee yuwas wisu fee sudoorin naas",
+        "Minal jinnati wan naas"
+      ],
+      "sources": {
+        "arabic": "apps/quran/src/content/generated/surah/*.json (text_uthmani, Quran Foundation content API)",
+        "english": "Al Quran Cloud en.sahih (Saheeh International)",
+        "transliteration": "Al Quran Cloud en.transliteration"
+      }
+    }
+  },
+  "hadith": {
+    "bukhari-1166": {
+      "collection": "Sahih al-Bukhari",
+      "number": 1166,
+      "arabic_full": "حَدَّثَنَا قُتَيْبَةُ، قَالَ حَدَّثَنَا عَبْدُ الرَّحْمَنِ بْنُ أَبِي الْمَوَالِي، عَنْ مُحَمَّدِ بْنِ الْمُنْكَدِرِ، عَنْ جَابِرِ بْنِ عَبْدِ اللَّهِ ـ رضى الله عنهما ـ قَالَ كَانَ رَسُولُ اللَّهِ صلى الله عليه وسلم يُعَلِّمُنَا الاِسْتِخَارَةَ فِي الأُمُورِ كَمَا يُعَلِّمُنَا السُّورَةَ مِنَ الْقُرْآنِ يَقُولُ ‏ \"‏ إِذَا هَمَّ أَحَدُكُمْ بِالأَمْرِ فَلْيَرْكَعْ رَكْعَتَيْنِ مِنْ غَيْرِ الْفَرِيضَةِ ثُمَّ لِيَقُلِ اللَّهُمَّ إِنِّي أَسْتَخِيرُكَ بِعِلْمِكَ وَأَسْتَقْدِرُكَ بِقُدْرَتِكَ، وَأَسْأَلُكَ مِنْ فَضْلِكَ الْعَظِيمِ، فَإِنَّكَ تَقْدِرُ وَلاَ أَقْدِرُ وَتَعْلَمُ وَلاَ أَعْلَمُ وَأَنْتَ عَلاَّمُ الْغُيُوبِ، اللَّهُمَّ إِنْ كُنْتَ تَعْلَمُ أَنَّ هَذَا الأَمْرَ خَيْرٌ لِي فِي دِينِي وَمَعَاشِي وَعَاقِبَةِ أَمْرِي ـ أَوْ قَالَ عَاجِلِ أَمْرِي وَآجِلِهِ ـ فَاقْدُرْهُ لِي وَيَسِّرْهُ لِي ثُمَّ بَارِكْ لِي فِيهِ، وَإِنْ كُنْتَ تَعْلَمُ أَنَّ هَذَا الأَمْرَ شَرٌّ لِي فِي دِينِي وَمَعَاشِي وَعَاقِبَةِ أَمْرِي ـ أَوْ قَالَ فِي عَاجِلِ أَمْرِي وَآجِلِهِ ـ فَاصْرِفْهُ عَنِّي وَاصْرِفْنِي عَنْهُ، وَاقْدُرْ لِي الْخَيْرَ حَيْثُ كَانَ ثُمَّ أَرْضِنِي بِهِ ـ قَالَ ـ وَيُسَمِّي حَاجَتَهُ ‏\"‏‏.‏",
+      "source": "fawazahmed0/hadith-api ara-bukhari (jsDelivr)"
+    }
+  },
+  "quran_ranges": {
+    "40:27-27": {
+      "arabic_uthmani": [
+        "وَقَالَ مُوسَىٰٓ إِنِّى عُذْتُ بِرَبِّى وَرَبِّكُم مِّن كُلِّ مُتَكَبِّرٍ لَّا يُؤْمِنُ بِيَوْمِ ٱلْحِسَابِ"
+      ],
+      "english_sahih": [
+        "But Moses said, \"Indeed, I have sought refuge in my Lord and your Lord from every arrogant one who does not believe in the Day of Account.\""
+      ]
+    },
+    "23:97-98": {
+      "arabic_uthmani": [
+        "وَقُل رَّبِّ أَعُوذُ بِكَ مِنْ هَمَزَٰتِ ٱلشَّيَـٰطِينِ",
+        "وَأَعُوذُ بِكَ رَبِّ أَن يَحْضُرُونِ"
+      ],
+      "english_sahih": [
+        "And say, \"My Lord, I seek refuge in You from the incitements of the devils,",
+        "And I seek refuge in You, my Lord, lest they be present with me.\""
+      ]
+    },
+    "17:82-82": {
+      "arabic_uthmani": [
+        "وَنُنَزِّلُ مِنَ ٱلْقُرْءَانِ مَا هُوَ شِفَآءٌ وَرَحْمَةٌ لِّلْمُؤْمِنِينَ ۙ وَلَا يَزِيدُ ٱلظَّـٰلِمِينَ إِلَّا خَسَارًا"
+      ],
+      "english_sahih": [
+        "And We send down of the Qur'an that which is healing and mercy for the believers, but it does not increase the wrongdoers except in loss."
+      ]
+    },
+    "1:1-7": {
+      "arabic_uthmani": [
+        "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ",
+        "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَـٰلَمِينَ",
+        "ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ",
+        "مَـٰلِكِ يَوْمِ ٱلدِّينِ",
+        "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
+        "ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ",
+        "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ"
+      ],
+      "english_sahih": [
+        "In the name of Allah, the Entirely Merciful, the Especially Merciful.",
+        "[All] praise is [due] to Allah, Lord of the worlds -",
+        "The Entirely Merciful, the Especially Merciful,",
+        "Sovereign of the Day of Recompense.",
+        "It is You we worship and You we ask for help.",
+        "Guide us to the straight path -",
+        "The path of those upon whom You have bestowed favor, not of those who have evoked [Your] anger or of those who are astray."
+      ]
+    },
+    "21:83-83": {
+      "arabic_uthmani": [
+        "۞ وَأَيُّوبَ إِذْ نَادَىٰ رَبَّهُۥٓ أَنِّى مَسَّنِىَ ٱلضُّرُّ وَأَنتَ أَرْحَمُ ٱلرَّٰحِمِينَ"
+      ],
+      "english_sahih": [
+        "And [mention] Job, when he called to his Lord, \"Indeed, adversity has touched me, and you are the Most Merciful of the merciful.\""
+      ]
+    },
+    "71:10-12": {
+      "arabic_uthmani": [
+        "فَقُلْتُ ٱسْتَغْفِرُوا۟ رَبَّكُمْ إِنَّهُۥ كَانَ غَفَّارًا",
+        "يُرْسِلِ ٱلسَّمَآءَ عَلَيْكُم مِّدْرَارًا",
+        "وَيُمْدِدْكُم بِأَمْوَٰلٍ وَبَنِينَ وَيَجْعَل لَّكُمْ جَنَّـٰتٍ وَيَجْعَل لَّكُمْ أَنْهَـٰرًا"
+      ],
+      "english_sahih": [
+        "And said, 'Ask forgiveness of your Lord. Indeed, He is ever a Perpetual Forgiver.",
+        "He will send [rain from] the sky upon you in [continuing] showers",
+        "And give you increase in wealth and children and provide for you gardens and provide for you rivers."
+      ]
+    },
+    "26:82-82": {
+      "arabic_uthmani": [
+        "وَٱلَّذِىٓ أَطْمَعُ أَن يَغْفِرَ لِى خَطِيٓـَٔتِى يَوْمَ ٱلدِّينِ"
+      ],
+      "english_sahih": [
+        "And who I aspire that He will forgive me my sin on the Day of Recompense.\""
+      ]
+    },
+    "23:118-118": {
+      "arabic_uthmani": [
+        "وَقُل رَّبِّ ٱغْفِرْ وَٱرْحَمْ وَأَنتَ خَيْرُ ٱلرَّٰحِمِينَ"
+      ],
+      "english_sahih": [
+        "And, [O Muhammad], say, \"My Lord, forgive and have mercy, and You are the best of the merciful.\""
+      ]
+    },
+    "14:41-41": {
+      "arabic_uthmani": [
+        "رَبَّنَا ٱغْفِرْ لِى وَلِوَٰلِدَىَّ وَلِلْمُؤْمِنِينَ يَوْمَ يَقُومُ ٱلْحِسَابُ"
+      ],
+      "english_sahih": [
+        "Our Lord, forgive me and my parents and the believers the Day the account is established.\""
+      ]
+    },
+    "3:16-16": {
+      "arabic_uthmani": [
+        "ٱلَّذِينَ يَقُولُونَ رَبَّنَآ إِنَّنَآ ءَامَنَّا فَٱغْفِرْ لَنَا ذُنُوبَنَا وَقِنَا عَذَابَ ٱلنَّارِ"
+      ],
+      "english_sahih": [
+        "Those who say, \"Our Lord, indeed we have believed, so forgive us our sins and protect us from the punishment of the Fire,\""
+      ]
+    },
+    "12:86-86": {
+      "arabic_uthmani": [
+        "قَالَ إِنَّمَآ أَشْكُوا۟ بَثِّى وَحُزْنِىٓ إِلَى ٱللَّهِ وَأَعْلَمُ مِنَ ٱللَّهِ مَا لَا تَعْلَمُونَ"
+      ],
+      "english_sahih": [
+        "He said, \"I only complain of my suffering and my grief to Allah, and I know from Allah that which you do not know."
+      ]
+    }
+  },
+  "urdu_maududi": {
+    "2:255-255": {
+      "urdu": [
+        "اللہ، وہ زندہ جاوید ہستی، جو تمام کائنات کو سنبھالے ہوئے ہے، اُس کے سوا کوئی خدا نہیں ہے وہ نہ سوتا ہے اور نہ اُسے اونگھ لگتی ہے زمین اور آسمانوں میں جو کچھ ہے، اُسی کا ہے کون ہے جو اُس کی جناب میں اُس کی اجازت کے بغیر سفارش کر سکے؟ جو کچھ بندوں کے سامنے ہے اسے بھی وہ جانتا ہے اور جو کچھ اُن سے اوجھل ہے، اس سے بھی وہ واقف ہے اور اُس کی معلومات میں سے کوئی چیز اُن کی گرفت ادراک میں نہیں آسکتی الّا یہ کہ کسی چیز کا علم وہ خود ہی اُن کو دینا چاہے اُس کی حکومت آسمانوں اور زمین پر چھائی ہوئی ہے اور اُن کی نگہبانی اس کے لیے کوئی تھکا دینے والا کام نہیں ہے بس وہی ایک بزرگ و برتر ذات ہے"
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "112:1-4": {
+      "urdu": [
+        "کہو، وہ اللہ ہے، یکتا",
+        "اللہ سب سے بے نیاز ہے اور سب اس کے محتاج ہیں",
+        "نہ اس کی کوئی اولاد ہے اور نہ وہ کسی کی اولاد",
+        "اور کوئی اس کا ہمسر نہیں ہے"
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "113:1-5": {
+      "urdu": [
+        "کہو، میں پناہ مانگتا ہوں صبح کے رب کی",
+        "ہر اُس چیز کے شر سے جو اُس نے پیدا کی ہے",
+        "اور رات کی تاریکی کے شر سے جب کہ وہ چھا جائے",
+        "اور گرہوں میں پھونکنے والوں (یا والیوں) کے شر سے",
+        "اور حاسد کے شر سے جب کہ وہ حسد کرے"
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "114:1-6": {
+      "urdu": [
+        "کہو، میں پناہ مانگتا ہوں انسانوں کے رب",
+        "انسانوں کے بادشاہ",
+        "انسانوں کے حقیقی معبود کی",
+        "اُس وسوسہ ڈالنے والے کے شر سے جو بار بار پلٹ کر آتا ہے",
+        "جو لوگوں کے دلوں میں وسوسے ڈالتا ہے",
+        "خواہ وہ جنوں میں سے ہو یا انسانوں میں سے"
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "21:87-87": {
+      "urdu": [
+        "اور مچھلی والے کو بھی ہم نے نوازا یاد کرو جبکہ وہ بگڑ کر چلا گیا تھا اور سمجھا تھا کہ ہم اس پر گرفت نہ کریں گے آخر کو اُس نے تاریکیوں میں پکارا \"نہیں ہے کوئی خدا مگر تُو، پاک ہے تیری ذات، بے شک میں نے قصور کیا\""
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "2:156-156": {
+      "urdu": [
+        "اِن حالات میں جو لوگ صبر کریں اور جب کوئی مصیبت پڑے، تو کہیں کہ: \"ہم اللہ ہی کے ہیں اور اللہ ہی کی طرف ہمیں پلٹ کر جانا ہے\""
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "3:8-8": {
+      "urdu": [
+        "وہ اللہ سے دعا کرتے رہتے ہیں کہ: \"پروردگار! جب تو ہمیں سیدھے رستہ پر لگا چکا ہے، تو پھر کہیں ہمارے دلوں کو کجی میں مبتلا نہ کر دیجیو ہمیں اپنے خزانہ فیض سے رحمت عطا کر کہ تو ہی فیاض حقیقی ہے"
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "20:114-114": {
+      "urdu": [
+        "پس بالا و برتر ہے اللہ، پادشاہ حقیقی اور دیکھو، قرآن پڑھنے میں جلدی نہ کیا کرو جب تک کہ تمہاری طرف اُس کی وحی تکمیل کو نہ پہنچ جائے، اور دُعا کرو کہ اے پروردگار مجھے مزید علم عطا کر"
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "7:23-23": {
+      "urdu": [
+        "دونوں بول اٹھے، \"اے رب، ہم نے اپنے اوپر ستم کیا، اب اگر تو نے ہم سے در گزر نہ فرمایا اور رحم نہ کیا تو یقیناً ہم تباہ ہو جائیں گے\""
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "2:201-201": {
+      "urdu": [
+        "اور کوئی کہتا ہے کہ اے ہمارے رب! ہمیں دنیا میں بھی بھلائی دے اور آخرت میں بھی بھلائی اور آگ کے عذاب سے ہمیں بچا"
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "3:147-147": {
+      "urdu": [
+        "ان کی دعا بس یہ تھی کہ، \"اے ہمارے رب! ہماری غلطیوں اور کوتاہیوں سے درگزر فرما، ہمارے کام میں تیرے حدود سے جو کچھ تجاوز ہو گیا ہو اُسے معاف کر دے، ہمارے قدم جما دے اور کافروں کے مقابلہ میں ہماری مدد کر\""
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "2:286-286": {
+      "urdu": [
+        "اللہ کسی متنفس پر اُس کی مقدرت سے بڑھ کر ذمہ داری کا بوجھ نہیں ڈالتا ہر شخص نے جو نیکی کمائی ہے، اس کا پھل اسی کے لیے ہے اور جو بدی سمیٹی ہے، اس کا وبال اسی پر ہے (ایمان لانے والو! تم یوں دعا کیا کرو) اے ہمارے رب! ہم سے بھول چوک میں جو قصور ہو جائیں، ان پر گرفت نہ کر مالک! ہم پر وہ بوجھ نہ ڈال، جو تو نے ہم سے پہلے لوگوں پر ڈالے تھے پروردگار! جس بار کو اٹھانے کی طاقت ہم میں نہیں ہے، وہ ہم پر نہ رکھ، ہمارے ساتھ نرمی کر، ہم سے در گزر فرما، ہم پر رحم کر، تو ہمارا مولیٰ ہے، کافروں کے مقابلے میں ہماری مدد کر"
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "20:25-26": {
+      "urdu": [
+        "موسیٰؑ نے عرض کیا \" پروردگار، میرا سینہ کھول دے",
+        "اور میرے کام کو میرے لیے آسان کر دے"
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "27:19-19": {
+      "urdu": [
+        "سلیمانؑ اس کی بات پر مُسکراتے ہوئے ہنس پڑا اور بولا \"اے میرے رب، مجھے قابو میں رکھ کہ میں تیرے اس احسان کا شکر ادا کرتا رہوں جو تو نے مجھ پر اور میرے والدین پر کیا ہے اور ایسا عمل صالح کروں جو تجھے پسند آئے اور اپنی رحمت سے مجھ کو اپنے صالح بندوں میں داخل کر\""
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "40:27-27": {
+      "urdu": [
+        "موسیٰؑ نے کہا \"میں نے تو ہر اُس متکبر کے مقابلے میں جو یَوم الحساب پر ایمان نہیں رکھتا اپنے ر ب اور تمہارے رب کی پناہ لے لی ہے\""
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "23:97-98": {
+      "urdu": [
+        "اور دعا کرو کہ \"پروردگار، میں شیاطین کی اکساہٹوں سے تیری پناہ مانگتا ہوں",
+        "بلکہ اے میرے رب، میں تو اس سے بھی تیری پناہ مانگتا ہوں کہ وہ میرے پاس آئیں\""
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "57:3-3": {
+      "urdu": [
+        "وہی اول بھی ہے اور آخر بھی، ظاہر بھی ہے اور مخفی بھی، اور وہ ہر چیز کا علم رکھتا ہے"
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "10:94-94": {
+      "urdu": [
+        "اب اگر تجھے اُس ہدایت کی طرف سے کچھ بھی شک ہو جو ہم نے تجھ پر نازل کی ہے تو اُن لوگوں سے پوچھ لے جو پہلے سے کتاب پڑھ رہے ہیں فی الواقع یہ تیرے پاس حق ہی آیا ہے تیرے رب کی طرف سے، لہٰذا تو شک کرنے والوں میں سے نہ ہو"
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "21:83-83": {
+      "urdu": [
+        "اور یہی (ہوش مندی اور حکم و علم کی نعمت) ہم نے ایّوبؑ کو دی تھی یاد کرو، جبکہ اس نے اپنے رب کو پکارا کہ \"مجھے بیماری لگ گئی ہے اور تو ارحم الراحمین ہے\""
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "71:10-12": {
+      "urdu": [
+        "میں نے کہا اپنے رب سے معافی مانگو، بے شک وہ بڑا معاف کرنے والا ہے",
+        "وہ تم پر آسمان سے خوب بارشیں برسائے گا",
+        "تمہیں مال اور اولاد سے نوازے گا، تمہارے لیے باغ پیدا کرے گا اور تمہارے لیے نہریں جاری کر دے گا"
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "26:82-82": {
+      "urdu": [
+        "اور جس سے میں امید رکھتا ہوں کہ روزِ جزا میں وہ میری خطا معاف فرما دے گا\""
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "23:118-118": {
+      "urdu": [
+        "اے محمدؐ، کہو، \"میرے رب درگزر فرما، اور رحم کر، اور تو سب رحیموں سے اچھا رحیم ہے\""
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "14:41-41": {
+      "urdu": [
+        "پروردگار، مجھے اور میرے والدین کو اور سب ایمان لانے والوں کو اُس دن معاف کر دیجیو جبکہ حساب قائم ہوگا\""
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "3:16-16": {
+      "urdu": [
+        "یہ وہ لوگ ہیں، جو کہتے ہیں کہ \"مالک! ہم ایمان لائے، ہماری خطاؤں سے در گزر فرما اور ہمیں آتش دوزخ سے بچا لے\""
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    },
+    "12:86-86": {
+      "urdu": [
+        "اُس نے کہا \"میں اپنی پریشانی اور اپنے غم کی فریاد اللہ کے سوا کسی سے نہیں کرتا، اور اللہ سے جیسا میں واقف ہوں تم نہیں ہو"
+      ],
+      "source": "Al Quran Cloud ur.maududi (Tafheem ul Quran, as used by the Flutter reader)"
+    }
+  }
+}
