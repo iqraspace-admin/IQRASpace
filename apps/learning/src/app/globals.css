@@ -1,65 +1,83 @@
 @import "tailwindcss";
 
 /* Manual dark-mode toggle (class-based) instead of Tailwind v4's default
-   media-query-only `dark:`. Settings' Light/Dark buttons (and the topbar
+   media-query-only `dark:`. Settings' Light/Dark buttons (and the header
    toggle) add/remove `.dark` on <html> and persist the choice — see
    lib/theme.ts. Falls back to system preference when no choice is stored. */
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
+  /* IqraSpace design system v1.0 — mirrors apps/site/styles.css tokens so the
+     Learning App reads as one product with the website and the Quran Reader.
+     (green-900 #0F2E25 · green-800 #163D32 · green-700 #205746 · ivory #FAF8F2
+     · sage-100 #E7EEE8 · sage-50 #F2F6F2 · gold #C6A66B · gold-text #8A6D2F) */
+
   /* ---- Paper & surfaces ---- */
-  --color-paper: #faf8f3;
-  --color-paper-alt: #f1ede1;
+  --color-paper: #faf8f2;
+  --color-paper-alt: #e7eee8;
   --color-surface: #ffffff;
-  --color-surface-alt: #f6f3ea;
+  --color-surface-alt: #f2f6f2;
 
   /* ---- Ink ---- */
-  --color-ink: #1c2521;
-  --color-ink-soft: #4a564f;
-  --color-muted: #7c8a82;
+  --color-ink: #202923;
+  --color-ink-soft: #5b665f;
+  --color-muted: #66716a;
+  --color-heading: #163d32;
 
-  /* ---- Primary: deep emerald/teal ---- */
-  --color-primary: #0b6b5c;
-  --color-primary-deep: #084a40;
-  --color-primary-tint: #e2f0ec;
+  /* ---- Primary: IqraSpace green ---- */
+  --color-primary: #205746;
+  --color-primary-deep: #163d32;
+  --color-primary-tint: #e7eee8;
 
-  /* ---- Accent: warm gold ---- */
-  --color-accent: #b98a3d;
-  --color-accent-deep: #8f6a2c;
-  --color-accent-tint: #f6ecd8;
+  /* ---- Accent: gold ---- */
+  --color-accent: #c6a66b;
+  --color-accent-deep: #8a6d2f;
+  --color-accent-tint: #f3ead3;
 
   /* ---- Status ---- */
-  --color-success: #2f7a4d;
-  --color-success-tint: #e3f0e6;
-  --color-danger: #b23b2e;
-  --color-danger-tint: #f5e3de;
-  --color-warning: #b98a3d;
-  --color-warning-tint: #f6ecd8;
+  --color-success: #1f6b47;
+  --color-success-tint: #e9f4ee;
+  --color-danger: #a63a2b;
+  --color-danger-tint: #fbefec;
+  --color-warning: #8a6d2f;
+  --color-warning-tint: #f3ead3;
 
-  --color-line: #e4e0d3;
+  --color-line: #e4e8e2;
+  --color-line-strong: #c9d1ca;
 
-  --radius-s: 10px;
-  --radius-m: 16px;
-  --radius-l: 24px;
+  --radius-s: 8px;
+  --radius-m: 12px;
+  --radius-l: 20px;
+  --radius-xl: 28px;
 
-  --shadow-s: 0 1px 3px rgba(20, 30, 26, 0.07);
-  --shadow-m: 0 10px 28px rgba(20, 30, 26, 0.09);
-  --shadow-l: 0 24px 56px rgba(20, 30, 26, 0.16);
+  --shadow-s: 0 1px 2px rgba(22, 61, 50, 0.06);
+  --shadow-m: 0 8px 24px -8px rgba(22, 61, 50, 0.14);
+  --shadow-l: 0 24px 48px -16px rgba(22, 61, 50, 0.22);
+
+  /* Matches apps/site's --header-h (76px, 64px on phones). */
+  --header-h: 76px;
 
   --background: var(--color-paper);
   --foreground: var(--color-ink);
 }
 
+@media (max-width: 639px) {
+  :root {
+    --header-h: 64px;
+  }
+}
+
 :root:not([data-theme="light"]) {
   @media (prefers-color-scheme: dark) {
     --color-paper: #0e1613;
-    --color-paper-alt: #14211d;
+    --color-paper-alt: #1b2b26;
     --color-surface: #16231f;
-    --color-surface-alt: #1b2b26;
+    --color-surface-alt: #14211d;
 
     --color-ink: #edf1ec;
     --color-ink-soft: #bfc9c1;
     --color-muted: #87958d;
+    --color-heading: #edf1ec;
 
     --color-primary: #3fa88f;
     --color-primary-deep: #1c3c36;
@@ -77,6 +95,7 @@
     --color-warning-tint: #2a2216;
 
     --color-line: #263731;
+    --color-line-strong: #37524a;
 
     --shadow-s: 0 1px 3px rgba(0, 0, 0, 0.35);
     --shadow-m: 0 10px 28px rgba(0, 0, 0, 0.35);
@@ -86,13 +105,14 @@
 
 .dark {
   --color-paper: #0e1613;
-  --color-paper-alt: #14211d;
+  --color-paper-alt: #1b2b26;
   --color-surface: #16231f;
-  --color-surface-alt: #1b2b26;
+  --color-surface-alt: #14211d;
 
   --color-ink: #edf1ec;
   --color-ink-soft: #bfc9c1;
   --color-muted: #87958d;
+  --color-heading: #edf1ec;
 
   --color-primary: #3fa88f;
   --color-primary-deep: #1c3c36;
@@ -110,6 +130,7 @@
   --color-warning-tint: #2a2216;
 
   --color-line: #263731;
+  --color-line-strong: #37524a;
 
   --shadow-s: 0 1px 3px rgba(0, 0, 0, 0.35);
   --shadow-m: 0 10px 28px rgba(0, 0, 0, 0.35);
@@ -127,6 +148,7 @@
   --color-ink: var(--color-ink);
   --color-ink-soft: var(--color-ink-soft);
   --color-muted: var(--color-muted);
+  --color-heading: var(--color-heading);
   --color-primary: var(--color-primary);
   --color-primary-deep: var(--color-primary-deep);
   --color-primary-tint: var(--color-primary-tint);
@@ -140,9 +162,10 @@
   --color-warning: var(--color-warning);
   --color-warning-tint: var(--color-warning-tint);
   --color-line: var(--color-line);
+  --color-line-strong: var(--color-line-strong);
 
   --font-sans: var(--font-inter);
-  --font-display: var(--font-fraunces);
+  --font-display: var(--font-newsreader);
   --font-arabic: var(--font-amiri);
 }
 
@@ -161,10 +184,16 @@ body {
   overflow-x: hidden;
 }
 
+html {
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
 body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -173,7 +202,18 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display), ui-serif, Georgia, serif;
+  font-weight: 500;
   letter-spacing: -0.01em;
+}
+
+/* Layered so Tailwind text-* utilities (white-on-green blocks etc.) still win. */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-heading);
+  }
 }
 
 ::selection {
@@ -182,9 +222,14 @@ h4 {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
   border-radius: 4px;
+}
+
+/* On the dark-green footer the focus ring switches to the site's light gold. */
+.on-dark :focus-visible {
+  outline-color: #f0ddb0;
 }
 
 .font-arabic {
@@ -192,28 +237,36 @@ h4 {
   direction: rtl;
 }
 
-/* Subtle 8-point-star geometric texture — used sparingly (auth screen,
-   dashboard hero, empty states), never as full-page decoration. */
+/* The site's `.pattern`: a faint 8-point-star outline fading in from the
+   right. Put it on a section/card; content sits above via isolation. */
 .pattern-geo {
-  background-image: radial-gradient(
-      circle at 0 0,
-      color-mix(in srgb, var(--color-primary) 8%, transparent) 0,
-      transparent 45%
-    ),
-    linear-gradient(45deg, color-mix(in srgb, var(--color-primary) 6%, transparent) 25%, transparent 25%),
-    linear-gradient(-45deg, color-mix(in srgb, var(--color-primary) 6%, transparent) 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, color-mix(in srgb, var(--color-accent) 6%, transparent) 75%),
-    linear-gradient(-45deg, transparent 75%, color-mix(in srgb, var(--color-accent) 6%, transparent) 75%);
-  background-size: 48px 48px;
-  background-position:
-    0 0,
-    0 0,
-    0 0,
-    24px 24px,
-    24px 24px;
+  position: relative;
+  isolation: isolate;
+}
+
+.pattern-geo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.5;
+  pointer-events: none;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23205746' stroke-opacity='.10' stroke-width='1'%3E%3Cpath d='M40 6l9.5 14.5L66 14l-2.5 17.5L80 40l-16.5 8.5L66 66l-16.5-6.5L40 74l-9.5-14.5L14 66l2.5-17.5L0 40l16.5-8.5L14 14l16.5 6.5z'/%3E%3C/g%3E%3C/svg%3E");
+  -webkit-mask-image: linear-gradient(115deg, transparent 30%, #000 100%);
+  mask-image: linear-gradient(115deg, transparent 30%, #000 100%);
+}
+
+.dark .pattern-geo::before,
+.on-dark.pattern-geo::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.08' stroke-width='1'%3E%3Cpath d='M40 6l9.5 14.5L66 14l-2.5 17.5L80 40l-16.5 8.5L66 66l-16.5-6.5L40 74l-9.5-14.5L14 66l2.5-17.5L0 40l16.5-8.5L14 14l16.5 6.5z'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   * {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;

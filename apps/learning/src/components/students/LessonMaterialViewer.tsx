@@ -67,7 +67,7 @@ export function useLessonMaterialViewer() {
               rel="noopener noreferrer"
               className={buttonClassName("outline", "sm", "mt-3")}
             >
-              📖 Read {state.surahName} in Quran
+              Read {state.surahName} in Quran
             </a>
           )}
         </div>

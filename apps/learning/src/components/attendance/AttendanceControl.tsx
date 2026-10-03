@@ -80,7 +80,7 @@ export function AttendanceControl({
           <AttendanceStatusBadge status={status} />
         ) : (
           <span className="inline-flex items-center gap-1 rounded-full bg-primary-tint px-2.5 py-1 text-[0.72rem] font-bold text-primary-deep">
-            ✅ Mark Attendance
+            Mark Attendance
           </span>
         )}
       </button>

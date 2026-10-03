@@ -1,5 +1,6 @@
 /**
- * Manual light/dark theme, persisted to localStorage. Works alongside
+ * Light by default, to match the website (which has no dark theme). Dark and
+ * "follow system" are explicit opt-ins in Settings. Manual theme, persisted to localStorage. Works alongside
  * globals.css's `.dark` class rules and the `prefers-color-scheme` fallback
  * (for the no-JS/pre-hydration instant): "system" removes any override and
  * lets the media query decide; "light"/"dark" force a choice regardless of
@@ -14,7 +15,7 @@ const STORAGE_KEY = "iqraspace-theme";
 export function getStoredTheme(): ThemeChoice {
   if (typeof window === "undefined") return "system";
   const stored = window.localStorage.getItem(STORAGE_KEY);
-  return stored === "light" || stored === "dark" ? stored : "system";
+  return stored === "dark" || stored === "system" ? stored : "light";
 }
 
 export function applyTheme(choice: ThemeChoice) {
@@ -44,7 +45,7 @@ export const THEME_INIT_SCRIPT = `
 (function () {
   try {
     var stored = localStorage.getItem("${STORAGE_KEY}");
-    var choice = stored === "light" || stored === "dark" ? stored : "system";
+    var choice = stored === "dark" || stored === "system" ? stored : "light";
     var systemDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
     var dark = choice === "dark" || (choice === "system" && systemDark);
     var root = document.documentElement;

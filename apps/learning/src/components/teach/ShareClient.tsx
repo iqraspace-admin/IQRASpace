@@ -133,7 +133,7 @@ export function ShareClient({ lessonId }: { lessonId: string }) {
         </div>
         {meeting && (
           <a href={meeting.meet_url} target="_blank" rel="noreferrer">
-            <Button>🎥 Join Google Meet</Button>
+            <Button>Join Google Meet</Button>
           </a>
         )}
       </header>
@@ -143,7 +143,7 @@ export function ShareClient({ lessonId }: { lessonId: string }) {
           <p className="text-center text-sm text-muted">This lesson has no teaching content attached yet.</p>
         ) : !shared.active ? (
           <div className="rounded-[var(--radius-l)] border border-line bg-surface p-10 text-center">
-            <span className="mb-2 block text-2xl">🕊️</span>
+            
             <p className="text-sm text-muted">Waiting for the Tutor to share a passage…</p>
           </div>
         ) : surah ? (
@@ -161,7 +161,7 @@ export function ShareClient({ lessonId }: { lessonId: string }) {
                 rel="noopener noreferrer"
                 className={buttonClassName("outline", "sm")}
               >
-                📖 Read in Quran
+                Read in Quran
               </a>
             </div>
             {ayahsOnPage.map((a) => (

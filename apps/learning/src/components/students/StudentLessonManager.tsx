@@ -215,7 +215,7 @@ function ClassCurriculumCard({
             ))}
           </Select>
           <Button size="sm" variant="gold" onClick={handleMarkCompleted} disabled={busy || !currentItem}>
-            ✅ Mark Completed & Advance
+            Mark Completed & Advance
           </Button>
         </div>
       )}

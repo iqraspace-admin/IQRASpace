@@ -15,7 +15,7 @@ export function Badge({ tone = "muted", children }: { tone?: BadgeTone; children
   return (
     <span
       className={cx(
-        "inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[0.72rem] font-bold",
+        "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs font-semibold leading-none tracking-[0.02em]",
         tones[tone]
       )}
     >
@@ -38,10 +38,10 @@ export function Chip({
       type="button"
       onClick={onClick}
       className={cx(
-        "rounded-full border px-3 py-1.5 text-[0.78rem] font-semibold transition-colors",
+        "rounded-full border px-3 py-2 text-[13px] font-medium leading-none transition-colors",
         active
           ? "border-primary bg-primary text-white"
-          : "border-line bg-paper-alt text-ink-soft hover:border-primary hover:text-primary"
+          : "border-line-strong bg-surface text-ink hover:border-primary hover:text-primary"
       )}
     >
       {children}

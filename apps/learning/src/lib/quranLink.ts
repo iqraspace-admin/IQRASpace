@@ -29,10 +29,17 @@
  */
 const QURAN_BASE = process.env.NEXT_PUBLIC_QURAN_URL || "https://iqraspace-quran.vercel.app/quran";
 
+/** Where *links* a person clicks (never fetches) point: the canonical, public
+ * iqraspace.org/quran — the same address the website and the Quran Reader
+ * itself advertise. PDFs above keep QURAN_BASE (the stable Vercel alias) since
+ * the PdfViewer fetches them cross-origin. NEXT_PUBLIC_QURAN_URL still
+ * overrides both, for local dev. */
+const QURAN_LINK_BASE = process.env.NEXT_PUBLIC_QURAN_URL || "https://iqraspace.org/quran";
+
 /** The Quran Reader's home — used by the always-visible "Open Quran" nav
  * entry, with no particular Surah/Ayah in mind. */
 export function quranHomeUrl(): string {
-  return QURAN_BASE;
+  return QURAN_LINK_BASE;
 }
 
 /**
@@ -42,7 +49,7 @@ export function quranHomeUrl(): string {
  * deep links) — reused as-is here, no changes to apps/quran needed.
  */
 export function quranSurahUrl(surahNumber: number, ayahNumber?: number | null): string {
-  const path = `${QURAN_BASE}/surah/${surahNumber}`;
+  const path = `${QURAN_LINK_BASE}/surah/${surahNumber}`;
   return ayahNumber ? `${path}?verse=${surahNumber}:${ayahNumber}` : path;
 }
 

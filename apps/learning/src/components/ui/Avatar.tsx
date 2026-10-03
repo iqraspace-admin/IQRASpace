@@ -1,6 +1,6 @@
 import { cx } from "./classNames";
 
-const PALETTE = ["#0b6b5c", "#b98a3d", "#5b7a6e", "#3a5a52", "#8a6a3a"];
+const PALETTE = ["#205746", "#8a6d2f", "#2b6b57", "#163d32", "#5b665f"];
 
 export function colorForName(name: string) {
   let hash = 0;

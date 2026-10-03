@@ -16,10 +16,10 @@ export function Tabs<T extends string>({
           key={t.value}
           onClick={() => onChange(t.value)}
           className={cx(
-            "-mb-px border-b-2 px-4 py-2.5 text-sm font-semibold transition-colors",
+            "-mb-px border-b-2 px-4 py-3 text-[15px] font-semibold transition-colors",
             active === t.value
-              ? "border-primary text-primary-deep"
-              : "border-transparent text-muted hover:text-ink"
+              ? "border-accent text-heading"
+              : "border-transparent text-ink-soft hover:text-heading"
           )}
         >
           {t.label}
@@ -39,14 +39,14 @@ export function ViewToggle<T extends string>({
   onChange: (value: T) => void;
 }) {
   return (
-    <div className="inline-flex gap-1 rounded-full bg-paper-alt p-1">
+    <div className="inline-flex gap-1 rounded-full border border-line bg-surface-alt p-1">
       {options.map((o) => (
         <button
           key={o.value}
           onClick={() => onChange(o.value)}
           className={cx(
-            "rounded-full px-3.5 py-1.5 text-[0.78rem] font-bold transition-colors",
-            active === o.value ? "bg-surface text-primary-deep shadow-[var(--shadow-s)]" : "text-muted"
+            "rounded-full px-4 py-2 text-[13px] font-semibold transition-colors",
+            active === o.value ? "bg-surface text-heading shadow-[var(--shadow-s)]" : "text-ink-soft"
           )}
         >
           {o.label}

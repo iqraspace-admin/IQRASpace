@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { setTheme } from "@/lib/theme";
+import { Icon } from "./icons";
 
 export function ThemeToggle() {
   const [dark, setDark] = useState(false);
@@ -19,11 +20,12 @@ export function ThemeToggle() {
 
   return (
     <button
+      type="button"
       onClick={toggle}
-      aria-label="Toggle theme"
-      className="flex h-[38px] w-[38px] items-center justify-center rounded-[10px] border border-line bg-surface text-[1.05rem]"
+      aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
+      className="flex h-11 w-11 items-center justify-center rounded-[var(--radius-m)] border-[1.5px] border-line-strong bg-surface text-heading hover:border-primary"
     >
-      {dark ? "☀️" : "🌙"}
+      <Icon name={dark ? "sun" : "moon"} className="h-5 w-5" />
     </button>
   );
 }

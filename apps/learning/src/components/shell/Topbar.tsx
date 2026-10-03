@@ -1,37 +1,45 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { useAuth } from "@/lib/authContext";
 import { Avatar } from "@/components/ui/Avatar";
+import { buttonClassName } from "@/components/ui/Button";
 import { NotificationBell } from "./NotificationBell";
 import { ThemeToggle } from "./ThemeToggle";
-import { pageMetaFor } from "./navConfig";
+import { SiteHeader } from "./SiteHeader";
+import { Icon } from "./icons";
+import type { NavItem } from "./navConfig";
 
-export function Topbar({ onOpenSidebar }: { onOpenSidebar: () => void }) {
-  const pathname = usePathname();
+/**
+ * The signed-in workspace's top bar: the shared IqraSpace header plus the
+ * workspace controls (notifications, theme, account) on the right.
+ */
+export function Topbar({ navItems, onLogout }: { navItems: NavItem[]; onLogout: () => void }) {
   const { profile } = useAuth();
-  const meta = pageMetaFor(pathname);
+  const name = profile?.full_name ?? "?";
 
   return (
-    <header className="sticky top-0 z-30 flex items-center justify-between gap-4 border-b border-line bg-paper px-5 py-4 md:px-7">
-      <div className="flex items-center gap-3">
-        <button
-          onClick={onOpenSidebar}
-          aria-label="Open menu"
-          className="flex h-[38px] w-[38px] items-center justify-center rounded-[8px] border border-line text-lg md:hidden"
-        >
-          ☰
-        </button>
-        <div>
-          <h2 className="text-[1.2rem] font-semibold">{meta.title}</h2>
-          <p className="mt-0.5 hidden text-[0.85rem] text-muted sm:block">{meta.subtitle}</p>
+    <SiteHeader
+      variant="app"
+      workspaceNav={navItems}
+      actions={
+        <>
+          <NotificationBell />
+          <ThemeToggle />
+          <span title={name}>
+            <Avatar name={name} size={40} />
+          </span>
+        </>
+      }
+      mobileActions={<NotificationBell />}
+      sheetFooter={
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <button type="button" onClick={onLogout} className={buttonClassName("outline", "md", "flex-1")}>
+            <Icon name="logout" className="h-[18px] w-[18px]" />
+            Log out{profile ? ` · ${name}` : ""}
+          </button>
         </div>
-      </div>
-      <div className="flex items-center gap-2.5">
-        <NotificationBell />
-        <ThemeToggle />
-        <Avatar name={profile?.full_name ?? "?"} size={38} />
-      </div>
-    </header>
+      }
+    />
   );
 }

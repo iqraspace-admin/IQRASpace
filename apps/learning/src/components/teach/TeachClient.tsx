@@ -265,13 +265,13 @@ export function TeachClient({ lessonId }: { lessonId: string }) {
               {material.page_start && ` · Curriculum pages ${material.page_start}${material.page_end && material.page_end !== material.page_start ? `–${material.page_end}` : ""}`}
             </div>
           </div>
-          <Badge tone={sharing ? "green" : "muted"}>{sharing ? "🟢 Sharing live" : "⚪ Not sharing"}</Badge>
+          <Badge tone={sharing ? "green" : "muted"}>{sharing ? "Sharing live" : "Not sharing"}</Badge>
         </div>
 
         <div className="grid grid-cols-[1fr_260px] gap-4 max-lg:grid-cols-1">
           <Card padded={false} className="overflow-hidden">
             <div className="flex items-center justify-between bg-paper-alt px-4 py-3">
-              <b className="text-sm">📄 Lesson Material — editable</b>
+              <b className="text-sm">Lesson Material — editable</b>
               <Badge tone="muted">You</Badge>
             </div>
             <div className="p-4">
@@ -291,7 +291,7 @@ export function TeachClient({ lessonId }: { lessonId: string }) {
                 </Button>
               </div>
               <Button onClick={sharePdfPage} className="mt-2.5 w-full">
-                📤 Share This Page
+                Share This Page
               </Button>
             </Card>
             <SideCards
@@ -417,7 +417,7 @@ export function TeachClient({ lessonId }: { lessonId: string }) {
           rel="noopener noreferrer"
           className={buttonClassName("outline", "sm")}
         >
-          📖 Read in Quran
+          Read in Quran
         </a>
         <ViewToggle
           options={[
@@ -428,7 +428,7 @@ export function TeachClient({ lessonId }: { lessonId: string }) {
           active={mode}
           onChange={setMode}
         />
-        <Badge tone={sharing ? "green" : "muted"}>{sharing ? "🟢 Sharing live" : "⚪ Not sharing"}</Badge>
+        <Badge tone={sharing ? "green" : "muted"}>{sharing ? "Sharing live" : "Not sharing"}</Badge>
       </div>
 
       <div className="grid grid-cols-[110px_1fr_260px] gap-4 max-lg:grid-cols-1">
@@ -451,7 +451,7 @@ export function TeachClient({ lessonId }: { lessonId: string }) {
           {showTutorPanel && (
             <div className="min-w-[280px] flex-1 rounded-[var(--radius-l)] border border-line bg-surface shadow-[var(--shadow-s)]">
               <div className="flex items-center justify-between bg-paper-alt px-4 py-3">
-                <b className="text-sm">👤 Tutor View — editable</b>
+                <b className="text-sm">Tutor View — editable</b>
                 <Badge tone="muted">You</Badge>
               </div>
               <div className="p-4">
@@ -475,7 +475,7 @@ export function TeachClient({ lessonId }: { lessonId: string }) {
           {showStudentPanel && (
             <div className="min-w-[280px] flex-1 rounded-[var(--radius-l)] border border-line bg-surface shadow-[var(--shadow-s)]">
               <div className="flex items-center justify-between bg-paper-alt px-4 py-3">
-                <b className="text-sm">🎓 Student View — read only</b>
+                <b className="text-sm">Student View — read only</b>
                 <Badge tone="muted">Preview</Badge>
               </div>
               <div className="p-4">
@@ -518,7 +518,7 @@ export function TeachClient({ lessonId }: { lessonId: string }) {
             <h4 className="mb-2 text-xs font-bold uppercase tracking-wide text-muted">Highlight Tools</h4>
             <div className="grid grid-cols-2 gap-2">
               <Button variant="outline" size="sm" onClick={applyHighlight}>
-                ✏️ Highlight
+                Highlight
               </Button>
               <Button variant="ghost" size="sm" onClick={clearHighlight}>
                 Clear
@@ -531,7 +531,7 @@ export function TeachClient({ lessonId }: { lessonId: string }) {
               </Button>
             </div>
             <Button onClick={shareWithStudent} className="mt-2.5 w-full">
-              📤 Share with Student
+              Share with Student
             </Button>
           </Card>
           <SideCards
@@ -594,7 +594,7 @@ function SideCards({
           ))
         )}
         <Button variant="outline" size="sm" onClick={openMeet} className="mt-2.5 w-full">
-          🎥 {meeting ? "Start Google Meet" : "No Meet link yet"}
+          {meeting ? "Start Google Meet" : "No Meet link yet"}
         </Button>
       </Card>
       {canManage && onMarkAttendance && (
@@ -611,7 +611,7 @@ function SideCards({
             lesson was actually completed.
           </p>
           <Button variant="gold" size="sm" onClick={onConfirm} className="w-full">
-            ✅ Confirm Lesson Completed
+            Confirm Lesson Completed
           </Button>
         </Card>
       )}

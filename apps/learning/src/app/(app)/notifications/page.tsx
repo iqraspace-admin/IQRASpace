@@ -8,13 +8,14 @@ import type { AppNotification } from "@/lib/types";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { Icon, type IconName } from "@/components/shell/icons";
 
-const TYPE_ICON: Record<string, string> = {
-  lesson_scheduled: "📅",
-  attendance_marked: "✅",
-  lesson_note_added: "📝",
-  sharing_started: "📤",
-  system: "🔔",
+const TYPE_ICON: Record<string, IconName> = {
+  lesson_scheduled: "calendar",
+  attendance_marked: "check",
+  lesson_note_added: "note",
+  sharing_started: "video",
+  system: "bell",
 };
 
 export default function NotificationsPage() {
@@ -56,7 +57,7 @@ export default function NotificationsPage() {
           <ul className="flex flex-col">
             {items.map((n) => (
               <li key={n.id} className={`flex items-center gap-3 border-b border-line py-3 last:border-0 ${n.read ? "" : "bg-primary-tint/40"}`}>
-                <span className="text-xl">{TYPE_ICON[n.type] ?? "🔔"}</span>
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-[var(--radius-m)] bg-primary-tint text-primary"><Icon name={TYPE_ICON[n.type] ?? "bell"} className="h-5 w-5" /></span>
                 <div className="flex-1">
                   <b className="block text-sm">{n.title}</b>
                   {n.body && <span className="text-xs text-muted">{n.body}</span>}

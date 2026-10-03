@@ -1,21 +1,23 @@
+import type { IconName } from "./icons";
+
 export type NavItem = {
   href: string;
   label: string;
-  icon: string;
+  icon: IconName;
 };
 
 export const NAV_ITEMS: NavItem[] = [
-  { href: "/dashboard", label: "Dashboard", icon: "🏠" },
-  { href: "/students", label: "Students", icon: "🎓" },
-  { href: "/classes", label: "Classes", icon: "📚" },
-  { href: "/lessons", label: "Lessons", icon: "📖" },
-  { href: "/materials", label: "Lesson Materials", icon: "📄" },
-  { href: "/schedule", label: "Schedule", icon: "📅" },
-  { href: "/attendance", label: "Attendance", icon: "✅" },
-  { href: "/progress", label: "Student Progress", icon: "📈" },
-  { href: "/notes", label: "Lesson Notes", icon: "📝" },
-  { href: "/meet", label: "Google Meet", icon: "🎥" },
-  { href: "/settings", label: "Settings", icon: "⚙️" },
+  { href: "/dashboard", label: "Dashboard", icon: "home" },
+  { href: "/students", label: "Students", icon: "students" },
+  { href: "/classes", label: "Classes", icon: "classes" },
+  { href: "/lessons", label: "Lessons", icon: "lessons" },
+  { href: "/materials", label: "Lesson Materials", icon: "file" },
+  { href: "/schedule", label: "Schedule", icon: "calendar" },
+  { href: "/attendance", label: "Attendance", icon: "check" },
+  { href: "/progress", label: "Student Progress", icon: "chart" },
+  { href: "/notes", label: "Lesson Notes", icon: "note" },
+  { href: "/meet", label: "Google Meet", icon: "video" },
+  { href: "/settings", label: "Settings", icon: "settings" },
 ];
 
 // Shown instead of NAV_ITEMS for role: admin/super_admin (src/lib/roles.ts).
@@ -26,9 +28,9 @@ export const NAV_ITEMS: NavItem[] = [
 // platform-wide (all-tutors) view once its page-level `canManage` check
 // recognizes admin (src/lib/roles.ts's isAdminRole()).
 export const ADMIN_NAV_ITEMS: NavItem[] = [
-  { href: "/admin", label: "Admin Dashboard", icon: "🛡️" },
-  { href: "/admin/users", label: "Manage Users", icon: "🗂️" },
-  { href: "/admin/duas", label: "Duas Admin", icon: "🤲" },
+  { href: "/admin", label: "Admin Dashboard", icon: "shield" },
+  { href: "/admin/users", label: "Manage Users", icon: "users" },
+  { href: "/admin/duas", label: "Duas Admin", icon: "duas" },
   ...NAV_ITEMS,
 ];
 
@@ -53,5 +55,6 @@ export const PAGE_META: Record<string, { title: string; subtitle: string }> = {
 
 export function pageMetaFor(pathname: string) {
   const key = Object.keys(PAGE_META).find((k) => pathname.startsWith(k));
-  return key ? PAGE_META[key] : { title: "IQRASpace", subtitle: "" };
+  const eyebrow = pathname.startsWith("/admin") ? "Administration" : "Learning workspace";
+  return { eyebrow, ...(key ? PAGE_META[key] : { title: "IqraSpace Learning", subtitle: "" }) };
 }

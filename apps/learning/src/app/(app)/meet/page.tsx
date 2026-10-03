@@ -76,10 +76,10 @@ export default function MeetPage() {
           </p>
           <div className="mt-3.5 flex flex-wrap gap-2.5">
             <a href={todayRow.meeting.meet_url} target="_blank" rel="noreferrer">
-              <Button>🎥 Join Google Meet</Button>
+              <Button>Join Google Meet</Button>
             </a>
             <Button variant="outline" onClick={() => copyLink(todayRow.meeting.meet_url)}>
-              🔗 Copy Meeting Link
+              Copy Meeting Link
             </Button>
           </div>
         </Card>

@@ -159,7 +159,7 @@ export default function ProgressPage() {
                     rel="noopener noreferrer"
                     className="text-xs font-semibold text-primary hover:underline"
                   >
-                    📖 Read {latest.surah_ayah_range} in Quran
+                    Read {latest.surah_ayah_range} in Quran
                   </a>
                 )}
               </div>

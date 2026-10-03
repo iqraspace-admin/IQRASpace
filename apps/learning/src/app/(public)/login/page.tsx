@@ -72,25 +72,25 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="pattern-geo mx-auto flex w-full max-w-sm flex-1 flex-col justify-center gap-6 p-8">
-      <div className="rounded-[var(--radius-l)] border border-line bg-surface p-7 shadow-[var(--shadow-m)]">
-        <h1 className="text-2xl font-semibold">Welcome back</h1>
-        <p className="mt-1 text-sm text-muted">Log in to your teaching workspace.</p>
-        <form onSubmit={handleSubmit} className="mt-5">
+    <main id="main" className="pattern-geo flex flex-1 flex-col justify-center px-5 py-10 sm:px-6 lg:py-16">
+      <div className="mx-auto w-full max-w-[460px] rounded-[var(--radius-l)] border border-line bg-surface p-6 shadow-[var(--shadow-m)] sm:rounded-[var(--radius-xl)] sm:p-10">
+        <h1 className="mb-1 text-[29px] leading-[1.15] sm:text-[34px]">Welcome back</h1>
+        <p className="mb-0 text-base text-ink-soft">Log in to your teaching workspace.</p>
+        <form onSubmit={handleSubmit} className="mt-6">
           <Field label="Username">
             <Input type="text" required value={username} onChange={(e) => setUsername(e.target.value)} autoFocus />
           </Field>
           <Field label="Password">
             <Input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
           </Field>
-          {error && <p className="mb-3.5 text-sm text-danger">{error}</p>}
-          <Button type="submit" disabled={submitting} className="w-full">
+          {error && <p role="alert" className="mb-5 rounded-[var(--radius-m)] border border-danger/30 bg-danger-tint px-4 py-3 text-sm font-medium text-danger">{error}</p>}
+          <Button type="submit" size="lg" disabled={submitting} className="w-full">
             {submitting ? "Logging in…" : "Log in"}
           </Button>
         </form>
-        <p className="mt-5 text-sm text-muted">
+        <p className="mt-6 text-[15px] text-ink-soft">
           No account?{" "}
-          <Link href="/signup" className="font-semibold text-primary underline">
+          <Link href="/signup" className="font-semibold text-primary underline underline-offset-[3px] hover:text-primary-deep">
             Sign up
           </Link>
         </p>

@@ -11,13 +11,14 @@ import { Card, Eyebrow, SectionHead } from "@/components/ui/Card";
 import { StatCard } from "@/components/ui/ProgressBar";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { LinkButton } from "@/components/ui/Button";
+import { Icon, type IconName } from "@/components/shell/icons";
 
-const QUICK_ACTIONS = [
-  { href: "/schedule", icon: "📅", label: "Schedule" },
-  { href: "/students", icon: "🎓", label: "Students" },
-  { href: "/materials", icon: "📄", label: "Materials" },
-  { href: "/attendance", icon: "✅", label: "Attendance" },
-  { href: "/notes", icon: "📝", label: "Lesson Notes" },
+const QUICK_ACTIONS: { href: string; icon: IconName; label: string }[] = [
+  { href: "/schedule", icon: "calendar", label: "Schedule" },
+  { href: "/students", icon: "students", label: "Students" },
+  { href: "/materials", icon: "file", label: "Materials" },
+  { href: "/attendance", icon: "check", label: "Attendance" },
+  { href: "/notes", icon: "note", label: "Lesson Notes" },
 ];
 
 export default function DashboardPage() {
@@ -168,9 +169,9 @@ export default function DashboardPage() {
               <Link
                 key={a.href}
                 href={a.href}
-                className="rounded-[var(--radius-m)] border border-line bg-paper-alt px-2 py-4 text-center text-[0.8rem] font-bold hover:border-primary hover:text-primary"
+                className="rounded-[var(--radius-m)] border border-line bg-surface px-2 py-4 text-center text-[13px] font-semibold text-ink shadow-[var(--shadow-s)] transition-shadow hover:border-line-strong hover:shadow-[var(--shadow-m)]"
               >
-                <span className="mb-1.5 block text-xl">{a.icon}</span>
+                <Icon name={a.icon} className="mx-auto mb-2 h-6 w-6 text-primary" />
                 {a.label}
               </Link>
             ))}
@@ -183,7 +184,7 @@ export default function DashboardPage() {
             <ul className="flex flex-col gap-1.5 text-sm">
               {recentNotes.map((n) => (
                 <li key={n.id} className="text-ink-soft">
-                  📝 {n.covered || n.note || "Lesson note"} —{" "}
+                  {n.covered || n.note || "Lesson note"} —{" "}
                   <span className="text-muted">{new Date(n.created_at).toLocaleDateString()}</span>
                 </li>
               ))}

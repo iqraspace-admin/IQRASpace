@@ -7,7 +7,7 @@ import type {
 import { cx } from "./classNames";
 
 const controlClass =
-  "w-full rounded-[10px] border border-line bg-surface px-3 py-2 text-sm text-ink placeholder:text-muted focus:border-primary";
+  "w-full min-h-[48px] rounded-[var(--radius-m)] border-[1.5px] border-line-strong bg-surface px-4 py-2.5 text-base text-ink transition-colors placeholder:text-muted hover:border-primary focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/20 disabled:cursor-not-allowed disabled:bg-paper-alt disabled:text-muted";
 
 export function Input({ className, ...rest }: InputHTMLAttributes<HTMLInputElement>) {
   return <input className={cx(controlClass, className)} {...rest} />;
@@ -22,7 +22,7 @@ export function Select({ className, children, ...rest }: SelectHTMLAttributes<HT
 }
 
 export function Textarea({ className, ...rest }: TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  return <textarea className={cx(controlClass, "min-h-[84px] resize-y", className)} {...rest} />;
+  return <textarea className={cx(controlClass, "min-h-[120px] resize-y", className)} {...rest} />;
 }
 
 export function Field({
@@ -35,12 +35,12 @@ export function Field({
   hint?: string;
 }) {
   return (
-    <label className="mb-3.5 block">
-      <span className="mb-1.5 block text-[0.72rem] font-bold uppercase tracking-[0.04em] text-muted">
+    <label className="mb-5 block">
+      <span className="mb-2 block text-sm font-semibold leading-snug text-ink">
         {label}
       </span>
       {children}
-      {hint && <span className="mt-1 block text-xs text-muted">{hint}</span>}
+      {hint && <span className="mt-1.5 block text-[13px] text-ink-soft">{hint}</span>}
     </label>
   );
 }

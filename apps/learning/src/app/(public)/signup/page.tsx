@@ -49,11 +49,11 @@ export default function SignupPage() {
   }
 
   return (
-    <main className="pattern-geo mx-auto flex w-full max-w-sm flex-1 flex-col justify-center gap-6 p-8">
-      <div className="rounded-[var(--radius-l)] border border-line bg-surface p-7 shadow-[var(--shadow-m)]">
-        <h1 className="text-2xl font-semibold">Create your account</h1>
-        <p className="mt-1 text-sm text-muted">Join as a tutor or a student.</p>
-        <form onSubmit={handleSubmit} className="mt-5">
+    <main id="main" className="pattern-geo flex flex-1 flex-col justify-center px-5 py-10 sm:px-6 lg:py-16">
+      <div className="mx-auto w-full max-w-[460px] rounded-[var(--radius-l)] border border-line bg-surface p-6 shadow-[var(--shadow-m)] sm:rounded-[var(--radius-xl)] sm:p-10">
+        <h1 className="mb-1 text-[29px] leading-[1.15] sm:text-[34px]">Create your account</h1>
+        <p className="mb-0 text-base text-ink-soft">Join as a tutor or a student.</p>
+        <form onSubmit={handleSubmit} className="mt-6">
           <Field label="I am a…">
             <Select value={role} onChange={(e) => setRole(e.target.value as Role)}>
               {ROLES.map((r) => (
@@ -87,14 +87,14 @@ export default function SignupPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Field>
-          {error && <p className="mb-3.5 text-sm text-danger">{error}</p>}
-          <Button type="submit" disabled={submitting} className="w-full">
+          {error && <p role="alert" className="mb-5 rounded-[var(--radius-m)] border border-danger/30 bg-danger-tint px-4 py-3 text-sm font-medium text-danger">{error}</p>}
+          <Button type="submit" size="lg" disabled={submitting} className="w-full">
             {submitting ? "Creating account…" : "Sign up"}
           </Button>
         </form>
-        <p className="mt-5 text-sm text-muted">
+        <p className="mt-6 text-[15px] text-ink-soft">
           Already have an account?{" "}
-          <Link href="/login" className="font-semibold text-primary underline">
+          <Link href="/login" className="font-semibold text-primary underline underline-offset-[3px] hover:text-primary-deep">
             Log in
           </Link>
         </p>

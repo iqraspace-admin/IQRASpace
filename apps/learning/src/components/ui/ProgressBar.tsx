@@ -3,7 +3,7 @@ export function ProgressBar({ value, label }: { value: number; label?: string })
   return (
     <div className="mb-2.5">
       {label && (
-        <div className="mb-1 flex justify-between text-[0.76rem] text-muted">
+        <div className="mb-1 flex justify-between text-[13px] text-ink-soft">
           <span>{label}</span>
           <span className="text-ink">{clamped}%</span>
         </div>
@@ -20,9 +20,9 @@ export function ProgressBar({ value, label }: { value: number; label?: string })
 
 export function StatCard({ value, label }: { value: ReactNodeLike; label: string }) {
   return (
-    <div className="rounded-[var(--radius-m)] border border-line bg-surface p-4">
-      <div className="font-display text-[1.9rem] text-primary-deep">{value}</div>
-      <div className="text-[0.78rem] font-semibold text-muted">{label}</div>
+    <div className="rounded-[var(--radius-m)] border border-line bg-surface p-4 shadow-[var(--shadow-s)]">
+      <div className="font-display text-[2rem] leading-tight text-heading">{value}</div>
+      <div className="text-[13px] font-medium text-ink-soft">{label}</div>
     </div>
   );
 }

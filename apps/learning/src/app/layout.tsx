@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, Amiri } from "next/font/google";
+import { Newsreader, Inter, Amiri } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import { canonicalUrl } from "@/lib/site";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   // the real production origin instead of defaulting to localhost:3000 —
   // same fix apps/quran's own layout.tsx applied first.
   metadataBase: new URL(canonicalUrl("/")),
-  title: "IQRASpace",
+  title: { default: "IqraSpace Learning", template: "%s · IqraSpace Learning" },
   description: "Online Quran learning management for a solo tutor and their students.",
 };
 
@@ -35,7 +35,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${inter.variable} ${amiri.variable} h-full antialiased`}
+      className={`${newsreader.variable} ${inter.variable} ${amiri.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

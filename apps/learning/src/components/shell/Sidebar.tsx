@@ -1,119 +1,85 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useAuth } from "@/lib/authContext";
-import { supabase } from "@/lib/supabaseClient";
 import { Avatar } from "@/components/ui/Avatar";
-import { isAdminRole } from "@/lib/roles";
-import { quranHomeUrl } from "@/lib/quranLink";
-import { ADMIN_NAV_ITEMS, NAV_ITEMS } from "./navConfig";
+import { PLATFORM } from "@/lib/platformLinks";
+import { Icon } from "./icons";
+import type { NavItem } from "./navConfig";
 
-// The brand icon is served from app/icon.tsx, a generated route under
-// this app's own basePath — not auto-prefixed the way next/link/next/image
-// prefix their own src, so it needs the same explicit client-exposed
-// NEXT_PUBLIC_BASE_PATH prefix PdfViewer.tsx uses for its public/ assets.
-const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-
-export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
+/**
+ * The workspace nav — desktop (≥1024px) only; phones get the same links in
+ * SiteHeader's sheet. Restyled from the old dark-green drawer to the
+ * website's light language: a white panel with a hairline border, sage pill
+ * hover, and the site's gold marker on the current page. It sits *under* the
+ * shared header (sticky at --header-h), so the brand and platform links stay
+ * in one place instead of being duplicated here.
+ */
+export function Sidebar({ navItems, onLogout }: { navItems: NavItem[]; onLogout: () => void }) {
   const pathname = usePathname();
-  const router = useRouter();
   const { profile } = useAuth();
-  // Admin/super_admin get a separate, smaller nav — see navConfig.ts.
-  const navItems = isAdminRole(profile?.role) ? ADMIN_NAV_ITEMS : NAV_ITEMS;
-
-  async function handleLogout() {
-    await supabase.auth.signOut();
-    router.push("/login");
-  }
 
   return (
-    <>
-      <div
-        className={`fixed inset-0 z-[35] bg-black/45 transition-opacity md:hidden ${
-          open ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
-        onClick={onClose}
-      />
-      <aside
-        className={`fixed inset-y-0 left-0 z-40 flex w-[264px] flex-col bg-primary-deep text-[#eaf3f0] transition-transform md:translate-x-0 ${
-          open ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
+    <aside
+      aria-label="Workspace"
+      className="sticky top-[var(--header-h)] hidden h-[calc(100dvh-var(--header-h))] w-[264px] shrink-0 flex-col overflow-y-auto border-r border-line bg-surface lg:flex"
+    >
+      <nav className="flex-1 px-3 py-5">
+        <p className="mb-3 flex items-center gap-2.5 px-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-accent-deep">
+          <span className="h-px w-6 bg-accent" />
+          Workspace
+        </p>
+        {navItems.map((item) => {
+          // "/admin" is a prefix of its sibling admin routes (users, duas), so match it exactly.
+          const active = item.href === "/admin" ? pathname === "/admin" : pathname.startsWith(item.href);
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              aria-current={active ? "page" : undefined}
+              className={`relative mb-0.5 flex items-center gap-3 rounded-[var(--radius-m)] px-3 py-2.5 text-[15px] no-underline transition-colors ${
+                active
+                  ? "bg-primary-tint font-semibold text-heading"
+                  : "font-medium text-ink hover:bg-primary-tint hover:text-heading"
+              }`}
+            >
+              {active && <span className="absolute inset-y-2 left-0 w-[3px] rounded-full bg-accent" />}
+              <Icon name={item.icon} className={`h-5 w-5 ${active ? "text-primary" : "text-ink-soft"}`} />
+              <span>{item.label}</span>
+            </Link>
+          );
+        })}
+      </nav>
+
+      <div className="border-t border-line px-4 py-4">
+        <div className="mb-3 flex items-center gap-3">
+          <Avatar name={profile?.full_name ?? "?"} size={38} />
+          <div className="min-w-0">
+            <b className="block truncate text-sm font-semibold text-ink">{profile?.full_name ?? "…"}</b>
+            <small className="block text-xs capitalize text-ink-soft">{profile?.role}</small>
+          </div>
+        </div>
         <button
-          onClick={onClose}
-          aria-label="Close menu"
-          className="absolute right-3.5 top-4 text-lg text-white md:hidden"
+          type="button"
+          onClick={onLogout}
+          className="flex w-full items-center gap-2 rounded-[var(--radius-s)] px-2 py-2 text-sm font-medium text-ink-soft hover:bg-primary-tint hover:text-heading"
         >
-          ✕
+          <Icon name="logout" className="h-[18px] w-[18px]" />
+          Log out
         </button>
-
-        <div className="flex items-center gap-3 border-b border-white/10 px-5 py-5">
-          {/* eslint-disable-next-line @next/next/no-img-element -- served from app/icon.tsx (a generated route, not a static public/ file), so next/image's static-import optimizations don't apply */}
-          <img src={`${BASE_PATH}/icon`} alt="" width={32} height={32} className="h-8 w-8 shrink-0 rounded-[6px]" />
-          <div>
-            <b className="block font-display text-[1.05rem] font-semibold text-white">IQRASpace</b>
-            <small className="block text-[0.72rem] tracking-wide text-[#afc9c2]">Online teaching workspace</small>
-          </div>
-        </div>
-
-        <div className="px-2.5 pt-2.5">
-          {/* Always-visible, prominent — the Learning App's entry point into
-              the full Quran Reader (apps/quran, a separate app; see
-              lib/quranLink.ts). Opens in a new tab so a learner's place in
-              a lesson here is never disturbed. */}
-          <a
-            href={quranHomeUrl()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2.5 rounded-[10px] bg-accent px-3 py-2.5 text-[0.86rem] font-bold text-white shadow-[var(--shadow-s)] hover:bg-accent-deep"
-          >
-            <span className="w-5 text-center text-base">📖</span>
-            <span>Open Quran</span>
-            <span className="ml-auto text-xs opacity-80" aria-hidden="true">
-              ↗
-            </span>
+        <p className="mt-3 flex flex-wrap gap-x-3 gap-y-1 px-2 text-xs text-muted">
+          <a href={PLATFORM.privacy} className="hover:text-heading hover:underline">
+            Privacy
           </a>
-        </div>
-
-        <nav className="flex-1 overflow-y-auto p-2.5">
-          {navItems.map((item) => {
-            // "/admin" is a prefix of its sibling admin routes (users, duas), so match it exactly.
-            const active = item.href === "/admin" ? pathname === "/admin" : pathname.startsWith(item.href);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={onClose}
-                className={`mb-0.5 flex items-center gap-2.5 rounded-[10px] border-l-[3px] px-3 py-2.5 text-[0.86rem] font-medium ${
-                  active
-                    ? "border-accent bg-white/10 font-bold text-white"
-                    : "border-transparent text-[#cfe3de] hover:bg-white/[.08] hover:text-white"
-                }`}
-              >
-                <span className="w-5 text-center text-base">{item.icon}</span>
-                <span>{item.label}</span>
-              </Link>
-            );
-          })}
-        </nav>
-
-        <div className="border-t border-white/10 px-5 py-4">
-          <div className="mb-2.5 flex items-center gap-2.5">
-            <Avatar name={profile?.full_name ?? "?"} size={34} />
-            <div>
-              <b className="block text-[0.82rem] text-white">{profile?.full_name ?? "…"}</b>
-              <small className="text-[0.72rem] text-[#afc9c2] capitalize">{profile?.role}</small>
-            </div>
-          </div>
-          <button
-            onClick={handleLogout}
-            className="text-[0.75rem] text-[#afc9c2] underline underline-offset-2 hover:text-white"
-          >
-            Log out
-          </button>
-        </div>
-      </aside>
-    </>
+          <a href={PLATFORM.terms} className="hover:text-heading hover:underline">
+            Terms
+          </a>
+          <a href={PLATFORM.contact} className="hover:text-heading hover:underline">
+            Contact
+          </a>
+        </p>
+      </div>
+    </aside>
   );
 }

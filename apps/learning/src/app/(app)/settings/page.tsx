@@ -166,9 +166,9 @@ export default function SettingsPage() {
           <div className="flex gap-2.5">
             {(
               [
-                ["light", "☀️ Light"],
-                ["dark", "🌙 Dark"],
-                ["system", "🖥️ System"],
+                ["light", "Light"],
+                ["dark", "Dark"],
+                ["system", "System"],
               ] as const
             ).map(([value, label]) => (
               <Button

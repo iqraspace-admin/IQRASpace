@@ -22,6 +22,7 @@ import { Select } from "@/components/ui/Field";
 import { Tabs } from "@/components/ui/Tabs";
 import { Modal } from "@/components/ui/Modal";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { Icon } from "@/components/shell/icons";
 import { Badge } from "@/components/ui/Badge";
 import { PdfViewer } from "@/components/pdf/PdfViewer";
 
@@ -164,7 +165,7 @@ export default function MaterialsPage() {
             <div className="grid gap-3 sm:grid-cols-2">
               {files.map((f) => (
                 <Card key={f.path} className="flex items-center gap-3">
-                  <span className="text-2xl">📄</span>
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[var(--radius-m)] bg-primary-tint text-primary"><Icon name="file" className="h-6 w-6" /></span>
                   <div className="min-w-0 flex-1">
                     <b className="block truncate text-sm">{f.name}</b>
                     <span className="text-xs text-muted">{formatFileSize(f.size)}</span>
@@ -193,11 +194,11 @@ export default function MaterialsPage() {
 
       {tab === "drive" && (
         <Card>
-          <h3 className="mb-2 text-base font-semibold">📁 Connect Google Drive</h3>
+          <h3 className="mb-2 text-base font-semibold">Connect Google Drive</h3>
           {GOOGLE_CLIENT_ID ? (
             <>
               <p className="mb-3 text-sm text-ink-soft">
-                Use lesson PDFs you&rsquo;ve already saved in Drive — IQRASpace only ever sees the specific files you
+                Use lesson PDFs you&rsquo;ve already saved in Drive — IqraSpace only ever sees the specific files you
                 choose to share.
               </p>
               <Button onClick={() => profile && (window.location.href = buildGoogleDriveConsentUrl(profile.id))}>
