@@ -6,7 +6,8 @@ description: Run IqraSpace's full production deployment workflow — validate an
 # iqs-deploy
 
 Runs the full release pipeline for **the website** (`apps/quran` +
-`apps/site`, both served under `iqraspace.org`) and **the Android
+`apps/site`, both served under `iqraspace.org`), **the Learning app**
+(`apps/learning`, served at `iqraspace.org/learning`) and **the Android
 app** (`apps/mobile/android`, IqraSpace Quran Flutter reader,
 `org.iqraspace.app`): **Inspect → Validate → Build → Deploy → Verify →
 Report**, for each, then one combined final report (see "Combined
@@ -160,6 +161,54 @@ not claim success.
 
 ---
 
+## Learning (apps/learning)
+
+Same mechanism as the website: deploy is `ci.yml` running `vercel deploy` on a push to `main`
+(path-filtered to `apps/learning/**`) with the default `VERCEL_*` secrets this session does not have.
+Never run the Vercel CLI locally. "Deploy" = validate like CI, get the change onto `main`, then poll
+the live health endpoints.
+
+### L0. Inspect
+- Pending changes under `apps/learning/**` (uncommitted or not yet on `origin/main`) **and** under the
+  repo-root `supabase/migrations/` (the Learning database history). If neither has anything, report
+  `Learning: NOTHING TO DEPLOY`.
+- **Database migrations are NOT applied by this pipeline.** CI never runs `supabase db push`. If any
+  `supabase/migrations/*.sql` file is new on this push, say plainly in the report that the owner must run
+  `npx supabase db push` (repo root, linked project) — and that any new Learning pages depending on those
+  tables will error in production until it is run. Never read `.env*`/credential files to try to apply it.
+
+### L1. Validate (mirrors ci.yml), from `apps/learning`
+```
+npm ci                       # if node_modules missing/stale
+npm run lint
+npx next typegen
+npm run typecheck
+npm run test:duas            # pure-logic unit tests (Node 24 type stripping)
+NEXT_PUBLIC_SUPABASE_URL=https://example.supabase.co NEXT_PUBLIC_SUPABASE_ANON_KEY=placeholder npm run build
+```
+(The placeholder public env vars go on the command line only — never into a file.) Fix real failures at
+the source; never weaken a rule or skip a test.
+
+### L2. Commit & push
+Same screening and commit discipline as W2 (no secrets/env files/build output; never `git add -A`; no
+force-push; merge to `main` carefully if on another branch). Learning and website changes may go in the
+same push.
+
+### L3. Deploy — the push is the trigger (`ci.yml`).
+
+### L4. Verify
+Poll every ~30s for up to ~6 min:
+```
+curl -s -o /dev/null -w "%{http_code} https://iqraspace.vercel.app/learning\n" https://iqraspace.vercel.app/learning
+curl -s -o /dev/null -w "%{http_code} https://iqraspace.org/learning\n" https://iqraspace.org/learning
+curl -s -o /dev/null -w "%{http_code} https://iqraspace.org/learning/login\n" https://iqraspace.org/learning/login
+```
+For a change that adds a route, also request the new route (it is behind client-side auth, so expect 200 or a
+redirect to login, not 404), e.g. `/learning/admin/duas`. Same honesty caveat as W4: this cannot prove which
+GitHub Actions run produced what is live.
+
+---
+
 ## Android (apps/mobile/android)
 
 Runs the full release pipeline for `apps/mobile/android` (IqraSpace Quran
@@ -300,6 +349,15 @@ Website
   Note: <the "cannot confirm the exact GitHub Actions run" caveat from W4,
   every time — never omit it just because checks passed>
 
+Learning
+  Status: SUCCESS / FAILED / NOTHING TO DEPLOY
+  Commit pushed: <sha> <subject>  (or "n/a")
+  Validate: <lint / typecheck / test:duas / build results>
+  Production URL(s): https://iqraspace.org/learning
+  Health check: <per-path HTTP codes>
+  DB migrations: <new files under supabase/migrations and whether the owner has applied them — never claim applied unless verified>
+  Note: <the same "cannot confirm the exact GitHub Actions run" caveat>
+
 Android
   Status: SUCCESS / FAILED
   Version: x.x.x
@@ -314,7 +372,7 @@ Errors/warnings:
   changes noticed along the way, etc. "None" if genuinely nothing>
 ```
 
-`iqs-deploy: SUCCESS` requires **both** halves to have actually
+`iqs-deploy: SUCCESS` requires **every** half (website, Learning, Android) to have actually
 succeeded as verified above (or a half legitimately had nothing to
 deploy). Use `PARTIAL` when one half succeeded and the other failed or
 is blocked on something owner-only (missing Play Console credentials
