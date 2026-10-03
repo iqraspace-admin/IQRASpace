@@ -19,7 +19,7 @@
     {
       "binding": "DB",
       "database_name": "iqraspace-site",
-      "database_id": "REPLACE_AFTER_d1_create",
+      "database_id": "fc39ee7c-243e-4b85-ab5b-c2d289509ed8",
       "migrations_dir": "d1/migrations"
     }
   ]

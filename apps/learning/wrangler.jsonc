@@ -7,7 +7,7 @@
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
-    "html_handling": "auto-trailing-slash",
+    "html_handling": "drop-trailing-slash",
     "not_found_handling": "404-page",
     // Only the dynamic-route URLs invoke the Worker; every other request is
     // served straight from static assets (free, no Worker invocation).
