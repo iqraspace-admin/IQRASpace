@@ -1,6 +1,11 @@
-import { EditDuaView } from "@/components/admin/duas/DuaEditor";
+import { EditDuaRoute } from "@/components/RouteEntry";
 
-export default async function EditDuaPage(props: PageProps<"/admin/duas/[id]">) {
-  const { id } = await props.params;
-  return <EditDuaView id={id} />;
+// Static export placeholder shell — see src/lib/routeParam.ts.
+export const dynamicParams = false;
+export function generateStaticParams() {
+  return [{ id: "_" }];
+}
+
+export default function EditDuaPage() {
+  return <EditDuaRoute />;
 }

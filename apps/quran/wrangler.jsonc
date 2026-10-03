@@ -1,0 +1,19 @@
+// Assets-only Cloudflare Worker (no main script): serves the static export
+// assembled into ./dist by `npm run build:cf` (dist/quran/** + dist/_headers).
+// Deploy manually/CI with `npx wrangler deploy`. No secrets live here.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "iqraspace-quran",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./dist",
+    // Next's export emits surah/2.html and canonical links without a
+    // trailing slash, so drop the slash: /quran/surah/2 -> 200,
+    // /quran/surah/2/ -> redirect to /quran/surah/2.
+    "html_handling": "drop-trailing-slash",
+    // Serve the nearest 404.html (dist/quran/404.html) with a 404 status.
+    "not_found_handling": "404-page"
+  },
+  "routes": [{ "pattern": "iqraspace.org/quran*", "zone_name": "iqraspace.org" }],
+  "workers_dev": true
+}

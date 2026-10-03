@@ -9,29 +9,21 @@
  * switching back to (or closing) the Quran tab, with no return-URL
  * plumbing needed inside apps/quran itself.
  *
- * Defaults to apps/quran's own stable Vercel alias — an absolute URL that
- * works correctly from *any* origin this app is served from. A same-origin
- * "/quran" prefix would only resolve via apps/landing's Multi-Zones rewrite
- * on the eventual custom domain (iqraspace.org) — this pilot is currently
- * live only at its bare https://iqraspace.vercel.app, which has no such
- * rewrite, so a relative default 404s there (confirmed in production). The
- * alias itself must still include the trailing "/quran" — apps/quran is
- * built with NEXT_BASE_PATH=/quran (see apps/quran/next.config.ts), and a
- * basePath applies to every URL that build is reachable at, including its
- * own *.vercel.app alias, not just the custom-domain rewrite; a bare-alias
- * link 404s for the same reason a bare "/" does (apps/quran/ARCHITECTURE.md
- * §8). Override with NEXT_PUBLIC_QURAN_URL for local dev (apps/quran's own
- * dev server, unprefixed on its own port — see apps/quran/package.json's
- * `dev` script, `next dev -p 3001` — set
- * NEXT_PUBLIC_QURAN_URL=http://localhost:3001 in `.env.local`, see
- * .env.local.example) or, once iqraspace.org is actually live, to switch
- * back to a same-origin "/quran" for a nicer single-domain UX.
+ * Defaults to the canonical public address https://iqraspace.org/quran — on
+ * production that is the same origin as this app (both are Cloudflare Workers
+ * on the iqraspace.org zone, routed by path), and an absolute URL also works
+ * from any other origin (workers.dev previews, localhost). apps/quran is built
+ * with NEXT_BASE_PATH=/quran, so the trailing "/quran" is required. Override
+ * with NEXT_PUBLIC_QURAN_URL for local dev (apps/quran's own dev server runs
+ * unprefixed on its own port — see apps/quran/package.json's `dev` script,
+ * `next dev -p 3001` — set NEXT_PUBLIC_QURAN_URL=http://localhost:3001 in
+ * `.env.local`, see .env.local.example).
  */
-const QURAN_BASE = process.env.NEXT_PUBLIC_QURAN_URL || "https://iqraspace-quran.vercel.app/quran";
+const QURAN_BASE = process.env.NEXT_PUBLIC_QURAN_URL || "https://iqraspace.org/quran";
 
 /** Where *links* a person clicks (never fetches) point: the canonical, public
  * iqraspace.org/quran — the same address the website and the Quran Reader
- * itself advertise. PDFs above keep QURAN_BASE (the stable Vercel alias) since
+ * itself advertise. PDFs above keep QURAN_BASE since
  * the PdfViewer fetches them cross-origin. NEXT_PUBLIC_QURAN_URL still
  * overrides both, for local dev. */
 const QURAN_LINK_BASE = process.env.NEXT_PUBLIC_QURAN_URL || "https://iqraspace.org/quran";

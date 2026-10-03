@@ -12,6 +12,8 @@ import { canonicalUrl } from "@/lib/site";
  * itself has to live at the true domain root, which this app doesn't own
  * (ARCHITECTURE.md §8).
  */
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     { url: canonicalUrl("/"), changeFrequency: "monthly", priority: 1 },

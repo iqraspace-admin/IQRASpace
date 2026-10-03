@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "node scripts/generate-search-index.mjs && next build",
-    "start": "next start -p 3001",
+    "build:cf": "node scripts/build-cf.mjs",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "sync:content": "node --env-file=.env.local scripts/sync-content.mjs",

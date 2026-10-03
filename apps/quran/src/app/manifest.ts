@@ -12,6 +12,8 @@ import { basePath } from "@/lib/site";
  * auto-emitted by the root layout) but the *values inside* it still need
  * building by hand — hence basePath() here.
  */
+export const dynamic = "force-static";
+
 export default function manifest(): MetadataRoute.Manifest {
   const base = basePath();
 

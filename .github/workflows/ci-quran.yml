@@ -1,17 +1,9 @@
 name: CI/CD (Quran)
 
-# Fully independent of .github/workflows/ci.yml (apps/web's tutoring app
-# pipeline) and ci-site.yml (apps/site) — see
-# apps/quran/ARCHITECTURE.md §8. Path-filtered so a change to one app
-# never triggers or blocks another's pipeline.
-#
-# `deploy` gated to a push on main, using this app's own dedicated
-# QURAN_VERCEL_*/QURAN_ secrets — never apps/web's or apps/site's
-# Vercel project or secrets (ARCHITECTURE.md §2). Unlike ci.yml
-# (apps/web), it uses `vercel deploy --prod` directly (remote build) —
-# NOT the "vercel pull → vercel build --prod → vercel deploy --prebuilt"
-# flow — see the `deploy` job's own comment for why. See DEPLOYMENT.md
-# for the exact secret names and where each value comes from.
+# apps/quran -> Cloudflare Worker `iqraspace-quran` (route
+# iqraspace.org/quran*). Path-filtered; fully independent of the other apps'
+# pipelines. `deploy` runs only for a push to main AND only when the
+# repository variable CF_DEPLOY_ENABLED == 'true'. See DEPLOYMENT.md.
 
 on:
   push:
@@ -24,13 +16,10 @@ on:
     paths:
       - "apps/quran/**"
       - ".github/workflows/ci-quran.yml"
-  # Lets a maintainer re-run validate+deploy from the Actions tab without
-  # needing an empty/no-op commit — e.g. to redeploy after a Vercel-side
-  # env var change with no code change.
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: quran-${{ github.ref }}
   cancel-in-progress: true
 
 defaults:
@@ -48,7 +37,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20.x"
+          node-version: "22.x"
           cache: "npm"
           cache-dependency-path: apps/quran/package-lock.json
 
@@ -58,99 +47,89 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      # Same reason as apps/web's workflow: tsc needs next-env.d.ts and
-      # .next/types/**, only generated as a side effect of dev/build.
       - name: Generate route types
         run: npx next typegen
 
       - name: Type check
         run: npm run typecheck
 
-      # No test suite exists yet (see PROJECT-STATUS.md) — --if-present
-      # makes this a no-op instead of a failure until one is added.
       - name: Run tests (if any)
         run: npm run test --if-present
 
-      # Needs no Quran Foundation / Supabase credentials: the synced
-      # content this build's SSG routes read (getAllChapters() etc.) is
-      # committed to the repo, not fetched live — see .gitignore's note
-      # on src/content/generated/. NEXT_BASE_PATH is deliberately left
-      # unset here (same as local dev) — this validate build only needs
-      # to prove the code builds, not reproduce the production basePath;
-      # the deploy job below builds via the real Vercel project, which
-      # has NEXT_BASE_PATH=/quran set.
-      - name: Build
-        run: npm run build
+      # Needs no Quran Foundation credentials: synced content under
+      # src/content/generated is committed, not fetched at build time.
+      - name: Build for Cloudflare
+        run: npm run build:cf
 
   deploy:
-    name: Deploy to Vercel (production)
+    name: Deploy to Cloudflare Workers
     needs: validate
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.CF_DEPLOY_ENABLED == 'true'
     runs-on: ubuntu-latest
-    environment:
-      name: vercel-quran
-      url: ${{ steps.deploy.outputs.url }}
-    env:
-      VERCEL_ORG_ID: ${{ secrets.QURAN_VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.QURAN_VERCEL_PROJECT_ID }}
+    concurrency:
+      group: quran-deploy
+      cancel-in-progress: false
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: "npm"
+          cache-dependency-path: apps/quran/package-lock.json
 
-      # NOT the "vercel pull → vercel build --prod → vercel deploy
-      # --prebuilt --prod" flow ci.yml (apps/web) uses: confirmed during
-      # this app's first real deploy that `vercel build`'s local
-      # lambda-tracing step fails on this app's SSG output ("Unable to
-      # find lambda for route: /juz/1" — a real Next.js 16 Turbopack /
-      # Vercel CLI compatibility issue, not a code bug; every SSG route
-      # was affected, not just one). Plain `vercel deploy --prod`
-      # uploads the source and lets Vercel's own (more mature) remote
-      # build pipeline build it instead — confirmed working. Revisit the
-      # prebuilt flow later if this is ever fixed upstream.
-      - name: Deploy to Vercel
-        id: deploy
-        run: |
-          url=$(vercel deploy --prod --token="${{ secrets.QURAN_VERCEL_TOKEN }}")
-          echo "Deployed: $url"
-          echo "url=$url" >> "$GITHUB_OUTPUT"
+      - name: Install dependencies
+        run: npm ci
 
-      # Checks the STABLE alias (https://iqraspace-quran.vercel.app), not
-      # steps.deploy.outputs.url: this Vercel team has Deployment
-      # Protection (SSO) on (confirmed, same as apps/web's team, see root
-      # DEPLOYMENT.md) — every ephemeral per-deployment URL redirects to
-      # vercel.com/sso-api (302) and would fail this check even on a
-      # totally healthy deploy. "/quran" not "/": NEXT_BASE_PATH means
-      # bare "/" 404s on this project by design (ARCHITECTURE.md §8).
+      - name: Build for Cloudflare
+        run: npm run build:cf
+
+      - name: Deploy (wrangler)
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: apps/quran
+          command: deploy
+
+      # Base URL is the repo variable CF_HEALTHCHECK_BASE (default
+      # https://iqraspace.org). Before DNS cutover point it at the
+      # workers.dev URL for staging.
       - name: Health check
+        env:
+          BASE: ${{ vars.CF_HEALTHCHECK_BASE || 'https://iqraspace.org' }}
         run: |
-          set -e
-          ALIAS_URL="https://iqraspace-quran.vercel.app"
-          for path in "/quran" "/quran/surah" "/quran/sitemap.xml"; do
-            code=$(curl -s -o /dev/null -w "%{http_code}" "$ALIAS_URL$path")
-            echo "$path -> HTTP $code"
-            if [ "$code" != "200" ]; then
-              echo "::error::Health check failed for $path (HTTP $code)"
-              exit 1
+          set -u
+          fail=0
+          for path in /quran /quran/surah /quran/sitemap.xml; do
+            ok=0
+            for attempt in 1 2 3 4 5 6 7 8; do
+              code=$(curl -s -o /dev/null -w "%{http_code}" -L "$BASE$path" || echo 000)
+              echo "$path -> HTTP $code (attempt $attempt)"
+              if [ "$code" = "200" ]; then ok=1; break; fi
+              sleep 15
+            done
+            if [ "$ok" != "1" ]; then
+              echo "::error::Health check failed for $BASE$path"
+              fail=1
             fi
           done
+          exit $fail
 
       - name: Deployment summary
         if: always()
         run: |
           {
-            echo "## Deployment Summary"
+            echo "## Deployment Summary (Quran)"
             echo ""
             echo "| Field | Value |"
             echo "|---|---|"
             echo "| Status | ${{ job.status }} |"
             echo "| Commit | \`${{ github.sha }}\` |"
-            echo "| Branch | \`${{ github.ref_name }}\` |"
-            echo "| Run | #${{ github.run_number }} (run id ${{ github.run_id }}) |"
+            echo "| Run | #${{ github.run_number }} |"
             echo "| Triggered by | ${{ github.actor }} |"
             echo "| Timestamp (UTC) | $(date -u +'%Y-%m-%d %H:%M:%S') |"
-            echo "| Deployment URL | ${{ steps.deploy.outputs.url }} |"
             echo "| Public URL | https://iqraspace.org/quran |"
           } >> "$GITHUB_STEP_SUMMARY"

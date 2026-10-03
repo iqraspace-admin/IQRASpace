@@ -26,24 +26,24 @@ report that half as FAILED with the real reason.
 ## Website (apps/quran + apps/site)
 
 **Hard rule: this repo's actual deploy mechanism for both apps is
-`vercel deploy --prod` running *inside GitHub Actions* (`ci-quran.yml` /
-`ci-site.yml`), gated on a push to `main`, using each app's own
-dedicated Vercel secrets (`QURAN_VERCEL_*` / `LANDING_VERCEL_*`) — never
-a locally-run `vercel` command.** This session has no Vercel
-credentials (`vercel whoami` is logged out; no token exists anywhere on
-this machine) and no `gh` CLI, so it cannot authenticate as either
-Vercel project or directly dispatch/inspect a GitHub Actions run.
+`wrangler deploy` running *inside GitHub Actions* (`ci-quran.yml` /
+`ci-site.yml`, via `cloudflare/wrangler-action@v3`), gated on a push to
+`main` AND on the repository variable `CF_DEPLOY_ENABLED == 'true'`,
+using the repo secrets `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` —
+never a locally-run `wrangler` command.** This session has no Cloudflare
+credentials (they are CI-only) and no `gh` CLI, so it cannot
+authenticate or directly dispatch/inspect a GitHub Actions run.
 **"Deploy" for the website therefore means: validate locally exactly
 like CI would, get the change safely onto `main` (which is what
 actually triggers the real deploy), then poll the same live production
-health-check endpoints CI itself checks.** Never attempt
-`vercel deploy --prod`, `vercel build`, `vercel link`, or any other
-direct Vercel CLI command from this session, even if a token were
-somehow available — that would bypass the deliberate CI-only,
-path-filtered, health-checked pipeline both apps rely on (see
-`apps/quran/DEPLOYMENT.md`'s "why not the prebuilt flow" note and root
-`CLAUDE.md`'s CI/CD section). Do not create or modify any `.vercel/`
-project-linkage files as a workaround.
+health-check endpoints CI itself checks.** Never run `wrangler deploy`,
+`wrangler secret`, `wrangler d1 ...`, or any other direct Cloudflare
+mutation from this session, and never read `.env*`/`.dev.vars` files —
+that would bypass the deliberate CI-only, path-filtered, health-checked
+pipeline (see root `DEPLOYMENT.md`). If `CF_DEPLOY_ENABLED` is not set to
+`true`, a push to `main` only runs `validate` and nothing deploys; say
+so in the report if the live site doesn't change (the owner sets the
+variable and Cloudflare token — see root `DEPLOYMENT.md`).
 
 ### W0. Inspect
 
@@ -70,14 +70,17 @@ npm ci                       # if node_modules is missing/stale
 npm run lint
 npx next typegen             # tsc needs next-env.d.ts / .next/types — CI does this too
 npm run typecheck
-npm run test --if-present    # currently a no-op; kept anyway, matches CI exactly
-npm run build
+npm run test --if-present    # matches CI exactly
+npm run build:cf
 ```
 
 For **apps/site**, only if it has pending changes, from `apps/site`:
 ```
-node -e "JSON.parse(require('fs').readFileSync('vercel.json','utf8')); console.log('vercel.json OK')"
+npm install                  # if node_modules is missing/stale
+npm run test --if-present
+node --test worker/*.test.mjs   # only if worker/*.test.mjs exists
 npx --yes html-validate index.html
+npm run build:cf
 ```
 
 If any check fails: diagnose and fix the real cause in the source —
@@ -118,41 +121,44 @@ secret/generated-file screening list) before committing anything:
 
 `ci-quran.yml` and/or `ci-site.yml` (whichever app(s) had files in
 the push) now run their own `validate` job again and, because this is a
-push to `main`, their `deploy` job — `vercel deploy --prod` against
-each app's real Vercel project, using CI-only secrets this session
-doesn't have. There is nothing further to run locally for this step.
+push to `main` with `CF_DEPLOY_ENABLED == 'true'`, their `deploy` job —
+`npm run build:cf` + `wrangler deploy` against the real Cloudflare
+Worker, using CI-only secrets this session doesn't have. Nothing further
+to run locally for this step.
 
 ### W4. Verify (post-deploy health check)
 
-Vercel's remote build + deploy typically takes a few minutes. Poll
-rather than checking once immediately after pushing — retry every ~30s
-for up to ~5-6 minutes if a path doesn't return 200 right away:
+A Workers deploy plus the CI health check typically takes a few minutes.
+Poll rather than checking once immediately after pushing — retry every
+~30s for up to ~5-6 minutes if a path doesn't return 200 right away:
 
 ```
 # apps/quran — only if it was deployed
 for path in /quran /quran/surah /quran/sitemap.xml; do
-  curl -s -o /dev/null -w "%{http_code} $path\n" "https://iqraspace-quran.vercel.app$path"
+  curl -s -o /dev/null -w "%{http_code} $path
+" "https://iqraspace.org$path"
 done
 
 # apps/site — only if it was deployed
 for path in / /robots.txt /sitemap.xml; do
-  curl -s -o /dev/null -w "%{http_code} $path\n" "https://iqraspace-landing.vercel.app$path"
+  curl -s -o /dev/null -w "%{http_code} $path
+" "https://iqraspace.org$path"
 done
-
-# Real custom domain, for whichever app(s) deployed:
-curl -s -o /dev/null -w "%{http_code} https://iqraspace.org\n" https://iqraspace.org
-curl -s -o /dev/null -w "%{http_code} https://iqraspace.org/quran\n" https://iqraspace.org/quran
 ```
+
+(If the repo variable `CF_HEALTHCHECK_BASE` points CI at a `workers.dev`
+URL during staging, `iqraspace.org` may still be served by the old host —
+say so rather than reporting production as verified.)
 
 **Be honest about what this does and doesn't prove.** A passing check
 confirms the site is reachable and healthy after pushing — the same
 thing CI's own health check confirms — but this session has no `gh` CLI
-or Vercel token, so it **cannot** directly confirm the specific GitHub
+token, so it **cannot** directly confirm the specific GitHub
 Actions run for this push actually succeeded, or distinguish "the new
 deploy is live" from "the previous deploy is still serving because the
 new one is still building or silently failed after checkout." State
 this limitation plainly in the report rather than claiming full
-certainty — point the user at the Actions tab or the Vercel dashboard
+certainty — point the user at the Actions tab or the Cloudflare dashboard (Workers → Deployments)
 if they want that stronger confirmation.
 
 If a health check still fails after the full wait window, report
@@ -163,9 +169,10 @@ not claim success.
 
 ## Learning (apps/learning)
 
-Same mechanism as the website: deploy is `ci.yml` running `vercel deploy` on a push to `main`
-(path-filtered to `apps/learning/**`) with the default `VERCEL_*` secrets this session does not have.
-Never run the Vercel CLI locally. "Deploy" = validate like CI, get the change onto `main`, then poll
+Same mechanism as the website: deploy is `ci.yml` running `wrangler deploy` (Worker
+`iqraspace-learning`) on a push to `main` (path-filtered to `apps/learning/**`), gated by
+`CF_DEPLOY_ENABLED == 'true'`, with CI-only Cloudflare secrets this session does not have.
+Never run `wrangler` locally. "Deploy" = validate like CI, get the change onto `main`, then poll
 the live health endpoints.
 
 ### L0. Inspect
@@ -183,8 +190,9 @@ npm ci                       # if node_modules missing/stale
 npm run lint
 npx next typegen
 npm run typecheck
-npm run test:duas            # pure-logic unit tests (Node 24 type stripping)
-NEXT_PUBLIC_SUPABASE_URL=https://example.supabase.co NEXT_PUBLIC_SUPABASE_ANON_KEY=placeholder npm run build
+npm run test:duas            # pure-logic unit tests
+node --test worker/*.test.mjs   # only if worker/*.test.mjs exists
+NEXT_PUBLIC_SUPABASE_URL=https://example.supabase.co NEXT_PUBLIC_SUPABASE_ANON_KEY=placeholder npm run build:cf
 ```
 (The placeholder public env vars go on the command line only — never into a file.) Fix real failures at
 the source; never weaken a rule or skip a test.
@@ -199,9 +207,10 @@ same push.
 ### L4. Verify
 Poll every ~30s for up to ~6 min:
 ```
-curl -s -o /dev/null -w "%{http_code} https://iqraspace.vercel.app/learning\n" https://iqraspace.vercel.app/learning
-curl -s -o /dev/null -w "%{http_code} https://iqraspace.org/learning\n" https://iqraspace.org/learning
-curl -s -o /dev/null -w "%{http_code} https://iqraspace.org/learning/login\n" https://iqraspace.org/learning/login
+curl -s -o /dev/null -w "%{http_code} https://iqraspace.org/learning/login
+" https://iqraspace.org/learning/login
+curl -s -o /dev/null -w "%{http_code} https://iqraspace.org/learning/share/00000000-0000-0000-0000-000000000000
+" https://iqraspace.org/learning/share/00000000-0000-0000-0000-000000000000
 ```
 For a change that adds a route, also request the new route (it is behind client-side auth, so expect 200 or a
 redirect to login, not 404), e.g. `/learning/admin/duas`. Same honesty caveat as W4: this cannot prove which
@@ -376,7 +385,7 @@ Errors/warnings:
 succeeded as verified above (or a half legitimately had nothing to
 deploy). Use `PARTIAL` when one half succeeded and the other failed or
 is blocked on something owner-only (missing Play Console credentials
-per A5; a website check that can't fully verify without `gh`/Vercel
-access per W4) — say exactly which half and why. Use `FAILED` only when
+per A5; a website check that can't fully verify without `gh`
+access, or CF_DEPLOY_ENABLED not set, per W4) — say exactly which half and why. Use `FAILED` only when
 neither half completed successfully. Never describe either half as
 production-verified beyond what was actually checked.

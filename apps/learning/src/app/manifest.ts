@@ -7,6 +7,8 @@ import { basePath } from "@/lib/site";
  * basePath-aware automatically, but the *values inside* it aren't, so
  * start_url/icon URLs need the same prefix by hand.
  */
+export const dynamic = "force-static"; // required by `output: "export"`
+
 export default function manifest(): MetadataRoute.Manifest {
   const base = basePath();
 

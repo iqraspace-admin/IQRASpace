@@ -1,18 +1,29 @@
-name: CI/CD
+name: CI/CD (Learning)
 
-# CI ("validate") runs on every push to main and every PR targeting main.
-# CD ("deploy") runs only after validate succeeds, and only for a push to
-# main (not PRs) — see DEPLOYMENT.md for the full pipeline writeup and
-# the one-time repo setup (GitHub Secrets) this workflow depends on.
+# apps/learning -> Cloudflare Worker `iqraspace-learning` (route
+# iqraspace.org/learning*). `validate` runs on every PR / push to main that
+# touches this app; `deploy` runs only for a push to main AND only when the
+# repository variable CF_DEPLOY_ENABLED == 'true' (so merging before the
+# Cloudflare token exists cannot break CI). See DEPLOYMENT.md.
+#
+# Database migrations (supabase/migrations/**) are deliberately NOT a
+# trigger and never applied by CI — run `npx supabase db push` manually.
 
 on:
   push:
     branches: [main]
+    paths:
+      - "apps/learning/**"
+      - ".github/workflows/ci.yml"
   pull_request:
     branches: [main]
+    paths:
+      - "apps/learning/**"
+      - ".github/workflows/ci.yml"
+  workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: learning-${{ github.ref }}
   cancel-in-progress: true
 
 defaults:
@@ -30,7 +41,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20.x"
+          node-version: "22.x"
           cache: "npm"
           cache-dependency-path: apps/learning/package-lock.json
 
@@ -40,127 +51,107 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      # `tsc --noEmit` needs next-env.d.ts and .next/types/**, which Next.js
-      # normally only generates as a side effect of `next dev`/`next build`
-      # — both gitignored, so a fresh CI checkout has neither yet and tsc
-      # fails with "next-env.d.ts not found" (TS6053). `next typegen`
-      # generates just those, without a full build.
+      # tsc needs next-env.d.ts and .next/types/**, normally only generated
+      # by dev/build (gitignored) — `next typegen` generates just those.
       - name: Generate route types
         run: npx next typegen
 
       - name: Type check
         run: npm run typecheck
 
-      # No test suite exists yet in this project (see docs/PROGRESS.md) —
-      # --if-present makes this a no-op instead of a failure until one is
-      # added, without having to remember to edit this workflow later.
       - name: Run tests (if any)
         run: npm run test --if-present
 
-      # Same build Vercel's own pipeline runs (Phase 6 of the deployment
-      # writeup) — this is a fast-fail gate only. The `deploy` job below
-      # does the actual production build via the Vercel CLI itself, so
-      # nothing built here is uploaded or deployed.
-      - name: Build
-        run: npm run build
+      - name: Run Duas unit tests (if present)
+        run: npm run test:duas --if-present
+
+      - name: Run Worker tests (if present)
+        run: |
+          if ls worker/*.test.mjs >/dev/null 2>&1; then
+            node --test worker/*.test.mjs
+          else
+            echo "No worker tests found - skipping"
+          fi
+
+      - name: Build for Cloudflare
+        run: npm run build:cf
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
   deploy:
-    name: Deploy to Vercel (pilot)
+    name: Deploy to Cloudflare Workers
     needs: validate
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.CF_DEPLOY_ENABLED == 'true'
     runs-on: ubuntu-latest
-    environment:
-      name: vercel
-      url: ${{ steps.deploy.outputs.url }}
-    env:
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    concurrency:
+      group: learning-deploy
+      cancel-in-progress: false
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: "npm"
+          cache-dependency-path: apps/learning/package-lock.json
 
-      # Pulls the Production env vars + project settings already configured
-      # in the Vercel dashboard (NEXT_PUBLIC_SUPABASE_URL/ANON_KEY etc.) —
-      # nothing Supabase-related needs to be duplicated as a GitHub Secret
-      # for this job specifically.
-      - name: Pull Vercel project settings
-        run: vercel pull --yes --environment=production --token="${{ secrets.VERCEL_TOKEN }}"
+      - name: Install dependencies
+        run: npm ci
 
-      # Vercel's own build mechanism (Phase 6) — this *is* the build/package
-      # step; no separate artifact is hand-assembled here per design.
-      - name: Build via Vercel
-        run: vercel build --prod --token="${{ secrets.VERCEL_TOKEN }}"
+      - name: Build for Cloudflare
+        run: npm run build:cf
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
-      - name: Deploy prebuilt output to Vercel
-        id: deploy
-        run: |
-          url=$(vercel deploy --prebuilt --prod --token="${{ secrets.VERCEL_TOKEN }}")
-          echo "Deployed: $url"
-          echo "url=$url" >> "$GITHUB_OUTPUT"
+      - name: Deploy (wrangler)
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: apps/learning
+          command: deploy
 
-      # Phase 10 / Phase 12 health check — application loads, login page
-      # loads. Anything deeper (auth round-trip, PDF rendering) is a manual
-      # pass per DEPLOYMENT.md; not scripted here.
-      #
-      # Deliberately checks the stable pilot alias, not
-      # steps.deploy.outputs.url: this Vercel team has Deployment
-      # Protection (SSO) on by default, which redirects every
-      # per-deployment URL to vercel.com/sso-api — only the assigned
-      # Production alias is exempt and actually publicly reachable, which
-      # is also the one real pilot users are given.
-      #
-      # Since the Learning migration (basePath cutover to /learning), the
-      # old bare "/" and "/login" 307-redirect rather than serving
-      # directly (see next.config.ts's redirects()) — checked in two
-      # parts so a broken redirect and a genuinely-down app fail with
-      # different, legible errors instead of both just "not 200".
+      # Base URL is the repo variable CF_HEALTHCHECK_BASE (default
+      # https://iqraspace.org). Before DNS cutover that still hits the old
+      # host, so during staging point it at the workers.dev URL — note the
+      # worker only serves /learning/* paths on any host.
       - name: Health check
+        env:
+          BASE: ${{ vars.CF_HEALTHCHECK_BASE || 'https://iqraspace.org' }}
         run: |
-          set -e
-          PILOT_URL="https://iqraspace.vercel.app"
-
-          check_redirect() {
-            local from="$1" to="$2"
-            code=$(curl -s -o /dev/null -w "%{http_code}" "$PILOT_URL$from")
-            location=$(curl -s -o /dev/null -w "%{redirect_url}" "$PILOT_URL$from")
-            echo "$from -> HTTP $code, Location: $location"
-            if [ "$code" != "307" ] || [ "$location" != "$PILOT_URL$to" ]; then
-              echo "::error::Expected 307 to $PILOT_URL$to for $from, got $code -> $location"
-              exit 1
-            fi
-          }
-          check_redirect "/" "/learning"
-          check_redirect "/login" "/learning/login"
-
-          for path in "/learning" "/learning/login"; do
-            code=$(curl -s -o /dev/null -w "%{http_code}" "$PILOT_URL$path")
-            echo "$path -> HTTP $code"
-            if [ "$code" != "200" ]; then
-              echo "::error::Health check failed for $path (HTTP $code)"
-              exit 1
+          set -u
+          fail=0
+          for path in /learning/login /learning/share/00000000-0000-0000-0000-000000000000; do
+            ok=0
+            for attempt in 1 2 3 4 5 6 7 8; do
+              code=$(curl -s -o /dev/null -w "%{http_code}" -L "$BASE$path" || echo 000)
+              echo "$path -> HTTP $code (attempt $attempt)"
+              if [ "$code" = "200" ]; then ok=1; break; fi
+              sleep 15
+            done
+            if [ "$ok" != "1" ]; then
+              echo "::error::Health check failed for $BASE$path"
+              fail=1
             fi
           done
+          exit $fail
 
       - name: Deployment summary
         if: always()
         run: |
           {
-            echo "## Deployment Summary"
+            echo "## Deployment Summary (Learning)"
             echo ""
             echo "| Field | Value |"
             echo "|---|---|"
             echo "| Status | ${{ job.status }} |"
             echo "| Commit | \`${{ github.sha }}\` |"
-            echo "| Branch | \`${{ github.ref_name }}\` |"
-            echo "| Run | #${{ github.run_number }} (run id ${{ github.run_id }}) |"
+            echo "| Run | #${{ github.run_number }} |"
             echo "| Triggered by | ${{ github.actor }} |"
             echo "| Timestamp (UTC) | $(date -u +'%Y-%m-%d %H:%M:%S') |"
-            echo "| Deployment URL | ${{ steps.deploy.outputs.url }} |"
-            echo "| Pilot alias | https://iqraspace.vercel.app/learning |"
+            echo "| Public URL | https://iqraspace.org/learning |"
           } >> "$GITHUB_STEP_SUMMARY"

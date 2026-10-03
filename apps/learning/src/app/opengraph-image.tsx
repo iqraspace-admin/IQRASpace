@@ -4,6 +4,8 @@ import { renderCroppedIcon } from "@/lib/branding/renderCroppedIcon";
 // Standard OG/social-share image size. Uses the FULL logo lockup (mark +
 // wordmark + tagline) — unlike icon.tsx/apple-icon.tsx, there's no
 // legibility problem at this size, so the "crop" is just the whole image.
+// Required by `output: "export"` (static image route).
+export const dynamic = "force-static";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

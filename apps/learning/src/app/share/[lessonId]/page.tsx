@@ -1,10 +1,14 @@
-import { ShareClient } from "@/components/teach/ShareClient";
+import { ShareRoute } from "@/components/RouteEntry";
 
-// Student sharing view (architecture §18 — simplified, single focus,
-// read-only follow of the tutor's current highlight). Deliberately outside
-// the (app) route group's sidebar/topbar shell — a student joining a live
-// lesson gets minimal chrome, not the full tutor workspace.
-export default async function ShareLessonPage(props: PageProps<"/share/[lessonId]">) {
-  const { lessonId } = await props.params;
-  return <ShareClient lessonId={lessonId} />;
+// Static export: one placeholder shell (out/share/_), served by the Worker for
+// every real /share/<id> URL. The real id is read client-side from the URL.
+export const dynamicParams = false;
+export function generateStaticParams() {
+  return [{ lessonId: "_" }];
+}
+
+// Student sharing view (architecture §18). Deliberately outside the (app)
+// route group's sidebar/topbar shell.
+export default function ShareLessonPage() {
+  return <ShareRoute />;
 }

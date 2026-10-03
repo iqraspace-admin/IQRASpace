@@ -1,10 +1,14 @@
-import { TeachClient } from "@/components/teach/TeachClient";
+import { TeachRoute } from "@/components/RouteEntry";
 
-// Tutor teaching screen (architecture §18 — 3-column layout: page
-// thumbnails | Qur'an content + highlight tool | students/Meet/highlight
-// controls). Kept as a server component only to unwrap the async `params`
-// Next 16 requires — all the interactive/realtime work lives in TeachClient.
-export default async function TeachLessonPage(props: PageProps<"/teach/[lessonId]">) {
-  const { lessonId } = await props.params;
-  return <TeachClient lessonId={lessonId} />;
+// Static export: one placeholder shell (out/teach/_), served by the Worker for
+// every real /teach/<id> URL. The real id is read client-side from the URL.
+export const dynamicParams = false;
+export function generateStaticParams() {
+  return [{ lessonId: "_" }];
+}
+
+// Tutor teaching screen (architecture §18 — 3-column layout). All the
+// interactive/realtime work lives in TeachClient.
+export default function TeachLessonPage() {
+  return <TeachRoute />;
 }

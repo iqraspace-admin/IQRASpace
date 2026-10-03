@@ -1,116 +1,127 @@
-# Contact form — admin area & setup
+# apps/site on Cloudflare - contact form admin & setup
+
+`apps/site` is a Cloudflare Worker with Static Assets (the HTML pages, built
+into `dist/` by `npm run build:cf`) plus a small Worker (`worker/`) that
+handles `POST /api/contact` and stores messages in a **D1** database.
+`/quran*` and `/learning*` are separate Workers bound to their own path
+routes; this Worker does not proxy them.
 
 ## What "admin area" means here
 
-There is no custom admin UI. Managing contact messages means logging into
-the **Supabase dashboard** (Table Editor) for the small, dedicated Supabase
-project below — it already gives you search, filtering, editing the
-`status` column (`new` / `read` / `resolved`), and deleting rows, with no
-code to build or maintain. This was a deliberate choice over building a
-custom login+UI (see the conversation this was decided in) to keep
-`apps/site` simple and avoid adding a whole authentication system for what
-is, at this project's scale, a handful of messages.
+There is no custom admin UI. Messages live in the D1 database
+`iqraspace-site`, table `contact_messages` (`id`, `name`, `email`, `subject`,
+`message`, `status` = `new` | `read` | `resolved`, `created_at` ISO text).
+Read and manage them from the Cloudflare dashboard (Storage & Databases ->
+D1 -> `iqraspace-site` -> Console / Tables) or with Wrangler from `apps/site`:
 
-The `contact_messages` table has Row Level Security enabled with **no
-policies** — the public Supabase API (the only key ever shipped to the
-browser doesn't even exist here; there is no anon key in the client)
-cannot read or write it. The only two ways in are the Supabase dashboard
-(you, signed in as the project owner) and the `service_role` key, which
-only `api/contact.js` holds, server-side, in Vercel.
-
-## One-time setup (all manual — only the project owner can do these)
-
-### 1. Create the Supabase project
-1. In the [Supabase dashboard](https://supabase.com/dashboard), create a
-   **new project** (Free tier) — e.g. named `iqraspace-site`. Use the
-   `iqraspaceorg@gmail.com` Google account or whichever account should own
-   it, consistent with `apps/quran` and `apps/learning` each having their
-   own separate project.
-2. Note the project's **Project URL** and **`service_role` secret key**
-   (Project Settings → API). The `service_role` key is highly privileged —
-   never put it in any client-side code, `NEXT_PUBLIC_*` var, or commit.
-
-### 2. Apply the migration
-From `apps/site`:
 ```bash
-npx supabase login                      # if not already logged in
-npx supabase link --project-ref <ref>   # <ref> is in the project URL / Settings → General
-npx supabase db push                    # applies supabase/migrations/0001_contact_messages.sql
+# newest messages
+npx wrangler d1 execute DB --remote --command "SELECT id, created_at, status, name, email, subject FROM contact_messages ORDER BY created_at DESC LIMIT 20"
+# read one in full
+npx wrangler d1 execute DB --remote --command "SELECT * FROM contact_messages WHERE id = '<id>'"
+# mark status
+npx wrangler d1 execute DB --remote --command "UPDATE contact_messages SET status = 'read' WHERE id = '<id>'"
+# delete (e.g. on a deletion request - see privacy.html)
+npx wrangler d1 execute DB --remote --command "DELETE FROM contact_messages WHERE id = '<id>'"
 ```
-This creates the `contact_messages` table with RLS enabled and no
-policies, as described above.
+There is no public access path to the table; only the Worker's `DB` binding
+and your Cloudflare account can reach it. Reply from your own email client.
 
-### 3. Create a Gmail App Password for the alert email
-1. Turn on **2-Step Verification** for `iqraspaceorg@gmail.com` if it isn't
-   already (Google Account → Security).
-2. Go to <https://myaccount.google.com/apppasswords>, create an app
-   password (any label, e.g. "IqraSpace contact form"). Copy the 16-character
-   password — Google only shows it once.
+> The old Supabase table (`supabase/migrations/0001_contact_messages.sql`) is
+> **superseded by D1** and kept only as history. The Supabase project for the
+> contact form is no longer used and can be exported/deleted once you have
+> copied over anything you want to keep.
 
-### 4. Create a Cloudflare Turnstile widget (spam protection)
-`iqraspace.org`'s DNS already lives on Cloudflare, so this uses the same
-account — no new vendor.
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com) → **Turnstile**,
-   add a site. Domain: `iqraspace.org` (add `localhost` too if you want to
-   test locally). Widget mode: **Managed** (the default — shows a checkbox,
-   only challenges suspicious traffic).
-2. Copy the **Site Key** and **Secret Key** it gives you.
-3. Open `apps/site/contact.html`, find `data-sitekey="YOUR_TURNSTILE_SITE_KEY"`
-   and replace `YOUR_TURNSTILE_SITE_KEY` with the real Site Key. (The site
-   key is meant to be public — it's safe to commit; it's already visible in
-   every visitor's page source. The Secret Key is not — it only goes in the
-   Vercel env var below, never in any file in this repo.)
+## One-time setup (owner only)
 
-### 5. Add environment variables to the Vercel project
-In `apps/site`'s Vercel project → **Settings → Environment Variables**,
-add (Production, and Preview if you want to test on PR deploys):
+All commands run from `apps/site`. `npm install` first (installs Wrangler).
 
-| Name | Value |
-|---|---|
-| `SUPABASE_URL` | the Project URL from step 1 |
-| `SUPABASE_SERVICE_ROLE_KEY` | the `service_role` key from step 1 |
-| `GMAIL_USER` | `iqraspaceorg@gmail.com` |
-| `GMAIL_APP_PASSWORD` | the app password from step 3 |
-| `TURNSTILE_SECRET_KEY` | the Secret Key from step 4 |
-| `CONTACT_ALERT_EMAIL` | `iqraspaceorg@gmail.com` (optional — this is the default if unset) |
+### 1. Create the D1 database and apply the migration
+```bash
+npx wrangler login
+npx wrangler d1 create iqraspace-site
+# copy the printed database_id into wrangler.jsonc (replace REPLACE_AFTER_d1_create)
+npx wrangler d1 migrations apply DB --remote     # applies d1/migrations/0001_contact_messages.sql
+```
 
-Redeploy after adding these (env var changes don't apply to already-running
-deployments, and `contact.html`'s site-key edit needs a redeploy too).
+### 2. Cloudflare Turnstile (spam protection)
+1. Cloudflare dashboard -> **Turnstile** -> add a site. Domain `iqraspace.org`
+   (add `localhost` to test locally). Widget mode **Managed**.
+2. Copy the **Site Key** and **Secret Key**.
+3. **OWNER TODO:** `contact.html` still contains the placeholder
+   `data-sitekey="YOUR_TURNSTILE_SITE_KEY"`. Replace it with the real Site Key
+   (public, safe to commit). Until then the widget is hidden and, if the secret
+   is set, every submission is rejected as unverified - do both together.
+4. Store the secret (never in a file in this repo):
+   ```bash
+   npx wrangler secret put TURNSTILE_SECRET_KEY
+   ```
+   If `TURNSTILE_SECRET_KEY` is unset, the captcha check is skipped so the form
+   works before setup is finished. If it is set and Cloudflare cannot be
+   reached, submissions are rejected (fail closed).
 
-Until `TURNSTILE_SECRET_KEY` is set, `api/contact.js` skips the captcha
-check entirely rather than blocking real visitors on an unfinished setup —
-so it's safe to ship the widget and finish this step slightly later.
+### 3. Optional email alert (Resend)
+Workers cannot use Gmail SMTP. Alerts use the Resend HTTPS API; if not
+configured they are skipped silently (messages are always stored first, and an
+alert failure never fails the request).
+Create a Resend account, verify a sending domain, create an API key, then:
+```bash
+npx wrangler secret put RESEND_API_KEY
+npx wrangler secret put CONTACT_FROM_EMAIL      # e.g. contact@iqraspace.org (verified sender)
+npx wrangler secret put CONTACT_ALERT_EMAIL     # optional; defaults to iqraspaceorg@gmail.com
+```
 
-### 6. Local testing (optional)
-Copy `.env.local.example` to `.env.local` in `apps/site` and fill in the
-same values, then run `vercel dev` from `apps/site` to test `/api/contact`
-locally against the real Supabase project and Gmail SMTP.
+### 4. Deploy and routes
+```bash
+npm run build:cf
+npx wrangler deploy
+```
+`wrangler.jsonc` binds the route `iqraspace.org/*` (zone `iqraspace.org`).
+`/quran*` and `/learning*` routes belong to their own Workers and win because
+they are more specific. The Gmail/Supabase/Vercel env vars from the old setup
+are no longer used.
+
+### 5. www -> apex redirect
+Handled by a Cloudflare **Redirect Rule**, not the Worker (static pages never
+invoke the Worker): Rules -> Redirect Rules -> custom filter
+`Hostname equals www.iqraspace.org` -> Dynamic redirect to
+`concat("https://iqraspace.org", http.request.uri.path)` preserving query
+string, status 301. The `www` DNS record must exist and be proxied (orange
+cloud).
+
+## Required names at a glance
+
+| Name | Kind | Required? |
+|---|---|---|
+| `DB` | D1 binding (wrangler.jsonc) | yes |
+| `ASSETS` | assets binding (wrangler.jsonc) | yes |
+| `TURNSTILE_SECRET_KEY` | secret | recommended (skipped if unset) |
+| `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` | secrets | only for email alerts |
+| `CONTACT_ALERT_EMAIL` | secret/var | optional |
+
+## Local development
+```bash
+npm run build:cf
+npx wrangler d1 migrations apply DB --local
+npx wrangler dev --local      # http://localhost:8787
+```
+Local secrets go in `apps/site/.dev.vars` (gitignored; see
+`.env.local.example` for the names). Tests: `npm test`.
 
 ## How it works at a glance
 
-1. Visitor submits the form on `/contact`. Cloudflare Turnstile (a
-   checkbox widget, usually invisible/automatic for real visitors) must
-   complete before the form allows submitting.
-2. `site.js` validates client-side, then `POST`s JSON to `/api/contact`,
-   including the Turnstile token.
-3. `api/contact.js` (Vercel serverless function) re-validates server-side,
-   silently drops obvious bot submissions (a filled honeypot field, or a
-   submission faster than 3 seconds after the page loaded), verifies the
-   Turnstile token with Cloudflare, then:
-   - inserts the message into `contact_messages` using the `service_role`
-     key, and
-   - best-effort emails an alert to `iqraspaceorg@gmail.com` over Gmail
-     SMTP. If the email fails to send, the message is still saved — check
-     Vercel's function logs for the error, and the message itself in
-     Supabase's Table Editor either way.
-4. You check new messages in Supabase's Table Editor (sort by
-   `created_at`, filter by `status`), and reply directly to the sender's
-   email address from your own inbox.
+1. Visitor submits the form on `/contact`; `site.js` validates, then POSTs JSON
+   (`name`, `email`, `subject`, `message`, `company` honeypot, `startedAt`,
+   `turnstileToken`) to `/api/contact`.
+2. `worker/index.js` -> `worker/contact.js` re-validates, silently drops bot
+   submissions (filled honeypot, or under 3 seconds after page load), verifies
+   Turnstile, inserts into D1, then best-effort sends the Resend alert.
+3. Responses: `200 {ok:true}`, `400 {ok:false, errors:{field:msg}}`,
+   `405`, `500 {ok:false, error}`.
+4. Security headers/CSP are in `dist/_headers`, generated by `scripts/build.mjs`.
 
-## Known limitations (by design, at this project's scale)
+## Known limitations
 
-- No rate limiting beyond the above (Vercel serverless functions are
-  stateless; proper rate limiting would need a KV store, which isn't
-  justified yet — Turnstile already handles the bulk of automated spam).
-- No reply-from-the-dashboard feature — you reply from your own email
-  client, same as any other email.
+- No rate limiting beyond Turnstile + honeypot + fill-time check (could use
+  Workers rate limiting binding later).
+- No reply-from-dashboard feature.

@@ -1,9 +1,15 @@
 {
   "name": "iqraspace-site",
   "private": true,
-  "description": "IqraSpace marketing/info site — static HTML pages, plus two small Vercel serverless functions (api/) for the contact form. No build step for the pages themselves; this package.json exists only so Vercel can install the functions' runtime dependencies.",
-  "dependencies": {
-    "@supabase/supabase-js": "^2.45.0",
-    "nodemailer": "^10.0.13"
+  "type": "module",
+  "description": "IqraSpace marketing/info site - static HTML pages served by a Cloudflare Worker with Static Assets, plus a small Worker (worker/) handling POST /api/contact into D1.",
+  "scripts": {
+    "build:cf": "node scripts/build.mjs",
+    "test": "node --test worker/*.test.mjs",
+    "dev:cf": "npm run build:cf && wrangler dev",
+    "deploy:cf": "npm run build:cf && wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
   }
 }

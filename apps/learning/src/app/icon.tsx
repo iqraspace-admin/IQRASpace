@@ -6,6 +6,8 @@ import { renderCroppedIcon } from "@/lib/branding/renderCroppedIcon";
 // illegible at favicon sizes — this keeps just the icon mark). Replaces
 // the old static app/favicon.ico (the default Next.js icon — never
 // actually branded).
+// Required by `output: "export"` (static image route).
+export const dynamic = "force-static";
 export const size = { width: 512, height: 512 };
 export const contentType = "image/png";
 
