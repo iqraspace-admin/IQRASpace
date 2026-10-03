@@ -28,11 +28,13 @@ export const NAV_ITEMS: NavItem[] = [
 export const ADMIN_NAV_ITEMS: NavItem[] = [
   { href: "/admin", label: "Admin Dashboard", icon: "🛡️" },
   { href: "/admin/users", label: "Manage Users", icon: "🗂️" },
+  { href: "/admin/duas", label: "Duas Admin", icon: "🤲" },
   ...NAV_ITEMS,
 ];
 
 export const PAGE_META: Record<string, { title: string; subtitle: string }> = {
   "/admin/users": { title: "Manage Users", subtitle: "Every account on the platform — view, manage, and assign roles" },
+  "/admin/duas": { title: "Duas Admin", subtitle: "Manage the supplications shown in the mobile app" },
   "/admin": { title: "Admin Dashboard", subtitle: "Platform-wide oversight and management" },
   "/dashboard": { title: "Dashboard", subtitle: "A calm, connected workspace for online Qur'an teaching" },
   "/students": { title: "Students", subtitle: "Every learner, their class and their progress in one place" },

@@ -13,6 +13,7 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
+    "test:duas": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test src/lib/duas/*.test.ts",
     "seed:admins": "node --env-file=.env.local scripts/seed-admin-accounts.mjs",
     "seed:surah-lessons": "node --env-file=.env.local scripts/seed-surah-lessons.mjs",
     "migrate:storage-to-r2": "node --env-file=.env.local scripts/migrate-storage-to-r2.mjs"

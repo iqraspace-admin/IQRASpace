@@ -78,7 +78,8 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
 
         <nav className="flex-1 overflow-y-auto p-2.5">
           {navItems.map((item) => {
-            const active = pathname.startsWith(item.href);
+            // "/admin" is a prefix of its sibling admin routes (users, duas), so match it exactly.
+            const active = item.href === "/admin" ? pathname === "/admin" : pathname.startsWith(item.href);
             return (
               <Link
                 key={item.href}

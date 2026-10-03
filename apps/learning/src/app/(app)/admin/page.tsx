@@ -82,6 +82,17 @@ function AdminDashboard() {
       )}
 
       <Card>
+        <Eyebrow>Duas (mobile app content)</Eyebrow>
+        <p className="mb-4 text-sm text-ink-soft">
+          Create, review, publish and organise the supplications shown in the IqraSpace mobile app, with categories, a
+          full change history and one-click restore.
+        </p>
+        <LinkButton href="/admin/duas" variant="outline">
+          Open Duas Admin &rarr;
+        </LinkButton>
+      </Card>
+
+      <Card>
         <Eyebrow>Manage the platform</Eyebrow>
         <p className="mb-4 text-sm text-ink-soft">
           Create, edit, deactivate or delete any account, and assign roles — plus full CRUD across classes, lessons,
