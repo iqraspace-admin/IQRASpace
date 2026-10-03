@@ -144,17 +144,17 @@ void main() {
     expect(find.textContaining('No bookmarks yet'), findsOneWidget);
   });
 
-  testWidgets('shows both the Quran and Supplications entry tiles', (tester) async {
+  testWidgets('shows both the Quran and Duas entry tiles', (tester) async {
     await pumpHome(tester);
 
     // 'Quran' also appears as the bottom nav's own label, so there are
     // two matches: the entry tile plus that nav item.
     expect(find.text('Quran'), findsNWidgets(2));
-    // The entry tile spells out the full "Supplications", while the
-    // bottom nav uses the shorter "Duas" label (see iqra_bottom_nav.dart)
-    // to keep five destinations from crowding the bar — so this one is
-    // unique, unlike Quran/Bookmarks above/below.
-    expect(find.text('Supplications'), findsOneWidget);
+    // Same for 'Duas': the entry tile and the bottom nav's destination
+    // label (see iqra_bottom_nav.dart) now say the same thing — the nav
+    // label used to be a shorter "Duas" next to a fuller "Supplications"
+    // entry tile, but both say "Duas" since the rename.
+    expect(find.text('Duas'), findsNWidgets(2));
   });
 
   testWidgets('bottom nav highlights Home and lists all five destinations', (tester) async {
@@ -164,10 +164,9 @@ void main() {
     // 'Quran' also appears as this screen's own entry tile, so there
     // are two matches: the bottom-nav label plus that tile.
     expect(find.text('Quran'), findsNWidgets(2));
-    // The bottom nav's Supplications destination uses the shorter "Duas"
-    // label (see iqra_bottom_nav.dart), distinct from the entry tile's
-    // full "Supplications" text checked above.
-    expect(find.text('Duas'), findsOneWidget);
+    // The bottom nav's Duas destination and the entry tile checked above
+    // both say "Duas" since the rename (see iqra_bottom_nav.dart).
+    expect(find.text('Duas'), findsNWidgets(2));
     // 'Bookmarks' also appears as this screen's own section header, so
     // there are two matches: the bottom-nav label plus that header.
     expect(find.text('Bookmarks'), findsNWidgets(2));

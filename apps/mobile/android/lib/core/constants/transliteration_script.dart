@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart' show TextDirection;
-import 'package:quran_flutter/l10n/app_localizations.dart';
 
-/// Which reading script the Supplications feature renders each dua's
-/// transliteration line in — Latin, Telugu, or (Arabic-script) Urdu. A
-/// single app-wide choice, not per-card: the point of this switch is
-/// reading every dua comfortably in one script, not mixing scripts card
-/// to card. See SupplicationScriptNotifier for persistence.
+/// Which script a Duas transliteration line renders in — Latin, Telugu,
+/// or (Arabic-script) Urdu. Derived from the app's own language setting
+/// ([AppLanguage] via dua_reading_screen.dart's _scriptForAppLanguage),
+/// not a separate Duas-only choice.
 enum TransliterationScript { latin, telugu, urdu }
 
 extension TransliterationScriptX on TransliterationScript {
@@ -29,22 +27,3 @@ extension TransliterationScriptX on TransliterationScript {
     }
   }
 }
-
-/// Display metadata for the Supplications feature's script switch.
-class TransliterationScriptOption {
-  final TransliterationScript script;
-  final String displayName;
-
-  const TransliterationScriptOption({required this.script, required this.displayName});
-}
-
-/// Built from [l10n] (not a top-level `const` list) so the labels follow
-/// the app's UI language — this is menu chrome, unrelated to which
-/// script the dua text itself renders in.
-List<TransliterationScriptOption> transliterationScriptOptions(AppLocalizations l10n) => [
-      TransliterationScriptOption(script: TransliterationScript.latin, displayName: l10n.scriptLatin),
-      TransliterationScriptOption(script: TransliterationScript.telugu, displayName: l10n.scriptTelugu),
-      TransliterationScriptOption(script: TransliterationScript.urdu, displayName: l10n.scriptUrdu),
-    ];
-
-const defaultTransliterationScript = TransliterationScript.latin;

@@ -243,3 +243,18 @@ only the Play Console upload step fails, with a clear "missing
 credentials" error (or, once credentials exist, a clear "track not
 found" error if step 3 above hasn't been done) rather than silently
 skipping it.
+
+## Remote Duas content (no release needed for content fixes)
+
+Duas are served from the Learning app's Supabase project (managed at /learning/admin/duas) and cached on device (see
+`apps/site/supabase/duas/README.md`). Release builds must pass the public project URL and **anon** key:
+
+```bash
+flutter build appbundle --release \
+  --dart-define=DUAS_SUPABASE_URL=https://<ref>.supabase.co \
+  --dart-define=DUAS_SUPABASE_ANON_KEY=<anon key>
+```
+
+Without these defines the app still works from its cache/bundled `assets/supplications.json`.
+Never pass a service-role key. Regenerate the bundled fallback with
+`node apps/site/supabase/duas/build_canonical.mjs --write-bundled`.

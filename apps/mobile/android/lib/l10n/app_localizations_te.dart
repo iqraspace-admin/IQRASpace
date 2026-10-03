@@ -122,13 +122,74 @@ class AppLocalizationsTe extends AppLocalizations {
       'దుఆల కంటెంట్‌ను లోడ్ చేయడం సాధ్యపడలేదు.';
 
   @override
-  String get scriptLatin => 'లాటిన్';
+  String get supplicationsGridViewTooltip => 'గ్రిడ్ వీక్షణ';
 
   @override
-  String get scriptTelugu => 'తెలుగు';
+  String get supplicationsListViewTooltip => 'జాబితా వీక్షణ';
 
   @override
-  String get scriptUrdu => 'ఉర్దూ';
+  String get supplicationsFavoritesTooltip => 'ఇష్టమైనవి';
+
+  @override
+  String get supplicationsFavoritesTitle => 'ఇష్టమైనవి';
+
+  @override
+  String get supplicationsFavoritesEmpty => 'ఇంకా ఇష్టమైన దుఆలు లేవు.';
+
+  @override
+  String get supplicationsFavoritesClearAll => 'అన్నీ తొలగించు';
+
+  @override
+  String get supplicationsFavoritesClearConfirmTitle =>
+      'అన్ని ఇష్టమైనవి తొలగించాలా?';
+
+  @override
+  String get supplicationsFavoritesClearConfirmBody =>
+      'మీరు ఇష్టపడిన ప్రతి దుఆను ఇది తొలగిస్తుంది. దీన్ని వెనక్కి తీసుకోలేరు.';
+
+  @override
+  String get supplicationsReadingSettingsTitle => 'పఠన సెట్టింగ్‌లు';
+
+  @override
+  String get supplicationsTransliterationScriptLabel =>
+      'లిప్యంతరీకరణ స్క్రిప్ట్';
+
+  @override
+  String get supplicationsJumpToDua => 'ఒక దుఆకు వెళ్ళండి';
+
+  @override
+  String get supplicationsTransliterationHeading => 'లిప్యంతరీకరణ';
+
+  @override
+  String get supplicationsReferenceHeading => 'సూచన';
+
+  @override
+  String get supplicationsShareTooltip => 'భాగస్వామ్యం చేయండి';
+
+  @override
+  String get supplicationsFavoriteAddTooltip => 'ఇష్టమైనవికి జోడించండి';
+
+  @override
+  String get supplicationsFavoriteRemoveTooltip => 'ఇష్టమైనవి నుండి తీసివేయండి';
+
+  @override
+  String get supplicationsShareAttribution =>
+      '— IqraSpace దుఆల ద్వారా షేర్ చేయబడింది';
+
+  @override
+  String get supplicationsTasbeehCounterLabel => 'తస్బీహ్ కౌంటర్';
+
+  @override
+  String get supplicationsTasbeehCounterDesc =>
+      'చదివేటప్పుడు నొక్కి-లెక్కించే బ్యాడ్జ్‌ను చూపించు (ప్రతి దుఆకు రీసెట్ అవుతుంది, సేవ్ కాదు).';
+
+  @override
+  String supplicationsRepeatCount(int count) {
+    return '$count సార్లు చదవండి';
+  }
+
+  @override
+  String get supplicationsFavoriteUnavailable => 'ఇకపై అందుబాటులో లేదు';
 
   @override
   String get quranTitle => 'ఖురాన్';
@@ -138,6 +199,9 @@ class AppLocalizationsTe extends AppLocalizations {
 
   @override
   String get commonDone => 'పూర్తయింది';
+
+  @override
+  String get commonCancel => 'రద్దు చేయండి';
 
   @override
   String commonAyahsCount(Object count) {
@@ -817,4 +881,24 @@ class AppLocalizationsTe extends AppLocalizations {
   String aboutCouldNotOpen(Object label) {
     return '$label తెరవలేకపోయాము.';
   }
+
+  @override
+  String get supplicationsTranslationLabel => 'అనువాదం';
+
+  @override
+  String get supplicationsTranslationEnglish => 'English';
+
+  @override
+  String get supplicationsTranslationUrdu => 'اردو';
+
+  @override
+  String get supplicationsTransliterationLabel => 'లిప్యంతరీకరణ';
+
+  @override
+  String get supplicationsTransliterationToggleDesc =>
+      'అరబిక్ క్రింద లిప్యంతరీకరణ చూపించు';
+
+  @override
+  String get supplicationsUrduTranslationUnavailable =>
+      'ఈ దుఆకు ఉర్దూ అనువాదం ఇంకా అందుబాటులో లేదు — ఇంగ్లీష్ చూపుతోంది';
 }

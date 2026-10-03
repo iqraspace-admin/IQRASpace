@@ -1,0 +1,104 @@
+{
+  "version": "fixture-v1",
+  "generated_at": "2026-10-01T00:00:00Z",
+  "meta": {
+    "title": "Fixture Duas",
+    "description": "Fixture description.",
+    "languages": ["arabic", "transliteration_latin"],
+    "sources_note": "Fixture sources. Telugu is an algorithmically generated phonetic aid.",
+    "urdu_titles_note": "Fixture Urdu titles note.",
+    "coverage_note": "Fixture coverage note."
+  },
+  "unknown_top_level_field": {"ignored": true},
+  "categories": [
+    {
+      "slug": "waking",
+      "name": "Waking up",
+      "name_ur": "جاگنا",
+      "name_te": null,
+      "description": "Upon waking from sleep.",
+      "description_ur": null,
+      "description_te": null,
+      "sort_order": 1,
+      "duas": [
+        {
+          "slug": "dua-upon-waking",
+          "title": "Upon waking",
+          "title_ur": "بیدار ہو کر",
+          "arabic": "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا",
+          "transliteration_latin": "Al-ḥamdu lillāhil-ladhī aḥyānā",
+          "transliteration_telugu": "అల్హమ్దు లిల్లాహిల్లజీ అహ్యానా",
+          "transliteration_urdu": null,
+          "translation_en": "All praise is for Allah who gave us life.",
+          "translation_ur": "سب تعریفیں اللہ کے لیے ہیں۔",
+          "description": null,
+          "repeat_count": null,
+          "source_type": "hadith",
+          "source_collection": "Bukhari",
+          "reference": "Bukhari",
+          "hadith_number": null,
+          "hadith_grade": null,
+          "quran_refs": [],
+          "audio_url": null,
+          "sort_order": 0,
+          "some_future_field": 42
+        },
+        {
+          "slug": "dua-dhikr-waking",
+          "title": "Upon waking: remembrance",
+          "title_ur": null,
+          "arabic": "لَا إِلَهَ إِلَّا اللَّهُ",
+          "transliteration_latin": "Lā ilāha illallāh",
+          "transliteration_telugu": null,
+          "transliteration_urdu": null,
+          "translation_en": "There is no god but Allah.",
+          "translation_ur": null,
+          "description": "A short note.",
+          "repeat_count": 3,
+          "source_type": "hadith",
+          "source_collection": null,
+          "reference": "Abu Dawud",
+          "hadith_number": "5060",
+          "hadith_grade": "sahih",
+          "quran_refs": [{"surah": 2, "ayah_from": 255, "ayah_to": 255}],
+          "audio_url": "https://example.com/a.mp3",
+          "sort_order": 1
+        }
+      ]
+    },
+    {
+      "slug": "morning",
+      "name": "Morning athkar",
+      "name_ur": null,
+      "name_te": null,
+      "description": "Morning remembrance.",
+      "sort_order": 2,
+      "duas": [
+        {
+          "slug": "dua-dhikr-waking",
+          "title": "Morning remembrance",
+          "arabic": "لَا إِلَهَ إِلَّا اللَّهُ",
+          "transliteration_latin": "Lā ilāha illallāh",
+          "translation_en": "There is no god but Allah.",
+          "repeat_count": 10,
+          "reference": "Abu Dawud"
+        }
+      ]
+    },
+    {
+      "slug": "brand-new-category",
+      "name": "A brand new category",
+      "description": "Not in the style table.",
+      "sort_order": 3,
+      "duas": [
+        {
+          "slug": "dua-new",
+          "title": "New dua",
+          "arabic": "اللَّهُمَّ",
+          "transliteration_latin": "Allāhumma",
+          "translation_en": "O Allah."
+        }
+      ]
+    }
+  ]
+}

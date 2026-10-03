@@ -13,6 +13,8 @@ class HiveBoxes {
   static const settingsBoxName = 'reader_settings';
   static const bookmarksBoxName = 'bookmarks';
   static const audioFileCacheBoxName = 'audio_file_cache';
+  static const duasFavoritesBoxName = 'duas_favorites';
+  static const duasContentCacheBoxName = 'duas_content_cache';
 
   static bool _initialized = false;
 
@@ -31,6 +33,8 @@ class HiveBoxes {
       Hive.openBox(settingsBoxName),
       Hive.openBox<String>(bookmarksBoxName),
       Hive.openBox<String>(audioFileCacheBoxName),
+      Hive.openBox<String>(duasFavoritesBoxName),
+      Hive.openBox<String>(duasContentCacheBoxName),
     ]);
 
     _initialized = true;
@@ -56,4 +60,15 @@ class HiveBoxes {
   /// writer of this box; the binary bytes themselves live on disk, not
   /// in Hive.
   static Box<String> get audioFileCacheBox => Hive.box<String>(audioFileCacheBoxName);
+
+  /// Favorited duas: key `"{categoryId}_{duaIndex}"` -> JSON-encoded
+  /// DuaFavorite. Positional (category id + index into the bundled
+  /// JSON's static array), same limitation as surahBox's cache keys —
+  /// see DuaFavoritesLocalDataSource's doc comment.
+  static Box<String> get duasFavoritesBox => Hive.box<String>(duasFavoritesBoxName);
+
+  /// Last good remote Duas snapshot: single key `"snapshot"` ->
+  /// JSON `{schema_version, version, fetched_at, json}` — see
+  /// SupplicationsContentCache.
+  static Box<String> get duasContentCacheBox => Hive.box<String>(duasContentCacheBoxName);
 }

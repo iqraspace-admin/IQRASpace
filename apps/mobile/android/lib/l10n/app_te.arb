@@ -1,12 +1,10 @@
 {
   "@@locale": "te",
-
   "navHome": "హోమ్",
   "navQuran": "ఖురాన్",
   "navSupplications": "దుఆలు",
   "navBookmarks": "బుక్‌మార్క్‌లు",
   "navSettings": "సెట్టింగ్‌లు",
-
   "homeTagline": "చదవండి. వినండి. నేర్చుకోండి. ఆలోచించండి.",
   "homeReadQuranTitle": "ఖురాన్",
   "homeReadQuranSubtitle": "114 సూరాలు, తజ్వీద్ & అనువాదం",
@@ -24,30 +22,51 @@
   "homeContinueReading": "చదవడం కొనసాగించండి",
   "homeBeginWithSurah": "{surahName} తో ప్రారంభించండి",
   "homeAyahCount": "ఆయత్ {ayah}",
-
   "bookmarksTitle": "బుక్‌మార్క్‌లు",
   "bookmarksEmpty": "ఇంకా బుక్‌మార్క్‌లు లేవు.",
-
   "searchHint": "అనువాదంలో శోధించండి (ఉదా. దయ, సహనం)…",
   "searchPrompt": "ఒక పదాన్ని టైప్ చేసి శోధనను నొక్కండి.",
   "searchNoMatches": "ఏ ఫలితాలు కనిపించలేదు.",
   "searchFailed": "శోధన విఫలమైంది.\n{error}",
-
   "supplicationsScreenTitle": "దుఆలు",
   "supplicationsInfoTitle": "ఈ కంటెంట్ గురించి",
   "supplicationsSourcesHeading": "మూలాలు",
   "supplicationsCategoryDuaSummary": "{categoryCount} వర్గాలు, {duaCount} దుఆలు",
   "supplicationsLoadFailed": "దుఆల కంటెంట్‌ను లోడ్ చేయడం సాధ్యపడలేదు.",
-  "scriptLatin": "లాటిన్",
-  "scriptTelugu": "తెలుగు",
-  "scriptUrdu": "ఉర్దూ",
-
+  "supplicationsGridViewTooltip": "గ్రిడ్ వీక్షణ",
+  "supplicationsListViewTooltip": "జాబితా వీక్షణ",
+  "supplicationsFavoritesTooltip": "ఇష్టమైనవి",
+  "supplicationsFavoritesTitle": "ఇష్టమైనవి",
+  "supplicationsFavoritesEmpty": "ఇంకా ఇష్టమైన దుఆలు లేవు.",
+  "supplicationsFavoritesClearAll": "అన్నీ తొలగించు",
+  "supplicationsFavoritesClearConfirmTitle": "అన్ని ఇష్టమైనవి తొలగించాలా?",
+  "supplicationsFavoritesClearConfirmBody": "మీరు ఇష్టపడిన ప్రతి దుఆను ఇది తొలగిస్తుంది. దీన్ని వెనక్కి తీసుకోలేరు.",
+  "supplicationsReadingSettingsTitle": "పఠన సెట్టింగ్‌లు",
+  "supplicationsTransliterationScriptLabel": "లిప్యంతరీకరణ స్క్రిప్ట్",
+  "supplicationsJumpToDua": "ఒక దుఆకు వెళ్ళండి",
+  "supplicationsTransliterationHeading": "లిప్యంతరీకరణ",
+  "supplicationsReferenceHeading": "సూచన",
+  "supplicationsShareTooltip": "భాగస్వామ్యం చేయండి",
+  "supplicationsFavoriteAddTooltip": "ఇష్టమైనవికి జోడించండి",
+  "supplicationsFavoriteRemoveTooltip": "ఇష్టమైనవి నుండి తీసివేయండి",
+  "supplicationsShareAttribution": "— IqraSpace దుఆల ద్వారా షేర్ చేయబడింది",
+  "supplicationsTasbeehCounterLabel": "తస్బీహ్ కౌంటర్",
+  "supplicationsTasbeehCounterDesc": "చదివేటప్పుడు నొక్కి-లెక్కించే బ్యాడ్జ్‌ను చూపించు (ప్రతి దుఆకు రీసెట్ అవుతుంది, సేవ్ కాదు).",
+  "supplicationsRepeatCount": "{count} సార్లు చదవండి",
+  "@supplicationsRepeatCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "supplicationsFavoriteUnavailable": "ఇకపై అందుబాటులో లేదు",
   "quranTitle": "ఖురాన్",
   "commonRetry": "మళ్లీ ప్రయత్నించండి",
   "commonDone": "పూర్తయింది",
+  "commonCancel": "రద్దు చేయండి",
   "commonAyahsCount": "{count} ఆయాత్‌లు",
   "commonCouldNotReachReader": "ఖురాన్ రీడర్‌ను చేరుకోలేకపోయాము.\nమీ కనెక్షన్‌ను తనిఖీ చేసి మళ్లీ ప్రయత్నించండి.",
-
   "readerStop": "ఆపండి",
   "readerPlayWholeSurah": "మొత్తం సూరా ప్లే చేయండి",
   "readerLoadingAudio": "ఆడియో లోడ్ అవుతోంది…",
@@ -63,7 +82,6 @@
   "readerPlayRecitation": "పారాయణం ప్లే చేయండి",
   "readerRemoveBookmark": "బుక్‌మార్క్ తీసివేయండి",
   "readerAddBookmark": "బుక్‌మార్క్ జోడించండి",
-
   "modeListening": "వినడం",
   "modeReading": "చదవడం",
   "modeReadingListening": "చదవడం + వినడం",
@@ -75,15 +93,12 @@
   "playbackPause": "పాజ్",
   "playbackPreviousSurah": "మునుపటి సూరా",
   "playbackNextSurah": "తదుపరి సూరా",
-
   "jumpToSura": "సూరా",
   "jumpToAyah": "ఆయత్",
   "jumpToSurahSearchHint": "Aa..",
   "jumpToAyahSearchHint": "1, 2..",
   "jumpToCouldNotLoad": "సూరాల జాబితాను లోడ్ చేయలేకపోయాము.\n{error}",
-
   "tajweedRulesScreenTitle": "తజ్వీద్ నియమాలు",
-
   "settingsClose": "మూసివేయండి",
   "settingsReadingSettings": "పఠన సెట్టింగ్‌లు",
   "settingsTheme": "థీమ్",
@@ -115,22 +130,18 @@
   "settingsAboutIqraSpace": "ఇక్రాస్పేస్ గురించి",
   "settingsAboutIqraSpaceDesc": "మా లక్ష్యం, దృష్టి, మరియు విలువలు",
   "settingsAttribution": "వచనం, తజ్వీద్, అనువాదం, మరియు ఆడియో: Al Quran Cloud (alquran.cloud). రోమన్ ఉర్దూ మరియు తెలుగు అనువాదాలు: Quran.com. ఫాంట్‌లు: Amiri కుటుంబం (SIL OFL 1.1).",
-
   "translationLangOff": "ఆఫ్",
   "translationLangEnglish": "ఇంగ్లీష్ (సహీహ్ ఇంటర్నేషనల్)",
   "translationLangRomanUrdu": "రోమన్ ఉర్దూ (అబుల్ అలా మౌదూదీ)",
   "translationLangUrdu": "ఉర్దూ (అబుల్ అలా మౌదూదీ)",
   "translationLangTelugu": "తెలుగు (అబ్దుర్ రహీమ్ ఇబ్న్ ముహమ్మద్)",
-
   "arabicFontAmiriQuran": "అమిరి ఖురాన్ (ఉస్మానీ)",
   "arabicFontAmiri": "అమిరి (సాధారణ ప్రయోజన)",
   "arabicFontAmiriQuranColored": "అమిరి ఖురాన్ కలర్డ్",
   "arabicFontColoredCaveat": "దీనికి స్వంత అంతర్నిర్మిత రంగులు ఉన్నాయి — ఈ యాప్ యొక్క తజ్వీద్ రంగులు దీనిపై కనిపించవు.",
-
   "languageEnglish": "English",
   "languageTelugu": "తెలుగు",
   "languageUrdu": "اردو",
-
   "tajweedRuleGhnName": "గున్నహ్",
   "tajweedRuleGhnDesc": "ఒత్తిడితో కూడిన م లేదా ن పై సుమారు రెండు లెక్కల నాసిక ధ్వని.",
   "tajweedRuleIkhfName": "ఇఖ్ఫా (దాచడం)",
@@ -161,14 +172,12 @@
   "tajweedRuleHamWaslDesc": "అచ్చు ముందు ఉన్నప్పుడు ఉచ్చారణలో వదిలివేయబడుతుంది — ఇక్కడ నుండి పారాయణం ప్రారంభించినప్పుడు మాత్రమే పలకబడుతుంది.",
   "tajweedRuleSlntName": "నిశ్శబ్ద అక్షరం",
   "tajweedRuleSlntDesc": "పలకబడని వ్రాతపూర్వక అక్షరం.",
-
   "guideTitle": "యూజర్ గైడ్",
   "guideSkip": "దాటవేయండి",
   "guideHelpUsTest": "ఇక్రాస్పేస్‌ను పరీక్షించడంలో మాకు సహాయం చేయండి",
   "guideScreenshotUnavailable": "స్క్రీన్‌షాట్ ఇంకా అందుబాటులో లేదు",
   "guideBack": "వెనుకకు",
   "guideNext": "తదుపరి",
-
   "guideHomeTitle": "హోమ్",
   "guideHomeCaption": "చదవడం ప్రారంభించడానికి \"ఖురాన్\", ఒక సూరాను తిరిగి కొనసాగించడానికి \"ఇటీవలి పఠనాలు\", లేదా నేరుగా శోధన, తజ్వీద్ నియమాలు, లేదా పఠన సెట్టింగ్‌లకు వెళ్లడానికి త్వరిత లింక్‌ను తట్టండి.",
   "guideSurahNavTitle": "సూరా స్క్రీన్",
@@ -201,7 +210,6 @@
   "guideThemeCaption": "పఠన సెట్టింగ్‌ల పైభాగంలో లైట్, డార్క్, మరియు సెపియా మధ్య మారండి.",
   "guideUserGuideEntryTitle": "ఈ గైడ్‌ను తిరిగి తెరవడం",
   "guideUserGuideEntryCaption": "పఠన సెట్టింగ్‌లలో \"యూజర్ గైడ్\" నుండి ఎప్పుడైనా ఈ వాక్‌త్రూకు తిరిగి రండి.",
-
   "guideTestSurahNavTitle": "పరీక్ష: సూరా నావిగేషన్",
   "guideTestSurahNavCaption": "1. ఏదైనా సూరాను తెరవండి.\n2. మరొక సూరాకు వెళ్లడానికి మునుపటి/తదుపరిని ఉపయోగించండి.\n3. అరబిక్ పేరు మరియు అనువాదం రెండూ అప్‌డేట్ అవుతున్నాయని నిర్ధారించుకోండి.",
   "guideTestSearchJumpTitle": "పరీక్ష: శోధన & సూరాకు దూకడం",
@@ -226,7 +234,6 @@
   "guideTestThemeCaption": "1. పఠన సెట్టింగ్‌లలో లైట్, డార్క్, మరియు సెపియా మధ్య మారండి.\n2. పఠన స్క్రీన్ మరియు దాని తజ్వీద్ రంగులు ప్రతి దానిలో స్పష్టంగా ఉన్నాయని నిర్ధారించుకోండి.",
   "guideTestClosingReopeningTitle": "పరీక్ష: యాప్‌ను మూసివేయడం & మళ్లీ తెరవడం",
   "guideTestClosingReopeningCaption": "1. ఒక థీమ్, అనువాదం, మరియు ఒక బుక్‌మార్క్‌ను సెట్ చేసి, తర్వాత ఇక్రాస్పేస్‌ను పూర్తిగా మూసివేయండి.\n2. దాన్ని మళ్లీ తెరిచి మీ థీమ్, అనువాదం, మరియు బుక్‌మార్క్ ఇంకా ఉన్నాయని నిర్ధారించుకోండి.",
-
   "aboutTitle": "ఇక్రాస్పేస్ గురించి",
   "aboutTagline": "చదవండి. ఆలోచించండి. అనుసంధానం చేయండి.",
   "aboutIntro": "ఇక్రాస్పేస్ అనేది ఖురాన్‌తో చదవడం మరియు అనుసంధానం చేయడాన్ని సరళంగా, అందంగా, మరియు అందుబాటులో ఉండేలా రూపొందించిన ఒక డిజిటల్ ఖురాన్ స్థలం.",
@@ -259,5 +266,11 @@
   "aboutReachX": "X",
   "aboutReachInstagram": "ఇన్‌స్టాగ్రామ్",
   "aboutReachWebsite": "వెబ్‌సైట్",
-  "aboutCouldNotOpen": "{label} తెరవలేకపోయాము."
+  "aboutCouldNotOpen": "{label} తెరవలేకపోయాము.",
+  "supplicationsTranslationLabel": "అనువాదం",
+  "supplicationsTranslationEnglish": "English",
+  "supplicationsTranslationUrdu": "اردو",
+  "supplicationsTransliterationLabel": "లిప్యంతరీకరణ",
+  "supplicationsTransliterationToggleDesc": "అరబిక్ క్రింద లిప్యంతరీకరణ చూపించు",
+  "supplicationsUrduTranslationUnavailable": "ఈ దుఆకు ఉర్దూ అనువాదం ఇంకా అందుబాటులో లేదు — ఇంగ్లీష్ చూపుతోంది"
 }

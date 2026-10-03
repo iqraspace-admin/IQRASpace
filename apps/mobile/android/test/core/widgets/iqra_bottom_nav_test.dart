@@ -50,7 +50,7 @@ void main() {
     expect(find.text('Screen body'), findsOneWidget);
   });
 
-  testWidgets('tapping Duas navigates to the Supplications categories screen', (tester) async {
+  testWidgets('tapping Duas navigates to the Duas categories screen', (tester) async {
     await pumpHost(tester, currentIndex: 0);
 
     await tester.tap(find.text('Duas'));
@@ -62,7 +62,7 @@ void main() {
     await tester.pump();
     await tester.pump();
 
-    expect(find.widgetWithText(AppBar, 'Supplications'), findsOneWidget);
+    expect(find.widgetWithText(AppBar, 'Duas'), findsOneWidget);
   });
 
   testWidgets('a null currentIndex does not crash (defaults to Home selected)', (tester) async {

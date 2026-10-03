@@ -1,46 +1,43 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:quran_flutter/features/supplications/data/datasources/supplications_local_datasource.dart';
 
+import '../../test_support.dart';
+
+/// Tests the bundled data source against the fixture (injected loader),
+/// not the real asset, which is regenerated independently.
 void main() {
-  TestWidgetsFlutterBinding.ensureInitialized();
+  test('parses the bundled snapshot; meta text from "meta", counts computed', () async {
+    final content = await fixtureBundled().load();
 
-  test('loads the bundled asset and its category/dua counts match meta', () async {
-    final content = await SupplicationsLocalDataSource().load();
-
-    expect(content.categories.length, content.meta.categoryCount);
-    final totalDuas = content.categories.fold<int>(0, (sum, c) => sum + c.duas.length);
-    expect(totalDuas, content.meta.duaCount);
+    expect(content.meta.title, 'Fixture Duas');
+    expect(content.meta.coverageNote, 'Fixture coverage note.');
+    expect(content.meta.categoryCount, content.categories.length);
+    final distinct = <String>{for (final c in content.categories) for (final d in c.duas) d.slug};
+    expect(content.meta.duaCount, distinct.length);
   });
 
-  test('every category has a non-empty id, label, description, and at least one dua', () async {
-    final content = await SupplicationsLocalDataSource().load();
+  test('every category has an id, label and at least one dua with core fields', () async {
+    final content = await fixtureBundled().load();
 
     for (final category in content.categories) {
-      expect(category.id, isNotEmpty, reason: 'category with label "${category.label}" has no id');
+      expect(category.id, isNotEmpty);
       expect(category.label, isNotEmpty);
-      expect(category.description, isNotEmpty);
-      expect(category.duas, isNotEmpty, reason: 'category "${category.id}" has no duas');
-    }
-  });
-
-  test('every dua has all five text fields populated', () async {
-    final content = await SupplicationsLocalDataSource().load();
-
-    for (final category in content.categories) {
+      expect(category.duas, isNotEmpty);
       for (final dua in category.duas) {
-        expect(dua.occasion, isNotEmpty);
-        expect(dua.reference, isNotEmpty);
+        expect(dua.slug, isNotEmpty);
+        expect(dua.title, isNotEmpty);
         expect(dua.arabic, isNotEmpty);
-        expect(dua.transliterationLatin, isNotEmpty);
-        expect(dua.transliterationTelugu, isNotEmpty);
-        expect(dua.transliterationUrdu, isNotEmpty);
-        expect(dua.translationEnglish, isNotEmpty);
       }
     }
   });
 
+  test('a snapshot without "meta" still loads (empty meta text)', () async {
+    final content = await fixtureBundledWithoutMeta().load();
+    expect(content.categories, isNotEmpty);
+    expect(content.meta.sourcesNote, isEmpty);
+  });
+
   test('repeated load() calls return the same cached future', () {
-    final dataSource = SupplicationsLocalDataSource();
+    final dataSource = fixtureBundled();
     expect(dataSource.load(), same(dataSource.load()));
   });
 }

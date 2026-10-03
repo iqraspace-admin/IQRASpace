@@ -19,6 +19,8 @@ Future<void> setUpTestHive() async {
   await Hive.openBox<String>(HiveBoxes.surahBoxName);
   await Hive.openBox(HiveBoxes.settingsBoxName);
   await Hive.openBox<String>(HiveBoxes.bookmarksBoxName);
+  await Hive.openBox<String>(HiveBoxes.duasFavoritesBoxName);
+  await Hive.openBox<String>(HiveBoxes.duasContentCacheBoxName);
 }
 
 Future<void> tearDownTestHive() async {

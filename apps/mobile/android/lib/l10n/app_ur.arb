@@ -1,12 +1,10 @@
 {
   "@@locale": "ur",
-
   "navHome": "ہوم",
   "navQuran": "قرآن",
   "navSupplications": "دعائیں",
   "navBookmarks": "بک مارکس",
   "navSettings": "ترتیبات",
-
   "homeTagline": "پڑھیں۔ سنیں۔ سیکھیں۔ غور کریں۔",
   "homeReadQuranTitle": "قرآن",
   "homeReadQuranSubtitle": "114 سورتیں، تجوید اور ترجمہ",
@@ -24,30 +22,51 @@
   "homeContinueReading": "پڑھنا جاری رکھیں",
   "homeBeginWithSurah": "{surahName} سے شروع کریں",
   "homeAyahCount": "آیت {ayah}",
-
   "bookmarksTitle": "بک مارکس",
   "bookmarksEmpty": "ابھی تک کوئی بک مارک نہیں۔",
-
   "searchHint": "ترجمہ تلاش کریں (مثلاً رحمت، صبر)…",
   "searchPrompt": "لفظ لکھیں اور تلاش دبائیں۔",
   "searchNoMatches": "کوئی نتیجہ نہیں ملا۔",
   "searchFailed": "تلاش ناکام ہوئی۔\n{error}",
-
   "supplicationsScreenTitle": "دعائیں",
   "supplicationsInfoTitle": "اس مواد کے بارے میں",
   "supplicationsSourcesHeading": "ماخذ",
   "supplicationsCategoryDuaSummary": "{categoryCount} زمرہ جات، {duaCount} دعائیں",
   "supplicationsLoadFailed": "دعاؤں کا مواد لوڈ نہیں ہو سکا۔",
-  "scriptLatin": "لاطینی",
-  "scriptTelugu": "تیلگو",
-  "scriptUrdu": "اردو",
-
+  "supplicationsGridViewTooltip": "گرڈ ویو",
+  "supplicationsListViewTooltip": "فہرست کا منظر",
+  "supplicationsFavoritesTooltip": "پسندیدہ",
+  "supplicationsFavoritesTitle": "پسندیدہ",
+  "supplicationsFavoritesEmpty": "ابھی تک کوئی پسندیدہ دعا نہیں۔",
+  "supplicationsFavoritesClearAll": "سب صاف کریں",
+  "supplicationsFavoritesClearConfirmTitle": "تمام پسندیدہ صاف کریں؟",
+  "supplicationsFavoritesClearConfirmBody": "یہ آپ کی پسند کی گئی ہر دعا کو ہٹا دے گا۔ اسے واپس نہیں کیا جا سکتا۔",
+  "supplicationsReadingSettingsTitle": "پڑھنے کی ترتیبات",
+  "supplicationsTransliterationScriptLabel": "تلفظ کا رسم الخط",
+  "supplicationsJumpToDua": "کسی دعا پر جائیں",
+  "supplicationsTransliterationHeading": "تلفظ",
+  "supplicationsReferenceHeading": "حوالہ",
+  "supplicationsShareTooltip": "شیئر کریں",
+  "supplicationsFavoriteAddTooltip": "پسندیدہ میں شامل کریں",
+  "supplicationsFavoriteRemoveTooltip": "پسندیدہ سے ہٹائیں",
+  "supplicationsShareAttribution": "— IqraSpace دعاؤں کے ذریعے شیئر کیا گیا",
+  "supplicationsTasbeehCounterLabel": "تسبیح کاؤنٹر",
+  "supplicationsTasbeehCounterDesc": "پڑھتے وقت ٹیپ کر کے شمار کرنے والا بیج دکھائیں (ہر دعا کے ساتھ دوبارہ شروع ہوتا ہے، محفوظ نہیں ہوتا)۔",
+  "supplicationsRepeatCount": "{count} بار دہرائیں",
+  "@supplicationsRepeatCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "supplicationsFavoriteUnavailable": "اب دستیاب نہیں",
   "quranTitle": "قرآن",
   "commonRetry": "دوبارہ کوشش کریں",
   "commonDone": "مکمل",
+  "commonCancel": "منسوخ کریں",
   "commonAyahsCount": "{count} آیات",
   "commonCouldNotReachReader": "قرآن ریڈر تک رسائی نہیں ہو سکی۔\nاپنا کنکشن چیک کریں اور دوبارہ کوشش کریں۔",
-
   "readerStop": "روکیں",
   "readerPlayWholeSurah": "پوری سورت چلائیں",
   "readerLoadingAudio": "آڈیو لوڈ ہو رہی ہے…",
@@ -63,7 +82,6 @@
   "readerPlayRecitation": "تلاوت چلائیں",
   "readerRemoveBookmark": "بک مارک ہٹائیں",
   "readerAddBookmark": "بک مارک شامل کریں",
-
   "modeListening": "سننا",
   "modeReading": "پڑھنا",
   "modeReadingListening": "پڑھنا + سننا",
@@ -75,15 +93,12 @@
   "playbackPause": "وقفہ",
   "playbackPreviousSurah": "پچھلی سورت",
   "playbackNextSurah": "اگلی سورت",
-
   "jumpToSura": "سورت",
   "jumpToAyah": "آیت",
   "jumpToSurahSearchHint": "Aa..",
   "jumpToAyahSearchHint": "1, 2..",
   "jumpToCouldNotLoad": "سورتوں کی فہرست لوڈ نہیں ہو سکی۔\n{error}",
-
   "tajweedRulesScreenTitle": "تجوید کے قواعد",
-
   "settingsClose": "بند کریں",
   "settingsReadingSettings": "پڑھنے کی ترتیبات",
   "settingsTheme": "تھیم",
@@ -115,22 +130,18 @@
   "settingsAboutIqraSpace": "اقرا اسپیس کے بارے میں",
   "settingsAboutIqraSpaceDesc": "ہمارا مشن، وژن، اور اقدار",
   "settingsAttribution": "متن، تجوید، ترجمہ، اور آڈیو: Al Quran Cloud (alquran.cloud)۔ رومن اردو اور تیلگو ترجمے: Quran.com۔ فونٹس: Amiri فیملی (SIL OFL 1.1)۔",
-
   "translationLangOff": "بند",
   "translationLangEnglish": "انگریزی (صحیح انٹرنیشنل)",
   "translationLangRomanUrdu": "رومن اردو (ابوالاعلیٰ مودودی)",
   "translationLangUrdu": "اردو (ابوالاعلیٰ مودودی)",
   "translationLangTelugu": "تیلگو (عبدالرحیم بن محمد)",
-
   "arabicFontAmiriQuran": "امیری قرآن (عثمانی)",
   "arabicFontAmiri": "امیری (عام مقصد)",
   "arabicFontAmiriQuranColored": "امیری قرآن رنگین",
   "arabicFontColoredCaveat": "اس کے اپنے بلٹ اِن رنگ ہیں — اس ایپ کی تجوید رنگت اس کے اوپر نظر نہیں آئے گی۔",
-
   "languageEnglish": "English",
   "languageTelugu": "తెలుగు",
   "languageUrdu": "اردو",
-
   "tajweedRuleGhnName": "غنہ",
   "tajweedRuleGhnDesc": "زبر والے م یا ن پر تقریباً دو شمار کی ناک سے آنے والی آواز۔",
   "tajweedRuleIkhfName": "اخفا (چھپانا)",
@@ -161,14 +172,12 @@
   "tajweedRuleHamWaslDesc": "حرکت سے پہلے ہو تو تلفظ میں گرا دیا جاتا ہے — صرف یہاں سے تلاوت شروع کرنے پر بولا جاتا ہے۔",
   "tajweedRuleSlntName": "خاموش حرف",
   "tajweedRuleSlntDesc": "ایک لکھا ہوا حرف جس کا تلفظ نہیں کیا جاتا۔",
-
   "guideTitle": "یوزر گائیڈ",
   "guideSkip": "نظرانداز کریں",
   "guideHelpUsTest": "اقرا اسپیس کی جانچ میں ہماری مدد کریں",
   "guideScreenshotUnavailable": "اسکرین شاٹ ابھی دستیاب نہیں",
   "guideBack": "پیچھے",
   "guideNext": "اگلا",
-
   "guideHomeTitle": "ہوم",
   "guideHomeCaption": "پڑھنا شروع کرنے کے لیے \"قرآن\"، کسی سورت کو دوبارہ شروع کرنے کے لیے \"حالیہ پڑھائی\"، یا براہِ راست تلاش، تجوید کے قواعد، یا پڑھنے کی ترتیبات پر جانے کے لیے کسی فوری ربط پر تھپتھپائیں۔",
   "guideSurahNavTitle": "سورت والی اسکرین",
@@ -201,7 +210,6 @@
   "guideThemeCaption": "پڑھنے کی ترتیبات کے اوپر روشن، تاریک، اور سیپیا کے درمیان تبدیل کریں۔",
   "guideUserGuideEntryTitle": "یہ گائیڈ دوبارہ کھولنا",
   "guideUserGuideEntryCaption": "کسی بھی وقت پڑھنے کی ترتیبات میں \"یوزر گائیڈ\" سے اس واک تھرو پر واپس آئیں۔",
-
   "guideTestSurahNavTitle": "جانچ: سورت نیویگیشن",
   "guideTestSurahNavCaption": "1۔ کوئی بھی سورت کھولیں۔\n2۔ دوسری سورت پر جانے کے لیے پچھلی/اگلی استعمال کریں۔\n3۔ تصدیق کریں کہ عربی نام اور ترجمہ دونوں اپڈیٹ ہوتے ہیں۔",
   "guideTestSearchJumpTitle": "جانچ: تلاش اور سورت پر جانا",
@@ -226,7 +234,6 @@
   "guideTestThemeCaption": "1۔ پڑھنے کی ترتیبات میں روشن، تاریک، اور سیپیا کے درمیان تبدیل کریں۔\n2۔ تصدیق کریں کہ پڑھنے کی اسکرین اور اس کے تجوید رنگ ہر ایک میں واضح رہتے ہیں۔",
   "guideTestClosingReopeningTitle": "جانچ: ایپ بند اور دوبارہ کھولنا",
   "guideTestClosingReopeningCaption": "1۔ ایک تھیم، ترجمہ، اور ایک بک مارک سیٹ کریں، پھر اقرا اسپیس مکمل طور پر بند کریں۔\n2۔ اسے دوبارہ کھولیں اور تصدیق کریں کہ آپ کا تھیم، ترجمہ، اور بک مارک اب بھی موجود ہیں۔",
-
   "aboutTitle": "اقرا اسپیس کے بارے میں",
   "aboutTagline": "پڑھیں۔ غور کریں۔ جڑیں۔",
   "aboutIntro": "اقرا اسپیس ایک ڈیجیٹل قرآن اسپیس ہے جو قرآن کے ساتھ پڑھنے اور جڑنے کو آسان، خوبصورت، اور قابلِ رسائی بنانے کے لیے ڈیزائن کی گئی ہے۔",
@@ -259,5 +266,11 @@
   "aboutReachX": "X",
   "aboutReachInstagram": "انسٹاگرام",
   "aboutReachWebsite": "ویب سائٹ",
-  "aboutCouldNotOpen": "{label} نہیں کھل سکا۔"
+  "aboutCouldNotOpen": "{label} نہیں کھل سکا۔",
+  "supplicationsTranslationLabel": "ترجمہ",
+  "supplicationsTranslationEnglish": "English",
+  "supplicationsTranslationUrdu": "اردو",
+  "supplicationsTransliterationLabel": "تلفظ",
+  "supplicationsTransliterationToggleDesc": "عربی متن کے نیچے تلفظ دکھائیں",
+  "supplicationsUrduTranslationUnavailable": "اس دعا کا اردو ترجمہ ابھی دستیاب نہیں — انگریزی دکھائی جا رہی ہے"
 }

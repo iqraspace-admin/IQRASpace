@@ -1,16 +1,14 @@
 {
   "@@locale": "en",
-
   "navHome": "Home",
   "navQuran": "Quran",
   "navSupplications": "Duas",
   "navBookmarks": "Bookmarks",
   "navSettings": "Settings",
-
   "homeTagline": "Read. Listen. Learn. Reflect.",
   "homeReadQuranTitle": "Quran",
   "homeReadQuranSubtitle": "114 Surahs, Tajweed & translation",
-  "homeSupplicationsTitle": "Supplications",
+  "homeSupplicationsTitle": "Duas",
   "homeSupplicationsSubtitle": "Duas & athkar for daily life",
   "homeLastReads": "Last Reads",
   "homeAyahOfTotal": "Ayah {current} of {total}",
@@ -24,30 +22,51 @@
   "homeContinueReading": "CONTINUE READING",
   "homeBeginWithSurah": "Begin with {surahName}",
   "homeAyahCount": "Ayah {ayah}",
-
   "bookmarksTitle": "Bookmarks",
   "bookmarksEmpty": "No bookmarks yet.",
-
   "searchHint": "Search translation (e.g. mercy, patience)…",
   "searchPrompt": "Type a word and press search.",
   "searchNoMatches": "No matches found.",
   "searchFailed": "Search failed.\n{error}",
-
-  "supplicationsScreenTitle": "Supplications",
+  "supplicationsScreenTitle": "Duas",
   "supplicationsInfoTitle": "About this content",
   "supplicationsSourcesHeading": "Sources",
   "supplicationsCategoryDuaSummary": "{categoryCount} categories, {duaCount} duas",
-  "supplicationsLoadFailed": "Could not load Supplications content.",
-  "scriptLatin": "Latin",
-  "scriptTelugu": "Telugu",
-  "scriptUrdu": "Urdu",
-
+  "supplicationsLoadFailed": "Could not load Duas content.",
+  "supplicationsGridViewTooltip": "Grid view",
+  "supplicationsListViewTooltip": "List view",
+  "supplicationsFavoritesTooltip": "Favorites",
+  "supplicationsFavoritesTitle": "Favorites",
+  "supplicationsFavoritesEmpty": "No favorite duas yet.",
+  "supplicationsFavoritesClearAll": "Clear all",
+  "supplicationsFavoritesClearConfirmTitle": "Clear all favorites?",
+  "supplicationsFavoritesClearConfirmBody": "This removes every dua you've favorited. This can't be undone.",
+  "supplicationsReadingSettingsTitle": "Reading Settings",
+  "supplicationsTransliterationScriptLabel": "Transliteration Script",
+  "supplicationsJumpToDua": "Jump to a dua",
+  "supplicationsTransliterationHeading": "Transliteration",
+  "supplicationsReferenceHeading": "Reference",
+  "supplicationsShareTooltip": "Share",
+  "supplicationsFavoriteAddTooltip": "Add to favorites",
+  "supplicationsFavoriteRemoveTooltip": "Remove from favorites",
+  "supplicationsShareAttribution": "— shared via IqraSpace Duas",
+  "supplicationsTasbeehCounterLabel": "Tasbeeh counter",
+  "supplicationsTasbeehCounterDesc": "Show a tap-to-count badge while reading (resets per dua, not saved).",
+  "supplicationsRepeatCount": "Repeat ×{count}",
+  "@supplicationsRepeatCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "supplicationsFavoriteUnavailable": "No longer available",
   "quranTitle": "Quran",
   "commonRetry": "Retry",
   "commonDone": "Done",
+  "commonCancel": "Cancel",
   "commonAyahsCount": "{count} ayahs",
   "commonCouldNotReachReader": "Could not reach the Quran Reader.\nCheck your connection and try again.",
-
   "readerStop": "Stop",
   "readerPlayWholeSurah": "Play whole surah",
   "readerLoadingAudio": "Loading audio…",
@@ -63,7 +82,6 @@
   "readerPlayRecitation": "Play recitation",
   "readerRemoveBookmark": "Remove bookmark",
   "readerAddBookmark": "Add bookmark",
-
   "modeListening": "Listening",
   "modeReading": "Reading",
   "modeReadingListening": "Reading + Listening",
@@ -75,15 +93,12 @@
   "playbackPause": "Pause",
   "playbackPreviousSurah": "Previous Surah",
   "playbackNextSurah": "Next Surah",
-
   "jumpToSura": "Sura",
   "jumpToAyah": "Ayah",
   "jumpToSurahSearchHint": "Aa..",
   "jumpToAyahSearchHint": "1, 2..",
   "jumpToCouldNotLoad": "Could not load the Surah list.\n{error}",
-
   "tajweedRulesScreenTitle": "Tajweed Rules",
-
   "settingsClose": "Close",
   "settingsReadingSettings": "Reading Settings",
   "settingsTheme": "Theme",
@@ -115,22 +130,18 @@
   "settingsAboutIqraSpace": "About IqraSpace",
   "settingsAboutIqraSpaceDesc": "Our mission, vision, and values",
   "settingsAttribution": "Text, Tajweed, translation, and audio: Al Quran Cloud (alquran.cloud). Roman Urdu and Telugu translations: Quran.com. Fonts: the Amiri family (SIL OFL 1.1).",
-
   "translationLangOff": "Off",
   "translationLangEnglish": "English (Sahih International)",
   "translationLangRomanUrdu": "Roman Urdu (Abul Ala Maududi)",
   "translationLangUrdu": "Urdu (Abul Ala Maududi)",
   "translationLangTelugu": "Telugu (Abder-Rahim ibn Muhammad)",
-
   "arabicFontAmiriQuran": "Amiri Quran (Uthmani)",
   "arabicFontAmiri": "Amiri (general-purpose)",
   "arabicFontAmiriQuranColored": "Amiri Quran Colored",
   "arabicFontColoredCaveat": "Has its own built-in colors — this app's Tajweed coloring won't be visible on top of it.",
-
   "languageEnglish": "English",
   "languageTelugu": "తెలుగు",
   "languageUrdu": "اردو",
-
   "tajweedRuleGhnName": "Ghunnah",
   "tajweedRuleGhnDesc": "A nasal sound of about two counts on a stressed م or ن.",
   "tajweedRuleIkhfName": "Ikhfa (Hiding)",
@@ -161,14 +172,12 @@
   "tajweedRuleHamWaslDesc": "Dropped in pronunciation when preceded by a vowel — sounded only when starting recitation here.",
   "tajweedRuleSlntName": "Silent Letter",
   "tajweedRuleSlntDesc": "A written letter that is not pronounced.",
-
   "guideTitle": "User Guide",
   "guideSkip": "Skip",
   "guideHelpUsTest": "Help Us Test IqraSpace",
   "guideScreenshotUnavailable": "Screenshot not available yet",
   "guideBack": "Back",
   "guideNext": "Next",
-
   "guideHomeTitle": "Home",
   "guideHomeCaption": "Tap \"Quran\" to start reading, \"Last Reads\" to resume a Surah, or a Quick Link to jump straight to Search, Tajweed Rules, or Reading Settings.",
   "guideSurahNavTitle": "The Surah screen",
@@ -201,7 +210,6 @@
   "guideThemeCaption": "Switch between Light, Dark, and Sepia at the top of Reading Settings.",
   "guideUserGuideEntryTitle": "Reopening this guide",
   "guideUserGuideEntryCaption": "Come back to this walkthrough any time from \"User Guide\" in Reading Settings.",
-
   "guideTestSurahNavTitle": "Test: Surah navigation",
   "guideTestSurahNavCaption": "1. Open any Surah.\n2. Use Previous/Next to move to another Surah.\n3. Confirm the Arabic name and translation both update.",
   "guideTestSearchJumpTitle": "Test: Search & jump to Surah",
@@ -226,7 +234,6 @@
   "guideTestThemeCaption": "1. Switch between Light, Dark, and Sepia in Reading Settings.\n2. Confirm the reading screen and its Tajweed colors stay legible in each.",
   "guideTestClosingReopeningTitle": "Test: Closing & reopening the app",
   "guideTestClosingReopeningCaption": "1. Set a theme, translation, and a bookmark, then fully close IqraSpace.\n2. Reopen it and confirm your theme, translation, and bookmark are all still there.",
-
   "aboutTitle": "About IqraSpace",
   "aboutTagline": "Read. Reflect. Connect.",
   "aboutIntro": "IqraSpace is a digital Quran space designed to make reading and connecting with the Quran simple, beautiful, and accessible.",
@@ -259,5 +266,11 @@
   "aboutReachX": "X",
   "aboutReachInstagram": "Instagram",
   "aboutReachWebsite": "Website",
-  "aboutCouldNotOpen": "Could not open {label}."
+  "aboutCouldNotOpen": "Could not open {label}.",
+  "supplicationsTranslationLabel": "Translation",
+  "supplicationsTranslationEnglish": "English",
+  "supplicationsTranslationUrdu": "اردو",
+  "supplicationsTransliterationLabel": "Transliteration",
+  "supplicationsTransliterationToggleDesc": "Show transliteration below the Arabic",
+  "supplicationsUrduTranslationUnavailable": "Urdu translation not available for this dua yet — showing English"
 }

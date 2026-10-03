@@ -5,14 +5,20 @@ import 'package:quran_flutter/core/widgets/brand_mark.dart';
 import 'package:quran_flutter/core/widgets/iqra_bottom_nav.dart';
 import 'package:quran_flutter/features/quran_reader/presentation/providers/surah_providers.dart';
 import 'package:quran_flutter/features/supplications/presentation/providers/supplications_providers.dart';
-import 'package:quran_flutter/features/supplications/presentation/screens/supplication_category_detail_screen.dart';
-import 'package:quran_flutter/features/supplications/presentation/widgets/script_switch.dart';
+import 'package:quran_flutter/features/supplications/presentation/screens/dua_favorites_screen.dart';
+import 'package:quran_flutter/features/supplications/presentation/screens/dua_reading_screen.dart';
+import 'package:quran_flutter/features/supplications/presentation/widgets/dua_category_grid_tile.dart';
+import 'package:quran_flutter/features/supplications/presentation/widgets/dua_category_list_row.dart';
 import 'package:quran_flutter/features/supplications/presentation/widgets/supplications_info_sheet.dart';
 import 'package:quran_flutter/l10n/app_localizations.dart';
 
-/// Supplications' landing screen — every category (id/label/description
-/// straight from the bundled JSON), with the session-wide reading-script
-/// switch pinned at the top since it's the feature's headline control.
+/// Duas' landing screen — every category (id/label/description straight
+/// from the bundled JSON), as a grid of colored tiles or a flat list
+/// (toggled in the AppBar, see duaCategoryViewModeProvider), matching the
+/// reference "Wa Iyyaka Nasta'in" app's grid/list category browser. The
+/// reading-script switch that used to be pinned here has moved into the
+/// reading screen's settings sheet (see dua_reading_settings_sheet.dart)
+/// — see that file's doc comment for why.
 class SupplicationsCategoriesScreen extends ConsumerWidget {
   const SupplicationsCategoriesScreen({super.key});
 
@@ -21,7 +27,10 @@ class SupplicationsCategoriesScreen extends ConsumerWidget {
     final themeMode = ref.watch(readerThemeModeProvider);
     final colors = ReaderColors.forMode(themeMode);
     final content = ref.watch(supplicationsContentProvider);
+    final viewMode = ref.watch(duaCategoryViewModeProvider);
+    final appLanguage = ref.watch(appLanguageProvider);
     final l10n = AppLocalizations.of(context)!;
+    final isGrid = viewMode == DuaCategoryViewMode.grid;
 
     return Scaffold(
       backgroundColor: colors.background,
@@ -36,6 +45,20 @@ class SupplicationsCategoriesScreen extends ConsumerWidget {
           ],
         ),
         actions: [
+          IconButton(
+            icon: Icon(isGrid ? Icons.view_list_outlined : Icons.grid_view_outlined),
+            tooltip: isGrid ? l10n.supplicationsListViewTooltip : l10n.supplicationsGridViewTooltip,
+            onPressed: () => ref.read(duaCategoryViewModeProvider.notifier).setMode(
+                  isGrid ? DuaCategoryViewMode.list : DuaCategoryViewMode.grid,
+                ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.star_border_outlined),
+            tooltip: l10n.supplicationsFavoritesTooltip,
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const DuaFavoritesScreen()),
+            ),
+          ),
           IconButton(
             icon: const Icon(Icons.info_outline),
             tooltip: l10n.supplicationsInfoTitle,
@@ -57,61 +80,59 @@ class SupplicationsCategoriesScreen extends ConsumerWidget {
             ),
           ),
         ),
-        data: (content) => Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(16, 12, 16, 4),
-              child: ScriptSwitch(),
-            ),
-            Expanded(
-              child: ListView.separated(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-                itemCount: content.categories.length,
-                separatorBuilder: (_, __) => const SizedBox(height: 10),
-                itemBuilder: (context, index) {
-                  final category = content.categories[index];
-                  return InkWell(
-                    borderRadius: BorderRadius.circular(14),
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => SupplicationCategoryDetailScreen(categoryId: category.id),
-                      ),
+        data: (content) {
+          // Opens straight into the reading screen at the first dua —
+          // matching the reference app's actual flow (no separate preview
+          // list in between). Swiping, and the reading screen's own
+          // "jump to a dua" index icon, cover picking a different one.
+          void openCategory(String categoryId) => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => DuaReadingScreen(categoryId: categoryId, initialIndex: 0)),
+              );
+
+          // Pull-to-refresh forces a remote version check (no-op offline /
+          // when the remote is not configured).
+          Future<void> onRefresh() => ref.read(supplicationsRepositoryProvider).refresh(force: true);
+
+          return RefreshIndicator(
+            onRefresh: onRefresh,
+            child: isGrid
+                ? GridView.builder(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      childAspectRatio: 1.05,
                     ),
-                    child: Container(
-                      padding: const EdgeInsets.all(14),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: colors.textColor.withValues(alpha: 0.15)),
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  category.label,
-                                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  category.description,
-                                  style: TextStyle(fontSize: 12.5, color: colors.textColor.withValues(alpha: 0.65)),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Icon(Icons.chevron_right, color: colors.textColor.withValues(alpha: 0.4)),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
+                    itemCount: content.categories.length,
+                    itemBuilder: (context, index) {
+                      final category = content.categories[index];
+                      return DuaCategoryGridTile(
+                        category: category,
+                        colors: colors,
+                        appLanguage: appLanguage,
+                        onTap: () => openCategory(category.id),
+                      );
+                    },
+                  )
+                : ListView.separated(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 24),
+                    itemCount: content.categories.length,
+                    separatorBuilder: (_, __) => Divider(height: 1, color: colors.textColor.withValues(alpha: 0.08)),
+                    itemBuilder: (context, index) {
+                      final category = content.categories[index];
+                      return DuaCategoryListRow(
+                        category: category,
+                        colors: colors,
+                        appLanguage: appLanguage,
+                        onTap: () => openCategory(category.id),
+                      );
+                    },
+                  ),
+          );
+        },
       ),
       bottomNavigationBar: const IqraBottomNav(currentIndex: 2),
     );

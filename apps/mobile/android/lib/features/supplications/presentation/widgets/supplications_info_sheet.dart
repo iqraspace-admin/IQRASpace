@@ -98,6 +98,13 @@ class _SupplicationsInfoSheet extends ConsumerWidget {
                 meta.sourcesNote,
                 style: TextStyle(fontSize: 13.5, height: 1.55, color: mutedColor),
               ),
+              if (meta.urduTitlesNote != null) ...[
+                const SizedBox(height: 10),
+                Text(
+                  meta.urduTitlesNote!,
+                  style: TextStyle(fontSize: 13.5, height: 1.55, color: mutedColor),
+                ),
+              ],
             ],
           ),
         );

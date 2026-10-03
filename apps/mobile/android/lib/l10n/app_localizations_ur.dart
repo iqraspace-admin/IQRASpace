@@ -121,13 +121,73 @@ class AppLocalizationsUr extends AppLocalizations {
   String get supplicationsLoadFailed => 'دعاؤں کا مواد لوڈ نہیں ہو سکا۔';
 
   @override
-  String get scriptLatin => 'لاطینی';
+  String get supplicationsGridViewTooltip => 'گرڈ ویو';
 
   @override
-  String get scriptTelugu => 'تیلگو';
+  String get supplicationsListViewTooltip => 'فہرست کا منظر';
 
   @override
-  String get scriptUrdu => 'اردو';
+  String get supplicationsFavoritesTooltip => 'پسندیدہ';
+
+  @override
+  String get supplicationsFavoritesTitle => 'پسندیدہ';
+
+  @override
+  String get supplicationsFavoritesEmpty => 'ابھی تک کوئی پسندیدہ دعا نہیں۔';
+
+  @override
+  String get supplicationsFavoritesClearAll => 'سب صاف کریں';
+
+  @override
+  String get supplicationsFavoritesClearConfirmTitle =>
+      'تمام پسندیدہ صاف کریں؟';
+
+  @override
+  String get supplicationsFavoritesClearConfirmBody =>
+      'یہ آپ کی پسند کی گئی ہر دعا کو ہٹا دے گا۔ اسے واپس نہیں کیا جا سکتا۔';
+
+  @override
+  String get supplicationsReadingSettingsTitle => 'پڑھنے کی ترتیبات';
+
+  @override
+  String get supplicationsTransliterationScriptLabel => 'تلفظ کا رسم الخط';
+
+  @override
+  String get supplicationsJumpToDua => 'کسی دعا پر جائیں';
+
+  @override
+  String get supplicationsTransliterationHeading => 'تلفظ';
+
+  @override
+  String get supplicationsReferenceHeading => 'حوالہ';
+
+  @override
+  String get supplicationsShareTooltip => 'شیئر کریں';
+
+  @override
+  String get supplicationsFavoriteAddTooltip => 'پسندیدہ میں شامل کریں';
+
+  @override
+  String get supplicationsFavoriteRemoveTooltip => 'پسندیدہ سے ہٹائیں';
+
+  @override
+  String get supplicationsShareAttribution =>
+      '— IqraSpace دعاؤں کے ذریعے شیئر کیا گیا';
+
+  @override
+  String get supplicationsTasbeehCounterLabel => 'تسبیح کاؤنٹر';
+
+  @override
+  String get supplicationsTasbeehCounterDesc =>
+      'پڑھتے وقت ٹیپ کر کے شمار کرنے والا بیج دکھائیں (ہر دعا کے ساتھ دوبارہ شروع ہوتا ہے، محفوظ نہیں ہوتا)۔';
+
+  @override
+  String supplicationsRepeatCount(int count) {
+    return '$count بار دہرائیں';
+  }
+
+  @override
+  String get supplicationsFavoriteUnavailable => 'اب دستیاب نہیں';
 
   @override
   String get quranTitle => 'قرآن';
@@ -137,6 +197,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get commonDone => 'مکمل';
+
+  @override
+  String get commonCancel => 'منسوخ کریں';
 
   @override
   String commonAyahsCount(Object count) {
@@ -814,4 +877,24 @@ class AppLocalizationsUr extends AppLocalizations {
   String aboutCouldNotOpen(Object label) {
     return '$label نہیں کھل سکا۔';
   }
+
+  @override
+  String get supplicationsTranslationLabel => 'ترجمہ';
+
+  @override
+  String get supplicationsTranslationEnglish => 'English';
+
+  @override
+  String get supplicationsTranslationUrdu => 'اردو';
+
+  @override
+  String get supplicationsTransliterationLabel => 'تلفظ';
+
+  @override
+  String get supplicationsTransliterationToggleDesc =>
+      'عربی متن کے نیچے تلفظ دکھائیں';
+
+  @override
+  String get supplicationsUrduTranslationUnavailable =>
+      'اس دعا کا اردو ترجمہ ابھی دستیاب نہیں — انگریزی دکھائی جا رہی ہے';
 }

@@ -151,7 +151,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeSupplicationsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Supplications'**
+  /// **'Duas'**
   String get homeSupplicationsTitle;
 
   /// No description provided for @homeSupplicationsSubtitle.
@@ -271,7 +271,7 @@ abstract class AppLocalizations {
   /// No description provided for @supplicationsScreenTitle.
   ///
   /// In en, this message translates to:
-  /// **'Supplications'**
+  /// **'Duas'**
   String get supplicationsScreenTitle;
 
   /// No description provided for @supplicationsInfoTitle.
@@ -295,26 +295,134 @@ abstract class AppLocalizations {
   /// No description provided for @supplicationsLoadFailed.
   ///
   /// In en, this message translates to:
-  /// **'Could not load Supplications content.'**
+  /// **'Could not load Duas content.'**
   String get supplicationsLoadFailed;
 
-  /// No description provided for @scriptLatin.
+  /// No description provided for @supplicationsGridViewTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Latin'**
-  String get scriptLatin;
+  /// **'Grid view'**
+  String get supplicationsGridViewTooltip;
 
-  /// No description provided for @scriptTelugu.
+  /// No description provided for @supplicationsListViewTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Telugu'**
-  String get scriptTelugu;
+  /// **'List view'**
+  String get supplicationsListViewTooltip;
 
-  /// No description provided for @scriptUrdu.
+  /// No description provided for @supplicationsFavoritesTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Urdu'**
-  String get scriptUrdu;
+  /// **'Favorites'**
+  String get supplicationsFavoritesTooltip;
+
+  /// No description provided for @supplicationsFavoritesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get supplicationsFavoritesTitle;
+
+  /// No description provided for @supplicationsFavoritesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No favorite duas yet.'**
+  String get supplicationsFavoritesEmpty;
+
+  /// No description provided for @supplicationsFavoritesClearAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all'**
+  String get supplicationsFavoritesClearAll;
+
+  /// No description provided for @supplicationsFavoritesClearConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear all favorites?'**
+  String get supplicationsFavoritesClearConfirmTitle;
+
+  /// No description provided for @supplicationsFavoritesClearConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This removes every dua you\'ve favorited. This can\'t be undone.'**
+  String get supplicationsFavoritesClearConfirmBody;
+
+  /// No description provided for @supplicationsReadingSettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Settings'**
+  String get supplicationsReadingSettingsTitle;
+
+  /// No description provided for @supplicationsTransliterationScriptLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Transliteration Script'**
+  String get supplicationsTransliterationScriptLabel;
+
+  /// No description provided for @supplicationsJumpToDua.
+  ///
+  /// In en, this message translates to:
+  /// **'Jump to a dua'**
+  String get supplicationsJumpToDua;
+
+  /// No description provided for @supplicationsTransliterationHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Transliteration'**
+  String get supplicationsTransliterationHeading;
+
+  /// No description provided for @supplicationsReferenceHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get supplicationsReferenceHeading;
+
+  /// No description provided for @supplicationsShareTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get supplicationsShareTooltip;
+
+  /// No description provided for @supplicationsFavoriteAddTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to favorites'**
+  String get supplicationsFavoriteAddTooltip;
+
+  /// No description provided for @supplicationsFavoriteRemoveTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from favorites'**
+  String get supplicationsFavoriteRemoveTooltip;
+
+  /// No description provided for @supplicationsShareAttribution.
+  ///
+  /// In en, this message translates to:
+  /// **'— shared via IqraSpace Duas'**
+  String get supplicationsShareAttribution;
+
+  /// No description provided for @supplicationsTasbeehCounterLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasbeeh counter'**
+  String get supplicationsTasbeehCounterLabel;
+
+  /// No description provided for @supplicationsTasbeehCounterDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Show a tap-to-count badge while reading (resets per dua, not saved).'**
+  String get supplicationsTasbeehCounterDesc;
+
+  /// No description provided for @supplicationsRepeatCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat ×{count}'**
+  String supplicationsRepeatCount(int count);
+
+  /// No description provided for @supplicationsFavoriteUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No longer available'**
+  String get supplicationsFavoriteUnavailable;
 
   /// No description provided for @quranTitle.
   ///
@@ -333,6 +441,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Done'**
   String get commonDone;
+
+  /// No description provided for @commonCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get commonCancel;
 
   /// No description provided for @commonAyahsCount.
   ///
@@ -1545,6 +1659,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not open {label}.'**
   String aboutCouldNotOpen(Object label);
+
+  /// No description provided for @supplicationsTranslationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Translation'**
+  String get supplicationsTranslationLabel;
+
+  /// No description provided for @supplicationsTranslationEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get supplicationsTranslationEnglish;
+
+  /// No description provided for @supplicationsTranslationUrdu.
+  ///
+  /// In en, this message translates to:
+  /// **'اردو'**
+  String get supplicationsTranslationUrdu;
+
+  /// No description provided for @supplicationsTransliterationLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Transliteration'**
+  String get supplicationsTransliterationLabel;
+
+  /// No description provided for @supplicationsTransliterationToggleDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Show transliteration below the Arabic'**
+  String get supplicationsTransliterationToggleDesc;
+
+  /// No description provided for @supplicationsUrduTranslationUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Urdu translation not available for this dua yet — showing English'**
+  String get supplicationsUrduTranslationUnavailable;
 }
 
 class _AppLocalizationsDelegate

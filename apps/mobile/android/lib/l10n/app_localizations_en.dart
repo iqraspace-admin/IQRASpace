@@ -33,7 +33,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeReadQuranSubtitle => '114 Surahs, Tajweed & translation';
 
   @override
-  String get homeSupplicationsTitle => 'Supplications';
+  String get homeSupplicationsTitle => 'Duas';
 
   @override
   String get homeSupplicationsSubtitle => 'Duas & athkar for daily life';
@@ -102,7 +102,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get supplicationsScreenTitle => 'Supplications';
+  String get supplicationsScreenTitle => 'Duas';
 
   @override
   String get supplicationsInfoTitle => 'About this content';
@@ -117,16 +117,75 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get supplicationsLoadFailed => 'Could not load Supplications content.';
+  String get supplicationsLoadFailed => 'Could not load Duas content.';
 
   @override
-  String get scriptLatin => 'Latin';
+  String get supplicationsGridViewTooltip => 'Grid view';
 
   @override
-  String get scriptTelugu => 'Telugu';
+  String get supplicationsListViewTooltip => 'List view';
 
   @override
-  String get scriptUrdu => 'Urdu';
+  String get supplicationsFavoritesTooltip => 'Favorites';
+
+  @override
+  String get supplicationsFavoritesTitle => 'Favorites';
+
+  @override
+  String get supplicationsFavoritesEmpty => 'No favorite duas yet.';
+
+  @override
+  String get supplicationsFavoritesClearAll => 'Clear all';
+
+  @override
+  String get supplicationsFavoritesClearConfirmTitle => 'Clear all favorites?';
+
+  @override
+  String get supplicationsFavoritesClearConfirmBody =>
+      'This removes every dua you\'ve favorited. This can\'t be undone.';
+
+  @override
+  String get supplicationsReadingSettingsTitle => 'Reading Settings';
+
+  @override
+  String get supplicationsTransliterationScriptLabel =>
+      'Transliteration Script';
+
+  @override
+  String get supplicationsJumpToDua => 'Jump to a dua';
+
+  @override
+  String get supplicationsTransliterationHeading => 'Transliteration';
+
+  @override
+  String get supplicationsReferenceHeading => 'Reference';
+
+  @override
+  String get supplicationsShareTooltip => 'Share';
+
+  @override
+  String get supplicationsFavoriteAddTooltip => 'Add to favorites';
+
+  @override
+  String get supplicationsFavoriteRemoveTooltip => 'Remove from favorites';
+
+  @override
+  String get supplicationsShareAttribution => '— shared via IqraSpace Duas';
+
+  @override
+  String get supplicationsTasbeehCounterLabel => 'Tasbeeh counter';
+
+  @override
+  String get supplicationsTasbeehCounterDesc =>
+      'Show a tap-to-count badge while reading (resets per dua, not saved).';
+
+  @override
+  String supplicationsRepeatCount(int count) {
+    return 'Repeat ×$count';
+  }
+
+  @override
+  String get supplicationsFavoriteUnavailable => 'No longer available';
 
   @override
   String get quranTitle => 'Quran';
@@ -136,6 +195,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonDone => 'Done';
+
+  @override
+  String get commonCancel => 'Cancel';
 
   @override
   String commonAyahsCount(Object count) {
@@ -813,4 +875,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String aboutCouldNotOpen(Object label) {
     return 'Could not open $label.';
   }
+
+  @override
+  String get supplicationsTranslationLabel => 'Translation';
+
+  @override
+  String get supplicationsTranslationEnglish => 'English';
+
+  @override
+  String get supplicationsTranslationUrdu => 'اردو';
+
+  @override
+  String get supplicationsTransliterationLabel => 'Transliteration';
+
+  @override
+  String get supplicationsTransliterationToggleDesc =>
+      'Show transliteration below the Arabic';
+
+  @override
+  String get supplicationsUrduTranslationUnavailable =>
+      'Urdu translation not available for this dua yet — showing English';
 }
