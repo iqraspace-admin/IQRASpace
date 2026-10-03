@@ -322,33 +322,74 @@ a.card{text-decoration:none;color:inherit}
 .faq-nav a.on{background:var(--sage-100);color:var(--green-800);font-weight:600}
 @media (max-width:1023px){.faq-layout{grid-template-columns:1fr;gap:var(--s6)}.faq-nav{position:static;flex-direction:row;overflow-x:auto;gap:8px;padding-bottom:6px;-webkit-overflow-scrolling:touch}.faq-nav a{border:1px solid var(--border-strong);white-space:nowrap;background:#fff}}
 
-/* ---------- Duas (category grid/tile + list view, matching the
-   official Wa Iyyaka Nasta'in app's grid/list category browser) ---------- */
-.dua-browser-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--s4);margin-bottom:var(--s6)}
-.h4-like{font-size:20px;margin:0}
+/* ---------- Duas (category browser + reading panel) ---------- */
+.dua-toolbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--s4);margin-bottom:var(--s6);min-height:44px}
 .dua-view-toggle{display:inline-flex;gap:4px;padding:4px;background:var(--sage-50);border:1px solid var(--border);border-radius:var(--r-pill)}
 .dua-view-toggle button{border:0;background:transparent;padding:8px 16px;border-radius:var(--r-pill);font:600 13px/1 var(--font-ui);color:var(--text-2);cursor:pointer}
 .dua-view-toggle button[aria-pressed="true"]{background:#fff;color:var(--green-800);box-shadow:var(--shadow-1)}
+.dua-crumb{display:flex;align-items:center;gap:var(--s3);flex-wrap:wrap}
+.dua-crumb button{border:1px solid var(--border-strong);background:#fff;border-radius:var(--r-pill);padding:8px 16px;font:600 13px/1 var(--font-ui);color:var(--green-800);cursor:pointer}
+.dua-crumb button:hover{background:var(--sage-50)}
+.dua-crumb h2{font-size:24px;margin:0}
+.dua-status{padding:var(--s8) 0;color:var(--text-2)}
+.dua-status:empty{display:none}
+.dua-status.is-error{color:var(--error)}
+.dua-status button{margin-left:var(--s3)}
+.dua-note{margin-top:var(--s10)}
 .dua-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4)}
 @media (max-width:1023px){.dua-tiles{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:639px){.dua-tiles{grid-template-columns:repeat(2,1fr)}}
-.dua-tile{display:flex;flex-direction:column;gap:4px;padding:var(--s5);background:#fff;border:1px solid var(--border);border-left:4px solid var(--green-700);border-radius:var(--r-md);text-decoration:none;color:inherit;transition:box-shadow .15s,border-color .15s}
-.dua-tile:hover{box-shadow:var(--shadow-1);border-color:var(--border-strong)}
-.dua-tile h4{margin:0;font:600 15px/1.3 var(--font-ui);color:var(--text)}
+.dua-tile{display:flex;flex-direction:column;gap:4px;padding:var(--s5);background:#fff;border:1px solid var(--border);border-left:4px solid var(--green-700);border-radius:var(--r-md);text-align:left;font:inherit;color:inherit;cursor:pointer;transition:box-shadow .15s,border-color .15s}
+.dua-tile:hover{box-shadow:var(--shadow-2);border-color:var(--border-strong)}
+.dua-tile h3{margin:0;font:600 15px/1.3 var(--font-ui);color:var(--text)}
 .dua-tile .count{font-size:13px;color:var(--text-2)}
-.dua-list{display:none;flex-direction:column;gap:6px}
-.dua-list-row{display:flex;justify-content:space-between;align-items:center;gap:var(--s4);padding:14px 18px;border:1px solid var(--border);border-left:4px solid var(--green-700);border-radius:var(--r-sm);background:#fff;text-decoration:none;color:var(--text);font-weight:500}
-.dua-list-row:hover{background:var(--sage-50)}
-.dua-list-row .count{font-size:13px;font-weight:400;color:var(--text-2)}
-.dua-tiles.is-hidden{display:none}
-.dua-list.is-active{display:flex}
+.dua-rows{display:flex;flex-direction:column;gap:6px}
+.dua-row{display:flex;justify-content:space-between;align-items:center;gap:var(--s4);width:100%;padding:14px 18px;border:1px solid var(--border);border-left:4px solid var(--green-700);border-radius:var(--r-sm);background:#fff;text-align:left;font:500 16px/1.4 var(--font-ui);color:var(--text);cursor:pointer}
+.dua-row:hover,.dua-row[aria-current="true"]{background:var(--sage-50)}
+.dua-row[aria-current="true"]{border-left-color:var(--gold)}
+.dua-row .count,.dua-row .src{font-size:13px;font-weight:400;color:var(--text-2);flex:none}
+.dua-cat-desc{margin:0 0 var(--s5);color:var(--text-2);max-width:62ch}
 
-/* ---------- Duas (transliteration script switch) ---------- */
-.translit{font-size:16px;line-height:1.6;margin:0 0 10px;color:var(--text)}
-.translit[data-script="telugu"]{font-family:"Noto Sans Telugu",sans-serif}
-.translit[data-script="urdu"]{font-family:"Noto Nastaliq Urdu","Traditional Arabic",serif}
-#script-switch [aria-checked="true"]{background:var(--green-700);color:#fff;border-color:var(--green-700)}
-.acc-panel .arabic{font-size:22px;margin:0 0 10px}
+/* Reading panel: right-hand drawer on desktop, full-height sheet on phones */
+.dua-overlay{position:fixed;inset:0;background:rgba(15,46,37,.42);z-index:60;opacity:0;transition:opacity .2s}
+.dua-overlay.is-open{opacity:1}
+.dua-panel{position:fixed;top:0;right:0;bottom:0;width:min(560px,100vw);background:var(--ivory);z-index:61;display:flex;flex-direction:column;box-shadow:var(--shadow-3);transform:translateX(100%);transition:transform .25s ease;outline:0}
+.dua-panel.is-open{transform:none}
+.dua-panel[hidden],.dua-overlay[hidden]{display:none}
+.dua-panel-head{display:flex;justify-content:space-between;align-items:center;gap:var(--s3);padding:var(--s4) var(--s6);border-bottom:1px solid var(--border);background:#fff}
+.dua-panel-meta{display:flex;flex-direction:column;gap:2px;min-width:0}
+.dua-panel-cat{font:600 12px var(--font-ui);letter-spacing:.12em;text-transform:uppercase;color:var(--gold-text)}
+.dua-panel-pos{font-size:13px;color:var(--text-2)}
+.dua-close{flex:none;width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--border-strong);background:#fff;border-radius:var(--r-pill);color:var(--green-800);cursor:pointer}
+.dua-close:hover{background:var(--sage-50)}
+.dua-close svg{width:20px;height:20px}
+.dua-panel-body{flex:1;overflow-y:auto;padding:var(--s8) var(--s6);overscroll-behavior:contain}
+.dua-panel-body h2{font-size:28px;line-height:1.25;margin:0 0 var(--s2)}
+.dua-ref{font-size:14px;color:var(--text-2);margin:0 0 var(--s6)}
+.dua-ref .rep{display:inline-block;margin-left:var(--s2);padding:2px 10px;border-radius:var(--r-pill);background:var(--gold-tint);color:var(--gold-text);font-weight:600}
+.dua-arabic{font-family:var(--font-arabic);direction:rtl;text-align:center;font-size:clamp(28px,5vw,36px);line-height:2.1;margin:var(--s6) 0;padding:var(--s8) var(--s5);background:#fff;border:1px solid var(--border);border-radius:var(--r-lg)}
+.dua-sec{margin:0 0 var(--s6)}
+.dua-sec h3{font:600 12px var(--font-ui);letter-spacing:.12em;text-transform:uppercase;color:var(--text-2);margin:0 0 var(--s2)}
+.dua-translit{font:italic 400 19px/1.7 var(--font-display);color:var(--text);margin:0}
+.dua-translit[lang="te"]{font:400 18px/1.8 "Noto Sans Telugu",sans-serif}
+.dua-translit[lang="ur"]{font:400 22px/2.2 "Noto Nastaliq Urdu","Traditional Arabic",serif;direction:rtl;text-align:right}
+.dua-trans{font:400 19px/1.75 var(--font-display);color:var(--text);margin:0}
+.dua-trans[lang="ur"]{font:400 22px/2.2 "Noto Nastaliq Urdu","Traditional Arabic",serif;direction:rtl;text-align:right}
+.dua-fallback{font-size:13px;color:var(--text-2);margin:var(--s2) 0 0}
+.dua-desc{padding:var(--s4) var(--s5);background:var(--gold-tint);border-radius:var(--r-md);font-size:15px;line-height:1.6;color:var(--text);margin:0 0 var(--s6)}
+.dua-opts{display:flex;flex-wrap:wrap;gap:var(--s3) var(--s6);padding:var(--s4) 0 0;border-top:1px solid var(--border);margin-top:var(--s8)}
+.dua-opt{display:flex;align-items:center;gap:var(--s2);font-size:13px;color:var(--text-2)}
+.dua-seg{display:inline-flex;gap:2px;padding:3px;background:var(--sage-50);border:1px solid var(--border);border-radius:var(--r-pill)}
+.dua-seg button{border:0;background:transparent;padding:6px 12px;border-radius:var(--r-pill);font:600 12px/1 var(--font-ui);color:var(--text-2);cursor:pointer}
+.dua-seg button[aria-pressed="true"]{background:var(--green-700);color:#fff}
+.dua-panel-foot{display:flex;justify-content:space-between;gap:var(--s3);padding:var(--s4) var(--s6);border-top:1px solid var(--border);background:#fff}
+.dua-panel-foot .btn[disabled]{opacity:.45;cursor:not-allowed}
+body.dua-lock{overflow:hidden}
+@media (max-width:639px){.dua-panel-body{padding:var(--s6) var(--s5)}.dua-panel-head,.dua-panel-foot{padding-left:var(--s5);padding-right:var(--s5)}.dua-panel-body h2{font-size:24px}}
+/* On wide screens keep the list reachable: shift the page so the drawer doesn't cover it */
+@media (min-width:1280px){body.dua-open #dua-app{padding-right:560px;transition:padding .25s}body.dua-open .dua-overlay{display:none}}
+@media (prefers-reduced-motion:reduce){.dua-panel,.dua-overlay{transition:none}}
+
 
 /* ---------- Legal ---------- */
 .legal{display:grid;grid-template-columns:260px minmax(0,720px);gap:var(--s16);justify-content:center}

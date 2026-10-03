@@ -99,6 +99,8 @@ re-create it alongside this Worker.)
 | `TURNSTILE_SECRET_KEY` | secret | recommended (skipped if unset) |
 | `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` | secrets | only for email alerts |
 | `CONTACT_ALERT_EMAIL` | secret/var | optional |
+| `DUAS_SUPABASE_URL` | var (wrangler.jsonc, public) | yes, for `/duas` |
+| `DUAS_SUPABASE_ANON_KEY` | secret (`npx wrangler secret put DUAS_SUPABASE_ANON_KEY`; the Learning project's public anon key) | yes, for `/duas` |
 
 ## Local development
 ```bash

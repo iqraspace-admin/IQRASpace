@@ -124,6 +124,15 @@ or unpublish → edit → publish). The mobile app receives only `published` row
 (empty categories are omitted). Every change is in the **History** tab / Activity page with who/when/
 before-after, and an admin can restore an earlier version.
 
+## Website (iqraspace.org/duas)
+
+`apps/site/duas.html` holds no Dua content. `duas.js` loads `GET /api/duas`, served by the site Worker
+(`worker/duas.js`), which calls the same `get_dua_content()` RPC as the app (published Duas in active
+categories only) and caches it at the edge for 60 s. Publishing/editing in Learning therefore reaches the website
+within ~1–2 minutes with no website code change or deploy. One-time setup: `wrangler secret put
+DUAS_SUPABASE_ANON_KEY` in `apps/site` (the URL is a public var in `wrangler.jsonc`). Verify the flow with
+`node e2e_web_feed.mjs` (runs the real migrations in PGlite).
+
 ## Mobile cache strategy
 
 1. Show immediately from the last good cache (Hive), else the bundled asset — never blank.
@@ -155,5 +164,4 @@ translation exists in the source data and none was machine-generated); the Engli
 Latin transliterations for Istikhara, Ayat al-Kursi and the three Quls need a scholar's check; Telugu
 transliteration for those three was removed rather than leave a partial text; 95 Wa Iyyaka drafts need
 Arabic and verification; `hadith_number`/`hadith_grade` are empty for almost all legacy Duas (references
-are collection names only); and `apps/site/duas.html` (the website's static Duas page) is **not** yet
-driven by this database.
+are collection names only).
