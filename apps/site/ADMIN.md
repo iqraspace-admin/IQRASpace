@@ -82,12 +82,13 @@ they are more specific. The Gmail/Supabase/Vercel env vars from the old setup
 are no longer used.
 
 ### 5. www -> apex redirect
-Handled by a Cloudflare **Redirect Rule**, not the Worker (static pages never
-invoke the Worker): Rules -> Redirect Rules -> custom filter
-`Hostname equals www.iqraspace.org` -> Dynamic redirect to
-`concat("https://iqraspace.org", http.request.uri.path)` preserving query
-string, status 301. The `www` DNS record must exist and be proxied (orange
-cloud).
+Handled by a tiny dedicated Worker, `iqraspace-www-redirect` (source in
+`apps/site/www-redirect/`, deployed by hand with `npx wrangler deploy`; CI does not
+deploy it). Its route is `www.iqraspace.org/*` only, so it can never see apex traffic,
+and it answers 301 to `https://iqraspace.org` + path + query. The `www` DNS record
+must exist and be proxied (orange cloud). (A Cloudflare Redirect Rule was tried first
+and looped on the apex because its filter also matched `iqraspace.org`; do not
+re-create it alongside this Worker.)
 
 ## Required names at a glance
 

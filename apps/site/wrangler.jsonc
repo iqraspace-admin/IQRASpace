@@ -13,7 +13,7 @@
     "run_worker_first": ["/api/*"]
   },
   // /quran* and /learning* are bound to their own Workers (more specific
-  // routes win). www -> apex is a Cloudflare Redirect Rule (see ADMIN.md).
+  // routes win). www -> apex is the separate iqraspace-www-redirect Worker (apps/site/www-redirect; see ADMIN.md).
   "routes": [{ "pattern": "iqraspace.org/*", "zone_name": "iqraspace.org" }],
   "d1_databases": [
     {

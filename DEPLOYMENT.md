@@ -1,6 +1,6 @@
 # IqraSpace — Deployment (Cloudflare)
 
-Status: **migrating from Vercel to Cloudflare Workers** (branch `cloudflare-migration`). Until the DNS cutover below is done, `iqraspace.org` is still served by the old Vercel projects. Per-app details live in each app's own docs (`apps/<app>/`); this file covers the repo-wide picture.
+Status: **live on Cloudflare Workers since 3 Oct 2026.** `iqraspace.org`, `/quran` and `/learning` are served by Cloudflare (DNS `@`/`www` are proxied to the placeholder `192.0.2.1`; the Worker routes answer first). The cutover steps below are kept as the runbook/rollback reference; the old Vercel projects no longer serve traffic and are to be deleted by the owner. CI deploys are gated by `CF_DEPLOY_ENABLED` and still need token fixes (see the CI notes); production was deployed manually with `wrangler`. Per-app details live in each app's own docs (`apps/<app>/`); this file covers the repo-wide picture.
 
 ## Architecture
 

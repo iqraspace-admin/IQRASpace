@@ -146,7 +146,7 @@ for content corrections.
 * `dua_audit_log` cannot be written by any API role (audit rows come only from the
   trigger; deleting/updating them is denied outright).
 * The service-role key is used by no client; only `api/contact.js` (server-side, unrelated) holds it.
-* The admin UI is part of the Learning app (its auth, shell and CSP); no separate admin site.
+* The admin UI is part of the Learning app (its auth and shell; Learning currently ships no CSP, only basic security headers); no separate admin site.
 
 ## Known gaps / NEEDS MANUAL VERIFICATION
 
