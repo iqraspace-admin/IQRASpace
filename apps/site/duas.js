@@ -9,6 +9,7 @@
   var API = app.getAttribute('data-duas-api') || '/api/duas';
   var CACHE_KEY = 'iqs.duas.snapshot.v1';
   var PREF_KEY = 'iqs.duas.prefs.v1';
+  var COUNT_KEY = 'iqs.duas.tasbeeh.v1';
 
   var stage = document.getElementById('dua-stage');
   var status = document.getElementById('dua-status');
@@ -35,6 +36,77 @@
   if (saved && typeof saved === 'object') {
     if (['off', 'latin', 'telugu', 'urdu'].indexOf(saved.translit) > -1) prefs.translit = saved.translit;
     if (['en', 'ur'].indexOf(saved.lang) > -1) prefs.lang = saved.lang;
+  }
+
+  // ---------- tasbeeh counter (per browser, localStorage) ----------
+  // Mirrors the mobile TasbeehCounterBadge: a dua with a repeat count shows a
+  // progress ring (n/target); once full, the next tap resets to 0. A dua without
+  // one is a plain tally that counts up without limit. Long-press resets anytime.
+  var counts = (function () { var c = load(COUNT_KEY); return c && typeof c === 'object' && !Array.isArray(c) ? c : {}; })();
+  function countKey(cat, dua) { return cat.slug + '/' + dua.slug; }
+  function setCount(key, n) {
+    if (n > 0) counts[key] = n; else delete counts[key];
+    save(COUNT_KEY, counts);
+  }
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var RING_C = 2 * Math.PI * 26;
+
+  function tasbeehCounter(cat, dua) {
+    var key = countKey(cat, dua);
+    var target = dua.repeat_count > 0 ? Math.floor(dua.repeat_count) : null;
+    var n = Math.max(0, Math.floor(Number(counts[key]) || 0));
+    if (target && n > target) n = target;
+
+    var btn = el('button', { type: 'button', class: 'tasbeeh-btn' + (target ? '' : ' is-plain') });
+    var label = el('span', { class: 'tasbeeh-num' });
+    var ring = null;
+    if (target) {
+      var svg = document.createElementNS(SVGNS, 'svg');
+      svg.setAttribute('viewBox', '0 0 60 60'); svg.setAttribute('aria-hidden', 'true');
+      var track = document.createElementNS(SVGNS, 'circle');
+      ['cx', 'cy'].forEach(function (a) { track.setAttribute(a, '30'); });
+      track.setAttribute('r', '26'); track.setAttribute('class', 'tasbeeh-track');
+      ring = document.createElementNS(SVGNS, 'circle');
+      ['cx', 'cy'].forEach(function (a) { ring.setAttribute(a, '30'); });
+      ring.setAttribute('r', '26'); ring.setAttribute('class', 'tasbeeh-arc');
+      ring.setAttribute('stroke-dasharray', String(RING_C));
+      svg.appendChild(track); svg.appendChild(ring);
+      btn.appendChild(svg);
+    }
+    btn.appendChild(label);
+    var tipText = target
+      ? 'Tap to count each repeat. When the ring is full, tap again to start over. Press and hold to reset anytime.'
+      : 'Tap to count — there is no limit. Press and hold to reset to zero.';
+    var tip = el('span', { class: 'tasbeeh-tip', role: 'tooltip', id: 'tasbeeh-tip', text: tipText });
+    var help = el('button', { type: 'button', class: 'tasbeeh-help', 'aria-label': 'How the counter works', 'aria-describedby': 'tasbeeh-tip', text: '?' });
+    help.addEventListener('click', function () { help.parentNode.classList.toggle('show-tip'); });
+    help.addEventListener('blur', function () { help.parentNode.classList.remove('show-tip'); });
+
+    function paint() {
+      var done = target && n >= target;
+      btn.classList.toggle('is-done', !!done);
+      label.textContent = done ? '↻' : (target ? n + '/' + target : String(n));
+      btn.setAttribute('aria-label', target
+        ? (done ? 'Completed ' + n + ' of ' + target + '. Tap to reset' : 'Count ' + n + ' of ' + target + '. Tap to add one')
+        : 'Count ' + n + '. Tap to add one');
+      if (ring) ring.setAttribute('stroke-dashoffset', String(RING_C * (1 - Math.min(1, n / target))));
+    }
+    function doReset() { n = 0; setCount(key, 0); paint(); }
+    var pressTimer = null, longFired = false;
+    function clearPress() { if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; } }
+    btn.addEventListener('pointerdown', function () {
+      longFired = false; clearPress();
+      pressTimer = setTimeout(function () { longFired = true; doReset(); if (navigator.vibrate) { try { navigator.vibrate(30); } catch (e) { /* ignore */ } } }, 650);
+    });
+    ['pointerup', 'pointerleave', 'pointercancel'].forEach(function (ev) { btn.addEventListener(ev, clearPress); });
+    btn.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+    btn.addEventListener('click', function () {
+      if (longFired) { longFired = false; return; }
+      if (target && n >= target) { doReset(); return; }
+      n += 1; setCount(key, n); paint();
+    });
+    paint();
+    return el('div', { class: 'tasbeeh', role: 'group', 'aria-label': 'Tasbeeh counter' }, [btn, el('span', { class: 'tasbeeh-helpwrap' }, [help, tip])]);
   }
 
   // ---------- tiny DOM helper ----------
@@ -213,6 +285,7 @@
         segmented('Translation language', [['en', 'English'], ['ur', 'اردو']], prefs.lang, function (v) { prefs.lang = v; save(PREF_KEY, prefs); renderDua(cat, dua); })]));
     }
     panelBody.appendChild(opts);
+    panelBody.appendChild(tasbeehCounter(cat, dua));
   }
 
   function openPanel(cat, dua) {
