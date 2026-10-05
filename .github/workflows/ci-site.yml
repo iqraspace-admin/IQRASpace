@@ -12,6 +12,7 @@ on:
     paths:
       - "apps/site/**"
       - ".github/workflows/ci-site.yml"
+      - ".github/scripts/cf-preflight.sh"
   pull_request:
     branches: [main]
     paths:
@@ -85,6 +86,14 @@ jobs:
 
       - name: Build for Cloudflare
         run: npm run build:cf
+
+      - name: Cloudflare credential preflight
+        working-directory: .
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_NEEDS_D1: "true"
+        run: bash .github/scripts/cf-preflight.sh
 
       - name: Deploy (wrangler)
         uses: cloudflare/wrangler-action@v3
