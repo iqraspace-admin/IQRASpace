@@ -1,5 +1,6 @@
 name: CI/CD (Site)
 
+# (Deploy requires a CLOUDFLARE_API_TOKEN with Workers Scripts, D1, Workers Routes and Zone Read - see DEPLOYMENT.md.)
 # apps/site -> Cloudflare Worker `iqraspace-site` (routes iqraspace.org/* and
 # www): static pages via Static Assets plus a Worker script for the /contact
 # form (D1 binding DB; secrets are set on the Worker, never in CI).

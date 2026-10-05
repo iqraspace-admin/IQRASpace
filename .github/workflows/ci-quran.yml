@@ -1,5 +1,6 @@
 name: CI/CD (Quran)
 
+# (Deploy requires a CLOUDFLARE_API_TOKEN with Workers Scripts, D1, Workers Routes and Zone Read - see DEPLOYMENT.md.)
 # apps/quran -> Cloudflare Worker `iqraspace-quran` (route
 # iqraspace.org/quran*). Path-filtered; fully independent of the other apps'
 # pipelines. `deploy` runs only for a push to main AND only when the

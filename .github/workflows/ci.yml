@@ -1,5 +1,6 @@
 name: CI/CD (Learning)
 
+# (Deploy requires a CLOUDFLARE_API_TOKEN with Workers Scripts, D1, Workers Routes and Zone Read - see DEPLOYMENT.md.)
 # apps/learning -> Cloudflare Worker `iqraspace-learning` (route
 # iqraspace.org/learning*). `validate` runs on every PR / push to main that
 # touches this app; `deploy` runs only for a push to main AND only when the
