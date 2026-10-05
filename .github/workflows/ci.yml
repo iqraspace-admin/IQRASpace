@@ -117,12 +117,61 @@ jobs:
         run: bash .github/scripts/cf-preflight.sh
 
       - name: Deploy (wrangler)
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          workingDirectory: apps/learning
-          command: deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set +e
+          npx wrangler deploy 2>&1 | tee "$RUNNER_TEMP/deploy.log"
+          rc=${PIPESTATUS[0]}
+          if [ "$rc" != "0" ]; then
+            # surface wrangler's own error as an annotation (readable without log access)
+            msg=$(grep -v '^s*
+      # Base URL is the repo variable CF_HEALTHCHECK_BASE (default
+      # https://iqraspace.org). Before DNS cutover that still hits the old
+      # host, so during staging point it at the workers.dev URL — note the
+      # worker only serves /learning/* paths on any host.
+      - name: Health check
+        env:
+          BASE: ${{ vars.CF_HEALTHCHECK_BASE || 'https://iqraspace.org' }}
+        run: |
+          set -u
+          fail=0
+          for path in /learning/login /learning/share/00000000-0000-0000-0000-000000000000; do
+            ok=0
+            for attempt in 1 2 3 4 5 6 7 8; do
+              code=$(curl -s -o /dev/null -w "%{http_code}" -L "$BASE$path" || echo 000)
+              echo "$path -> HTTP $code (attempt $attempt)"
+              if [ "$code" = "200" ]; then ok=1; break; fi
+              sleep 15
+            done
+            if [ "$ok" != "1" ]; then
+              echo "::error::Health check failed for $BASE$path"
+              fail=1
+            fi
+          done
+          exit $fail
+
+      - name: Deployment summary
+        if: always()
+        run: |
+          {
+            echo "## Deployment Summary (Learning)"
+            echo ""
+            echo "| Field | Value |"
+            echo "|---|---|"
+            echo "| Status | ${{ job.status }} |"
+            echo "| Commit | \`${{ github.sha }}\` |"
+            echo "| Run | #${{ github.run_number }} |"
+            echo "| Triggered by | ${{ github.actor }} |"
+            echo "| Timestamp (UTC) | $(date -u +'%Y-%m-%d %H:%M:%S') |"
+            echo "| Public URL | https://iqraspace.org/learning |"
+          } >> "$GITHUB_STEP_SUMMARY"
+ "$RUNNER_TEMP/deploy.log" | tail -12 | tr '
+' '|' | cut -c1-1500)
+            echo "::error title=wrangler deploy failed (exit $rc)::$msg"
+          fi
+          exit $rc
 
       # Base URL is the repo variable CF_HEALTHCHECK_BASE (default
       # https://iqraspace.org). Before DNS cutover that still hits the old
