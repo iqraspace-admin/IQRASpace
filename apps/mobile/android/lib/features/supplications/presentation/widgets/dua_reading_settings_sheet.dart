@@ -6,6 +6,7 @@ import 'package:quran_flutter/core/theme/app_theme.dart';
 import 'package:quran_flutter/features/quran_reader/presentation/providers/surah_providers.dart';
 import 'package:quran_flutter/features/settings/presentation/widgets/language_picker_sheet.dart';
 import 'package:quran_flutter/features/supplications/presentation/providers/supplications_providers.dart';
+import 'package:quran_flutter/features/supplications/presentation/widgets/dua_font_size_control.dart';
 import 'package:quran_flutter/l10n/app_localizations.dart';
 
 /// The Duas reading screen's settings sheet — opened from its `tune`
@@ -46,9 +47,9 @@ class _DuaReadingSettingsSheet extends ConsumerWidget {
         appLanguageOptions.firstWhere((o) => o.language == appLanguage).nativeName(l10n);
 
     return DraggableScrollableSheet(
-      initialChildSize: 0.5,
+      initialChildSize: 0.6,
       minChildSize: 0.3,
-      maxChildSize: 0.85,
+      maxChildSize: 0.92,
       expand: false,
       builder: (context, scrollController) {
         return Material(
@@ -136,6 +137,9 @@ class _DuaReadingSettingsSheet extends ConsumerWidget {
                 value: tasbeehEnabled,
                 onChanged: (enabled) => ref.read(duaTasbeehEnabledProvider.notifier).setEnabled(enabled),
               ),
+              const Divider(),
+              _SectionLabel(l10n.supplicationsFontSizeLabel),
+              const DuaFontSizeControl(),
               const SizedBox(height: 12),
               SizedBox(
                 width: double.infinity,

@@ -1,4 +1,4 @@
-import { supabase } from "./supabaseClient";
+import { db } from "@/lib/db";
 
 /**
  * Persistence side of live sharing (architecture §16's audit trail — every
@@ -7,7 +7,7 @@ import { supabase } from "./supabaseClient";
  * what makes it feel instant; these rows are the durable record.
  */
 export async function getOrCreateActiveSession(lessonId: string): Promise<string | null> {
-  const { data: existing } = await supabase
+  const { data: existing } = await db
     .from("sharing_sessions")
     .select("id")
     .eq("lesson_id", lessonId)
@@ -18,7 +18,7 @@ export async function getOrCreateActiveSession(lessonId: string): Promise<string
 
   if (existing) return existing.id as string;
 
-  const { data, error } = await supabase
+  const { data, error } = await db
     .from("sharing_sessions")
     .insert({ lesson_id: lessonId, status: "active" })
     .select("id")
@@ -43,7 +43,7 @@ export async function recordHighlight(
   sessionId: string,
   params: { pageNumber: number; selectedText: string; kind: "ayah" | "pdf" }
 ) {
-  await supabase.from("highlighted_content").insert({
+  await db.from("highlighted_content").insert({
     sharing_session_id: sessionId,
     page_number: params.pageNumber,
     highlight_type: params.kind === "ayah" ? "ayah" : "rect",
@@ -62,7 +62,7 @@ export async function recordHighlight(
 export async function getLatestHighlight(
   lessonId: string
 ): Promise<{ pageNumber: number; selectedText: string; kind: "ayah" | "pdf" } | null> {
-  const { data: session } = await supabase
+  const { data: session } = await db
     .from("sharing_sessions")
     .select("id")
     .eq("lesson_id", lessonId)
@@ -72,7 +72,7 @@ export async function getLatestHighlight(
     .maybeSingle();
   if (!session) return null;
 
-  const { data: highlight } = await supabase
+  const { data: highlight } = await db
     .from("highlighted_content")
     .select("page_number, selected_text, highlight_type")
     .eq("sharing_session_id", session.id)
@@ -89,5 +89,5 @@ export async function getLatestHighlight(
 }
 
 export async function endSession(sessionId: string) {
-  await supabase.from("sharing_sessions").update({ status: "ended", ended_at: new Date().toISOString() }).eq("id", sessionId);
+  await db.from("sharing_sessions").update({ status: "ended", ended_at: new Date().toISOString() }).eq("id", sessionId);
 }

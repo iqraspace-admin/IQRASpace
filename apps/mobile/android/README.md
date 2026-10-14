@@ -1,7 +1,8 @@
 # IqraSpace Quran — Flutter reader
 
-A **fully independent** Flutter app, isolated from `apps/quran` (the
-existing Next.js/Capacitor reader). Separate codebase, separate data
+A **fully independent** Flutter app (Dart package `quran_flutter`, currently
+version `0.3.0+19` in `pubspec.yaml`), isolated from `apps/quran` (the
+Next.js web reader). Separate codebase, separate data
 source, separate scope: this app is Tajweed-focused colored reading;
 `apps/quran` covers API-rendered text plus a scanned-PDF reading mode and
 deliberately has no Tajweed scope. Neither app depends on the other, and
@@ -26,7 +27,12 @@ exist.
   edition), not the Quran Foundation Content API `apps/quran` uses — that
   API needs a confidential OAuth2 client secret held server-side, which a
   Flutter mobile/web client can't safely hold. Al Quran Cloud is public
-  and needs no auth.
+  and needs no auth. The public Quran.com API supplies the Roman Urdu and Telugu
+  translations (secondary; failure never blocks a surah load —
+  `lib/core/network/dio_client.dart` holds both clients). Two other
+  remote dependencies, both optional/degradable: Listening Mode's
+  whole-Surah audio on Cloudflare R2 (see [AUDIO.md](AUDIO.md)) and the
+  Duas content (below).
 - **Tajweed markup format (corrected after live verification)**: the raw
   API does **not** return `<tajweed class="...">` HTML — that assumption
   in this app's first draft was wrong and produced garbled bracket
@@ -45,7 +51,7 @@ exist.
   `assets/fonts/AmiriQuran.ttf`, license text at `assets/fonts/OFL.txt`.
   See `assets/fonts/NOTE.md` for what else is in that folder (extra Amiri
   weights, a colored variant) and why they aren't wired up yet.
-- **No codegen** in this first pass: no `build_runner`, `freezed`,
+- **No codegen** for models/state: no `build_runner`, `freezed`,
   `json_serializable`, or `hive_generator`. Hand-written `fromJson`/
   `toJson`, plain Riverpod `Provider`/`StateNotifierProvider`, and a
   `Box<String>` holding JSON-encoded cache entries instead of a Hive
@@ -57,29 +63,80 @@ exist.
   `lib/core/storage/hive_boxes.dart`, the only file that branches on
   `kIsWeb`.
 
-## Scope of this pass (first vertical slice)
+## Features (current)
 
-Built and working end-to-end: fetch Surah 1 (Al-Fatiha) from Al Quran
-Cloud's `quran-tajweed` edition, parse the Tajweed markup into typed
-spans once at fetch time, cache in Hive, render with colored Tajweed
-spans in `AyahRichText`, with a working Light / True Black Dark / Sepia
-toggle and a font-size control.
+- **Quran reading** — all 114 surahs from Al Quran Cloud's `quran-tajweed`
+  edition, Tajweed markup parsed once at fetch time into typed spans and
+  cached in Hive (offline-first). Surah list, Tajweed rules screen,
+  per-ayah deep links (search/bookmarks), Light / True Black Dark / Sepia
+  themes, font-size control, selectable Arabic fonts
+  (`lib/core/theme/arabic_fonts.dart`), Quran translation
+  (Off / English / Roman Urdu / Urdu / Telugu).
+- **Reader modes** — Listening, Reading, Reading + Listening
+  (`lib/core/constants/reader_mode.dart`). Reading + Listening plays
+  per-ayah audio (five reciters) with ayah highlighting. **Listening
+  Mode** plays whole-Surah Al-Afasy recitation or the Arabic + Urdu
+  translation recording from Cloudflare R2, cached on device, with
+  lock-screen/background controls (Android) — see [AUDIO.md](AUDIO.md).
+- **Search, Bookmarks, Home** (Continue Reading, Last Reads, Quick
+  Links), **Settings** (reader/audio settings sheets, UI language
+  English / Urdu / Telugu, in-app User Guide, About).
+- **Duas / Supplications** (`lib/features/supplications`, bottom-nav
+  "Duas"):
+  - *Content*: a published, curated Duas dataset (30 categories / 117
+    duas in the bundled copy). Resolution order is remote -> last good
+    Hive cache -> bundled `assets/supplications.json`,
+    stale-while-revalidate: screens render cached/bundled content
+    immediately, a validated newer remote snapshot (checked at most
+    hourly) refreshes them in place. Remote is the published Learning
+    Dua data via the Learning API's public read-only feed
+    (`GET {DUAS_API_URL}/duas/version` and `/duas/content`, plain `dio`,
+    no key); it is only enabled when the build passes
+    `--dart-define=DUAS_API_URL` (see [DEPLOYMENT.md](DEPLOYMENT.md)),
+    otherwise the app is purely offline.
+  - *Screens*: categories screen (grid or list, persisted), reading
+    screen (swipe between duas, jump sheet, share, repeat-count chip,
+    hadith reference/grade), favorites screen (positional keys in the
+    `duas_favorites` box).
+  - *Settings* (reading settings sheet, Hive `reader_settings` box):
+    translation language (English / Urdu, independent of the app
+    language; English fallback with a note if Urdu is missing),
+    transliteration on/off and script (Latin / Telugu / Urdu), tasbeeh
+    counter on/off (default off), and text size.
+  - *Tasbeeh counter badge* (`tasbeeh_counter_badge.dart`, enabled via a
+    setting): when the dua has a repeat count it is a circular button
+    whose ring fills as progress (`n/target`); tap to count, once the
+    target is reached the next tap resets, long-press resets at any
+    time. With no target it is a plain tally pill (tap increments,
+    long-press resets). Ephemeral — never persisted, resets on every
+    dua change.
+  - *Text size*: one persisted multiplier, `duaFontScaleProvider`
+    (Hive key `supplicationsFontScale`, 0.8–1.8 in 0.1 steps, default
+    1.0), applied to the reading screen (Arabic, transliteration,
+    translation, meta) and to category tile/row labels. Reachable from the
+    categories screen's app-bar `text_fields` icon (a standalone sheet
+    with live preview) and from the reading settings sheet
+    (`dua_font_size_control.dart`).
+- **Localization**: English, Urdu, Telugu UI strings
+  (`lib/l10n/app_{en,ur,te}.arb`, generated `app_localizations*.dart`
+  committed), including the `supplicationsFontSize*` strings.
+  Duas-only fonts (Noto Naskh Arabic / Sans Telugu / Nastaliq Urdu) are
+  bundled alongside the Amiri family.
 
-**Verified, not just built** (Flutter 3.47.3, 2026-09-10): `flutter pub
-get`, `flutter analyze` (clean), `flutter test` (all passing, including
-a real-API fixture for the parser), `flutter build web`, and a visual
-check in Chrome — Al-Fatiha's 7 ayat render with correctly shaped Uthmani
-script and visibly distinct Tajweed colors (grey hamzat-wasl/lam-
-shamsiyyah, blue/purple madd variants) on real, live API data.
+**Still deferred / not built**: Zen mode (hiding the chrome), `deferred as`
+imports for web bundle-splitting, a custom PWA service worker, per-Juz font
+subsetting, iOS. Web builds work but the app is not deployed to web.
 
-**Explicitly deferred** — do not expect these yet:
-- Bookmarks, Settings screen, Search (see the `NOTE.md` in each
-  `lib/features/*` placeholder directory)
-- Zen mode (hiding the AppBar/chrome)
-- `deferred as` imports for web bundle-splitting
-- A custom PWA service worker layered on Flutter's generated one
-- Per-Juz font subsetting (this pass ships one full font file)
-- Any surah beyond Al-Fatiha, or a surah list/navigation screen
+**Bundled assets** (`pubspec.yaml`): `assets/tajweed_rules_fallback.json`,
+`assets/supplications.json` (offline Duas fallback, a snapshot of the
+published Duas content),
+`assets/branding/icon.png`, `assets/user_guide/` (screenshots), fonts.
+Note: `assets/supplications_translated_ur_te.json` also sits in `assets/`
+(currently untracked) but is **not** declared in `pubspec.yaml` or read by
+any code, so it is not shipped in the app.
+
+**Verified** (Flutter 3.47.3, 2026-10-05): `flutter test` — 156 passed,
+1 skipped.
 
 ## Commands
 
@@ -88,13 +145,17 @@ Run from this directory (`apps/mobile/android`):
 ```bash
 flutter pub get              # resolve dependencies
 flutter analyze              # static analysis (what CI gates on)
-flutter test                 # unit tests
+flutter test                 # unit + widget tests (test/)
 flutter run -d chrome        # run on web, for local iteration
 flutter build web            # production web build
-flutter build apk --debug    # debug APK (no signing set up yet)
+flutter build apk --debug    # debug APK
+# Optional: enable remote Duas content (public feed, no key)
+flutter run --dart-define=DUAS_API_URL=https://iqraspace.org/learning/api
 ```
 
-The `AmiriQuran.ttf` font file is already in place at `assets/fonts/`.
+Release builds: see [DEPLOYMENT.md](DEPLOYMENT.md) (bump the `+N` build
+number first). Regenerate l10n after editing `lib/l10n/*.arb` with
+`flutter gen-l10n` (also runs on `flutter pub get`/build).
 
 **Web renderer note (resolved)**: this app was originally designed
 assuming `flutter build web --web-renderer html` (smaller bundle, real
@@ -105,8 +166,7 @@ all) — Flutter web has consolidated on CanvasKit, with an optional
 `--wasm` flag to compile to WebAssembly instead of JS. Practical effect:
 web builds render text to canvas rather than as DOM text nodes, so native
 text selection/copy and the smaller-bundle rationale from the original
-blueprint no longer apply as designed. Nothing to do differently for this
-first slice (`flutter build web` with no renderer flag is now simply the
+blueprint no longer apply as designed. Nothing to do differently (`flutter build web` with no renderer flag is now simply the
 only option), but if native text selection on web becomes a requirement
 later, that needs a different approach (e.g. a parallel `SelectableText`-
 based render path) rather than a build flag.

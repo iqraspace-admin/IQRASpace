@@ -9,7 +9,7 @@ const dist = join(root, 'dist');
 
 const PUBLIC_EXT = new Set(['.html', '.css', '.js', '.png', '.txt', '.xml']);
 const EXTRA_OK = new Set(['favicon.ico', 'manifest.webmanifest']);
-const NOT_SHIPPED = new Set(['package.json', 'package-lock.json', 'wrangler.jsonc', 'ADMIN.md']);
+const NOT_SHIPPED = new Set(['package.json', 'package-lock.json', 'wrangler.jsonc', 'ADMIN.md', 'DUAS.md']);
 
 const files = readdirSync(root).filter((f) => statSync(join(root, f)).isFile());
 const ship = [];

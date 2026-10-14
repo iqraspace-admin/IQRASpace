@@ -18,31 +18,31 @@ per-ayah audio from the Quran API, since that's what drives its
 ayah-level highlight/sync (word/ayah-level local-file timing data doesn't
 exist).
 
-## A new, dedicated Cloudflare R2 bucket — not apps/quran's Supabase project
+## A new, dedicated Cloudflare R2 bucket — not shared with any web app
 
-This is `apps/mobile/android`'s first-ever backend dependency (it was previously
+This was `apps/mobile/android`'s first backend dependency (it was previously
 "fully isolated," using only public, keyless APIs — see the root
-`CLAUDE.md`). It deliberately uses its own object storage rather than
-`apps/quran`'s Supabase project (or any Supabase project at all):
+`CLAUDE.md`). Since then the Duas feature added a second, unrelated remote
+source (the Learning API's public read-only Duas feed, see README.md /
+DEPLOYMENT.md) — it has nothing to do with audio or this bucket. It deliberately uses its own object storage rather than
+any `apps/quran` (or other web app) backend:
 
 - `apps/quran/COST.md` and `ARCHITECTURE.md` explicitly reject
   self-hosting audio as "the single largest potential cost driver,"
-  scoping that project's whole Supabase budget to "a few MB of small
+  scoping that app's whole backend budget to "a few MB of small
   rows" (bookmarks/progress/prefs only).
 - Reusing it for ~hundreds of MB of media would silently invalidate that
-  documented decision and risk that project's free-tier budget.
-- A separate bucket/project keeps both apps' cost models intact and
+  documented decision and risk that app's free-tier budget.
+- A separate bucket keeps both apps' cost models intact and
   isolates blast radius if this bucket's bandwidth ever grows.
 
-This was originally built against a dedicated Supabase Storage-only
-project, then migrated to Cloudflare R2 before shipping: R2 has no
-per-object size limit (Supabase Storage's free tier caps a single object
+This was originally built against an earlier, dedicated storage backend,
+then migrated to Cloudflare R2 before shipping: R2 has no
+per-object size limit (the earlier backend's free tier capped a single object
 at 50MiB, which is what originally forced 5 Surahs to be split into
 parts — see "Splitting oversized Surahs" below), R2 has no egress/
-bandwidth charges, and `iqraspace.org`'s DNS already lives on Cloudflare
-(kept deliberately DNS-only/un-proxied for Vercel — see
-`apps/quran/DEPLOYMENT.md` — R2 is unrelated to that and doesn't change
-it), so adding R2 doesn't introduce a new vendor relationship. The 5
+bandwidth charges, and `iqraspace.org`'s DNS already lives on Cloudflare,
+so adding R2 doesn't introduce a new vendor relationship. The 5
 already-split Surahs were **not** re-merged as part of that migration —
 their part files are already correct, verified audio; re-splitting/
 merging them once the size limit no longer applied would have been
@@ -89,7 +89,7 @@ domain `audio.iqraspace.org`:
   `listeningTrack` setting, never chaining `arabic/` into `urdu/` —
   doing that used to recite every ayah's Arabic twice.
 
-This layout is unchanged from the original Supabase-hosted version — the
+This layout is unchanged from the original pre-R2 version — the
 R2 migration was a lift-and-shift of bytes to a new backend, not a data
 model change. Object names are always normalized to `{NNN}.mp3`
 regardless of the local source filename (`upload-audio-to-r2.mjs`
@@ -97,10 +97,10 @@ handles both "004.mp3" and "001 Al Fatiha.mp3"-style local names) — the
 bucket layout stays uniform even though `Resources/`'s own file naming
 isn't.
 
-### Splitting oversized Surahs (historical Supabase-era workaround)
+### Splitting oversized Surahs (historical pre-R2 workaround)
 
-Supabase Storage's free tier (the original backend for this bucket,
-before the R2 migration above) capped a single Storage object at 50MiB.
+The earlier storage backend's free tier (used before the R2 migration
+above) capped a single object at 50MiB.
 5 of the 114 Al-Afasy recitation files exceed that (55-76MB — long
 Surahs at a normal bitrate). `scripts/split-large-audio.mjs` splits each
 into 2 sequential parts, safely under that now-historical limit — R2

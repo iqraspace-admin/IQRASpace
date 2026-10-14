@@ -1,19 +1,14 @@
-import { supabase } from "./supabaseClient";
+import { db, apiFetch, apiUrl } from "@/lib/db";
 import type { LessonMaterial } from "./types";
 
 /**
- * Lesson material storage — migrated from Supabase Storage to Cloudflare R2
- * (see supabase/functions/lesson-materials-r2 for the presigned-URL broker
- * this now goes through; R2 has no RLS equivalent, so every access-control
- * rule that used to live in supabase/migrations/0011_storage_lesson_materials_bucket.sql
- * and 0018_admin_full_access.sql is re-enforced server-side in that
- * function instead). Path convention unchanged: `{tutorId}/{filename}` —
- * the Edge Function is the only place that knows this now lives under a
- * `learning/` prefix in R2, so no existing `lesson_materials.storage_path`
- * row needed rewriting as part of this migration.
+ * Lesson material storage — a private Cloudflare R2 bucket reached through
+ * the Learning API (worker/api/storage.js, R2 binding MATERIALS). R2 has no
+ * row-level security, so every access rule (own folder, or admin) is
+ * enforced in the Worker. Path convention: `{tutorId}/{timestamp}-{filename}`
+ * (what lesson_materials.storage_path holds); the Worker keeps objects under
+ * a `learning/` key prefix.
  */
-const BROKER_FUNCTION = "lesson-materials-r2";
-
 export type StoredFile = {
   name: string;
   path: string;
@@ -24,32 +19,32 @@ export type StoredFile = {
 type BrokerResponse<T> = { ok: true; data: T } | { ok: false; error: string };
 
 async function invokeBroker<T>(body: Record<string, unknown>): Promise<{ data: T | null; error: { message: string } | null }> {
-  const { data, error } = await supabase.functions.invoke<BrokerResponse<T>>(BROKER_FUNCTION, { body });
-  if (error) return { data: null, error: { message: error.message } };
-  if (!data?.ok) return { data: null, error: { message: (data as { error?: string })?.error ?? "Unknown storage error." } };
-  return { data: data.data, error: null };
+  try {
+    const res = await apiFetch("/storage", { method: "POST", body: JSON.stringify(body) });
+    const out = (await res.json()) as BrokerResponse<T>;
+    if (!out.ok) return { data: null, error: { message: out.error ?? "Unknown storage error." } };
+    return { data: out.data, error: null };
+  } catch (e) {
+    return { data: null, error: { message: e instanceof Error ? e.message : "Unknown storage error." } };
+  }
 }
 
 export async function uploadLessonMaterial(_tutorId: string, file: File) {
-  // _tutorId kept for call-site compatibility; the broker derives the
+  // _tutorId kept for call-site compatibility; the Worker derives the
   // authoritative tutor id from the caller's own session, never a
   // client-supplied value.
-  const { data, error } = await invokeBroker<{ path: string; uploadUrl: string }>({
-    action: "sign-upload",
-    filename: file.name,
-    contentType: file.type || "application/pdf",
-  });
-  if (error || !data) return { path: "", error: error ?? { message: "Could not get an upload URL." } };
-
-  const putRes = await fetch(data.uploadUrl, {
-    method: "PUT",
-    body: file,
-    headers: { "Content-Type": file.type || "application/pdf" },
-  });
-  if (!putRes.ok) {
-    return { path: data.path, error: { message: `Upload to storage failed (HTTP ${putRes.status}).` } };
+  try {
+    const res = await apiFetch(`/storage/upload?filename=${encodeURIComponent(file.name)}`, {
+      method: "PUT",
+      body: file,
+      headers: { "Content-Type": file.type || "application/pdf" },
+    });
+    const out = (await res.json()) as BrokerResponse<{ path: string }>;
+    if (!out.ok) return { path: "", error: { message: out.error ?? `Upload failed (HTTP ${res.status}).` } };
+    return { path: out.data.path, error: null };
+  } catch (e) {
+    return { path: "", error: { message: e instanceof Error ? e.message : "Upload failed." } };
   }
-  return { path: data.path, error: null };
 }
 
 export async function listLessonMaterials(tutorId: string): Promise<StoredFile[]> {
@@ -60,7 +55,7 @@ export async function listLessonMaterials(tutorId: string): Promise<StoredFile[]
 
 /**
  * All lesson materials across every tutor's folder — for admin/super_admin.
- * Authorization (admin-only) is enforced inside the Edge Function itself,
+ * Authorization (admin-only) is enforced inside the Worker itself,
  * not just by which UI screens call this.
  */
 export async function listAllLessonMaterials(): Promise<StoredFile[]> {
@@ -77,7 +72,7 @@ export async function listAllLessonMaterials(): Promise<StoredFile[]> {
  * specific page range of the same uploaded Noorani Qaida PDF.
  */
 export async function getLessonMaterial(lessonId: string): Promise<LessonMaterial | null> {
-  const { data } = await supabase
+  const { data } = await db
     .from("lesson_materials")
     .select("*")
     .eq("lesson_id", lessonId)
@@ -88,10 +83,12 @@ export async function getLessonMaterial(lessonId: string): Promise<LessonMateria
   return (data as LessonMaterial) ?? null;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars -- expiresInSeconds kept for call-site compatibility; the broker sets a fixed, server-controlled TTL rather than trusting a client-passed value.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- expiresInSeconds kept for call-site compatibility; the Worker issues a fixed, server-controlled one-hour download link.
 export async function getSignedMaterialUrl(path: string, expiresInSeconds = 3600) {
-  const { data, error } = await invokeBroker<{ url: string }>({ action: "sign-download", path });
-  return { url: data?.url ?? null, error };
+  const { data, error } = await invokeBroker<{ downloadPath: string }>({ action: "sign-download", path });
+  // One-hour ticket link served by the Worker; absolute so pdf.js / new tabs can open it.
+  const url = data?.downloadPath ? new URL(apiUrl(data.downloadPath), window.location.href).href : null;
+  return { url, error };
 }
 
 export async function deleteLessonMaterial(path: string) {

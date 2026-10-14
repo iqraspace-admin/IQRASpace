@@ -30,6 +30,8 @@ public/pdf/surah/{1..114}.pdf                (served — per-Surah PDF Mode)
 src/content/generated/pdf-manifest.json     (page counts, read by lib/content/pdf.ts)
 ```
 
+The generated `public/pdf/surah/*.pdf` files ship as static assets of the `iqraspace-quran` Worker (served at `/quran/pdf/surah/{n}.pdf`, with `Access-Control-Allow-Origin: *` set in `scripts/prepare-cf.mjs` because the Learning app's pdf.js fetches them cross-origin); no server is involved. The source Juz PDFs under `apps/quran/pdf/` are not in the repo.
+
 Both scripts are developer-run, on-demand (`npm run pdf:strip-watermark`, `npm run pdf:generate`) — like `sync-content.mjs`, this is static content that changes only when someone deliberately updates it and commits the result, not a `next build`/CI step. Run `pdf:strip-watermark` before `pdf:generate` if `.pdf-build/juz/` doesn't exist locally yet (it's gitignored, regenerated on demand, not part of a fresh checkout).
 
 ## 3. Watermark removal (`scripts/pdf/strip-watermark.mjs`)

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/authContext";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import type { AppUser, AttendanceRecord, ClassMember, ClassRow, Lesson, LessonNote, LessonProgress } from "@/lib/types";
 import { isAdminRole } from "@/lib/roles";
 import {
@@ -47,7 +47,7 @@ export default function StudentsPage() {
   const router = useRouter();
   const isTutor = profile?.role === "tutor";
   // Admin/super_admin get the platform-wide roster (all tutors' students),
-  // not just "their own" (0018_admin_full_access.sql).
+  // not just "their own" (worker/api/policies.js).
   const canManage = isTutor || isAdminRole(profile?.role);
 
   const [rows, setRows] = useState<StudentRow[]>([]);
@@ -67,7 +67,7 @@ export default function StudentsPage() {
     let active = true;
 
     async function load() {
-      const classesQuery = supabase.from("classes").select("*");
+      const classesQuery = db.from("classes").select("*");
       const { data: classRows } = await (isTutor ? classesQuery.eq("tutor_id", profile!.id) : classesQuery);
       const classes = (classRows ?? []) as ClassRow[];
       if (classes.length === 0) {
@@ -80,8 +80,8 @@ export default function StudentsPage() {
 
       const classIds = classes.map((c) => c.id);
       const [{ data: memberRows }, { data: lessonRows }] = await Promise.all([
-        supabase.from("class_members").select("*").in("class_id", classIds),
-        supabase.from("lessons").select("*").in("class_id", classIds).order("lesson_date", { ascending: true }),
+        db.from("class_members").select("*").in("class_id", classIds),
+        db.from("lessons").select("*").in("class_id", classIds).order("lesson_date", { ascending: true }),
       ]);
       const members = (memberRows ?? []) as ClassMember[];
       const lessonList = (lessonRows ?? []) as Lesson[];
@@ -96,7 +96,7 @@ export default function StudentsPage() {
         return;
       }
 
-      const { data: userRows } = await supabase.from("users").select("*").in("id", studentIds);
+      const { data: userRows } = await db.from("users").select("*").in("id", studentIds);
       const users = (userRows ?? []) as AppUser[];
       const today = todayISO();
       const [currentLessons, todayAttendance] = await Promise.all([
@@ -307,19 +307,19 @@ function StudentProfile({
     async function load() {
       const lessonIds = lessons.map((l) => l.id);
       const [{ data: progressRows }, { data: attRows }] = await Promise.all([
-        supabase
+        db
           .from("lesson_progress")
           .select("*")
           .eq("student_id", student.id)
           .order("created_at", { ascending: false }),
-        supabase.from("attendance").select("*").eq("student_id", student.id),
+        db.from("attendance").select("*").eq("student_id", student.id),
       ]);
       if (!active) return;
       setProgress((progressRows ?? []) as LessonProgress[]);
       setAttendance((attRows ?? []) as AttendanceRecord[]);
 
       if (lessonIds.length > 0) {
-        const { data: noteRows } = await supabase
+        const { data: noteRows } = await db
           .from("lesson_notes")
           .select("*")
           .in("lesson_id", lessonIds)

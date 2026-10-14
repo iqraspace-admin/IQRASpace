@@ -14,14 +14,14 @@
 # COMMITTED, not gitignored. Reasoning (found during the production
 # deployment pass, see DEPLOYMENT.md): this is read at build time by
 # generateStaticParams/getAllChapters (src/lib/content/quran.ts) for
-# every SSG route. Leaving it untracked meant a fresh checkout — CI, or
-# Vercel's own build — had no content and `next build` failed outright.
+# every SSG route. Leaving it untracked meant a fresh checkout — CI's
+# build — had no content and `next build` failed outright.
 # Committing it: (a) fixes that, (b) matches ARCHITECTURE.md's own
 # "immutable reference content, decoupled from live API calls" model,
 # (c) avoids hitting the Quran Foundation API (rate limits, ~2 minutes)
 # on every single CI run/deploy, and (d) mirrors this repo's existing
 # precedent of treating content/schema updates as a deliberate, manual,
-# separately-committed step (see apps/web's Supabase migrations, which
+# separately-committed step (like apps/learning's D1 migrations, which
 # are equally never auto-applied by CI). Regenerate deliberately with
 # `npm run sync:content` (at least every 7 days per QURAN-CONTENT.md's
 # licensing term) and commit the result — not a build-time side effect.

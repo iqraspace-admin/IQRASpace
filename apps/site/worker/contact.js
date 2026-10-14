@@ -1,4 +1,4 @@
-// Pure logic for POST /api/contact (ported from the old Vercel function).
+// Pure logic for POST /api/contact.
 // No Cloudflare-specific globals are used directly so it is unit-testable
 // with fakes: pass `fetchImpl`, `env.DB`, `now`, `uuid`.
 

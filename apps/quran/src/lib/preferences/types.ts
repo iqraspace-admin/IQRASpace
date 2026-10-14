@@ -4,10 +4,9 @@ import { DEFAULT_RECITER, type ReciterId } from "@/lib/content/reciters";
 import { DEFAULT_LISTENING_TRACK, type ListeningTrack } from "@/lib/content/listeningAudio";
 
 /**
- * Reader preferences (Readme.md §10/§11) — deliberately the same shape as
- * supabase/migrations/0001_init_schema.sql's user_preferences table, so
- * Phase 5's "upgrade local data to synced data" (ARCHITECTURE.md §5) is a
- * direct mapping, not a translation layer.
+ * Reader preferences (Readme.md §10/§11), stored locally in the browser.
+ * Kept as one flat, serialisable shape so a future optional sync feature
+ * (ARCHITECTURE.md §5) can map it directly rather than translate it.
  */
 export type Theme = "light" | "dark" | "sepia" | "system";
 export type ReadingWidth = "narrow" | "comfortable" | "wide";

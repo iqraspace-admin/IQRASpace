@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/authContext";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import type { AppUser, Lesson, LessonNote } from "@/lib/types";
 import { notifyUser } from "@/lib/notifications";
 import { isAdminRole } from "@/lib/roles";
@@ -29,20 +29,20 @@ export default function NotesPage() {
   const [loading, setLoading] = useState(true);
 
   async function load() {
-    const { data: lessonRows } = await supabase.from("lessons").select("*").order("lesson_date", { ascending: false });
+    const { data: lessonRows } = await db.from("lessons").select("*").order("lesson_date", { ascending: false });
     const rows = (lessonRows ?? []) as Lesson[];
     setLessons(rows);
     setLessonId((prev) => prev || rows[0]?.id || "");
 
     const studentIds = Array.from(new Set(rows.map((l) => l.student_id)));
     if (studentIds.length > 0) {
-      const { data: userRows } = await supabase.from("users").select("*").in("id", studentIds);
+      const { data: userRows } = await db.from("users").select("*").in("id", studentIds);
       setStudentsById(new Map(((userRows ?? []) as AppUser[]).map((u) => [u.id, u])));
     }
 
     const lessonIds = rows.map((l) => l.id);
     if (lessonIds.length > 0) {
-      const { data: noteRows } = await supabase
+      const { data: noteRows } = await db
         .from("lesson_notes")
         .select("*")
         .in("lesson_id", lessonIds)
@@ -68,7 +68,7 @@ export default function NotesPage() {
   async function handleSave() {
     if (!lessonId) return;
     setSaving(true);
-    const { error } = await supabase.from("lesson_notes").insert({
+    const { error } = await db.from("lesson_notes").insert({
       lesson_id: lessonId,
       covered: covered || null,
       performance_note: performance || null,
@@ -83,7 +83,7 @@ export default function NotesPage() {
     const lesson = lessons.find((l) => l.id === lessonId);
     if (lesson) {
       // One-to-one session — notify just this session's one student
-      // (0023_student_based_scheduling.sql's `lessons.student_id`).
+      // (d1/migrations/0001_init.sql's `lessons.student_id`).
       await notifyUser({
         userId: lesson.student_id,
         type: "lesson_note_added",

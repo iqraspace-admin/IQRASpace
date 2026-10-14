@@ -7,6 +7,11 @@ Play Console listing; nothing here affects that app).
 
 ## 1. Test APK — built and verified (2026-09-11)
 
+> Historical snapshot of the first test build (`0.2.0+2`). The app is now at
+> `0.3.0+19` (see `pubspec.yaml`), `flutter test` currently passes 156 tests
+> (1 skipped), and `.aab` uploads to closed testing are done via §9. The
+> table/figures below are not refreshed per release.
+
 Built locally (Flutter 3.47.3, Android SDK 36, JDK 17) from the current
 working tree on `mobile/android`:
 
@@ -58,11 +63,11 @@ Reviewed against current Play Console requirements:
 | Sensitive permissions minimized | ✅ Only `INTERNET`/`ACCESS_NETWORK_STATE` — no camera, mic, location, storage, contacts. Nothing needing a Play "permission declaration form" or Restricted Permissions review. |
 | No ads SDK | ✅ none in `pubspec.yaml` — Data Safety form's ads question is a straight "No". |
 | No analytics/crash SDK (Firebase, Sentry, etc.) | ✅ none present — simplifies the Data Safety form (no third-party data sharing to declare). If one is added later, the form must be updated before that release ships. |
-| No accounts/login, no personal data collected | ✅ All state (bookmarks, settings, last-read, cached Surah text) is local `Hive` storage on-device; nothing is uploaded. Network calls are anonymous read-only `GET`s to two public Quran APIs (Al Quran Cloud, Quran.com) — no auth headers, no user identifiers sent. |
+| No accounts/login, no personal data collected | ✅ All state (bookmarks, favorite duas, settings, last-read, cached Surah text and Duas content) is local `Hive` storage on-device; nothing is uploaded. Network calls are anonymous read-only requests: `GET`s to two public Quran APIs (Al Quran Cloud, Quran.com), downloads of whole-Surah audio from `audio.iqraspace.org` (Cloudflare R2, see [AUDIO.md](AUDIO.md)), and two plain `GET`s to the Learning API's public read-only Duas feed (`/learning/api/duas/version` and `/duas/content`, no key) — no user identifiers sent. |
 | Religious/sacred text accuracy (Play's policy on user-generated & sensitive content, applied loosely here since this is *not* UGC but is Quranic text) | ✅ `AboutScreen` already states the text is from an authenticated source and is not altered — keep this true; never let a future feature (e.g. user-submitted translations) modify the Arabic text without review. |
 | `applicationId` decided and stable | ✅ `org.iqraspace.app`, documented in README.md as effectively permanent |
 | Unique, non-infringing app name/icon | ✅ "IqraSpace" + custom brand icon, distinct from `apps/quran`'s existing listing (if any) |
-| Privacy Policy URL | ❌ **Blocking — see §5.** No privacy policy page exists yet anywhere in this repo (checked `apps/landing`, `apps/quran`). Play Console will not let you publish to *any* track, including internal testing, without one. |
+| Privacy Policy URL | ✅/⚠️ A policy page now exists in this repo (`apps/site/privacy.html`, served at `iqraspace.org/privacy`) — confirm in Play Console that it is the URL entered, and keep it accurate (see §5). Play Console will not let you publish to *any* track without one. |
 | Target audience / Families policy | ⚠️ Decide explicitly in Play Console (§6) — this is a general-audience reading app with no chat/UGC/ads, so declaring it "not primarily for children" with a standard 18+/general audience is the fitting choice; confirm against the actual questionnaire at submission time since Google's wording changes. |
 | Content rating | ⚠️ Run the questionnaire (§6) — expect "Everyone"/"3+" given no violence, UGC, gambling, or objectionable content. |
 
@@ -108,23 +113,30 @@ flutter build appbundle --release
 produces `build/app/outputs/bundle/release/app-release.aab` — this is
 what gets uploaded to Play Console, not the `.apk` from §1 (Play accepts
 `.apk` only for a few legacy/enterprise flows; standard listings require
-App Bundle). Bump `pubspec.yaml`'s `version:` (currently `0.2.0+2`) —
+App Bundle). Bump `pubspec.yaml`'s `version:` (currently `0.3.0+19`) —
 the `+N` build number must increase on every upload, the `x.y.z` part is
 the user-visible version.
 
-## 5. Privacy Policy — blocking, needs a decision
+To ship live Duas content, add the two `--dart-define` flags from "Remote Duas
+content" at the end of this file. Without them the build is offline-only for
+Duas (cache/bundled asset).
+
+## 5. Privacy Policy
+
+**Status:** a privacy page exists at `apps/site/privacy.html`
+(`iqraspace.org/privacy`). The notes below describe what it must keep
+covering; re-check it whenever the app's network/data behaviour changes
+(e.g. the audio bucket and remote Duas content were added after this section
+was first written).
 
 Play Console requires a live, publicly reachable privacy policy URL
-before any track (including internal testing) can be published. None
-exists yet for IqraSpace. Given this app collects no personal data, it
-can be short and truthful: what's fetched (public Quran text/audio APIs,
-no auth), what's stored locally only (bookmarks/settings/last-read via
+before any track (including internal testing) can be published. Given this app collects no personal data, it
+can be short and truthful: what's fetched (public Quran text APIs, R2-hosted
+audio, public Duas content, no auth), what's stored locally only (bookmarks/settings/last-read via
 Hive, never transmitted), that there's no account system, no ads, no
 analytics/crash SDK, and the contact address (`iqraspaceorg@gmail.com`,
-already used in `AboutScreen`). The natural home for this is a `/privacy`
-page on `apps/landing` (iqraspace.org, a static site) since that's the
-domain already referenced from the app's About screen — say the word and
-I'll draft that page in this session.
+already used in `AboutScreen`). It lives on `apps/site` (iqraspace.org, a static site), the domain
+already referenced from the app's About screen.
 
 ## 6. Play Console setup checklist (owner-only — needs your Google account)
 
@@ -181,15 +193,14 @@ I'll draft that page in this session.
 
 ## 7. What's still missing to fully exercise this locally
 
-- No Android emulator/physical device is connected in this environment
-  (`flutter doctor` shows only Windows desktop + Chrome + Edge as
-  connected targets) — the APKs above are built but not yet installed
-  and run anywhere. Install `app-release.apk` on a real device via
-  `adb install`, or set up an emulator (Android Studio → Device Manager)
-  to take the store-listing screenshots §6 needs and to smoke-test the
-  release build before uploading anything to Play Console.
-- No `.aab` has been built yet — blocked on the real upload keystore
-  (§3), which is deliberately owner-only.
+- Device availability varies by machine: the `iqs-debug` skill drives a
+  physical Android device when one is connected; otherwise use the emulator
+  workflow in [TESTING.md](TESTING.md). Smoke-test a release build (via
+  `adb install` or the emulator) before uploading to Play Console, and use
+  it for the store-listing screenshots §6 needs.
+- The real upload keystore (§3) is deliberately owner-only; release `.aab`
+  builds (and so the §9 upload step) need it configured on the building
+  machine.
 
 ## 8. Things that are effectively permanent once published
 
@@ -246,15 +257,27 @@ skipping it.
 
 ## Remote Duas content (no release needed for content fixes)
 
-Duas are served from the Learning app's Supabase project (managed at /learning/admin/duas) and cached on device (see
-`apps/site/supabase/duas/README.md`). Release builds must pass the public project URL and **anon** key:
+Duas are stored in the Learning app's Cloudflare D1 database (managed at /learning/admin/duas), served
+published-only by the Learning API's public feed, and cached on device (see `apps/site/DUAS.md`).
+Release builds must pass the feed's base URL (one define, no key):
 
 ```bash
 flutter build appbundle --release \
-  --dart-define=DUAS_SUPABASE_URL=https://<ref>.supabase.co \
-  --dart-define=DUAS_SUPABASE_ANON_KEY=<anon key>
+  --dart-define=DUAS_API_URL=https://iqraspace.org/learning/api
 ```
 
-Without these defines the app still works from its cache/bundled `assets/supplications.json`.
-Never pass a service-role key. Regenerate the bundled fallback with
-`node apps/site/supabase/duas/build_canonical.mjs --write-bundled`.
+Without this define the app still works from its cache/bundled `assets/supplications.json`.
+Before a release, refresh that bundled fallback from the live feed (keeps the file's `meta` block):
+`node scripts/refresh-bundled-duas.mjs` (optionally `--source <api base> --out <file>`).
+Note: the `iqs-deploy` skill's build step (`flutter build appbundle --release`) does not
+pass this flag by itself — supply it (e.g. via the build command or
+local config) when a release must use live Duas content.
+The app reads it with `String.fromEnvironment` in
+`supplications_remote_datasource.dart` (`DuasRemoteConfig`) and GETs
+`{DUAS_API_URL}/duas/version` and `/duas/content`; the remote is
+checked at most hourly and any invalid/failed response silently falls back to
+the cache/bundled content.
+Never put any admin credential in the app.
+Already-installed versions built before this change still point at the old
+Duas backend; once that is shut down they keep working from their Hive cache /
+bundled content until users update.

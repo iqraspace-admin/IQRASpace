@@ -7,8 +7,10 @@ release `.aab`.
 
 ## Why an emulator, not a physical device
 
-No physical Android device is available in this dev environment, so the
-workflow below is built around the Android Emulator. See "Known
+This dev machine has no dedicated physical test device wired into the
+workflow below, so it is built around the Android Emulator. (When a
+physical device is connected, the `iqs-debug` skill uses it instead and
+`flutter run -d <device>` works the same way.) See "Known
 limitation" below before you rely on it for anything performance-sensitive.
 
 ## Quick start
@@ -92,9 +94,42 @@ AVD is an experimental feature`. Delete those two lock entries and
 relaunch if you see that error — `stop-emulator.ps1`'s graceful `adb emu
 kill` avoids this in normal use.
 
+## Automated tests
+
+`flutter test` (from `apps/mobile/android`; CI runs it after `flutter analyze`)
+currently passes 156 tests (1 skipped). Layout: `test/core/` (Tajweed parser,
+bottom nav), `test/features/{bookmarks,home,quran_reader,search,settings}`,
+`test/e2e/remote_publish_flow_test.dart` (skipped unless `DUAS_E2E_URL` is set;
+it runs against the local Learning API — in `apps/learning` run
+`npm run db:migrate:local`, load Duas content, `npm run seed:admins`,
+`npm run dev:api`, then from here
+`DUAS_E2E_URL=http://localhost:8787/learning/api DUAS_E2E_ADMIN_USER=admin DUAS_E2E_ADMIN_PASSWORD=<ADMIN_PASSWORD> flutter test test/e2e/remote_publish_flow_test.dart`),
+`test/test_helpers/hive_test_env.dart`
+(temp-dir Hive setup shared by tests that touch storage), and
+`test/features/supplications/` for Duas:
+- `data/` — bundled asset parses/validates (`bundled_asset_test.dart`, runs
+  against the real `assets/supplications.json`), snapshot validation, local /
+  remote (mocked dio adapter) / cache datasources, repository resolution
+  order, favorites storage.
+- `presentation/screens/dua_reading_screen_test.dart` — Arabic/transliteration/
+  translation display order, repeat chip and tasbeeh badge, translation
+  language and transliteration settings (incl. Urdu-missing fallback and
+  persistence), favorite star.
+- `presentation/widgets/tasbeeh_counter_badge_test.dart` — ring progress and
+  animation, reset-after-target tap, long-press reset, plain tally mode.
+- `presentation/screens/dua_font_size_layout_test.dart` — text-size control:
+  no overflow at max (180%) on a 320px screen with raised system text scale
+  against the real bundled content, category labels really scale, size
+  survives leaving/re-entering a category, slider preview/persist, clamp to
+  0.8–1.8 in 0.1 steps (`supplicationsFontScale`).
+
+`test/_icon_preview/` holds two PNGs (`out_large_filled.png`,
+`out_large_outline.png`) — leftover icon-preview output, not a test and not
+referenced by any test code; it is currently untracked.
+
 ## Critical-flow manual checklist
 
-Automated widget tests (`flutter test`, see `test/`) already cover a good
+Automated widget tests (see above) already cover a good
 slice of this — this checklist is for manual sweeps on the emulator before
 a release, focused on things that only show up on-device (audio playback,
 real navigation transitions, actual layout at emulator screen sizes).
@@ -117,14 +152,32 @@ real navigation transitions, actual layout at emulator screen sizes).
 
 ### Audio (Listening Mode + per-ayah)
 - [ ] Per-ayah audio plays and highlights the correct ayah
-- [ ] Whole-Surah Listening Mode: play, pause, seek, and — the current
-      uncommitted change under test — whatever the audio-handler/provider
-      change being validated actually does end-to-end, not just that it
-      compiles
+- [ ] Whole-Surah Listening Mode: play, pause, seek, Next/Previous
+      Surah from the lock-screen notification, and the loading/error
+      (retry) states on a slow or offline connection
 - [ ] Backgrounding the app (Home button) and returning: playback state
       (playing/paused, position) survives correctly
 - [ ] Switching Arabic/Urdu audio source mid-playback behaves sanely (no
       overlapping tracks, no stuck loading state)
+
+### Duas
+- [ ] Duas tab: categories show as grid and as list (toggle persists
+      across restart); category/dua content loads offline (cached or
+      bundled) with airplane mode on
+- [ ] Reading screen: swipe between duas, jump sheet, favorite star (appears
+      in Favorites), share sheet
+- [ ] Reading settings: translation language (English/Urdu), transliteration
+      on/off and script, tasbeeh counter on/off all take effect immediately
+- [ ] Tasbeeh counter: with a repeat-count dua the ring fills per tap, the
+      tap after the target resets, long-press resets mid-way; a dua with no
+      count shows a plain tally; the count is not kept after swiping to
+      another dua
+- [ ] Text size (app-bar `text_fields` icon on the categories screen and the
+      reading settings sheet): Arabic/transliteration/translation and the
+      category tile/row labels all grow/shrink, no clipped text at the
+      largest size, setting persists across restart
+- [ ] Switch UI language en/ur/te: Duas strings (incl. text-size sheet)
+      translate
 
 ### Settings
 - [ ] Reader settings sheet opens, all sections listed, each control

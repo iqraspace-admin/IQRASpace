@@ -1,6 +1,6 @@
 // Pure form <-> row conversion for the Dua / category / mapping editors.
 // Form state keeps everything as strings (what inputs hold); the *ToData
-// helpers produce the typed payloads sent to Supabase.
+// helpers produce the typed payloads sent to the Learning API.
 
 import type { CategoryRow, DuaRow, MappingRow, DuaStatus } from "./types";
 import { parseList } from "./validate";
@@ -74,7 +74,7 @@ export const blankMap = (): MapForm => ({
   sort_order: "0", context_title: "", context_title_ur: "", context_note: "", context_reference: "", context_repeat_count: "",
 });
 
-/** The writable columns of a Dua, typed for Supabase. */
+/** The writable columns of a Dua. */
 export function formToData(form: DuaForm, refs: RefForm[], status: DuaStatus | string): Record<string, unknown> {
   const d: Record<string, unknown> = {};
   for (const k of TEXT_KEYS) d[k] = nz(form[k]);

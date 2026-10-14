@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/authContext";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import type { AttendanceRecord } from "@/lib/types";
 import { getLessonAttendanceForRange, markAttendance, type LessonAttendance } from "@/lib/attendance";
 import { isAdminRole } from "@/lib/roles";
@@ -114,10 +114,10 @@ export default function AttendancePage() {
     (async () => {
       const weekAgo = new Date();
       weekAgo.setDate(weekAgo.getDate() - 7);
-      const { data: lessonRows } = await supabase.from("lessons").select("id");
+      const { data: lessonRows } = await db.from("lessons").select("id");
       const lessonIds = (lessonRows ?? []).map((l) => (l as { id: string }).id);
       if (lessonIds.length === 0) return;
-      const { data: attRows } = await supabase
+      const { data: attRows } = await db
         .from("attendance")
         .select("*")
         .in("lesson_id", lessonIds)

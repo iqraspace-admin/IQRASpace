@@ -26,7 +26,7 @@ export function CategoriesListView() {
   }, []);
 
   useEffect(() => {
-    // Fetch-on-mount via the browser Supabase client (same pattern as the other admin pages).
+    // Fetch-on-mount via the browser API client (same pattern as the other admin pages).
     // eslint-disable-next-line react-hooks/set-state-in-effect
     load();
   }, [load]);

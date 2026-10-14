@@ -145,6 +145,40 @@ class AppLocalizationsEn extends AppLocalizations {
       'This removes every dua you\'ve favorited. This can\'t be undone.';
 
   @override
+  String get supplicationsFontSizeLabel => 'Text size';
+
+  @override
+  String get supplicationsFontSizePreviewHint =>
+      'Preview — applies to duas and category names';
+
+  @override
+  String get supplicationsFontSizeReset => 'Reset';
+
+  @override
+  String get supplicationsFontSizeDecrease => 'Smaller text';
+
+  @override
+  String get supplicationsFontSizeIncrease => 'Larger text';
+
+  @override
+  String get supplicationsFontSizeTooltip => 'Text size';
+
+  @override
+  String get supplicationsFontSizePreviewArabic =>
+      'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ';
+
+  @override
+  String get supplicationsFontSizePreviewTranslit =>
+      'Alhamdu lillahi rabbil-alamin';
+
+  @override
+  String get supplicationsFontSizePreviewTranslation =>
+      'All praise is due to Allah, Lord of the worlds.';
+
+  @override
+  String get supplicationsFontSizePreviewCategory => 'Morning & Evening';
+
+  @override
   String get supplicationsReadingSettingsTitle => 'Reading Settings';
 
   @override

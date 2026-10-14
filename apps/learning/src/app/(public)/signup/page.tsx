@@ -3,9 +3,9 @@
 import { useState, type SubmitEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import type { Role } from "@/lib/types";
-import { buildAuthEmail, friendlyAuthError } from "@/lib/username";
+import { friendlyAuthError } from "@/lib/username";
 import { Button } from "@/components/ui/Button";
 import { Field, Input, Select } from "@/components/ui/Field";
 
@@ -29,16 +29,15 @@ export default function SignupPage() {
     e.preventDefault();
     setError(null);
     setSubmitting(true);
-    // username/full_name/role/contact_email land in auth.users.raw_user_meta_data
-    // and are split apart by the handle_new_user trigger
-    // (0002_auth_signup_trigger.sql, rewritten by 0019_username_auth.sql) into
-    // public.users.username/full_name/role/email (+ tutors/students row).
-    // Email is optional — signUp still needs *an* email-shaped identifier for
-    // Supabase Auth itself, so a synthetic one is used when none is given.
-    const { error } = await supabase.auth.signUp({
-      email: buildAuthEmail(username, email),
+    // Creates the users row (+ tutors/students row) and signs in
+    // (worker/api/auth.js). The Worker only accepts tutor/student/guardian
+    // here — never admin. Email is optional contact info, not a login.
+    const { error } = await db.auth.signUp({
+      username: username.trim(),
       password,
-      options: { data: { username, full_name: fullName, role, contact_email: email || null } },
+      full_name: fullName,
+      role,
+      email: email || null,
     });
     setSubmitting(false);
     if (error) {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type SubmitEvent } from "react";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import type { LessonPlan } from "@/lib/types";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Badge";
@@ -10,7 +10,7 @@ import { Modal } from "@/components/ui/Modal";
 import { useToast } from "@/components/ui/Toast";
 
 /** Plan switcher + "New Plan" for the Lesson Library — a universal
- * curriculum (0021_universal_lesson_plans.sql: not owned by any one tutor),
+ * curriculum (worker/api/policies.js: not owned by any one tutor),
  * so any number of tutors can share the same set of plans (e.g. Qaida,
  * Tajweed, Hifz), each reusable across any number of classes. `canCreate`
  * gates the "+ New Plan" affordance — curriculum editing is admin-only;
@@ -68,7 +68,7 @@ function NewPlanForm({ onCreated }: { onCreated: (id: string) => void }) {
     e.preventDefault();
     setSaving(true);
     // No tutor_id — this is a universal plan, not owned by whoever creates it.
-    const { data, error } = await supabase
+    const { data, error } = await db
       .from("lesson_plans")
       .insert({ name, description: description || null })
       .select()

@@ -176,13 +176,13 @@ Never run `wrangler` locally. "Deploy" = validate like CI, get the change onto `
 the live health endpoints.
 
 ### L0. Inspect
-- Pending changes under `apps/learning/**` (uncommitted or not yet on `origin/main`) **and** under the
-  repo-root `supabase/migrations/` (the Learning database history). If neither has anything, report
+- Pending changes under `apps/learning/**` (uncommitted or not yet on `origin/main`). If nothing, report
   `Learning: NOTHING TO DEPLOY`.
-- **Database migrations are NOT applied by this pipeline.** CI never runs `supabase db push`. If any
-  `supabase/migrations/*.sql` file is new on this push, say plainly in the report that the owner must run
-  `npx supabase db push` (repo root, linked project) — and that any new Learning pages depending on those
-  tables will error in production until it is run. Never read `.env*`/credential files to try to apply it.
+- **D1 migrations are NOT applied by this pipeline.** CI never applies them. If any
+  `apps/learning/d1/migrations/*.sql` file is new on this push, say plainly in the report that the owner
+  must run `npx wrangler d1 migrations apply iqraspace-learning --remote` (from `apps/learning`) —
+  ideally before the merge — and that any Learning code depending on that schema will error in production
+  until it is run. Never run it from this session and never read `.env*`/credential files.
 
 ### L1. Validate (mirrors ci.yml), from `apps/learning`
 ```
@@ -190,12 +190,12 @@ npm ci                       # if node_modules missing/stale
 npm run lint
 npx next typegen
 npm run typecheck
+npm run test --if-present
 npm run test:duas            # pure-logic unit tests
-node --test worker/*.test.mjs   # only if worker/*.test.mjs exists
-NEXT_PUBLIC_SUPABASE_URL=https://example.supabase.co NEXT_PUBLIC_SUPABASE_ANON_KEY=placeholder npm run build:cf
+npm run test:worker          # routing + API tests (node:sqlite, D1 migrations applied)
+npm run build:cf
 ```
-(The placeholder public env vars go on the command line only — never into a file.) Fix real failures at
-the source; never weaken a rule or skip a test.
+Fix real failures at the source; never weaken a rule or skip a test.
 
 ### L2. Commit & push
 Same screening and commit discipline as W2 (no secrets/env files/build output; never `git add -A`; no
@@ -203,6 +203,8 @@ force-push; merge to `main` carefully if on another branch). Learning and websit
 same push.
 
 ### L3. Deploy — the push is the trigger (`ci.yml`).
+`apps/site`'s `/api/duas` reads the Learning Worker through the `LEARNING` service binding, so a site
+change that depends on a new Learning API must not go live before the Learning Worker does.
 
 ### L4. Verify
 Poll every ~30s for up to ~6 min:
@@ -211,6 +213,8 @@ curl -s -o /dev/null -w "%{http_code} https://iqraspace.org/learning/login
 " https://iqraspace.org/learning/login
 curl -s -o /dev/null -w "%{http_code} https://iqraspace.org/learning/share/00000000-0000-0000-0000-000000000000
 " https://iqraspace.org/learning/share/00000000-0000-0000-0000-000000000000
+curl -s -o /dev/null -w "%{http_code} https://iqraspace.org/learning/api/duas/version
+" https://iqraspace.org/learning/api/duas/version
 ```
 For a change that adds a route, also request the new route (it is behind client-side auth, so expect 200 or a
 redirect to login, not 404), e.g. `/learning/admin/duas`. Same honesty caveat as W4: this cannot prove which
@@ -361,10 +365,10 @@ Website
 Learning
   Status: SUCCESS / FAILED / NOTHING TO DEPLOY
   Commit pushed: <sha> <subject>  (or "n/a")
-  Validate: <lint / typecheck / test:duas / build results>
+  Validate: <lint / typecheck / test:duas / test:worker / build results>
   Production URL(s): https://iqraspace.org/learning
   Health check: <per-path HTTP codes>
-  DB migrations: <new files under supabase/migrations and whether the owner has applied them — never claim applied unless verified>
+  DB migrations: <new files under apps/learning/d1/migrations and whether the owner has applied them — never claim applied unless verified>
   Note: <the same "cannot confirm the exact GitHub Actions run" caveat>
 
 Android

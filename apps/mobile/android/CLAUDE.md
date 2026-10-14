@@ -20,18 +20,39 @@ There is no way to query Play Console's history of already-used version
 codes from this environment, so **always increment `+N` before building
 a release artifact for upload**, never reuse or guess whether a prior
 number is safe. Bump only the `+N` build number by default (e.g.
-`0.3.0+3` → `0.3.0+4`); only bump the `x.y.z` part too if the user asks
+`0.3.0+18` → `0.3.0+19`); only bump the `x.y.z` part too if the user asks
 for a version bump or the changes are a genuine user-visible release
 (new feature set, etc.).
 
 See [DEPLOYMENT.md](DEPLOYMENT.md) for the rest of the release checklist
-(signing, Play Console setup, Privacy Policy requirement).
+(signing, Play Console setup, Privacy Policy requirement, and the
+`--dart-define` flags that enable remote Duas content in release builds).
 
 ## The `iqs-deploy` skill
 
 Saying "iqs-deploy" runs `.claude/skills/iqs-deploy/SKILL.md`, which
 automates validate → bump build number → build the signed `.aab` →
-verify → upload to Play Console's **internal testing** track (never
-closed testing or production — see DEPLOYMENT.md §9). It needs one-time
+verify → upload to Play Console's **closed testing** track (the API's
+`alpha` track id; never production — see DEPLOYMENT.md §9). It needs one-time
 owner-only credential setup (DEPLOYMENT.md §9) before the upload step
 will work.
+
+## Duas (supplications) feature — things to keep in mind
+
+- Content resolution is remote (the Learning API's public feed,
+  `{DUAS_API_URL}/duas/version` + `/duas/content`, only if `DUAS_API_URL`
+  was `--dart-define`d) → Hive cache
+  (`duas_content_cache`) → bundled `assets/supplications.json`. The feed
+  needs no key; never put any admin credential in the app. See `lib/features/supplications`.
+- Persisted Duas settings live in the `reader_settings` Hive box, keys
+  `supplicationsCategoryViewMode`, `supplicationsTasbeehEnabled`,
+  `supplicationsTranslationLanguage`, `supplicationsTransliterationEnabled`,
+  `supplicationsFontScale` (`duaFontScaleProvider`, 0.8–1.8, step 0.1 —
+  scales the reading screen *and* category tile/row labels). The tasbeeh
+  counter state itself is intentionally ephemeral.
+- UI strings are in `lib/l10n/app_{en,ur,te}.arb`; add every new string to
+  all three and regenerate (`flutter gen-l10n`).
+- Layout-sensitive changes to Duas screens should keep
+  `test/features/supplications/presentation/screens/dua_font_size_layout_test.dart`
+  passing (no overflow at 180% on a 320px screen with raised system text
+  scale, against the real bundled content).

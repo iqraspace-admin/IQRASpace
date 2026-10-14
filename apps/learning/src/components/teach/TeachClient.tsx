@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useAuth } from "@/lib/authContext";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import { getLessonChannel, type HighlightState } from "@/lib/realtime";
 import { getOrCreateActiveSession, recordHighlight } from "@/lib/sharing";
 import { getSurah, surahPageCount } from "@/lib/quranContent";
@@ -68,21 +68,21 @@ export function TeachClient({ lessonId }: { lessonId: string }) {
 
   useEffect(() => {
     async function load() {
-      const { data: lessonRow } = await supabase.from("lessons").select("*").eq("id", lessonId).single();
+      const { data: lessonRow } = await db.from("lessons").select("*").eq("id", lessonId).single();
       if (!lessonRow) return;
       const loadedLesson = lessonRow as Lesson;
       setLesson(loadedLesson);
 
-      const { data: classRow } = await supabase.from("classes").select("*").eq("id", loadedLesson.class_id).single();
+      const { data: classRow } = await db.from("classes").select("*").eq("id", loadedLesson.class_id).single();
       if (classRow) setClassName((classRow as ClassRow).name);
 
-      const { data: meetingRow } = await supabase.from("meetings").select("*").eq("lesson_id", lessonId).maybeSingle();
+      const { data: meetingRow } = await db.from("meetings").select("*").eq("lesson_id", lessonId).maybeSingle();
       setMeeting((meetingRow as Meeting) ?? null);
 
       // One-to-one session — `participants` is always this one student
-      // (0023_student_based_scheduling.sql's `lessons.student_id`), not the
+      // (d1/migrations/0001_init.sql's `lessons.student_id`), not the
       // whole class roster.
-      const { data: studentRow } = await supabase.from("users").select("*").eq("id", loadedLesson.student_id).maybeSingle();
+      const { data: studentRow } = await db.from("users").select("*").eq("id", loadedLesson.student_id).maybeSingle();
       if (studentRow) setParticipants([studentRow as AppUser]);
 
       const attendanceRecord = await getLessonAttendance(lessonId);
@@ -90,7 +90,7 @@ export function TeachClient({ lessonId }: { lessonId: string }) {
 
       let loadedPlanItem: LessonPlanItem | null = null;
       if (loadedLesson.lesson_plan_item_id) {
-        const { data: itemRow } = await supabase
+        const { data: itemRow } = await db
           .from("lesson_plan_items")
           .select("*")
           .eq("id", loadedLesson.lesson_plan_item_id)
@@ -152,7 +152,7 @@ export function TeachClient({ lessonId }: { lessonId: string }) {
     });
 
     return () => {
-      supabase.removeChannel(channel);
+      db.removeChannel(channel);
     };
   }, [lessonId, profile]);
 
@@ -192,7 +192,7 @@ export function TeachClient({ lessonId }: { lessonId: string }) {
 
   async function saveNote() {
     if (!note.trim()) return;
-    await supabase.from("lesson_notes").insert({ lesson_id: lessonId, note });
+    await db.from("lesson_notes").insert({ lesson_id: lessonId, note });
     setNote("");
     showToast("Note saved to this lesson");
   }

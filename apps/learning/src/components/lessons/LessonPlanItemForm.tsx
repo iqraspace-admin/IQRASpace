@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, type SubmitEvent } from "react";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import { QURAN_SURAHS } from "@/lib/quranContent";
 import { listLessonMaterials, uploadLessonMaterial, type StoredFile } from "@/lib/storage";
 import type { LessonPlanItem } from "@/lib/types";
@@ -77,8 +77,8 @@ export function LessonPlanItemForm({
     };
 
     const { error } = item
-      ? await supabase.from("lesson_plan_items").update(payload).eq("id", item.id)
-      : await supabase.from("lesson_plan_items").insert({
+      ? await db.from("lesson_plan_items").update(payload).eq("id", item.id)
+      : await db.from("lesson_plan_items").insert({
           ...payload,
           lesson_plan_id: lessonPlanId,
           sequence: nextSequence,

@@ -169,7 +169,7 @@
       <a href="#app-learning">6. apps/learning (LMS)</a>
       <a href="#app-quran">7. apps/quran (Reader)</a>
       <a href="#app-flutter">8. apps/mobile/android (Native)</a>
-      <a href="#app-landing">9. apps/landing (Domain)</a>
+      <a href="#app-site">9. apps/site (Domain root)</a>
       <div class="h1">Cross-Cutting</div>
       <a href="#data">10. Data Architecture</a>
       <a href="#auth">11. Auth &amp; Authorization</a>
@@ -185,7 +185,12 @@
       <a href="#status">21. Implementation Status</a>
       <a href="#debt">22. Known Debt &amp; Doc Drift</a>
       <a href="#safe">23. Safe Change Guidelines</a>
-      <a href="#appendix">24. Appendix: Doc Index</a>
+      <div class="h1">Runbooks</div>
+      <a href="#localdev">24. Local Dev &amp; Build</a>
+      <a href="#deploying">25. Deploying (Cloudflare)</a>
+      <a href="#supabase-ops">26. Supabase Operations</a>
+      <a href="#duas">27. Duas System</a>
+      <a href="#appendix">28. Appendix: Doc Index</a>
     </nav>
   </aside>
 
@@ -196,8 +201,8 @@
         <h1>IqraSpace — Developer Guide</h1>
         <p class="lead">The single entry point for understanding, running, and safely extending every app in this monorepo. Written from a direct review of the current codebase — not from memory of earlier docs, which have in several places fallen behind the code (flagged throughout, and summarized in §22).</p>
         <div class="meta-row">
-          <span>Reviewed: 2026-09-20</span>
-          <span>4 independent apps, 1 domain</span>
+          <span>Updated: 2026-10-05 (Cloudflare migration, new Supabase project, remote Duas, site Duas panel)</span>
+          <span>4 independent apps (3 Cloudflare Workers + 1 Flutter app), 1 domain</span>
           <span>Source of truth: current code &gt; existing docs</span>
         </div>
       </div>
@@ -211,7 +216,7 @@
       <p class="section-sub">What IqraSpace is, who it serves, and how the repository is shaped.</p>
 
       <h3>What the system does</h3>
-      <p>IqraSpace is <strong>not one application</strong> — it's a small family of independent products that share a brand and a domain, built and run by a single developer/owner. The repo root's <code>CLAUDE.md</code> is explicit about this and the code confirms it: there is no shared package, no shared UI library, no shared types between apps. Each app has its own stack, its own data store (or none), its own CI pipeline, and its own Vercel/Play Console deployment target.</p>
+      <p>IqraSpace is <strong>not one application</strong> — it's a small family of independent products that share a brand and a domain, built and run by a single developer/owner. The repo root's <code>CLAUDE.md</code> is explicit about this and the code confirms it: there is no shared package, no shared UI library, no shared types between apps. Each app has its own stack, its own data store (or none), its own CI pipeline, and its own deployment target (a Cloudflare Worker for each web app, Play Console for the Android app).</p>
 
       <div class="grid2">
         <div class="card app-card">
@@ -220,15 +225,15 @@
         </div>
         <div class="card app-card">
           <h4>IqraSpace Quran <span class="tag">apps/quran</span></h4>
-          <p>A free, anonymous-first public Quran reader: Surah/Page/PDF reading modes, audio (per-ayah and whole-Surah), Tajweed coloring, search, Supplications (duas), bookmarks — all local-only today, no login required. Lives at <code>iqraspace.org/quran</code>.</p>
+          <p>A free, anonymous-first public Quran reader: Surah/Page/PDF reading modes, audio (per-ayah and whole-Surah), Tajweed coloring, search, bookmarks — all local-only today, no login required. Served as a static export from an assets-only Cloudflare Worker at <code>iqraspace.org/quran</code>. (Its Supplications feature was removed on 2026-10-03; Duas now live in the Flutter app.)</p>
         </div>
         <div class="card app-card">
           <h4>IqraSpace Quran (Flutter) <span class="tag">apps/mobile/android</span></h4>
-          <p>The native Android (and web-capable) counterpart to apps/quran, but a fully separate codebase and data source: Tajweed-colored reading, Listening Mode, Supplications, bookmarks — all offline-first via Hive. Distributed through Google Play (closed testing).</p>
+          <p>The native Android (and web-capable) counterpart to apps/quran, but a fully separate codebase and data source: Tajweed-colored reading, Listening Mode, Supplications (remote content with a bundled fallback), bookmarks — offline-first via Hive. Distributed through Google Play (closed testing).</p>
         </div>
         <div class="card app-card">
-          <h4>Landing <span class="tag">apps/landing</span></h4>
-          <p>A single static HTML page that owns the <code>iqraspace.org</code> domain root and transparently proxies <code>/quran/*</code> and <code>/learning/*</code> to the other two Vercel projects. No framework, no build step, by design.</p>
+          <h4>Site <span class="tag">apps/site</span></h4>
+          <p>The hand-authored static marketing/info site that owns the <code>iqraspace.org</code> domain root (home, about, mission, explore, duas, contact, FAQ, privacy, terms…), plus one tiny Worker endpoint (<code>POST /api/contact</code>, stored in Cloudflare D1). No framework. <code>/quran*</code> and <code>/learning*</code> are not proxied through it — they are separate Workers bound to more specific routes on the same Cloudflare zone.</p>
         </div>
       </div>
 
@@ -240,7 +245,7 @@
         <tr><td>Guardian</td><td>apps/learning</td><td>Modeled in the DB/type system (<code>role</code> enum, signup metadata) but has <strong>no dedicated UI</strong> today — <span class="badge warn">Partial</span>.</td></tr>
         <tr><td>Admin / Super Admin</td><td>apps/learning</td><td>Full CRUD across the app via <code>is_admin()</code> RLS bypass; provisioned only by a seed script or the <code>admin-user-management</code> Edge Function, never via public signup.</td></tr>
         <tr><td>Anonymous reader</td><td>apps/quran, apps/mobile/android</td><td>The overwhelming majority of users. No account needed for any core reading/audio/search feature in either app — this is a hard product rule for apps/quran (see §20).</td></tr>
-        <tr><td>Owner / solo developer</td><td>All four apps</td><td>Runs Supabase projects, Vercel projects, Play Console, Cloudflare R2, and the GitHub Actions secrets for each app independently.</td></tr>
+        <tr><td>Owner / solo developer</td><td>All four apps</td><td>Runs the Cloudflare account (3 Workers + D1 + R2), the Learning Supabase project, Play Console, and the GitHub Actions secrets/variables.</td></tr>
       </table>
 
       <div class="callout info"><strong>How to use this document</strong>
@@ -253,7 +258,7 @@
       <p class="section-sub">How a request actually gets from a browser to the right app, and how the four apps relate to each other.</p>
 
       <h3>Diagram</h3>
-      <svg viewBox="0 0 980 640" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;background:var(--panel);border:1px solid var(--border);border-radius:12px;">
+      <svg viewBox="0 0 980 560" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;background:var(--panel);border:1px solid var(--border);border-radius:12px;">
         <defs>
           <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
             <path d="M0,0 L7,3 L0,6 Z" fill="var(--ink-soft)"/>
@@ -273,95 +278,106 @@
         <rect x="410" y="8" width="160" height="38" class="box"/>
         <text x="490" y="31" text-anchor="middle" class="lbl">Browser / Android</text>
 
-        <!-- iqraspace.org -->
-        <rect x="370" y="70" width="240" height="52" class="box-accent"/>
-        <text x="490" y="92" text-anchor="middle" class="lbl">iqraspace.org (Cloudflare DNS)</text>
-        <text x="490" y="110" text-anchor="middle" class="lbl-sm">DNS-only → Vercel: apps/landing</text>
-
+        <!-- Cloudflare zone -->
+        <rect x="320" y="70" width="340" height="56" class="box-accent"/>
+        <text x="490" y="92" text-anchor="middle" class="lbl">iqraspace.org — Cloudflare zone (proxied)</text>
+        <text x="490" y="110" text-anchor="middle" class="lbl-sm">path routes, most specific wins · no proxy hop</text>
         <line x1="490" y1="46" x2="490" y2="70" class="edge"/>
 
-        <!-- landing rewrites -->
-        <rect x="370" y="150" width="240" height="60" class="box"/>
-        <text x="490" y="172" text-anchor="middle" class="lbl">apps/landing</text>
-        <text x="490" y="188" text-anchor="middle" class="lbl-sm">static HTML + vercel.json rewrites()</text>
-        <text x="490" y="202" text-anchor="middle" class="lbl-sm">everything else: served directly</text>
-        <line x1="490" y1="122" x2="490" y2="150" class="edge"/>
+        <!-- www redirect -->
+        <rect x="740" y="70" width="220" height="56" class="box-muted"/>
+        <text x="850" y="92" text-anchor="middle" class="lbl">iqraspace-www-redirect</text>
+        <text x="850" y="110" text-anchor="middle" class="lbl-sm">www.iqraspace.org/* → 301 apex</text>
+        <line x1="660" y1="98" x2="740" y2="98" class="edge-dashed"/>
 
-        <!-- two branches -->
-        <line x1="430" y1="210" x2="200" y2="260" class="edge"/>
-        <text x="300" y="228" class="lbl-sm">/learning/*</text>
-        <line x1="550" y1="210" x2="780" y2="260" class="edge"/>
-        <text x="680" y="228" class="lbl-sm">/quran/*</text>
+        <!-- three workers -->
+        <line x1="400" y1="126" x2="165" y2="170" class="edge"/>
+        <text x="250" y="142" class="lbl-sm">iqraspace.org/learning*</text>
+        <line x1="490" y1="126" x2="490" y2="170" class="edge"/>
+        <text x="498" y="148" class="lbl-sm">iqraspace.org/*</text>
+        <line x1="580" y1="126" x2="815" y2="170" class="edge"/>
+        <text x="700" y="142" class="lbl-sm">iqraspace.org/quran*</text>
 
-        <!-- apps/learning vercel -->
-        <rect x="60" y="260" width="280" height="56" class="box"/>
-        <text x="200" y="282" text-anchor="middle" class="lbl">apps/learning (Vercel project)</text>
-        <text x="200" y="298" text-anchor="middle" class="lbl-sm">Next.js 16, basePath=/learning</text>
+        <rect x="20" y="170" width="290" height="70" class="box"/>
+        <text x="165" y="192" text-anchor="middle" class="lbl">Worker: iqraspace-learning</text>
+        <text x="165" y="208" text-anchor="middle" class="lbl-sm">Next.js static export, basePath /learning</text>
+        <text x="165" y="223" text-anchor="middle" class="lbl-sm">+ small Worker for 4 dynamic-route patterns</text>
 
-        <!-- apps/quran vercel -->
-        <rect x="640" y="260" width="280" height="56" class="box"/>
-        <text x="780" y="282" text-anchor="middle" class="lbl">apps/quran (Vercel project)</text>
-        <text x="780" y="298" text-anchor="middle" class="lbl-sm">Next.js 16, basePath=/quran, SSG</text>
+        <rect x="345" y="170" width="290" height="70" class="box"/>
+        <text x="490" y="192" text-anchor="middle" class="lbl">Worker: iqraspace-site</text>
+        <text x="490" y="208" text-anchor="middle" class="lbl-sm">static HTML · Worker only for POST /api/contact</text>
+        <text x="490" y="223" text-anchor="middle" class="lbl-sm">Turnstile · honeypot · optional Resend alert</text>
+
+        <rect x="670" y="170" width="290" height="70" class="box"/>
+        <text x="815" y="192" text-anchor="middle" class="lbl">Worker: iqraspace-quran</text>
+        <text x="815" y="208" text-anchor="middle" class="lbl-sm">Next.js static export, basePath /quran</text>
+        <text x="815" y="223" text-anchor="middle" class="lbl-sm">assets only, no script (730 pages + PDFs)</text>
 
         <!-- learning downstream -->
-        <rect x="20" y="360" width="170" height="50" class="box"/>
-        <text x="105" y="380" text-anchor="middle" class="lbl">Supabase (learning)</text>
-        <text x="105" y="395" text-anchor="middle" class="lbl-sm">Postgres · Auth · Realtime · Storage</text>
-        <line x1="150" y1="316" x2="105" y2="360" class="edge"/>
+        <rect x="20" y="290" width="200" height="60" class="box"/>
+        <text x="120" y="312" text-anchor="middle" class="lbl">Supabase (Learning)</text>
+        <text x="120" y="328" text-anchor="middle" class="lbl-sm">Postgres · Auth · Realtime · Edge Fns</text>
+        <text x="120" y="342" text-anchor="middle" class="lbl-sm">+ Duas tables &amp; public RPCs</text>
+        <line x1="120" y1="240" x2="120" y2="290" class="edge"/>
 
-        <rect x="210" y="360" width="170" height="50" class="box-muted"/>
-        <text x="295" y="380" text-anchor="middle" class="lbl">Google OAuth / Drive</text>
-        <text x="295" y="395" text-anchor="middle" class="lbl-sm">code-complete, NOT deployed</text>
-        <line x1="250" y1="316" x2="295" y2="360" class="edge-dashed"/>
+        <rect x="240" y="290" width="150" height="60" class="box-muted"/>
+        <text x="315" y="312" text-anchor="middle" class="lbl">Google OAuth / Drive</text>
+        <text x="315" y="328" text-anchor="middle" class="lbl-sm">code-complete,</text>
+        <text x="315" y="342" text-anchor="middle" class="lbl-sm">NOT deployed</text>
+        <line x1="250" y1="240" x2="315" y2="290" class="edge-dashed"/>
 
-        <rect x="20" y="430" width="170" height="46" class="box-muted"/>
-        <text x="105" y="450" text-anchor="middle" class="lbl">Edge Functions</text>
-        <text x="105" y="464" text-anchor="middle" class="lbl-sm">admin-user-mgmt (live) +2 undeployed</text>
-        <line x1="105" y1="410" x2="105" y2="430" class="edge"/>
+        <rect x="20" y="390" width="200" height="50" class="box"/>
+        <text x="120" y="410" text-anchor="middle" class="lbl">R2 (private) lesson PDFs</text>
+        <text x="120" y="426" text-anchor="middle" class="lbl-sm">via Edge Fn lesson-materials-r2</text>
+        <line x1="120" y1="350" x2="120" y2="390" class="edge"/>
+
+        <!-- site downstream -->
+        <rect x="395" y="290" width="190" height="50" class="box"/>
+        <text x="490" y="310" text-anchor="middle" class="lbl">D1 · iqraspace-site</text>
+        <text x="490" y="326" text-anchor="middle" class="lbl-sm">table contact_messages</text>
+        <line x1="490" y1="240" x2="490" y2="290" class="edge"/>
 
         <!-- quran downstream -->
-        <rect x="600" y="360" width="170" height="50" class="box-muted"/>
-        <text x="685" y="380" text-anchor="middle" class="lbl">Supabase (quran)</text>
-        <text x="685" y="395" text-anchor="middle" class="lbl-sm">schema exists, UNWIRED today</text>
-        <line x1="700" y1="316" x2="685" y2="360" class="edge-dashed"/>
+        <rect x="670" y="290" width="140" height="50" class="box"/>
+        <text x="740" y="310" text-anchor="middle" class="lbl">Quran Foundation</text>
+        <text x="740" y="326" text-anchor="middle" class="lbl-sm">build-time sync only</text>
+        <line x1="760" y1="240" x2="740" y2="290" class="edge-dashed"/>
 
-        <rect x="790" y="360" width="170" height="50" class="box"/>
-        <text x="875" y="380" text-anchor="middle" class="lbl">Quran Foundation API</text>
-        <text x="875" y="395" text-anchor="middle" class="lbl-sm">build-time content sync only</text>
-        <line x1="850" y1="316" x2="875" y2="360" class="edge"/>
-
-        <rect x="600" y="430" width="170" height="46" class="box"/>
-        <text x="685" y="450" text-anchor="middle" class="lbl">Al Quran Cloud API</text>
-        <text x="685" y="464" text-anchor="middle" class="lbl-sm">live Tajweed fetch, opt-in</text>
-        <line x1="780" y1="410" x2="685" y2="430" class="edge"/>
+        <rect x="830" y="290" width="130" height="50" class="box"/>
+        <text x="895" y="310" text-anchor="middle" class="lbl">Al Quran Cloud API</text>
+        <text x="895" y="326" text-anchor="middle" class="lbl-sm">live Tajweed, opt-in</text>
+        <line x1="870" y1="240" x2="895" y2="290" class="edge"/>
 
         <!-- shared R2 -->
-        <rect x="330" y="500" width="320" height="54" class="box-accent"/>
-        <text x="490" y="522" text-anchor="middle" class="lbl">Cloudflare R2 · audio.iqraspace.org</text>
-        <text x="490" y="538" text-anchor="middle" class="lbl-sm">whole-Surah audio — dedicated bucket, public read</text>
-        <line x1="780" y1="410" x2="560" y2="500" class="edge"/>
+        <rect x="580" y="390" width="320" height="54" class="box-accent"/>
+        <text x="740" y="412" text-anchor="middle" class="lbl">Cloudflare R2 · audio.iqraspace.org</text>
+        <text x="740" y="428" text-anchor="middle" class="lbl-sm">whole-Surah audio — dedicated bucket, public read</text>
 
-        <!-- flutter app, separate -->
-        <rect x="330" y="580" width="320" height="50" class="box"/>
-        <text x="490" y="600" text-anchor="middle" class="lbl">apps/mobile/android (Android / Web)</text>
-        <text x="490" y="615" text-anchor="middle" class="lbl-sm">separate codebase, Hive local storage, no shared DB/code</text>
-        <line x1="490" y1="580" x2="490" y2="554" class="edge"/>
-        <line x1="490" y1="580" x2="685" y2="480" class="edge-dashed"/>
+        <!-- flutter -->
+        <rect x="330" y="470" width="320" height="56" class="box"/>
+        <text x="490" y="492" text-anchor="middle" class="lbl">apps/mobile/android (Android / Web)</text>
+        <text x="490" y="508" text-anchor="middle" class="lbl-sm">Hive local storage · bundled + cached Duas · no shared code</text>
+        <line x1="650" y1="490" x2="740" y2="444" class="edge"/>
+        <line x1="400" y1="470" x2="150" y2="350" class="edge-dashed"/>
+        <text x="215" y="428" class="lbl-sm">anon RPC: get_dua_content</text>
+        <line x1="650" y1="480" x2="880" y2="340" class="edge-dashed"/>
       </svg>
+      <p class="section-sub" style="margin-top:8px">Solid arrows are live dependencies; dashed ones are optional, build-time-only, or not deployed. The Flutter app calls only two anon-callable Duas RPCs on the Learning Supabase project (published content only) and otherwise stays offline-first.</p>
 
       <div class="callout warn"><strong>One connection root CLAUDE.md doesn't mention</strong>
       The R2 audio bucket is documented as apps/mobile/android's "one deliberate exception" to isolation from apps/quran. In the current code, <strong>apps/quran also fetches whole-Surah audio directly from that same bucket</strong> (its Listening Mode CSP allow-lists <code>https://audio.iqraspace.org</code>, and <code>src/lib/content/listeningAudio.ts</code> builds the same URL scheme, ported from the Flutter app's Dart constants). Nothing is shared code-wise or via imports — both apps independently hard-code URLs to the same public, keyless CDN endpoint — but it means the R2 bucket is now a dependency of <em>two</em> apps, not one. Worth knowing before renaming keys or restructuring that bucket.</div>
 
-      <h3>Multi-Zones routing, traced end to end</h3>
-      <p>A request to <code>iqraspace.org/quran/some-page</code>:</p>
+      <h3>Path routing on one Cloudflare zone, traced end to end</h3>
+      <p>A request to <code>iqraspace.org/quran/surah/2</code>:</p>
       <ol>
-        <li>DNS for <code>iqraspace.org</code> resolves to the <strong>apps/landing</strong> Vercel project (kept DNS-only/un-proxied on Cloudflare — see apps/quran's <code>DEPLOYMENT.md</code>).</li>
-        <li>Landing's <code>vercel.json</code> evaluates its <code>rewrites</code> array. <code>/quran/:path*</code> matches a rule that transparently proxies to <code>https://iqraspace-quran.vercel.app/quran/:path*</code> — the browser's address bar never changes.</li>
-        <li>That target is <strong>apps/quran's own, separately deployed</strong> Vercel project. Its <code>next.config.ts</code> sets <code>basePath</code> from <code>NEXT_BASE_PATH</code>, which is set to <code>/quran</code> only in that project's Vercel production environment — so the app's own routing lines up exactly with the incoming path. Bare <code>/</code> 404s on that project by design.</li>
-        <li>The exact same pattern applies to <code>/learning/*</code> → <code>https://iqraspace.vercel.app/learning/:path*</code> (apps/learning's own project, own <code>NEXT_BASE_PATH=/learning</code>, plus explicit <code>redirects()</code> for old bare bookmarked paths).</li>
-        <li>Anything not matching <code>/quran*</code> or <code>/learning*</code> is served directly by apps/landing (its own static pages), with landing's own security headers applied only there (scoped via a negative-lookahead <code>source</code> so they don't collide with the proxied apps' own headers).</li>
+        <li>DNS: the <code>@</code> and <code>www</code> A records point at the placeholder <code>192.0.2.1</code> and are <strong>Proxied</strong> (orange cloud). The address is never contacted — a Worker route answers first. Worker routes only fire for proxied records, so un-proxying these records takes the site down.</li>
+        <li>Cloudflare matches the request path against the <code>routes</code> declared in each app's <code>wrangler.jsonc</code>. <code>iqraspace.org/quran*</code> belongs to <code>iqraspace-quran</code>; <code>iqraspace.org/learning*</code> to <code>iqraspace-learning</code>; <code>iqraspace.org/*</code> to <code>iqraspace-site</code>. <strong>The most specific pattern wins</strong>, so no app proxies to another and the browser never sees a hop.</li>
+        <li><code>iqraspace-quran</code> is an assets-only Worker (no script): Workers Static Assets serves <code>dist/quran/surah/2.html</code> directly with <code>html_handling: "drop-trailing-slash"</code> (so <code>/quran/surah/2/</code> redirects, 307, to <code>/quran/surah/2</code>). Security headers/CSP come from a generated <code>_headers</code> file, not <code>next.config</code> <code>headers()</code>.</li>
+        <li><code>iqraspace-learning</code> is also a static export, plus a small Worker script that runs <strong>only</strong> for the dynamic-route URL patterns (<code>run_worker_first</code>): <code>/learning/share/*</code>, <code>/learning/teach/*</code>, <code>/learning/admin/duas/*</code> (minus the fixed sub-pages <code>new</code>, <code>list</code>, <code>activity</code>, <code>categories</code>, <code>categories/new</code>). Details and the safe way to add a route are in §25.</li>
+        <li><code>iqraspace-site</code> serves everything else from its own static assets and runs its Worker only for <code>/api/*</code> (<code>POST /api/contact</code>).</li>
+        <li><code>www.iqraspace.org/*</code> is bound to a fourth, tiny Worker (<code>iqraspace-www-redirect</code>) that 301-redirects to the apex preserving path and query.</li>
       </ol>
-      <p><strong>Net effect:</strong> three fully independent Vercel projects/deployments, each with its own CI workflow and secrets, stitched into one apparent domain purely by an edge-level rewrite. There is no shared runtime and no monorepo-aware Vercel configuration.</p>
+      <p><strong>Net effect:</strong> three independent Workers, each with its own <code>wrangler.jsonc</code>, build and CI workflow, stitched into one domain by the zone's route table alone. Routing changes are edits to the relevant app's <code>wrangler.jsonc</code> <code>routes</code> (and, for the www host, <code>apps/site/www-redirect</code>) — there is no <code>vercel.json</code>, no Multi-Zones <code>rewrites()</code>, and nothing is hosted on Vercel any more (see §22 for the historical note).</p>
     </section>
 
     <!-- 3. STACK -->
@@ -386,7 +402,7 @@
           <td>TypeScript ^5</td>
           <td>Tailwind CSS ^4</td>
           <td>React 19.2.8, <code>react-pdf</code> ^10.5.0, <code>pdf-lib</code> ^1.17.1 (dev)</td>
-          <td>Static generated content (committed JSON); Supabase project exists but is unwired (see §7)</td>
+          <td>Static generated content (committed JSON). <strong>No Supabase usage at all</strong> — bookmarks/preferences are <code>localStorage</code>; its old Supabase project is unused and deletable (see §7)</td>
         </tr>
         <tr>
           <td><code>apps/mobile/android</code></td>
@@ -398,16 +414,16 @@
           <td>No backend DB — Hive (local) + Al Quran Cloud API + Cloudflare R2 audio</td>
         </tr>
         <tr>
-          <td><code>apps/landing</code></td>
-          <td>—</td>
-          <td>None (static HTML)</td>
-          <td>HTML/CSS</td>
-          <td>Inline CSS</td>
-          <td>—</td>
-          <td>None — <code>vercel.json</code> rewrites only</td>
+          <td><code>apps/site</code></td>
+          <td>Node (build script + Wrangler only)</td>
+          <td>None (hand-authored static HTML)</td>
+          <td>HTML/JS</td>
+          <td>Shared <code>styles.css</code></td>
+          <td><code>wrangler</code> ^4 (dev dep)</td>
+          <td>Cloudflare D1 (<code>iqraspace-site</code>, contact form) via a tiny Worker</td>
         </tr>
       </table>
-      <p>Root-level: Node/npm workspace with a single Supabase CLI devDependency (<code>supabase ^2.116.0</code>) for apps/learning's DB; no shared build tool across apps.</p>
+      <p>Root-level: Node/npm with a single Supabase CLI devDependency (<code>supabase ^2.116.0</code>) for apps/learning's DB (and the Duas tables, which live in that same project); no shared build tool across apps. Only <code>apps/site</code> declares <code>wrangler</code> as a devDependency; for <code>apps/quran</code> and <code>apps/learning</code> run <code>npx wrangler</code> (fetched on demand, as CI's wrangler-action does).</p>
     </section>
 
     <!-- 4. STRUCTURE -->
@@ -416,44 +432,52 @@
       <div class="tree">
 IqraSpace/
 ├─ apps/
-│  ├─ <span class="c1">learning/</span>        <span class="c2"># Quranic Teacher — tutoring LMS (Next.js + Supabase)</span>
+│  ├─ <span class="c1">learning/</span>        <span class="c2"># Quranic Teacher — tutoring LMS (Next.js static export + Supabase)</span>
 │  │  ├─ src/app/(public)     <span class="c2"># /, /login, /signup</span>
 │  │  ├─ src/app/(app)        <span class="c2"># dashboard, classes, lessons, students, materials,</span>
 │  │  │                       <span class="c2">#   schedule, attendance, progress, notes, meet,</span>
-│  │  │                       <span class="c2">#   notifications, settings, teach/[lessonId], admin/*</span>
+│  │  │                       <span class="c2">#   notifications, settings, teach/[lessonId], admin/*, admin/duas/*</span>
 │  │  ├─ src/app/share/[lessonId]   <span class="c2"># read-only live-follow view (still requires login)</span>
-│  │  ├─ src/components/{ui,shell,pdf,teach,lessons,students,attendance,admin}
+│  │  ├─ src/components/{ui,shell,pdf,teach,lessons,students,attendance,admin,admin/duas}
 │  │  ├─ src/lib/              <span class="c2"># supabaseClient, realtime, sharing, storage, notifications,</span>
-│  │  │                        <span class="c2">#   curriculum, roster, attendance, quranLink, types, ...</span>
-│  │  └─ scripts/               <span class="c2"># pdfjs asset copy, admin seeding, surah-lesson seeding</span>
+│  │  │                        <span class="c2">#   curriculum, roster, routeParam, duas/, ...</span>
+│  │  ├─ worker/               <span class="c2"># Cloudflare Worker for the 4 dynamic routes (index.js, routes.js + tests)</span>
+│  │  ├─ scripts/              <span class="c2"># build-cf, prepare-cf, pdfjs asset copy, admin seeding, ...</span>
+│  │  └─ wrangler.jsonc        <span class="c2"># route iqraspace.org/learning*</span>
 │  │
-│  ├─ <span class="c1">quran/</span>           <span class="c2"># IqraSpace Quran — public reader (Next.js, SSG)</span>
+│  ├─ <span class="c1">quran/</span>           <span class="c2"># IqraSpace Quran — public reader (Next.js static export, assets-only Worker)</span>
 │  │  ├─ src/app/{surah,page,bookmarks,search,supplications}
 │  │  ├─ src/components/{reader,audio,supplications,home}
 │  │  ├─ src/content/generated/    <span class="c2"># synced Quran text/translations — committed, NOT gitignored</span>
 │  │  ├─ src/lib/{content,i18n,preferences}
-│  │  ├─ scripts/                  <span class="c2"># sync-content.mjs, generate-search-index.mjs, pdf/*</span>
-│  │  └─ supabase/                 <span class="c2"># OWN Supabase project — separate from root supabase/</span>
+│  │  ├─ scripts/                  <span class="c2"># sync-content.mjs, generate-search-index.mjs, build-cf.mjs, pdf/*</span>
+│  │  ├─ supabase/                 <span class="c2"># legacy: its Supabase project is UNUSED (no client in package.json)</span>
+│  │  └─ wrangler.jsonc            <span class="c2"># route iqraspace.org/quran*</span>
 │  │
-│  ├─ <span class="c1">flutter/</span>         <span class="c2"># IqraSpace Quran (Flutter) — Android/Web, sibling to apps/quran</span>
+│  ├─ <span class="c1">mobile/android/</span> <span class="c2"># IqraSpace Quran (Flutter) — Android/Web, sibling to apps/quran</span>
 │  │  ├─ lib/core/{audio,constants,network,storage,theme,widgets}
 │  │  ├─ lib/features/{home,quran_reader,bookmarks,search,settings,supplications}
 │  │  ├─ lib/l10n/                 <span class="c2"># app_{en,te,ur}.arb + generated app_localizations*.dart</span>
-│  │  └─ assets/{fonts,supplications.json}
+│  │  └─ assets/{fonts,supplications.json}   <span class="c2"># bundled Duas fallback snapshot</span>
 │  │
-│  └─ <span class="c1">landing/</span>         <span class="c2"># Static domain-root page — no framework</span>
-│     ├─ index.html, privacy.html, robots.txt, sitemap.xml
-│     └─ vercel.json               <span class="c2"># the Multi-Zones rewrites() config</span>
+│  ├─ <span class="c1">site/</span>            <span class="c2"># Domain-root static site + contact Worker (D1)</span>
+│  │  ├─ *.html, styles.css, site.js, robots.txt, sitemap.xml
+│  │  ├─ worker/ (index.js, contact.js + tests), d1/migrations/, scripts/build.mjs
+│  │  ├─ www-redirect/             <span class="c2"># separate tiny Worker: www -> apex 301 (deployed by hand)</span>
+│  │  ├─ supabase/duas/            <span class="c2"># Duas content pipeline, PGlite tests, reports (see §27)</span>
+│  │  └─ wrangler.jsonc            <span class="c2"># route iqraspace.org/*, D1 binding DB</span>
+│  │
+│  └─ <span class="c1">landing/</span>         <span class="c2"># leftover (renamed apps/site): only gitignored local files — ignore</span>
 │
-├─ supabase/                    <span class="c2"># belongs to apps/learning — migrations/ (0001-0023) + functions/</span>
-├─ .github/workflows/           <span class="c2"># ci.yml, ci-quran.yml, ci-flutter.yml, ci-landing.yml</span>
+├─ supabase/                    <span class="c2"># belongs to apps/learning — migrations/ (0001-0026) + functions/ + config.toml</span>
+├─ .github/workflows/           <span class="c2"># ci.yml, ci-quran.yml, ci-site.yml, ci-flutter.yml, sync-quran-content.yml</span>
 ├─ .claude/skills/               <span class="c2"># iqs-debug, iqs-deploy, iqs-git (AI-assisted dev tooling)</span>
-├─ CLAUDE.md                    <span class="c2"># repo-wide guidance for AI coding agents</span>
+├─ CLAUDE.md                    <span class="c2"># repo-wide guidance for AI agents (refreshed 2026-10-05 for Cloudflare Workers; older revisions mentioned Vercel/Multi-Zones/Capacitor)</span>
 ├─ Iqra-space-architecture.md   <span class="c2"># ORIGINAL apps/learning-only planning doc — pre-monorepo</span>
-├─ DEPLOYMENT.md                <span class="c2"># apps/learning-scoped deployment notes (has stale claims — see §22)</span>
+├─ DEPLOYMENT.md                <span class="c2"># Cloudflare deployment writeup (CI, DNS runbook, costs)</span>
 └─ docs/, design/, resources/   <span class="c2"># gitignored local working material — will NOT exist on a fresh clone</span>
       </div>
-      <p><strong>Root <code>package.json</code></strong> only proxies into two apps: <code>dev</code>/<code>build</code>/<code>lint</code> → apps/learning (the unprefixed "default"), <code>quran:dev</code>/<code>quran:build</code>/<code>quran:lint</code>/<code>quran:typecheck</code> → apps/quran. Notably it has <strong>no <code>typecheck</code> proxy for apps/learning</strong> and <strong>no delegator scripts at all</strong> for apps/mobile/android or apps/landing (they use their own toolchains). Always run app-specific commands from inside that app's directory, or with an explicit <code>--prefix</code>.</p>
+      <p><strong>Root <code>package.json</code></strong> only proxies into two apps: <code>dev</code>/<code>build</code>/<code>lint</code> → apps/learning (the unprefixed "default"), <code>quran:dev</code>/<code>quran:build</code>/<code>quran:lint</code>/<code>quran:typecheck</code> → apps/quran. Notably it has <strong>no <code>typecheck</code> proxy for apps/learning</strong> and <strong>no delegator scripts at all</strong> for apps/mobile/android or apps/site (they use their own toolchains), and none for <code>build:cf</code>. Always run app-specific commands from inside that app's directory, or with an explicit <code>--prefix</code>.</p>
     </section>
 
     <!-- 5. ONBOARDING -->
@@ -462,7 +486,7 @@ IqraSpace/
       <p class="section-sub">A concrete, ordered path using only commands that actually exist in this repo.</p>
       <ol>
         <li><strong>Read this document's §2–§4</strong>, then skim the per-app section (§6–§9) for whichever app you'll actually touch.</li>
-        <li><strong>Prerequisites:</strong> Node ≥20.9 + npm for the two Next.js apps; Flutter 3.47.3/Dart ≥3.5 for apps/mobile/android; nothing extra for apps/landing.</li>
+        <li><strong>Prerequisites:</strong> Node ≥20.9 + npm for the Next.js apps and <code>apps/site</code>; Flutter 3.47.3/Dart ≥3.5 for apps/mobile/android; Wrangler (installed as a dev dependency or via <code>npx wrangler</code>) only if you need to preview/deploy the Workers. Full commands are in §24.</li>
         <li><strong>Clone and install</strong> only what you need — there's no repo-wide install step:
 <pre><code># apps/learning
 npm install --prefix apps/learning
@@ -473,7 +497,7 @@ cd apps/quran && npm install
 # apps/mobile/android
 cd apps/mobile/android && flutter pub get</code></pre>
         </li>
-        <li><strong>Configure environment</strong> — copy each app's <code>.env.local.example</code> to <code>.env.local</code> and fill in your own Supabase project URL/anon key (learning) or Quran Foundation sandbox credentials (quran, only needed if you're touching content sync). apps/mobile/android needs no env file for normal development (only for the release-upload pipeline).</li>
+        <li><strong>Configure environment</strong> — copy each app's <code>.env.local.example</code> to <code>.env.local</code> and fill in your own Supabase project URL/anon key (learning; for the real backend use the <code>iqraspace-learning</code> project's public URL + anon key from the owner) or Quran Foundation sandbox credentials (quran, only needed if you're touching content sync). apps/mobile/android needs no env file for normal development (only for the release-upload pipeline); to see <em>remote</em> Duas locally pass the two <code>--dart-define</code>s from §27.</li>
         <li><strong>Apply the DB schema</strong> (apps/learning only, if you need a working backend):
 <pre><code>npx supabase login
 npx supabase link --project-ref &lt;your-project-ref&gt;
@@ -488,7 +512,8 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
         <li><strong>Verify:</strong> apps/learning — sign up, confirm a <code>public.users</code>/<code>tutors</code> or <code>students</code> row was created by the DB trigger. apps/quran — reading/search/bookmarks should all work with zero configuration (it's local-storage-only today). apps/mobile/android — the app should boot straight to Home with no login screen.</li>
         <li><strong>Run the checks before any change:</strong> <code>npm run lint</code>, then <code>npx next typegen && npm run typecheck</code> (both Next.js apps need the <code>next typegen</code> step first on a fresh checkout — see §17), <code>npm run build</code>. For Flutter: <code>flutter analyze</code> and <code>flutter test</code> (what CI actually gates on).</li>
         <li><strong>Make a small, safe change</strong> — e.g. a copy tweak in one component — and confirm the dev server hot-reloads it and lint/typecheck still pass.</li>
-        <li><strong>Understand deployment</strong> before pushing to <code>main</code> on anything CI-guarded (§16) — each app deploys independently on push to <code>main</code> (Flutter is analyze/test-only, no auto-deploy; release is a separate manual/skill-driven process, §16).</li>
+        <li><strong>Understand deployment</strong> before pushing to <code>main</code> on anything CI-guarded (§16, §25) — the three web apps build with <code>npm run build:cf</code> and deploy to Cloudflare Workers (CI deploy is currently <em>not working</em>; production is deployed manually with <code>wrangler</code>, §25). Flutter is analyze/test-only in CI; release is a separate manual/skill-driven process.</li>
+        <li><strong>Never apply database changes through CI</strong> — migrations are applied by the owner with <code>npx supabase db push</code> from the repo root (§26).</li>
       </ol>
     </section>
 
@@ -497,7 +522,7 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
     <!-- 6. APPS/LEARNING -->
     <section id="app-learning">
       <h2><span class="num">6</span>apps/learning — Quranic Teacher (LMS)</h2>
-      <p class="section-sub">A tutoring LMS for a single solo tutor. The oldest, most-piloted app in the repo — quiet since 2026-09-09 while development focus moved to the Quran-reader apps.</p>
+      <p class="section-sub">A tutoring LMS for a single solo tutor. Now a <strong>Next.js static export on a Cloudflare Worker</strong>, backed by a <strong>new Supabase project (created 2026-10-03, fresh start — no data carried over)</strong>, and since 2026-10-03 also home to the Duas admin area (§27).</p>
 
       <div class="callout info"><strong>Where the real docs are</strong>
       <code>apps/learning/README.md</code> and <code>AGENTS.md</code>/<code>CLAUDE.md</code> at that level are auto-generated Next.js boilerplate, not hand-written project docs (Next 16 regenerates them on <code>next dev</code>). The actual build history and design decisions live in root <code>docs/PROGRESS.md</code> (gitignored, local-only) and <code>Iqra-space-architecture.md</code>.</div>
@@ -507,16 +532,19 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
         <tr><th>Path</th><th>Group</th><th>Notes</th></tr>
         <tr><td><code>/</code>, <code>/login</code>, <code>/signup</code></td><td><code>(public)</code></td><td>Slim public header, no sidebar.</td></tr>
         <tr><td><code>/dashboard</code>, <code>/students</code>, <code>/classes</code>, <code>/lessons</code>, <code>/materials</code>, <code>/schedule</code>, <code>/attendance</code>, <code>/progress</code>, <code>/notes</code>, <code>/meet</code>, <code>/notifications</code>, <code>/settings</code></td><td><code>(app)</code></td><td>Wrapped in <code>RequireAuth</code> + <code>AppShell</code> (sidebar/topbar).</td></tr>
-        <tr><td><code>/teach/[lessonId]</code></td><td><code>(app)</code></td><td>Tutor's live teaching screen — PDF/ayah selection, highlight broadcast, presence.</td></tr>
+        <tr><td><code>/teach/[lessonId]</code></td><td><code>(app)</code></td><td>Tutor's live teaching screen — PDF/ayah selection, highlight broadcast, presence. Served via the dynamic-route Worker (§25); the real id is read from <code>window.location</code>.</td></tr>
         <tr><td><code>/admin</code>, <code>/admin/users</code></td><td><code>(app)</code></td><td>Admin/super_admin only.</td></tr>
-        <tr><td><code>/share/[lessonId]</code></td><td>outside both groups</td><td>Chrome-minimal student follow view. <strong>Requires a real login</strong> — not a token/magic-link share.</td></tr>
+        <tr><td><code>/admin/duas</code>, <code>/admin/duas/list</code>, <code>/new</code>, <code>/[id]</code>, <code>/categories</code>, <code>/categories/new</code>, <code>/categories/[slug]</code>, <code>/activity</code></td><td><code>(app)</code></td><td>Duas content management — admin/super_admin only (§27). <code>[id]</code> and <code>[slug]</code> are dynamic-route patterns handled by the Worker.</td></tr>
+        <tr><td><code>/share/[lessonId]</code></td><td>outside both groups</td><td>Chrome-minimal student follow view. <strong>Requires a real login</strong> — not a token/magic-link share. Dynamic-route Worker pattern.</td></tr>
       </table>
-      <p>No <code>middleware.ts</code> and no <code>src/app/api</code> routes exist anywhere in this app — route protection is client-side (<code>RequireAuth</code>, UX-only) backed by Postgres RLS as the real boundary, and all backend logic goes through Supabase directly or through Edge Functions.</p>
+      <p>No <code>middleware.ts</code> and no <code>src/app/api</code> routes exist anywhere in this app — it is a pure static export (<code>output: "export"</code>, <code>basePath: /learning</code>, <code>trailingSlash</code> handled by Cloudflare's <code>drop-trailing-slash</code>). Route protection is client-side (<code>RequireAuth</code>, UX-only) backed by Postgres RLS as the real boundary, and all backend logic goes through Supabase directly or through Edge Functions. Because nothing runs on a server per request, <strong>every <code>NEXT_PUBLIC_*</code> value is baked in at build time</strong> (§24).</p>
+      <div class="callout info"><strong>Dynamic routes in a static export</strong>
+      Next can't pre-render <code>/share/&lt;uuid&gt;</code> for ids that don't exist yet, so each of the 4 dynamic patterns exports <em>one placeholder shell</em> (param value <code>_</code>). The Worker (<code>apps/learning/worker/</code>) rewrites a real URL internally to that shell — no redirect, bookmarked links keep working — and the client component reads the real id from <code>window.location</code> via <code>src/lib/routeParam.ts</code> / <code>src/components/RouteEntry.tsx</code>. Adding a new dynamic route means touching <em>four</em> places; the checklist is in §25.</div>
 
       <h3>Component architecture</h3>
       <ul>
         <li><code>components/ui/</code> — hand-built primitives: Button, Card, Field/Input/Select/Textarea, Badge, Avatar, ProgressBar, EmptyState, Tabs, Modal, Toast. No component library dependency.</li>
-        <li><code>components/shell/</code> — AppShell, Sidebar, Topbar, PublicHeader, NotificationBell, ThemeToggle, and <code>navConfig.ts</code> (single source of truth for nav items/titles).</li>
+        <li><code>components/shell/</code> — AppShell, Sidebar, Topbar, SiteHeader/PublicHeader/PublicFooter and <code>Brand</code> (shared brand lockup, matching apps/site after the 2026-10-03 UI refresh), NotificationBell, ThemeToggle, <code>icons.tsx</code>, and <code>navConfig.ts</code> (single source of truth for nav items/titles).</li>
         <li><code>components/pdf/</code> — <code>PdfViewer.tsx</code> (pdf.js wrapper: zoom/fit, page nav, fullscreen, JBIG2/scanned-PDF support), <code>AnnotationLayer.tsx</code> (SVG draw overlay, <strong>session-local only, never persisted or broadcast</strong>), <code>PdfToolbar.tsx</code>.</li>
         <li><code>components/teach/</code> — <code>TeachClient.tsx</code> (tutor's live screen) and <code>ShareClient.tsx</code> (student's read-only follow view).</li>
         <li><code>components/lessons/</code>, <code>students/</code>, <code>attendance/</code>, <code>admin/</code> — feature-specific forms and widgets (scheduling, curriculum picking, attendance control, tutor-impersonation picker for admins).</li>
@@ -529,15 +557,17 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
         <tr><td><code>authContext.tsx</code></td><td><code>AuthProvider</code>/<code>useAuth()</code> — re-validates session via <code>auth.getUser()</code> (server round-trip) rather than trusting a cached session.</td></tr>
         <tr><td><code>realtime.ts</code> / <code>sharing.ts</code></td><td>Live highlight-sync channel (<code>lesson:{id}</code>) + durable persistence/catch-up query (see §10).</td></tr>
         <tr><td><code>notifications.ts</code></td><td>Thin wrapper around the <code>notify_user()</code> RPC — never a direct table insert.</td></tr>
-        <tr><td><code>storage.ts</code></td><td><code>lesson-materials</code> Storage bucket: upload/list/signed-URL/delete.</td></tr>
-        <tr><td><code>quranLink.ts</code> / <code>lessonMaterial.ts</code></td><td>Cross-app deep links into apps/quran (its own separate Vercel project), including resolving a <code>quran-surah:{N}</code> marker to that app's hosted per-surah PDFs — avoids duplicate uploads.</td></tr>
+        <tr><td><code>storage.ts</code></td><td>Lesson-material PDFs: upload/list/signed-URL/delete through the <code>lesson-materials-r2</code> Edge Function (presigned-URL broker for a <strong>private Cloudflare R2 bucket</strong> — migrated from Supabase Storage on 2026-09-28; migration 0024 dropped the old bucket).</td></tr>
+        <tr><td><code>quranLink.ts</code> / <code>lessonMaterial.ts</code></td><td>Cross-app deep links into apps/quran (its own separate Worker on the same domain), including resolving a <code>quran-surah:{N}</code> marker to that app's hosted per-surah PDFs — avoids duplicate uploads.</td></tr>
         <tr><td><code>curriculum.ts</code></td><td>The "Universal Lesson Plan" data layer — shared, tutor-agnostic curriculum with per-student progress.</td></tr>
         <tr><td><code>recurringSessions.ts</code></td><td>Materializes ~8 weeks of concrete <code>lessons</code> rows from a recurring-session rule. No cron — a manual "Generate 8 more weeks" button.</td></tr>
         <tr><td><code>types.ts</code></td><td>Hand-written domain types mirroring the SQL schema — <strong>not</strong> generated via <code>supabase gen types</code> yet.</td></tr>
+        <tr><td><code>routeParam.ts</code></td><td>Reads the real dynamic-route id from <code>window.location</code> (needed because the static export only contains a placeholder shell — §25).</td></tr>
+        <tr><td><code>duas/</code> (<code>api.ts</code>, <code>form.ts</code>, <code>types.ts</code>, <code>validate.ts</code>)</td><td>Data access, form model, types and client-side validation for the Duas admin (§27). <code>validate.ts</code> has 17 unit tests (<code>npm run test:duas</code>).</td></tr>
       </table>
 
       <h3>Database schema</h3>
-      <p>24 migrations at repo root (<code>supabase/migrations/0001–0023</code>, not inside <code>apps/learning/</code>). Every table uses <code>STABLE SECURITY DEFINER</code> helper functions (<code>is_tutor_of_class</code>, <code>is_member_of_class</code>, <code>is_tutor_of_student</code>, <code>is_admin</code>, <code>is_super_admin</code>, <code>is_any_tutor</code>) for RLS, adopted specifically to avoid an infinite-recursion bug (Postgres error <code>42P17</code>) hit early on with naive inline-subquery policies.</p>
+      <p>26 migrations at repo root (<code>supabase/migrations/0001–0026</code>, not inside <code>apps/learning/</code>; <code>0025_duas_schema.sql</code> and <code>0026_duas_seed.sql</code> are the Duas tables and seed). Every table uses <code>STABLE SECURITY DEFINER</code> helper functions (<code>is_tutor_of_class</code>, <code>is_member_of_class</code>, <code>is_tutor_of_student</code>, <code>is_admin</code>, <code>is_super_admin</code>, <code>is_any_tutor</code>) for RLS, adopted specifically to avoid an infinite-recursion bug (Postgres error <code>42P17</code>) hit early on with naive inline-subquery policies. The Duas tables add <code>dua_role</code> / <code>is_dua_admin</code> / <code>is_dua_staff</code>, which read <code>public.users.role</code>.</p>
       <table>
         <tr><th>Table</th><th>Purpose</th><th>Key relationships</th></tr>
         <tr><td><code>users</code></td><td>One row per authenticated person; <code>role</code> enum (<code>tutor</code>/<code>student</code>/<code>guardian</code>/<code>admin</code>/<code>super_admin</code>), <code>username</code> (unique, NOT NULL), <code>auth_email</code> (real or synthetic).</td><td>Root of the role system; FK target for most ownership checks.</td></tr>
@@ -545,7 +575,7 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
         <tr><td><code>classes</code> / <code>class_members</code></td><td>Class grouping and membership.</td><td><code>classes.tutor_id → tutors</code>; <code>class_members</code> joins classes↔students.</td></tr>
         <tr><td><code>lessons</code></td><td>A scheduled/held session. Now <strong>student-based</strong> (one-to-one), not class-based, as of migration 0023.</td><td><code>student_id</code> NOT NULL; optional <code>recurring_rule_id</code>, <code>lesson_plan_item_id</code>.</td></tr>
         <tr><td><code>recurring_session_rules</code></td><td>A recurrence definition materialized into concrete <code>lessons</code> rows.</td><td>0023.</td></tr>
-        <tr><td><code>lesson_materials</code></td><td>Uploaded PDFs (Storage bucket) + page range.</td><td><code>tutor_id</code>-scoped write, any-authenticated read.</td></tr>
+        <tr><td><code>lesson_materials</code></td><td>Uploaded PDFs (private R2 bucket, brokered by an Edge Function) + page range.</td><td><code>tutor_id</code>-scoped write, any-authenticated read.</td></tr>
         <tr><td><code>lesson_plans</code> / <code>lesson_plan_items</code> / <code>class_lesson_plans</code></td><td>Shared, admin-edited curriculum catalog (tutor-agnostic since 0021).</td><td>Read-only for tutors.</td></tr>
         <tr><td><code>student_lesson_progress</code> / <code>student_lesson_completions</code></td><td>Per-student position in the curriculum; completions require tutor/admin confirmation.</td><td>Seeded consistently regardless of add-order via two triggers (0022).</td></tr>
         <tr><td><code>attendance</code> / <code>lesson_progress</code> / <code>lesson_notes</code></td><td>Per-lesson records: presence, skill scores (recitation/tajweed/memorization), structured notes.</td><td><code>lesson_id</code>-scoped.</td></tr>
@@ -558,54 +588,58 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
       <table>
         <tr><th>Function</th><th>Status</th><th>Purpose</th></tr>
         <tr><td><code>admin-user-management</code></td><td><span class="badge ok">Deployed</span></td><td>Create/reset-password/deactivate/reactivate/delete/status via <code>auth.admin.*</code> — service_role key never touches the browser. Re-checks the caller's DB role server-side.</td></tr>
+        <tr><td><code>lesson-materials-r2</code></td><td><span class="badge ok">Deployed</span></td><td>Presigned-URL broker for the private lesson-materials R2 bucket; re-implements the access rules the old Storage RLS enforced. Secrets (names only): <code>LESSON_MATERIALS_R2_ACCOUNT_ID/BUCKET/ACCESS_KEY_ID/SECRET_ACCESS_KEY</code>.</td></tr>
         <tr><td><code>google-oauth-exchange</code></td><td><span class="badge warn">Code-complete, not deployed</span></td><td>Token exchange + AES-GCM encrypt/store of the refresh token. Returns HTTP 501 if its secrets are unset.</td></tr>
         <tr><td><code>drive-file-proxy</code></td><td><span class="badge warn">Code-complete, not deployed</span></td><td>Refreshes and streams a Drive file's bytes.</td></tr>
       </table>
-      <p>Both undeployed functions need a Google Cloud OAuth client that only the project owner can provision. The UI correctly shows a "not configured" state — nothing is faked. Direct PDF upload to Supabase Storage is the fully-working materials path today.</p>
+      <p>Both undeployed functions need a Google Cloud OAuth client that only the project owner can provision. The UI correctly shows a "not configured" state — nothing is faked. Direct PDF upload (to R2 through the broker) is the fully-working materials path today. How to deploy a function: §26.</p>
 
       <h3>Testing</h3>
-      <p><span class="badge danger">None configured</span> — no test framework, no <code>test</code> script, no test files anywhere under <code>src</code>. CI's "run tests" step is an explicit no-op (<code>npm run test --if-present</code>). Prior validation was via throwaway, uncommitted Playwright scripts against the live hosted Supabase project — real but not repeatable.</p>
+      <p><span class="badge warn">Narrow</span> — there is no UI/E2E suite and the generic <code>npm run test</code> step is still a no-op in CI (<code>--if-present</code>). What exists: <code>npm run test:duas</code> (17 unit tests for the Duas form validation, run with Node's built-in runner) and <code>npm run test:worker</code> / <code>node --test worker/*.test.mjs</code> (8 tests for the dynamic-route matcher). CI runs both. Prior end-to-end validation of the LMS flows was via throwaway Playwright scripts against a live Supabase project — real but not repeatable.</p>
 
       <h3>Known gaps (confirmed against code)</h3>
       <ul>
         <li>Google Drive/Calendar integration — genuinely unconfigured, not faked (see above).</li>
         <li>Guardian role exists in the DB/type system with no dedicated portal.</li>
         <li>Highlight sync is page-level for PDFs, not the normalized-coordinate rect/word-level sync the original architecture doc sketched.</li>
-        <li>The most recent PROGRESS.md entry (student-based one-to-one scheduling, migration 0023) is explicitly flagged as <strong>not independently end-to-end tested</strong> — verify booking, recurring-session generation, and "Launch Lesson from Today's Sessions" before relying on it.</li>
+        <li>Student-based one-to-one scheduling (migration 0023) was explicitly flagged in PROGRESS.md as <strong>not independently end-to-end tested</strong> — and the app now runs on a brand-new, empty Supabase project, so verify booking, recurring-session generation and "Launch Lesson from Today's Sessions" from scratch.</li>
+        <li><strong>Existing users must re-register</strong> on the new Supabase project (fresh start); only the two seeded admin accounts exist at first (§26).</li>
+        <li><strong>No Content-Security-Policy</strong> on the Learning Worker (<code>_headers</code> has nosniff, Referrer-Policy, SAMEORIGIN, Permissions-Policy only) — a CSP could not be safely tested against the Google Drive picker/OAuth, Meet and pdf.js.</li>
+        <li>Duas admin CRUD flows (create/edit/publish/restore) have been verified only through login + RLS read checks and the PGlite end-to-end test, not clicked through against the live project.</li>
       </ul>
     </section>
 
     <!-- 7. APPS/QURAN -->
     <section id="app-quran">
       <h2><span class="num">7</span>apps/quran — IqraSpace Quran (public reader)</h2>
-      <p class="section-sub">Free, anonymous-first Quran reader. The most actively developed app in the repo right now — most of its documentation (dated 2026-08-31) is 3+ weeks and 15+ commits behind the code.</p>
+      <p class="section-sub">Free, anonymous-first Quran reader, served as a static export from an assets-only Cloudflare Worker. Its Supplications feature was <strong>removed on 2026-10-03</strong> (commit <code>778bf90</code>); Duas now live in the Flutter app and are managed remotely (§27).</p>
 
-      <div class="callout danger"><strong>Correcting a stale claim in root CLAUDE.md</strong>
-      Root <code>CLAUDE.md</code> describes this app as "Next.js 16 + Capacitor" with <code>cap:sync</code>/<code>cap:open:android</code> scripts and a <code>ci-quran-mobile.yml</code> workflow. <strong>None of that exists in the current tree.</strong> <code>package.json</code> has zero Capacitor dependencies, there's no <code>capacitor.config</code>, no <code>android/</code> folder, and <code>.github/workflows/</code> only has four files (<code>ci.yml</code>, <code>ci-quran.yml</code>, <code>ci-flutter.yml</code>, <code>ci-landing.yml</code>) — <code>ci-quran-mobile.yml</code> exists only on the separate <code>mobile/android</code> git branch and was deliberately excluded when that branch's work was folded into <code>main</code> (merge commit <code>144d049</code>: "main's apps/quran has since had its own newer redesign ... reconciling those two independently-evolved UIs is a separate, deliberate product decision"). <strong>The actual native Android app for the Quran reader today is the sibling <code>apps/mobile/android</code></strong>, a fully different codebase.</div>
+      <div class="callout danger"><strong>Correcting stale claims in root CLAUDE.md</strong>
+      Older revisions of root <code>CLAUDE.md</code> described this app as "Next.js 16 + Capacitor" with <code>cap:sync</code>/<code>cap:open:android</code> scripts and a <code>ci-quran-mobile.yml</code> workflow, and Vercel/Multi-Zones hosting (root <code>CLAUDE.md</code> has since been corrected). <strong>None of that exists in the current tree.</strong> <code>package.json</code> has zero Capacitor dependencies, there's no <code>capacitor.config</code>, no <code>android/</code> folder, and <code>.github/workflows/</code> has five files (<code>ci.yml</code>, <code>ci-quran.yml</code>, <code>ci-site.yml</code>, <code>ci-flutter.yml</code>, <code>sync-quran-content.yml</code>) — <code>ci-quran-mobile.yml</code> exists only on the separate <code>mobile/android</code> git branch and was deliberately excluded when that branch's work was folded into <code>main</code> (merge commit <code>144d049</code>). <strong>The actual native Android app for the Quran reader today is the sibling <code>apps/mobile/android</code></strong>, a fully different codebase.</div>
 
       <h3>Routes</h3>
-      <p><code>/</code>, <code>/surah</code> + <code>/surah/[surahNumber]</code>, <code>/page</code> + <code>/page/[pageNumber]</code>, <code>/bookmarks</code>, <code>/search</code>, <code>/supplications</code> + <code>/supplications/[categoryId]</code>. <strong>No <code>/juz</code> route</strong> — Juz Mode was deliberately removed (commit <code>1956544</code>, replaced by per-Surah PDF Mode); several of this app's own docs (PRODUCT-ROADMAP.md, PROJECT-STATUS.md) still describe it as built — it is not, in the current tree.</p>
+      <p><code>/</code>, <code>/surah</code> + <code>/surah/[surahNumber]</code>, <code>/page</code> + <code>/page/[pageNumber]</code>, <code>/bookmarks</code>, <code>/search</code> (730 statically exported pages in total: 114 Surah + 604 Page + 12 others). <strong>No <code>/juz</code> route</strong> — Juz Mode was deliberately removed (commit <code>1956544</code>, replaced by per-Surah PDF Mode) — and <strong>no <code>/supplications</code> route any more</strong> (removed 2026-10-03). Several of this app's own docs (PRODUCT-ROADMAP.md, PROJECT-STATUS.md) still describe those as built; they are not. Because this is a static export under <code>basePath: /quran</code> with <code>drop-trailing-slash</code>, <code>/quran/</code> answers 307 → <code>/quran</code>.</p>
 
       <h3>Content pipeline</h3>
-      <p>Source: <strong>Quran Foundation Content API</strong> (OAuth2 client-credentials, server-side only). <code>npm run sync:content</code> is a manual, developer-run step — <strong>not part of CI or the build</strong> — that fetches all 114 chapters / 6,236 verses (Uthmani text) plus translations and writes them to <code>src/content/generated/</code>. This output is <strong>deliberately committed to git</strong>, not gitignored (so CI/Vercel never needs live API access, and to respect the API's rate limits) — must be re-synced at least every 7 days per the Quran Foundation's license terms on cached content. A second, build-time-only pipeline (<code>generate-search-index.mjs</code>, wired into <code>npm run build</code>) turns that committed content into <code>public/search-index.json</code> for client-side search — no network call, no credentials needed at build time.</p>
+      <p>Source: <strong>Quran Foundation Content API</strong> (OAuth2 client-credentials, server-side only). <code>npm run sync:content</code> fetches all 114 chapters / 6,236 verses (Uthmani text) plus translations and writes them to <code>src/content/generated/</code>. This output is <strong>deliberately committed to git</strong>, not gitignored (so CI never needs live API access, and to respect the API's rate limits). The Quran Foundation licence requires a re-sync at least every 7 days — this used to be manual; the new <code>sync-quran-content.yml</code> workflow now runs weekly (guarded by the <code>QURAN_SYNC_ENABLED</code> repo variable), and if the content changed it opens a PR (it never pushes to <code>main</code>). A second, build-time-only pipeline (<code>generate-search-index.mjs</code>, wired into <code>npm run build</code>) turns that committed content into <code>public/search-index.json</code> for client-side search — no network call, no credentials needed at build time.</p>
 
       <h3>Major features (verified against code)</h3>
       <table>
         <tr><th>Feature</th><th>Status</th><th>Detail</th></tr>
         <tr><td>Reader Modes</td><td><span class="badge ok">Implemented</span></td><td>3-way switch: <em>listening</em> (whole-Surah audio from the Flutter app's R2 bucket, no per-ayah highlight), <em>reading</em> (no audio), <em>readingListening</em> (default — original per-ayah playback with now-playing highlight).</td></tr>
         <tr><td>Tajweed coloring</td><td><span class="badge ok">Implemented, opt-in</span></td><td>Live client-side fetch from Al Quran Cloud's keyless <code>quran-tajweed</code> edition, cached per-Surah, falls back to plain text on failure. Off by default — it's the one feature with a live third-party fetch.</td></tr>
-        <tr><td>Supplications (duas)</td><td><span class="badge ok">Implemented</span></td><td><code>/supplications</code> + detail route, backed by <code>src/content/supplications.json</code> — <strong>reused verbatim from apps/mobile/android's own dataset</strong> ("Hisn al-Qalb"), not independently maintained. Same Latin/Telugu/Urdu transliteration-script switch as the Flutter app.</td></tr>
+        <tr><td>Supplications (duas)</td><td><span class="badge muted">Removed here (2026-10-03)</span></td><td>The <code>/supplications</code> routes and components were deleted from apps/quran; Duas are now a Flutter-app feature backed by the remote Duas content system (§27). <code>apps/site</code> has a static <code>duas.html</code> page and links to it from the navigation/home pages.</td></tr>
         <tr><td>Search</td><td><span class="badge ok">Implemented</span>, simple</td><td>Client-side fetch of a static, build-time-generated JSON index (English translation text only) — deliberately not a database/Elasticsearch search, per the cost-consciousness rule (§20).</td></tr>
         <tr><td>i18n (UI chrome)</td><td><span class="badge ok">Implemented</span>, scoped</td><td>English/Telugu/Urdu — a hand-rolled dictionary + <code>useT()</code> hook (no i18n library), reusing wording from the Flutter app's <code>.arb</code> files where concepts overlap. Localizes UI chrome only, <strong>not</strong> Quran/translation content.</td></tr>
         <tr><td>PDF Mode</td><td><span class="badge ok">Implemented</span></td><td>Scanned-Mushaf per-Surah PDFs (<code>react-pdf</code>), built from a documented, multi-step offline pipeline (watermark strip → boundary crop → merge). Not in any prior roadmap phase — added ad hoc.</td></tr>
         <tr><td>Mini-player / Media Session</td><td><span class="badge ok">Implemented</span></td><td>Persistent bottom bar with real <code>navigator.mediaSession</code> integration (lock-screen-style controls), confirmed in code, not just claimed.</td></tr>
-        <tr><td>Auth / cross-device sync</td><td><span class="badge danger">Unwired</span></td><td>A Supabase project and schema exist (bookmarks, reading_progress, user_preferences, reading_history — one simple RLS policy per table), but <strong>no Supabase client is even installed</strong> in <code>package.json</code>. Every feature runs 100% on <code>localStorage</code> today. This is the roadmapped-but-not-started "Phase 5."</td></tr>
+        <tr><td>Auth / cross-device sync</td><td><span class="badge danger">Unwired</span></td><td><strong>Zero Supabase usage:</strong> no Supabase client is installed in <code>package.json</code> and bookmarks/preferences are <code>localStorage</code> only. The old schema/project (<code>apps/quran/supabase/</code>) is unused and can be deleted. This is the roadmapped-but-not-started "Phase 5."</td></tr>
         <tr><td>PWA / offline</td><td><span class="badge warn">Partial</span></td><td>Only an installable manifest (<code>manifest.ts</code>) exists — <strong>no service worker anywhere</strong>, no offline caching.</td></tr>
         <tr><td>Capacitor / Android wrap</td><td><span class="badge danger">Not present</span></td><td>See callout above — this app has no native wrap; use apps/mobile/android for the Android experience.</td></tr>
       </table>
 
       <h3>Cost-consciousness (hard constraint)</h3>
-      <p>Target is genuinely $0/month at pilot scale: Vercel Hobby, Supabase free tier (currently idle), Quran Foundation API is free, and all audio streams from external CDNs (<code>cdn.islamic.network</code> for per-ayah, the Flutter app's Cloudflare R2 bucket for whole-Surah) — never through this app's own bandwidth. Explicitly disallowed absent a documented requirement: Kubernetes/microservices, Elasticsearch/Algolia, paid CMS, Redis, self-hosted audio storage. Search's static-JSON approach is a direct product of this rule, not a limitation to "fix" later.</p>
+      <p>Target is genuinely $0/month at pilot scale: Cloudflare Workers Free (static asset requests are free and unlimited; this Worker has no script, so it never counts against the 100k requests/day Worker quota), Quran Foundation API is free, and all audio streams from external CDNs (<code>cdn.islamic.network</code> for per-ayah, the Flutter app's Cloudflare R2 bucket for whole-Surah) — never through this app's own bandwidth. Static Assets limits to keep in mind: 25 MiB per file, 20,000 files per Worker (<code>dist/quran</code> is currently 4,534 files / 375.8 MiB, largest PDF 14.8 MiB). Explicitly disallowed absent a documented requirement: Kubernetes/microservices, Elasticsearch/Algolia, paid CMS, Redis, self-hosted audio storage. Search's static-JSON approach is a direct product of this rule, not a limitation to "fix" later.</p>
 
       <h3>Testing</h3>
       <p><span class="badge danger">None</span> — no test script, no test framework, no test files. CI's test step is a documented no-op. A one-off manual accessibility pass (axe-core + Playwright, dev dependencies installed with <code>--no-save</code> and removed afterward) found and fixed two real bugs, but left no standing suite.</p>
@@ -617,7 +651,7 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
     <!-- 8. APPS/FLUTTER -->
     <section id="app-flutter">
       <h2><span class="num">8</span>apps/mobile/android — IqraSpace Quran (native)</h2>
-      <p class="section-sub">The Android (and web-capable) counterpart to apps/quran — a deliberately separate codebase and data source. Currently the most active part of the whole repo.</p>
+      <p class="section-sub">The Android (and web-capable) counterpart to apps/quran — a deliberately separate codebase and data source. Currently the most active part of the whole repo. Latest release: <strong>0.3.0+19</strong> (uploaded to the closed-testing track <code>alpha</code> on 2026-10-03).</p>
 
       <h3>Architecture</h3>
       <p>Feature-first under <code>lib/</code>: <code>core/</code> (audio, constants, network, storage, theme, widgets — shared infra) and <code>features/{home, quran_reader, bookmarks, search, settings, supplications}</code>, each with its own <code>data/{datasources,models,repositories}</code> → <code>domain/{entities,repositories,usecases}</code> → <code>presentation/{providers,screens,widgets}</code> layering (clean-architecture-lite). State management is Riverpod throughout, no codegen — plain <code>Provider</code>/<code>FutureProvider</code>/<code>StateNotifierProvider</code>. A recurring pattern: a <code>StateNotifier</code> reads its initial value from Hive on construction and writes back to Hive on every mutation, so Riverpod state and on-disk persistence never drift apart.</p>
@@ -626,23 +660,33 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
       <table>
         <tr><th>Box</th><th>Contents</th></tr>
         <tr><td><code>surah_cache</code></td><td>JSON-encoded, already Tajweed-parsed ayah lists per Surah — offline-first content cache.</td></tr>
-        <tr><td><code>reader_settings</code></td><td>Theme, font size, translation toggle, Tajweed on/off, reciter, reader mode, listening track, and the Supplications transliteration-script choice.</td></tr>
+        <tr><td><code>reader_settings</code></td><td>Theme, font size, translation toggle, Tajweed on/off, reciter, reader mode, listening track, the Supplications transliteration-script choice, <code>supplicationsTranslationLanguage</code> (English/Urdu) and <code>supplicationsTransliterationEnabled</code>.</td></tr>
         <tr><td><code>bookmarks</code></td><td>Bookmarked ayahs.</td></tr>
         <tr><td><code>audio_file_cache</code></td><td>Listening Mode's on-device audio cache metadata (Android only; web streams live every time).</td></tr>
+        <tr><td><code>duas_favorites</code></td><td>Favourite Duas, keyed by Dua slug (<code>slug:&lt;slug&gt;</code>).</td></tr>
+        <tr><td><code>duas_content_cache</code></td><td>Last validated remote Duas snapshot — one envelope under key <code>snapshot</code> (<code>{schema_version, version, fetched_at, json}</code>).</td></tr>
       </table>
-      <p>No account/personal data is ever stored or transmitted — everything is local, confirmed both by the Play Data-Safety review and by there being no auth code at all.</p>
+      <p>No account/personal data is ever stored or transmitted — everything is local, confirmed both by the Play Data-Safety review and by there being no auth code at all. The only outbound calls are public, anonymous: the Quran APIs, the R2 audio bucket and (from 0.3.0+19) the two public Duas RPCs.</p>
 
       <h3>Data source</h3>
       <p>Al Quran Cloud (<code>api.alquran.cloud</code>, keyless) is primary; a second client hits <code>api.quran.com</code> only for the Roman-Urdu translation (short timeout, failure silently swallowed — a "nice to have"). Once a Surah is fetched and Tajweed-parsed, it's served from Hive on every later open with no further network call.</p>
 
-      <h3>Supplications feature (new)</h3>
-      <p>A full vertical slice added alongside apps/quran's own port of the same feature: <code>assets/supplications.json</code> ("Hisn al-Qalb") currently has <strong>25 of an eventual ~132 categories / 106 of ~267 duas populated</strong> — a deliberate, tracked content gap, not a bug (the data's own <code>coverage_note</code> says so). Each dua carries Arabic, three transliteration scripts (Latin/Telugu/Urdu — note the "Urdu" field is actually Arabic script reused, per the data's own <code>sources_note</code>), and an English translation. Three new Noto font families (Naskh Arabic, Nastaliq Urdu, Sans Telugu — SIL OFL licensed) render this content; the script choice is a single, Hive-persisted, app-wide setting. This feature <strong>replaced the bottom nav's previous "Learn — coming soon" placeholder slot</strong> (that screen and its test were deleted in the same change).</p>
+      <h3>Supplications (Duas) — remote content with offline fallback</h3>
+      <p>Dua content no longer lives only in the app: the source of truth is the Learning Supabase project (tables <code>duas</code>, <code>dua_categories</code>, <code>dua_category_map</code>, §27), edited in <code>/learning/admin/duas</code> and downloaded by the app, so fixing a letter no longer needs a Play Store release. Layering under <code>lib/features/supplications/</code>:</p>
+      <ul>
+        <li><code>SupplicationsRepository</code> (<code>load</code>, <code>loadBundled</code>, an <code>updates</code> stream, <code>refresh({force})</code>) — resolution order is <strong>validated remote → last good cache → bundled asset</strong>, never blank. A freshness check (<code>dua_content_version</code>) runs at most hourly, always on cold start and pull-to-refresh; an invalid or failed refresh keeps the cache.</li>
+        <li><code>RemoteDataSource</code> (<code>dio</code>, anon key only) calls <code>POST /rest/v1/rpc/dua_content_version</code> and <code>get_dua_content</code>. It is enabled only when the build supplies <code>--dart-define=DUAS_SUPABASE_URL=…</code> and <code>--dart-define=DUAS_SUPABASE_ANON_KEY=…</code>; without them the app is purely offline on the bundled snapshot (§27 has the release command).</li>
+        <li><code>LocalCache</code> — Hive box <code>duas_content_cache</code>; <code>assets/supplications.json</code> is the bundled fallback, <strong>same shape as the RPC snapshot plus a <code>meta</code> block</strong>, regenerated by <code>build_canonical.mjs --write-bundled</code>.</li>
+        <li><strong>Favourites</strong> are keyed by Dua slug; legacy <code>{category}_{index}</code> favourites are migrated through the bundled <code>sort_order</code>; unresolved favourites are kept and shown as "No longer available".</li>
+        <li><strong>UI/settings:</strong> "Repeat ×N" chip + tasbeeh target (as of 2026-10-05, uncommitted work in the tree: the counter is a circular ring that fills toward the repeat count, resets on the next tap once full or on long-press, and a Duas <strong>text-size control</strong> with live preview is reachable from the reading settings sheet and the categories screen; not yet in a release build), per-category description note, hadith number/grade appended to the reference, a <strong>translation language</strong> setting (English/Urdu — default Urdu only if the app language is Urdu; missing Urdu falls back to English with a note) and a <strong>transliteration on/off</strong> setting. Display order: Arabic → transliteration → translation; the transliteration <em>script</em> (Latin/Telugu/Urdu) still follows the app language. Noto Naskh Arabic / Nastaliq Urdu / Sans Telugu fonts (SIL OFL) are bundled.</li>
+      </ul>
+      <p>This replaced the earlier bundled-only implementation (25 categories / 106 duas, with several truncated Arabic texts — Istikhara, Ayat al-Kursi, the three Quls — and Urdu "transliteration" that was just the Arabic again). The corrected dataset has 102 distinct published Duas in 30 active categories (197 Duas total incl. 95 unpublished drafts).</p>
 
       <h3>Listening Mode / Cloudflare R2</h3>
       <p>Plays one long-lived whole-Surah audio file (Al-Afasy recitation, or an Arabic+Urdu interleaved track — mutually exclusive, never both) rather than chaining per-ayah fetches, because the chained approach broke under Android's background/doze throttling. This is the app's <strong>first and only backend dependency</strong>, and the one deliberate exception to isolation from apps/quran: a dedicated Cloudflare R2 bucket (<code>audio.iqraspace.org</code>), chosen over Supabase Storage for no per-object size cap and no egress fees. Lock-screen/notification controls (<code>audio_service</code>) are wired only for this path — per-ayah playback stays in-app-only and pauses when the screen isn't active.</p>
 
       <h3>i18n</h3>
-      <p>Three locales — English (template), Telugu, Urdu — declared in <code>l10n.yaml</code>, generated via <code>flutter gen-l10n</code> from <code>.arb</code> files (240 keys, kept in sync across all three). apps/quran reuses this wording verbatim wherever concepts overlap, to avoid divergent copy between the two Quran-reader surfaces.</p>
+      <p>Three locales — English (template), Telugu, Urdu — declared in <code>l10n.yaml</code>, generated via <code>flutter gen-l10n</code> from <code>.arb</code> files (240+ keys, kept in sync across all three; the translation-language and transliteration settings added strings in all three). apps/quran reuses this wording verbatim wherever concepts overlap, to avoid divergent copy between the two Quran-reader surfaces.</p>
 
       <h3>Testing &amp; release</h3>
       <ul>
@@ -653,16 +697,21 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
       </ul>
     </section>
 
-    <!-- 9. APPS/LANDING -->
-    <section id="app-landing">
-      <h2><span class="num">9</span>apps/landing — domain root</h2>
-      <p class="section-sub">A single static page, by design. This is not an app that will grow a framework — treat any request to "add a build step here" with suspicion.</p>
+    <!-- 9. APPS/SITE -->
+    <section id="app-site">
+      <h2><span class="num">9</span>apps/site — domain root</h2>
+      <p class="section-sub">Hand-authored static pages plus one tiny Worker endpoint, by design. It replaced <code>apps/landing</code> (single page) on 2026-09-30; treat any request to "add a framework here" with suspicion.</p>
       <ul>
-        <li><code>index.html</code> — marketing/hero page, full SEO/OG meta tags, inline CSS with a <code>prefers-color-scheme: dark</code> variant, links out to <code>/quran</code> and <code>/learning</code>.</li>
-        <li><code>privacy.html</code> — companion static privacy-policy page (also listed in <code>sitemap.xml</code>). <strong>This resolves apps/mobile/android's DEPLOYMENT.md-documented "no Privacy Policy page yet" blocker</strong> — it already exists.</li>
-        <li><code>vercel.json</code> — the Multi-Zones <code>rewrites()</code> (see §2) plus security headers scoped away from the proxied paths via a negative-lookahead <code>source</code>, and <code>robots.txt</code> deliberately listing two sitemaps (its own, and apps/quran's) since <code>robots.txt</code> can only exist once per domain.</li>
+        <li><strong>Pages</strong> — <code>index.html</code>, <code>about</code>, <code>mission</code>, <code>explore</code>, <code>quran-reader</code>, <code>mobile-app</code>, <code>duas</code>, <code>get-involved</code>, <code>contact</code>, <code>faq</code>, <code>privacy</code>, <code>terms</code>, <code>404</code>, sharing <code>styles.css</code>/<code>site.js</code>, with SEO/OG tags, <code>robots.txt</code> (listing both its own and apps/quran's sitemap, since <code>robots.txt</code> can exist only once per domain) and <code>sitemap.xml</code>. <code>privacy.html</code> resolves the Play Store privacy-policy requirement.</li>
+        <li><strong>Build</strong> — <code>npm run build:cf</code> (<code>scripts/build.mjs</code>) copies an <em>allow-list</em> of public files into <code>dist/</code> and writes <code>_headers</code> (security headers + the CSP). Nothing outside the allow-list is ever published, so don't drop a new page in without adding it there.</li>
+        <li><strong>Contact form</strong> — <code>POST /api/contact</code> is one of two code paths that run the Worker (<code>run_worker_first: ["/api/*"]</code>; the other is <code>GET /api/duas</code>, below). It validates the payload, checks a honeypot and a 3-second minimum fill time, verifies a Cloudflare <strong>Turnstile</strong> token (secret <code>TURNSTILE_SECRET_KEY</code>; skipped if unset, <em>fail-closed</em> if Cloudflare is unreachable), stores the message in <strong>D1</strong> (<code>iqraspace-site</code>, binding <code>DB</code>, table <code>contact_messages</code>) and optionally emails an alert via Resend (<code>RESEND_API_KEY</code>, <code>CONTACT_FROM_EMAIL</code>, <code>CONTACT_ALERT_EMAIL</code>). It replaced a Supabase table + Vercel function + Gmail SMTP. "Managing" messages is done with <code>wrangler d1 execute</code> (see <code>apps/site/ADMIN.md</code>). 13 unit tests: <code>npm test</code> in <code>apps/site</code>.</li>
+        <li><strong>Duas page and feed</strong> — <code>duas.html</code> + <code>duas.js</code> render a category browser and reading drawer (Arabic, transliteration, translation, prev/next, a Tasbeeh counter) from <code>GET /api/duas</code> (<code>worker/duas.js</code>): a proxy of Learning's published-only <code>get_dua_content()</code> RPC with a 60 s edge cache, configured by the var <code>DUAS_SUPABASE_URL</code> (<code>wrangler.jsonc</code>) and the secret <code>DUAS_SUPABASE_ANON_KEY</code> (public anon key). No Dua text lives in the site source; an admin publish reaches the site without a deploy. The home hero also has Quick Access tiles.</li>
+        <li><strong>www redirect</strong> — a separate Worker in <code>apps/site/www-redirect</code> (§25).</li>
+        <li><strong>Duas pipeline</strong> — <code>apps/site/supabase/duas/</code> holds the Duas content pipeline, reports and PGlite tests (a historical home from when Duas were planned for the site; they are deployed to the Learning Supabase project — §27).</li>
       </ul>
-      <p>No <code>package.json</code>, no <code>node_modules</code>, no framework config exist here — confirmed by directory listing. CI (<code>ci-landing.yml</code>) only validates that <code>vercel.json</code> parses as JSON and runs <code>html-validate</code> on <code>index.html</code>; there's no lint/typecheck step because there's nothing to lint.</p>
+      <div class="callout warn"><strong>Owner TODO: Turnstile</strong>
+      <code>contact.html</code> still contains the placeholder <code>YOUR_TURNSTILE_SITE_KEY</code>, and <code>TURNSTILE_SECRET_KEY</code> is not yet set, so the form currently runs without a CAPTCHA. Resend alerts are optional and also not configured.</div>
+      <p><code>apps/landing</code> still exists on disk only as a leftover folder of gitignored local files (<code>.env.local</code>, <code>.vercel</code>) — it holds no source and can be ignored/deleted. CI (<code>ci-site.yml</code>) validates, runs the Worker tests, builds and (when enabled) deploys <code>apps/site</code>.</p>
     </section>
 
     <hr class="sep">
@@ -673,10 +722,10 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
       <p class="section-sub">Four apps, three different storage models. Nothing is shared.</p>
       <table>
         <tr><th>App</th><th>Where data lives</th><th>Who reads/writes</th></tr>
-        <tr><td>apps/learning</td><td>Its own Supabase project (Postgres + Auth + Realtime + Storage)</td><td>Browser client only, gated entirely by RLS. No server-side Supabase client exists in this app.</td></tr>
-        <tr><td>apps/quran</td><td>Committed static JSON (<code>src/content/generated/</code>, <code>public/search-index.json</code>) for content; <code>localStorage</code> for everything user-specific (bookmarks, progress, preferences)</td><td>Its own Supabase project exists with a real schema but is currently unused by any shipped code path.</td></tr>
-        <tr><td>apps/mobile/android</td><td>Hive (on-device, four boxes — see §8) for everything user-specific; bundled JSON assets for content</td><td>No backend database at all. Its only network dependency besides the Quran API is the R2 audio bucket.</td></tr>
-        <tr><td>apps/landing</td><td>None</td><td>—</td></tr>
+        <tr><td>apps/learning</td><td>Its own Supabase project (<code>iqraspace-learning</code>, created 2026-10-03: Postgres + Auth + Realtime + Edge Functions), plus a private Cloudflare R2 bucket for lesson PDFs</td><td>Browser client only, gated entirely by RLS. No server-side Supabase client exists in this app. The same project also holds the Duas tables (§27).</td></tr>
+        <tr><td>apps/quran</td><td>Committed static JSON (<code>src/content/generated/</code>, <code>public/search-index.json</code>) for content; <code>localStorage</code> for everything user-specific (bookmarks, progress, preferences)</td><td>Zero Supabase usage; its old Supabase project is unused and deletable.</td></tr>
+        <tr><td>apps/mobile/android</td><td>Hive (on-device boxes — see §8) for everything user-specific; bundled JSON assets for content; a cached snapshot of the published Duas</td><td>No account, no writes. Network: Quran APIs, the R2 audio bucket, and two anonymous read-only Duas RPCs on the Learning Supabase project.</td></tr>
+        <tr><td>apps/site</td><td>Cloudflare D1 (<code>iqraspace-site</code>, table <code>contact_messages</code>)</td><td>Only the <code>/api/contact</code> Worker writes; the owner reads with <code>wrangler d1 execute</code>.</td></tr>
       </table>
 
       <h3>Live-teach highlight sync (apps/learning), traced end to end</h3>
@@ -715,13 +764,15 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
           <td>N/A.</td>
         </tr>
         <tr>
-          <td>apps/landing</td>
-          <td>N/A</td>
-          <td>N/A</td>
+          <td>apps/site</td>
+          <td>N/A (the contact endpoint is public, protected by Turnstile + honeypot + minimum fill time)</td>
+          <td>N/A — D1 is reachable only through the Worker binding.</td>
         </tr>
       </table>
       <div class="callout info"><strong>The <code>/share/[lessonId]</code> route is not a public link</strong>
-      It's easy to assume a "share" URL is a token-based public link. It is not — <code>ShareClient.tsx</code> requires a genuine logged-in session and relies entirely on RLS to scope what that session can see. There is no separate share-token or magic-link mechanism anywhere in the codebase.</div>
+      It's easy to assume a "share" URL is a token-based public link. It is not — <code>ShareClient.tsx</code> requires a genuine logged-in session and relies entirely on RLS to scope what that session can see. There is no separate share-token or magic-link mechanism anywhere in the codebase. Because the hosting is now static, the "share" URL is a placeholder-shell route resolved by the Worker (§25) — but the access model is unchanged: a real session plus RLS.</div>
+      <div class="callout info"><strong>Login is by USERNAME, not email — and the Supabase project is brand new</strong>
+      On the login page type the <em>username</em> (e.g. <code>admin</code> or <code>superadmin</code>, the two seeded accounts — §26). The form is two steps: RPC <code>get_auth_email_for_username</code>, then <code>signInWithPassword</code> with the real-or-synthetic email (<code>&lt;username&gt;@users.iqraspace.internal</code>). Email confirmation is off. Typing an email into the box will fail. Anyone who used the old Learning project must register again; no data was migrated.</div>
     </section>
 
     <!-- 12. INTEGRATIONS -->
@@ -729,14 +780,18 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
       <h2><span class="num">12</span>External Integrations</h2>
       <table>
         <tr><th>Integration</th><th>Used by</th><th>Purpose</th><th>Auth</th><th>Status</th></tr>
-        <tr><td>Supabase</td><td>apps/learning</td><td>Postgres, Auth, Realtime, Storage, Edge Functions — the entire backend</td><td>Anon key (browser) + service_role (scripts/Edge Functions only)</td><td><span class="badge ok">Live</span></td></tr>
-        <tr><td>Quran Foundation Content API</td><td>apps/quran</td><td>Build-time-only sync of Quran text/translations into committed static content</td><td>OAuth2 client-credentials, server/script-side only</td><td><span class="badge ok">Live (production access granted 2026-08-31)</span></td></tr>
+        <tr><td>Supabase (<code>iqraspace-learning</code> project)</td><td>apps/learning; apps/mobile/android (Duas RPCs only)</td><td>Postgres, Auth, Realtime, Edge Functions, and the Duas tables + two public RPCs</td><td>Anon key (browser/app) + service_role (scripts/Edge Functions only)</td><td><span class="badge ok">Live</span></td></tr>
+        <tr><td>Quran Foundation Content API</td><td>apps/quran</td><td>Build-time-only sync of Quran text/translations into committed static content (weekly via <code>sync-quran-content.yml</code>)</td><td>OAuth2 client-credentials, server/script-side only</td><td><span class="badge ok">Live (production access granted 2026-08-31)</span></td></tr>
         <tr><td>Al Quran Cloud API</td><td>apps/quran (Tajweed only), apps/mobile/android (primary content source)</td><td>Keyless public API — chosen for apps/mobile/android specifically because it needs no server-held OAuth secret</td><td>None (keyless)</td><td><span class="badge ok">Live</span></td></tr>
         <tr><td>Cloudflare R2 (<code>audio.iqraspace.org</code>)</td><td>apps/mobile/android (owner) + apps/quran (consumer)</td><td>Whole-Surah recitation/translation audio, public-read, no egress fees</td><td>None for playback (public bucket)</td><td><span class="badge ok">Live</span></td></tr>
+        <tr><td>Cloudflare R2 (private lesson-materials bucket)</td><td>apps/learning via the <code>lesson-materials-r2</code> Edge Function</td><td>Tutor-uploaded lesson PDFs</td><td>Scoped R2 API token held only as Edge Function secrets</td><td><span class="badge ok">Live</span></td></tr>
+        <tr><td>Cloudflare Workers + Static Assets</td><td>apps/site, apps/quran, apps/learning (+ www-redirect)</td><td>Hosting for all web apps — one Worker each, joined by path routes on the <code>iqraspace.org</code> zone (replaced Vercel on 2026-10-03)</td><td>Wrangler OAuth login (manual) / <code>CLOUDFLARE_API_TOKEN</code> (CI)</td><td><span class="badge ok">Live</span> <span class="badge warn">CI deploy failing</span></td></tr>
+        <tr><td>Cloudflare D1</td><td>apps/site</td><td>Contact-form messages</td><td>Worker binding <code>DB</code></td><td><span class="badge ok">Live</span></td></tr>
+        <tr><td>Cloudflare Turnstile / Resend</td><td>apps/site contact form</td><td>CAPTCHA verification / optional email alert</td><td>Worker secrets <code>TURNSTILE_SECRET_KEY</code>; <code>RESEND_API_KEY</code>, <code>CONTACT_FROM_EMAIL</code>, <code>CONTACT_ALERT_EMAIL</code></td><td><span class="badge warn">Not configured yet (owner TODO)</span></td></tr>
         <tr><td>Google OAuth / Drive API</td><td>apps/learning</td><td>Optional lesson-material sourcing from a tutor's Drive</td><td>OAuth2, client secret owner-provisioned only</td><td><span class="badge warn">Code-complete, not deployed</span></td></tr>
-        <tr><td>Vercel</td><td>All 3 Next.js/static web apps</td><td>Hosting + deploy, 3 fully separate projects</td><td>Per-project tokens via GitHub Secrets</td><td><span class="badge ok">Live</span></td></tr>
         <tr><td>Google Play Console</td><td>apps/mobile/android</td><td>Distribution — Closed testing track</td><td>Service account (Release-to-testing-tracks scope only)</td><td><span class="badge ok">Live</span></td></tr>
         <tr><td>Google Meet</td><td>apps/learning</td><td>Manual link only (architecture's "Option A") — no OAuth</td><td>None needed</td><td><span class="badge ok">Live, by design (no auto-attendance)</span></td></tr>
+        <tr><td>Vercel</td><td>— (none)</td><td>Formerly hosted all three web apps. Serves nothing now; the owner will delete the three projects and the old <code>VERCEL_*</code>/<code>QURAN_VERCEL_*</code>/<code>LANDING_VERCEL_*</code> GitHub secrets.</td><td>—</td><td><span class="badge muted">Retired</span></td></tr>
       </table>
     </section>
 
@@ -745,10 +800,10 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
       <h2><span class="num">13</span>Data Synchronization</h2>
       <table>
         <tr><th>Pipeline</th><th>Source → Target</th><th>Trigger</th><th>Notes</th></tr>
-        <tr><td>Quran content sync</td><td>Quran Foundation API → <code>apps/quran/src/content/generated/*.json</code> (committed)</td><td>Manual (<code>npm run sync:content</code>), developer-run, not CI</td><td>Must re-run at least every 7 days per license terms on cached content; rate-limited with backoff, real ceiling unknown.</td></tr>
+        <tr><td>Quran content sync</td><td>Quran Foundation API → <code>apps/quran/src/content/generated/*.json</code> (committed)</td><td>Weekly GitHub Action <code>sync-quran-content.yml</code> (guarded by <code>QURAN_SYNC_ENABLED</code>; opens a PR, never pushes to <code>main</code>); manual <code>npm run sync:content</code> still works</td><td>Licence requires a re-sync at most every 7 days; this was previously unautomated. Merging the PR deploys through <code>ci-quran.yml</code> — which is currently failing at the wrangler step, so a merge may need a manual deploy (§25).</td></tr>
         <tr><td>Search index build</td><td>Committed content → <code>public/search-index.json</code> (gitignored)</td><td>Automatic, every <code>npm run build</code></td><td>No network call; English-translation text only.</td></tr>
         <tr><td>PDF Mode pipeline</td><td>30 supplied scanned Juz PDFs (gitignored) → watermark-strip → boundary-crop → merge → committed per-Surah PDFs</td><td>Manual, multi-script, developer-run</td><td>Hand-verified page-map/crop/trim JSON configs; several documented, fixed bugs (icon-cropping, false "content leak," interior-seam trims on merged Surahs).</td></tr>
-        <tr><td>Flutter Supplications ↔ Quran Supplications</td><td>Same source JSON, maintained once, copied into both apps</td><td>Manual, coupled to feature work</td><td>Not an automated sync — a duplicated file kept in parity by convention, not tooling. A future divergence risk if one app's copy is edited without the other.</td></tr>
+        <tr><td>Duas content</td><td>Learning admin UI → Supabase tables → <code>get_dua_content()</code> RPC → Flutter app (cache) · bundled <code>assets/supplications.json</code> as fallback</td><td>Admin edits/publishes; the app polls the cheap version RPC (≤ hourly). The bundled snapshot is regenerated by <code>build_canonical.mjs --write-bundled</code> and only changes with an app release.</td><td>No more duplicated JSON between apps — apps/quran no longer has Supplications. See §27.</td></tr>
         <tr><td>Recurring lesson generation (apps/learning)</td><td><code>recurring_session_rules</code> → concrete <code>lessons</code> rows</td><td>Manual "Generate 8 more weeks" button</td><td>No cron/background job.</td></tr>
       </table>
       <p><strong>Analytics/Reporting:</strong> <span class="badge danger">Not Implemented</span> anywhere in the repo — no analytics SDK, no reporting tables, no dashboards were found in any app. This is deliberate for apps/quran (cost/privacy posture explicitly excludes third-party analytics) and simply not built yet elsewhere.</p>
@@ -762,53 +817,64 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
       <h3>apps/learning (<code>.env.local.example</code>)</h3>
       <table>
         <tr><th>Variable</th><th>Required?</th><th>Purpose</th></tr>
-        <tr><td><code>NEXT_PUBLIC_SUPABASE_URL</code>, <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code></td><td>Yes</td><td>App throws at import time if missing — the whole app depends on these.</td></tr>
-        <tr><td><code>SUPABASE_SERVICE_ROLE_KEY</code></td><td>Scripts only</td><td>Read only by <code>seed-admin-accounts.mjs</code> and Edge Functions — never by the deployed Next.js app.</td></tr>
+        <tr><td><code>NEXT_PUBLIC_SUPABASE_URL</code>, <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code></td><td>Yes (build time)</td><td>App throws at import time if missing. Static export ⇒ inlined at <strong>build</strong> time: they must be present wherever <code>npm run build:cf</code> runs (<code>.env.local</code> locally; GitHub secrets of the same names in CI). Use the <code>iqraspace-learning</code> project's URL + anon key.</td></tr>
+        <tr><td><code>NEXT_BASE_PATH</code></td><td>Set by <code>build:cf</code></td><td><code>scripts/build-cf.mjs</code> sets it to <code>/learning</code> (default) — don't set it by hand. Unset for plain <code>npm run dev</code>.</td></tr>
+        <tr><td><code>NEXT_PUBLIC_BASE_PATH</code></td><td>Derived</td><td>Exposed to client code from <code>NEXT_BASE_PATH</code> via <code>next.config</code> <code>env</code> (it used to be a hand-set Vercel dashboard variable; its absence after the cutover broke the logo, pdf.js assets, a Duas admin link and a footer link — §19).</td></tr>
+        <tr><td><code>NEXT_PUBLIC_GOOGLE_CLIENT_ID</code>, <code>NEXT_PUBLIC_GOOGLE_REDIRECT_URI</code>, <code>NEXT_PUBLIC_APP_URL</code>, <code>NEXT_PUBLIC_QURAN_URL</code></td><td>Optional</td><td>Used when set; Google ones gate the Drive-connection UI — unset means "not configured" is shown correctly.</td></tr>
+        <tr><td><code>SUPABASE_SERVICE_ROLE_KEY</code></td><td>Scripts only</td><td>Read only by <code>seed-admin-accounts.mjs</code> and the one-off R2 migration script — never by the deployed app. Never commit it.</td></tr>
         <tr><td><code>SUPABASE_ACCESS_TOKEN</code>, <code>SUPABASE_PROJECT_REF</code></td><td>CLI only</td><td><code>supabase link</code>/<code>db push</code>.</td></tr>
-        <tr><td><code>NEXT_PUBLIC_GOOGLE_CLIENT_ID</code>, <code>NEXT_PUBLIC_GOOGLE_REDIRECT_URI</code></td><td>Optional</td><td>Gates the Drive-connection UI — unset means "not configured" is shown correctly.</td></tr>
         <tr><td><code>ADMIN_EMAIL/PASSWORD</code>, <code>SUPER_ADMIN_EMAIL/PASSWORD</code></td><td><code>npm run seed:admins</code> only</td><td>Documented gotcha: Node's <code>--env-file</code> truncates unquoted values at <code>#</code> — avoid <code>#</code>/<code>$</code> in these or quote them.</td></tr>
-        <tr><td><code>NEXT_BASE_PATH</code></td><td>Build/deploy only</td><td>Set to <code>/learning</code> only in the real Vercel production environment; unset locally and in CI's validate build.</td></tr>
+        <tr><td><code>CLOUDFLARE_API_TOKEN</code> in <code>.env.local</code></td><td>Avoid</td><td>Wrangler auto-loads it and it <strong>overrides <code>wrangler login</code></strong>; see §24 for how to avoid the trap.</td></tr>
+        <tr><td><code>LESSON_MATERIALS_R2_*</code></td><td>Edge Function secrets (+ the one-off migration script)</td><td>Account id, bucket, access key id and secret for the private lesson-materials bucket — set with <code>supabase secrets set</code>, never read by the Next.js app.</td></tr>
       </table>
 
       <h3>apps/quran (<code>.env.local.example</code>)</h3>
       <table>
         <tr><th>Variable</th><th>Required?</th><th>Purpose</th></tr>
         <tr><td><code>QURAN_FOUNDATION_CLIENT_ID/_SECRET</code></td><td>Sandbox sync only</td><td>Pre-live sandbox credentials for <code>sync:content</code>.</td></tr>
-        <tr><td><code>QURAN_FOUNDATION_PROD_CLIENT_ID/_SECRET</code></td><td>Production sync only</td><td>Selected via <code>QURAN_FOUNDATION_ENV=production</code>.</td></tr>
-        <tr><td><code>NEXT_PUBLIC_SUPABASE_URL/ANON_KEY</code></td><td>Set, but currently unread</td><td>Provisioned ahead of the not-yet-built Phase 5 sync feature.</td></tr>
-        <tr><td><code>NEXT_BASE_PATH</code></td><td>Build/deploy only</td><td>Set to <code>/quran</code> only in the real Vercel production project.</td></tr>
+        <tr><td><code>QURAN_FOUNDATION_PROD_CLIENT_ID/_SECRET</code></td><td>Production sync only</td><td>Selected via <code>QURAN_FOUNDATION_ENV=production</code>. In CI these are GitHub secrets used by <code>sync-quran-content.yml</code>.</td></tr>
+        <tr><td><code>NEXT_PUBLIC_SUPABASE_URL/ANON_KEY</code></td><td>No — unused</td><td>Listed in the example file, but no code reads them (zero Supabase usage in this app).</td></tr>
+        <tr><td><code>NEXT_BASE_PATH</code></td><td>Set by <code>build:cf</code></td><td><code>scripts/build-cf.mjs</code> sets <code>/quran</code>; <code>next.config</code> also exposes it as <code>NEXT_PUBLIC_BASE_PATH</code>. Unset for <code>npm run dev</code> (port 3001).</td></tr>
       </table>
 
+      <h3>apps/site</h3>
+      <p>No build-time env. Worker bindings/secrets (names only): <code>DB</code> (D1) and <code>ASSETS</code> in <code>wrangler.jsonc</code>; <code>TURNSTILE_SECRET_KEY</code> (recommended — skipped if unset), <code>RESEND_API_KEY</code>, <code>CONTACT_FROM_EMAIL</code>, <code>CONTACT_ALERT_EMAIL</code> (optional email alerts) set with <code>wrangler secret put</code>. For local <code>wrangler dev</code> they go in a gitignored <code>apps/site/.dev.vars</code> (names in <code>.env.local.example</code>). The Turnstile <em>site</em> key is public and lives in <code>contact.html</code> (still the placeholder <code>YOUR_TURNSTILE_SITE_KEY</code>).</p>
+
       <h3>apps/mobile/android</h3>
-      <p>No env file needed for normal development — the app is entirely offline-first with keyless APIs. The <em>release upload</em> tooling only (<code>scripts/deploy/.env.local</code>) needs <code>PLAY_SERVICE_ACCOUNT_JSON_PATH</code> for the Google Play Publisher API, plus an owner-provisioned signing keystore (<code>android/key.properties</code>, gitignored, never committable).</p>
+      <p>No env file needed for normal development — the app is offline-first with keyless APIs. Remote Duas are enabled only by <strong>build-time</strong> defines, <code>--dart-define=DUAS_SUPABASE_URL=…</code> and <code>--dart-define=DUAS_SUPABASE_ANON_KEY=…</code> (public values; §27). The <em>release upload</em> tooling only (<code>scripts/deploy/.env.local</code>) needs <code>PLAY_SERVICE_ACCOUNT_JSON_PATH</code> for the Google Play Publisher API, plus an owner-provisioned signing keystore (<code>android/key.properties</code>, gitignored, never committable).</p>
+
+      <h3>GitHub Actions (repo → Settings → Secrets and variables)</h3>
+      <p>Secrets: <code>CLOUDFLARE_API_TOKEN</code>, <code>CLOUDFLARE_ACCOUNT_ID</code>, <code>NEXT_PUBLIC_SUPABASE_URL</code>, <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code>, and the <code>QURAN_FOUNDATION_*</code> set for the content sync. Variables: <code>CF_DEPLOY_ENABLED</code> (<code>true</code> allows deploy jobs), <code>CF_HEALTHCHECK_BASE</code> (optional, default <code>https://iqraspace.org</code>), <code>QURAN_SYNC_ENABLED</code> (<code>true</code> enables the weekly sync). Worker runtime secrets are <strong>not</strong> held by CI.</p>
     </section>
 
     <!-- 15. ENVIRONMENTS -->
     <section id="environments">
       <h2><span class="num">15</span>Environments</h2>
       <table>
-        <tr><th>App</th><th>Local dev</th><th>CI validate</th><th>Production</th></tr>
-        <tr><td>apps/learning</td><td><code>localhost:3000</code>, no basePath, hosted Supabase project (no local Docker stack by choice)</td><td>Builds without <code>NEXT_BASE_PATH</code> set</td><td><code>iqraspace.org/learning</code> via Vercel + Multi-Zones, <code>NEXT_BASE_PATH=/learning</code></td></tr>
-        <tr><td>apps/quran</td><td><code>localhost:3001</code> (chosen so it can run alongside apps/learning), no basePath</td><td>Builds without <code>NEXT_BASE_PATH</code> — proves compilation only, not basePath-correct output</td><td><code>iqraspace.org/quran</code>, <code>NEXT_BASE_PATH=/quran</code>, deployed via <code>vercel deploy --prod</code> directly (see §16 for why)</td></tr>
+        <tr><td>apps/learning</td><td><code>localhost:3000</code> via <code>npm run dev</code> (no basePath); or <code>build:cf</code> + <code>wrangler dev --local</code> to test the Worker + basePath. Hosted Supabase project (no local Docker stack by choice)</td><td>Lint, typegen, typecheck, <code>test:duas</code>, worker tests, then <code>build:cf</code> (with the Supabase public vars from secrets)</td><td><code>iqraspace.org/learning</code> — Worker <code>iqraspace-learning</code>, route <code>iqraspace.org/learning*</code>; also reachable at its <code>workers.dev</code> URL</td></tr>
+        <tr><td>apps/quran</td><td><code>localhost:3001</code> via <code>npm run dev</code> (no basePath); or <code>build:cf</code> + <code>wrangler dev --local</code></td><td>Lint, typegen, typecheck, <code>build:cf</code> (which sets <code>NEXT_BASE_PATH=/quran</code>, so basePath output is actually exercised)</td><td><code>iqraspace.org/quran</code> — Worker <code>iqraspace-quran</code>, assets only</td></tr>
         <tr><td>apps/mobile/android</td><td>Local emulator or connected device, Chrome for web</td><td><code>flutter analyze</code> + <code>flutter test</code> on branch <code>mobile/android</code> only</td><td>Google Play — Closed testing track (not yet Production)</td></tr>
-        <tr><td>apps/landing</td><td>Open <code>index.html</code> directly, or any static server</td><td><code>vercel.json</code> JSON validation + <code>html-validate</code></td><td><code>iqraspace.org</code> root, via <code>vercel deploy --prod</code> directly</td></tr>
+        <tr><td>apps/site</td><td><code>npm run build:cf</code> then <code>npx wrangler dev --local</code> (<code>localhost:8787</code>), with local D1 (<code>d1 migrations apply DB --local</code>)</td><td>HTML validation, <code>npm test</code> (13 Worker tests), <code>build:cf</code></td><td><code>iqraspace.org/*</code> — Worker <code>iqraspace-site</code> + D1; <code>www.iqraspace.org</code> → <code>iqraspace-www-redirect</code></td></tr>
       </table>
     </section>
 
     <!-- 16. CICD -->
     <section id="cicd">
       <h2><span class="num">16</span>CI/CD &amp; Deployment</h2>
-      <p class="section-sub">Four independent, path-filtered GitHub Actions workflows. A change to one app's files never triggers or blocks another's pipeline.</p>
+      <p class="section-sub">Path-filtered GitHub Actions workflows, one per app, plus a weekly content sync. A change to one app's files never triggers or blocks another's pipeline. <strong>Current status (2026-10-03): the deploy jobs FAILED at the wrangler step the first time they ran; CI deployment is deliberately parked until fixed, and production was deployed manually with Wrangler (§25).</strong></p>
       <table>
         <tr><th>Workflow</th><th>Trigger</th><th>Validate steps</th><th>Deploy</th></tr>
-        <tr><td><code>ci.yml</code> (learning)</td><td>push/PR to <code>main</code>, no path filter</td><td>lint → <code>next typegen</code> → typecheck → test (no-op) → build</td><td>On push to <code>main</code>: <code>vercel pull</code> → <code>vercel build --prod</code> → <code>vercel deploy --prebuilt --prod</code>; health-checks the stable alias, not the ephemeral URL (SSO protection redirects those).</td></tr>
-        <tr><td><code>ci-quran.yml</code></td><td>push/PR to <code>main</code>, path-filtered to <code>apps/quran/**</code></td><td>Same lint/typegen/typecheck/build shape (build has no <code>NEXT_BASE_PATH</code> — proves compile only)</td><td><code>vercel deploy --prod</code> directly (remote build) — <strong>not</strong> the prebuilt flow, because <code>vercel build</code>'s local lambda-tracing step fails on this app's SSG output (Next.js 16/Vercel CLI incompatibility, affected every SSG route, not a code bug).</td></tr>
+        <tr><td><code>ci.yml</code> (learning)</td><td>push/PR to <code>main</code>, path-filtered to <code>apps/learning/**</code></td><td>lint → <code>next typegen</code> → typecheck → <code>test --if-present</code> → <code>test:duas</code> → <code>node --test worker/*.test.mjs</code> → <code>npm run build:cf</code> (Supabase public vars from secrets)</td><td>On push to <code>main</code> <em>and</em> <code>vars.CF_DEPLOY_ENABLED == 'true'</code>: <code>cloudflare/wrangler-action@v3</code> with <code>workingDirectory: apps/learning</code>, then a health check against <code>vars.CF_HEALTHCHECK_BASE</code> (default <code>https://iqraspace.org</code>) — <code>/learning/login</code> and the dynamic-route shell <code>/learning/share/00000000-0000-0000-0000-000000000000</code> must be 200.</td></tr>
+        <tr><td><code>ci-quran.yml</code></td><td>push/PR to <code>main</code>, path-filtered to <code>apps/quran/**</code></td><td>lint → typegen → typecheck → <code>build:cf</code></td><td>Same wrangler-action + <code>CF_DEPLOY_ENABLED</code> gate; health check <code>/quran</code>, <code>/quran/surah</code>, <code>/quran/sitemap.xml</code>.</td></tr>
+        <tr><td><code>ci-site.yml</code></td><td>push/PR to <code>main</code>, path-filtered to <code>apps/site/**</code></td><td>HTML validation → Worker tests → <code>build:cf</code></td><td>Same gate; health check <code>/</code>, <code>/robots.txt</code>, <code>/sitemap.xml</code>.</td></tr>
+        <tr><td><code>sync-quran-content.yml</code></td><td>weekly schedule + manual dispatch, only if <code>vars.QURAN_SYNC_ENABLED == 'true'</code></td><td>runs <code>sync-content.mjs</code> in apps/quran with the <code>QURAN_FOUNDATION_*</code> secrets</td><td>If content changed, opens a PR from <code>chore/quran-content-sync</code> (never pushes to <code>main</code>). Merging it triggers <code>ci-quran.yml</code>.</td></tr>
         <tr><td><code>ci-flutter.yml</code></td><td>push/PR to <code>mobile/android</code> only (not <code>main</code>), path-filtered</td><td><code>flutter pub get</code> → <code>flutter analyze</code> → <code>flutter test</code></td><td><span class="badge warn">None</span> — no build/deploy job exists in CI. Release is the separate, manual/skill-driven <code>iqs-deploy</code> flow.</td></tr>
-        <tr><td><code>ci-landing.yml</code></td><td>push/PR to <code>main</code>, path-filtered</td><td><code>vercel.json</code> JSON check + <code>html-validate</code></td><td><code>vercel deploy --prod</code> directly (same remote-build rationale as apps/quran, hit independently on 2026-08-31).</td></tr>
       </table>
-      <p>Each deploy job uses that app's own dedicated GitHub Secrets (<code>VERCEL_*</code> for learning, <code>QURAN_VERCEL_*</code>, <code>LANDING_VERCEL_*</code>) — never shared across apps.</p>
+      <p>GitHub secrets/variables are listed (names only) in §14. The deploy jobs use one shared Cloudflare token pair; nothing Vercel-related remains in the workflows.</p>
+      <div class="callout warn"><strong>CI deploy is currently failing — likely cause (hypothesis, log not seen)</strong>
+      The first runs after <code>CF_DEPLOY_ENABLED=true</code> was set failed at the wrangler step. The most likely cause is that <code>CLOUDFLARE_API_TOKEN</code> lacks <strong>Zone → Zone → Read</strong>, which Wrangler needs to resolve <code>zone_name</code> routes (the token recipe in <code>DEPLOYMENT.md</code> doesn't list it either: Workers Scripts:Edit, D1:Edit, Zone → Workers Routes:Edit, Account Settings:Read). To fix: add that permission to the token, update the secret, re-run the failed workflow, and check the log. Until then leave <code>CF_DEPLOY_ENABLED</code> as you need it (unset = validate-only) and deploy manually (§25). Note <code>DEPLOYMENT.md</code> also says "never run <code>wrangler deploy</code> from a developer/agent session — deploys are CI-only", which is aspirational until CI works.</div>
       <div class="callout danger"><strong><code>ci-quran-mobile.yml</code> does not exist on <code>main</code></strong>
-      Root CLAUDE.md lists it as an active workflow for a Capacitor Android debug-APK build. It was added on a feature branch, then explicitly excluded when that branch's work was merged into <code>main</code> (merge commit <code>144d049</code>), because <code>main</code>'s apps/quran had since diverged with its own UI redesign. It still exists only on the <code>mobile/android</code> branch. Don't expect it to run, or to exist, on <code>main</code>.</div>
+      Root CLAUDE.md lists it as an active workflow for a Capacitor Android debug-APK build. It only ever existed on the <code>mobile/android</code> branch and was excluded when that branch's work was merged into <code>main</code> (merge commit <code>144d049</code>). <strong>CI never applies database migrations</strong> for any app (§26).</div>
     </section>
 
     <!-- 17. TESTING -->
@@ -816,24 +882,25 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
       <h2><span class="num">17</span>Testing</h2>
       <table>
         <tr><th>App</th><th>Automated tests</th><th>What CI actually gates on</th></tr>
-        <tr><td>apps/learning</td><td><span class="badge danger">None</span></td><td>lint + typecheck + build only</td></tr>
-        <tr><td>apps/quran</td><td><span class="badge danger">None</span></td><td>lint + typecheck + build only</td></tr>
-        <tr><td>apps/mobile/android</td><td><span class="badge ok">Yes</span> — widget/unit tests under <code>test/</code>, mirroring <code>lib/</code>'s structure</td><td><code>flutter analyze</code> + <code>flutter test</code> (the only app in the repo with real CI-gated tests)</td></tr>
-        <tr><td>apps/landing</td><td>N/A (static HTML)</td><td>JSON validity + HTML validation</td></tr>
+        <tr><td>apps/learning</td><td><span class="badge warn">Narrow</span> — <code>npm run test:duas</code> (17 Duas form-validation tests) and <code>node --test worker/*.test.mjs</code> (8 dynamic-route tests); no UI/E2E suite</td><td>lint + typecheck + both test commands + <code>build:cf</code></td></tr>
+        <tr><td>apps/quran</td><td><span class="badge danger">None</span></td><td>lint + typecheck + <code>build:cf</code></td></tr>
+        <tr><td>apps/mobile/android</td><td><span class="badge ok">Yes</span> — 136 passing + 1 skipped (the end-to-end test that needs the local Duas dev backend), mirroring <code>lib/</code> under <code>test/</code></td><td><code>flutter analyze</code> + <code>flutter test</code> (branch <code>mobile/android</code>)</td></tr>
+        <tr><td>apps/site</td><td><span class="badge ok">Yes</span> — 13 Worker unit tests (<code>npm test</code>)</td><td>HTML validation + Worker tests + <code>build:cf</code></td></tr>
+        <tr><td>Duas pipeline (<code>apps/site/supabase/duas</code>)</td><td><span class="badge ok">Yes</span> — 23 PGlite tests (schema/RLS 11, seed 8, Learning variant 4) plus an end-to-end publish-flow script</td><td>Not run by any workflow — run locally with <code>npm test</code> there (§27)</td></tr>
       </table>
-      <p>For the two untested Next.js apps, validate changes manually: run the dev server, exercise the actual golden path in a browser, and rely on <code>lint</code>/<code>typecheck</code>/<code>build</code> to catch structural mistakes — they do not verify feature correctness.</p>
+      <p>Commands: <code>npm run test:duas</code> and <code>npm run test:worker</code> (or <code>node --test worker/*.test.mjs</code>) in <code>apps/learning</code>; <code>npm test</code> in <code>apps/site</code> and in <code>apps/site/supabase/duas</code> (needs <code>npm install</code> there for PGlite); <code>flutter test</code> in <code>apps/mobile/android</code>; the E2E proof is <code>node apps/site/supabase/duas/e2e_publish_flow.mjs</code> (starts the local dev backend, sets <code>DUAS_E2E_URL</code> and runs <code>test/e2e/remote_publish_flow_test.dart</code>). For apps/quran and for UI behaviour in apps/learning, validate manually: run the dev server (or <code>wrangler dev --local</code> for Worker/basePath behaviour), exercise the golden path in a browser, and rely on lint/typecheck/build to catch structural mistakes.</p>
       <div class="callout warn"><strong>The <code>next typegen</code> caveat (both Next.js apps)</strong>
-      <code>tsc --noEmit</code> needs <code>next-env.d.ts</code> and <code>.next/types/**</code>, which are gitignored and normally only produced as a side effect of <code>next dev</code>/<code>next build</code>. On a fresh checkout, running <code>typecheck</code> directly fails with <code>TS6053</code> ("next-env.d.ts not found"). Always run <code>npx next typegen</code> first — this is exactly what CI does, and it's why the root README calls this out explicitly.</div>
+      <code>tsc --noEmit</code> needs <code>next-env.d.ts</code> and <code>.next/types/**</code>, which are gitignored and normally only produced as a side effect of <code>next dev</code>/<code>next build</code>. On a fresh checkout, running <code>typecheck</code> directly fails with <code>TS6053</code> ("next-env.d.ts not found"). Always run <code>npx next typegen</code> first — this is exactly what CI does.</div>
     </section>
 
     <!-- 18. DEBUGGING -->
     <section id="debugging">
       <h2><span class="num">18</span>Debugging &amp; Logging</h2>
       <ul>
-        <li><strong>apps/learning / apps/quran</strong> — no structured logging framework; rely on browser devtools console, Next.js dev-server output, and Vercel's deployment/function logs in production. Supabase errors surface via the client library's error objects.</li>
+        <li><strong>apps/learning / apps/quran</strong> — no structured logging framework; rely on browser devtools console, the Next.js dev-server output, and <code>wrangler dev --local</code>'s console for Worker behaviour. In production, Cloudflare's Workers/observability dashboard (and <code>npx wrangler tail &lt;worker-name&gt;</code> for the Workers that run a script) shows live requests; assets-only requests are not logged as Worker invocations. Supabase errors surface via the client library's error objects; the Supabase dashboard has Auth/Edge Function logs.</li>
         <li><strong>apps/mobile/android</strong> — standard Flutter/Dart console logging plus <code>flutter analyze</code> for static issues. The documented local Android-emulator dev loop (<code>TESTING.md</code>) is the main way to reproduce device-specific bugs (notifications, lock-screen audio controls, background throttling) since these don't show up on web/desktop runs.</li>
         <li><strong>CI failures</strong> — check the specific workflow's Actions run; each job's step names map directly to the table in §16 (e.g. a failure at "Type check" almost always means the <code>next typegen</code> step didn't run first, or a real type error).</li>
-        <li><strong>Deploy health checks</strong> — all three web-app deploy jobs curl the stable alias (not the ephemeral per-deploy URL) after deploying, specifically because Vercel's SSO Deployment Protection redirects requests to ephemeral URLs. A failing health check after a successful deploy step is the first place to look for a routing/basePath regression.</li>
+        <li><strong>Deploy health checks</strong> — the three web-app deploy jobs curl the production URLs (<code>CF_HEALTHCHECK_BASE</code>, default <code>https://iqraspace.org</code>) with retries after deploying. A failing health check after a successful deploy step is the first place to look for a routing/basePath regression. During staging, point <code>CF_HEALTHCHECK_BASE</code> at the <code>*.workers.dev</code> URL of the Worker under test (note a Worker only serves its own path prefix on that host).</li>
       </ul>
     </section>
 
@@ -855,10 +922,52 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
           <td>Follow the pattern established in migration <code>0004</code> — add/reuse a <code>SECURITY DEFINER</code> helper (<code>is_tutor_of_class</code> etc.) instead of an inline correlated subquery</td>
         </tr>
         <tr>
-          <td>Vercel deploy fails: "Unable to find lambda for route: /juz/1" (or any SSG route)</td>
-          <td>Next.js 16 Turbopack / Vercel CLI's local lambda-tracing is incompatible with this app's SSG output</td>
-          <td>apps/quran, apps/landing deploy jobs</td>
-          <td>Already fixed by design — both use <code>vercel deploy --prod</code> directly instead of the prebuilt flow. Don't "fix" this by switching them back to <code>vercel build</code> + <code>--prebuilt</code>.</td>
+          <td>"Could not find the table 'public.duas' in the schema cache" (admin UI or app)</td>
+          <td>Migrations 0025/0026 were not applied to the Supabase project the build points at — CI never applies migrations</td>
+          <td>Supabase dashboard → Table editor; <code>npx supabase migration list</code> from the repo root</td>
+          <td>Link the right project and run <code>npx supabase db push</code> (§26)</td>
+        </tr>
+        <tr>
+          <td>Learning login: "invalid credentials" with a valid-looking email</td>
+          <td>The login box takes the <strong>username</strong> (<code>admin</code>, <code>superadmin</code>), not an email; or the user registered on the old, now-abandoned Supabase project</td>
+          <td>Login page; <code>public.users</code> in the new project</td>
+          <td>Use the username; re-register or re-run <code>npm run seed:admins</code> (§26)</td>
+        </tr>
+        <tr>
+          <td>Learning logo, pdf.js (wasm/worker) or a footer/Duas link 404</td>
+          <td><code>NEXT_PUBLIC_BASE_PATH</code> missing at build time (it is derived from <code>NEXT_BASE_PATH</code> in <code>next.config</code> <code>env</code>; a build run without going through <code>build:cf</code>, or a regression of that config, drops it)</td>
+          <td><code>apps/learning/next.config.ts</code>, browser Network tab for 404s under <code>/learning/…</code></td>
+          <td>Build with <code>npm run build:cf</code>; keep the <code>env: { NEXT_PUBLIC_BASE_PATH: … }</code> block (fix commit <code>a39868c</code>)</td>
+        </tr>
+        <tr>
+          <td><code>www.iqraspace.org</code> hangs or redirect-loops</td>
+          <td>A Cloudflare <em>Redirect Rule</em> for www → apex collides with the zone routes and loops on the apex (tried first; abandoned), or the <code>www</code> DNS record isn't proxied</td>
+          <td>Cloudflare dashboard → Rules → Redirect Rules; DNS records; <code>apps/site/www-redirect</code></td>
+          <td>Delete any www Redirect Rule, keep <code>www</code> A <code>192.0.2.1</code> <em>Proxied</em>, and (re)deploy the redirect Worker (§25)</td>
+        </tr>
+        <tr>
+          <td><code>/learning/share/&lt;id&gt;</code>, <code>/teach/&lt;id&gt;</code> or <code>/admin/duas/&lt;id&gt;</code> shows 404 or a blank page</td>
+          <td>The URL pattern isn't in the Worker's <code>routes.js</code>/<code>run_worker_first</code>, the placeholder shell wasn't exported, or the page reads its param from Next instead of <code>window.location</code></td>
+          <td><code>apps/learning/worker/</code>, <code>wrangler.jsonc</code>, <code>src/lib/routeParam.ts</code></td>
+          <td>Follow the add-a-dynamic-route checklist in §25</td>
+        </tr>
+        <tr>
+          <td><code>wrangler dev</code>/<code>deploy</code> authenticates as the wrong account or ignores <code>wrangler login</code></td>
+          <td>Wrangler auto-loads <code>CLOUDFLARE_API_TOKEN</code> from a <code>.env.local</code> in the current folder (e.g. <code>apps/learning/.env.local</code>) and that overrides the OAuth login</td>
+          <td>The working directory's <code>.env</code>/<code>.env.local</code>; <code>npx wrangler whoami</code></td>
+          <td>Run wrangler from a folder without that file (or remove the variable) — §24</td>
+        </tr>
+        <tr>
+          <td>CI deploy fails at the wrangler step</td>
+          <td>Likely the API token lacks Zone → Zone → Read (hypothesis; log not seen)</td>
+          <td>GitHub Actions run log; Cloudflare token permissions</td>
+          <td>See the callout in §16</td>
+        </tr>
+        <tr>
+          <td>Quran PDF or asset fails to deploy: "file exceeds 25 MiB" / "more than 20,000 files"</td>
+          <td>Workers Static Assets limits (25 MiB per file, 20,000 files per Worker); <code>dist/quran</code> is at 4,534 files / 375.8 MiB with the largest PDF 14.8 MiB</td>
+          <td><code>apps/quran/dist</code> after <code>build:cf</code></td>
+          <td>Split/compress the file or host it elsewhere (e.g. R2 behind a custom domain)</td>
         </tr>
         <tr>
           <td>Arabic text/duas left-align against their number badge on iPad/Safari only</td>
@@ -867,10 +976,10 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
           <td>Explicit <code>text-align: right</code> (or the global <code>[dir="rtl"]</code> CSS rule) must be set — don't rely on <code>dir="rtl"</code> alone for alignment</td>
         </tr>
         <tr>
-          <td>Health check fails right after a successful Vercel deploy</td>
-          <td>Request hit the ephemeral per-deploy URL, which Vercel's SSO Deployment Protection redirects</td>
-          <td>Any of the three web-app CI workflows</td>
-          <td>Health checks intentionally target the stable alias (e.g. <code>iqraspace-quran.vercel.app</code>), not the deploy-specific URL — confirm you're checking the right URL before assuming a real regression</td>
+          <td>Health check fails right after a successful deploy</td>
+          <td>Wrong <code>CF_HEALTHCHECK_BASE</code> (e.g. a <code>workers.dev</code> host for a Worker that only serves another path prefix), a not-yet-propagated route, or a real basePath/route regression</td>
+          <td>Any of the three web-app CI workflows; the repo variable <code>CF_HEALTHCHECK_BASE</code></td>
+          <td>Confirm the base URL and that the Worker route/DNS (<code>192.0.2.1</code>, proxied) are in place before assuming a regression</td>
         </tr>
         <tr>
           <td>A student can't see a shared lesson via <code>/share/[lessonId]</code></td>
@@ -885,10 +994,10 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
           <td>Bump the <code>+N</code> build number and rebuild; there's no way to query previously used codes, so always bump before a real release build</td>
         </tr>
         <tr>
-          <td>apps/quran build fails/crashes after adding an icon route under <code>src/app/brand/</code></td>
-          <td>Previously, decorative icon routes there caused a real Vercel lambda-tracing build failure (since deleted)</td>
-          <td><code>apps/quran DEPLOYMENT.md</code>'s documented fix</td>
-          <td>Avoid adding standalone dynamic icon routes outside the standard Next.js <code>icon.tsx</code>/<code>apple-icon.tsx</code>/<code>opengraph-image.tsx</code> convention without testing a real Vercel deploy first</td>
+          <td>Hosting build fails/crashes after adding a standalone dynamic icon route under <code>src/app/brand/</code> (historical)</td>
+          <td>On Vercel, decorative icon routes there broke lambda tracing (since deleted). Static export under Cloudflare has no such step, but standalone dynamic routes still can't be exported</td>
+          <td><code>apps/quran DEPLOYMENT.md</code> (historical fix note)</td>
+          <td>Stick to the standard Next.js <code>icon.tsx</code>/<code>apple-icon.tsx</code>/<code>opengraph-image.tsx</code> convention and confirm <code>npm run build:cf</code> succeeds</td>
         </tr>
       </table>
     </section>
@@ -897,16 +1006,20 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
     <section id="conventions">
       <h2><span class="num">20</span>Development Rules &amp; Conventions</h2>
       <ul>
-        <li><strong>Apps are independent — verify before assuming sharing.</strong> No shared package, types, or UI library exists between any two apps. Cross-app references are always either a deep link (URL) or a duplicated file kept in parity by convention (e.g. Supplications JSON), never a code import.</li>
+        <li><strong>Apps are independent — verify before assuming sharing.</strong> No shared package, types, or UI library exists between any two apps. Cross-app references are always either a deep link (URL) or a public, anonymous endpoint (the Flutter app's two Duas RPCs; the R2 audio URLs), never a code import.</li>
         <li><strong>apps/quran must stay anonymous-first.</strong> Reading, search, audio, and theme/font preferences must never require sign-in. Auth is reserved exclusively for future optional cross-device sync.</li>
         <li><strong>apps/quran's cost ceiling is a hard constraint,</strong> not a suggestion — no paid infra, no unnecessary third-party API dependencies for core reading. The resilience rule is explicit: "reading still works if audio/search/login/analytics are down."</li>
         <li><strong>apps/mobile/android's isolation from apps/quran</strong> is deliberate (different <code>applicationId</code>, no shared code) with exactly one sanctioned exception: the Cloudflare R2 audio bucket, which — per current code — both apps now independently consume (see the callout in §2). Don't casually add a second "exception."</li>
         <li><strong>RLS is the real authorization boundary in apps/learning,</strong> not client-side checks. Any new table needs its own RLS policies (migration <code>0001</code>'s tables shipped with RLS enabled but zero policies — a deliberate deny-by-default placeholder pattern to follow for new tables too).</li>
         <li><strong>Never reference another RLS-protected table via an inline subquery in a new policy</strong> — use or extend the existing <code>STABLE SECURITY DEFINER</code> helper functions to avoid the recursion bug fixed in migration <code>0004</code>.</li>
         <li><strong>Admin/super_admin accounts are never created by public signup,</strong> by design, enforced server-side in the DB trigger and independently in the Edge Function. Don't add a code path that lets a client specify its own privileged role.</li>
-        <li><strong>Quran content in apps/quran is licensed, cached content</strong> — it must be re-synced within the license's cache window (7 days) and must never be modified or redistributed as a standalone product. Don't hand-edit <code>src/content/generated/</code>.</li>
+        <li><strong>Quran content in apps/quran is licensed, cached content</strong> — it must be re-synced within the license's cache window (7 days; now automated weekly by <code>sync-quran-content.yml</code>) and must never be modified or redistributed as a standalone product. Don't hand-edit <code>src/content/generated/</code>.</li>
         <li><strong>Always bump only the <code>+N</code> build number</strong> in apps/mobile/android's <code>pubspec.yaml</code> before a real release build; bump <code>x.y.z</code> itself only for an explicit, user-requested version change.</li>
         <li><strong>Run app-specific commands from inside that app's directory</strong> (or with an explicit <code>--prefix</code>) — root <code>package.json</code> only proxies a subset of commands for two of the four apps.</li>
+        <li><strong>Hosting is Cloudflare, not Vercel.</strong> Don't reintroduce <code>vercel.json</code>, Multi-Zones rewrites or Vercel env vars. Everything the Next apps need at runtime is inlined at build time.</li>
+        <li><strong>Never claim a Duas text is verified unless a source was checked.</strong> Don't machine-translate Urdu, don't invent hadith numbers, don't paste copyrighted Wa Iyyaka text; unverified content stays <code>draft</code> / <code>needs_review</code> (§27).</li>
+        <li><strong>Database changes are manual.</strong> CI never runs <code>supabase db push</code>; add a numbered migration under <code>supabase/migrations/</code> and have the owner apply it (§26).</li>
+        <li><strong>No secrets in docs, repo or the app bundle.</strong> Only public values (Supabase URL + anon key) are ever baked into a build.</li>
       </ul>
     </section>
 
@@ -915,18 +1028,22 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
       <h2><span class="num">21</span>Current Implementation Status</h2>
       <table>
         <tr><th>Area</th><th>Status</th><th>Evidence</th></tr>
-        <tr><td>apps/learning core LMS (auth, classes, scheduling, live-teach, attendance, curriculum, notifications)</td><td><span class="badge ok">Implemented</span></td><td>24 migrations, full component tree, verified live-highlight-sync flow</td></tr>
+        <tr><td>Hosting on Cloudflare Workers (site, quran, learning) + www redirect + D1</td><td><span class="badge ok">Implemented, live</span></td><td>Verified live 2026-10-03: <code>Server: cloudflare</code>; /, /about, /contact, /faq, /duas, /quran, /quran/surah/2, /quran/page/604, sitemap, PDFs, /learning, /learning/login, /learning/admin/duas, /learning/share/&lt;id&gt;, /learning/teach/&lt;id&gt; all 200; www → 301 → apex 200</td></tr>
+        <tr><td>CI deploy to Cloudflare</td><td><span class="badge danger">Failing</span></td><td>Deploy jobs failed at the wrangler step; likely token permission (hypothesis); production deployed manually</td></tr>
+        <tr><td>apps/learning core LMS (auth, classes, scheduling, live-teach, attendance, curriculum, notifications)</td><td><span class="badge ok">Implemented</span></td><td>26 migrations applied to the new Supabase project; component tree; the data was <strong>not</strong> migrated (fresh start)</td></tr>
+        <tr><td>apps/learning Duas admin (<code>/admin/duas</code>)</td><td><span class="badge ok">Implemented</span> <span class="badge warn">CRUD not exercised live</span></td><td>Login + RLS read of 197 Duas verified; create/edit/publish clicked through only in tests</td></tr>
         <tr><td>apps/learning Google Drive/Calendar integration</td><td><span class="badge warn">Partial / In Progress</span></td><td>Edge Functions code-complete, undeployed; UI correctly shows "not configured"</td></tr>
         <tr><td>apps/learning Guardian portal</td><td><span class="badge info">Planned / Not Implemented</span></td><td>Role exists in DB/types only, no UI</td></tr>
-        <tr><td>apps/learning automated tests</td><td><span class="badge danger">Not Implemented</span></td><td>No framework, no test files, CI test step is a no-op</td></tr>
-        <tr><td>apps/quran reading, search, bookmarks, audio, Reader Modes, Tajweed, Supplications, PDF Mode, i18n chrome</td><td><span class="badge ok">Implemented</span></td><td>Verified against <code>src/app</code>, <code>src/components</code>, recent commits</td></tr>
-        <tr><td>apps/quran auth / cross-device sync</td><td><span class="badge info">Planned / Not Implemented</span></td><td>Schema exists; no Supabase client installed; entirely unwired</td></tr>
+        <tr><td>apps/learning automated tests</td><td><span class="badge warn">Narrow</span></td><td>17 + 8 unit tests; no UI/E2E suite</td></tr>
+        <tr><td>apps/quran reading, search, bookmarks, audio, Reader Modes, Tajweed, PDF Mode, i18n chrome</td><td><span class="badge ok">Implemented</span></td><td>Verified against <code>src/app</code>, <code>src/components</code>, recent commits; Supplications removed 2026-10-03</td></tr>
+        <tr><td>apps/quran auth / cross-device sync</td><td><span class="badge info">Planned / Not Implemented</span></td><td>No Supabase client installed; old project unused</td></tr>
         <tr><td>apps/quran PWA offline support</td><td><span class="badge warn">Partial / In Progress</span></td><td>Manifest only, no service worker</td></tr>
         <tr><td>apps/quran Capacitor/Android wrap</td><td><span class="badge danger">Not Implemented (contradicts CLAUDE.md)</span></td><td>No Capacitor dependency, config, or android/ folder in the current tree</td></tr>
-        <tr><td>apps/mobile/android reading, bookmarks, search, settings, Listening Mode, Supplications, i18n (en/te/ur)</td><td><span class="badge ok">Implemented</span></td><td>Verified against <code>lib/features/*</code>, recent commits, generated l10n</td></tr>
-        <tr><td>apps/mobile/android Supplications content</td><td><span class="badge warn">Partial / In Progress</span></td><td>106 of an eventual ~267 duas populated, per the data's own coverage note</td></tr>
+        <tr><td>apps/mobile/android reading, bookmarks, search, settings, Listening Mode, i18n (en/te/ur)</td><td><span class="badge ok">Implemented</span></td><td>Verified against <code>lib/features/*</code>; release 0.3.0+19 uploaded to closed testing (processing/pre-launch report not checked)</td></tr>
+        <tr><td>apps/mobile/android Supplications (remote + cache + bundled fallback, translation language, transliteration toggle)</td><td><span class="badge ok">Implemented</span></td><td>136 Flutter tests pass; end-to-end publish flow proven on real migrations (PGlite)</td></tr>
+        <tr><td>Duas content completeness</td><td><span class="badge warn">Partial / In Progress</span></td><td>102 published Duas in 30 categories; 95 draft stubs without Arabic; Urdu translations only for Quran-based Duas; Istikhara English/transliteration needs manual verification</td></tr>
+        <tr><td>apps/site contact form (D1 + Turnstile + optional Resend)</td><td><span class="badge warn">Partial</span></td><td>Worker + D1 live; Turnstile site key placeholder and secret not set; Resend not configured</td></tr>
         <tr><td>apps/mobile/android automated release build in CI</td><td><span class="badge info">Planned / Not Implemented</span></td><td>CI is analyze/test only; release is a separate manual/skill-driven flow</td></tr>
-        <tr><td>apps/landing static page + Multi-Zones rewrites + privacy page</td><td><span class="badge ok">Implemented</span></td><td>Verified <code>vercel.json</code>, <code>index.html</code>, <code>privacy.html</code></td></tr>
         <tr><td>Analytics / reporting (any app)</td><td><span class="badge danger">Not Implemented</span></td><td>No analytics SDK or reporting table found anywhere in the repo</td></tr>
         <tr><td><code>ci-quran-mobile.yml</code> (per root CLAUDE.md)</td><td><span class="badge danger">Deprecated / branch-only</span></td><td>Exists on <code>mobile/android</code> only, deliberately excluded from <code>main</code></td></tr>
       </table>
@@ -937,19 +1054,18 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
       <h2><span class="num">22</span>Known Limitations, Technical Debt &amp; Documentation Drift</h2>
       <p class="section-sub">Every item below was found by comparing an existing doc's claim against the actual current code — flagged so the next developer doesn't inherit a false assumption.</p>
       <ol>
-        <li><strong>Root <code>CLAUDE.md</code>:</strong> describes apps/quran as having Capacitor + <code>cap:sync</code>/<code>cap:open:android</code> + a <code>ci-quran-mobile.yml</code> workflow. None of this exists on <code>main</code> today (§7, §16). Treat apps/mobile/android as the real native Android app.</li>
-        <li><strong>Root <code>DEPLOYMENT.md</code>:</strong> states "no custom domain yet — temporary Vercel URL only." This is now false — the Multi-Zones custom-domain setup (<code>apps/landing</code> + basePath cutovers) shipped on 2026-08-31, after this doc was written. It's also scoped to apps/learning only, despite reading as repo-wide.</li>
-        <li><strong>Root <code>package.json</code> vs. <code>DEPLOYMENT.md</code>:</strong> the doc implies <code>npm run typecheck</code> works from repo root; it doesn't — only <code>quran:typecheck</code> is proxied, not a bare <code>typecheck</code> for apps/learning.</li>
-        <li><strong><code>Iqra-space-architecture.md</code>:</strong> a pre-monorepo, apps/learning-only planning document — its "Deployment Instructions" and "Folder/Project Structure" sections predate apps/quran, apps/mobile/android, and apps/landing entirely. Good for original product/DB rationale only.</li>
-        <li><strong>apps/quran's own docs</strong> (<code>PROJECT-STATUS.md</code>, <code>PRODUCT-ROADMAP.md</code>, <code>ARCHITECTURE.md</code>, <code>COST.md</code>, <code>QURAN-CONTENT.md</code>): all dated 2026-08-31, still call apps/learning by its old name <code>apps/web</code>, still describe Juz Mode as built (it was removed), and don't mention PDF Mode, Reader Modes, Tajweed, Supplications, search, or i18n at all — 3+ weeks and 15+ commits behind.</li>
-        <li><strong>apps/mobile/android <code>CLAUDE.md</code> vs. the <code>iqs-deploy</code> skill:</strong> CLAUDE.md still says releases go to "internal testing (never closed testing or production)"; the skill and <code>DEPLOYMENT.md</code> §9 both correctly say Closed testing (<code>alpha</code> track) as of commit <code>5a7f0cf</code>.</li>
-        <li><strong>apps/mobile/android <code>DEPLOYMENT.md</code>'s Privacy Policy blocker:</strong> flagged as blocking Play Store submission; already resolved — <code>apps/landing/privacy.html</code> exists.</li>
-        <li><strong>The R2 audio bucket "one deliberate exception" framing:</strong> root CLAUDE.md attributes this exception to apps/mobile/android alone. In current code, apps/quran's Listening Mode also consumes the same bucket directly (§2 callout) — not shared code, but a second live consumer of the same infrastructure.</li>
-        <li><strong>Supplications content duplication:</strong> the same <code>supplications.json</code> dataset is maintained as two separate committed files (one per app), kept in parity by convention only — no automated sync exists. A future edit to one without the other will silently diverge.</li>
-        <li><strong><code>apps/learning/README.md</code> and <code>AGENTS.md</code>:</strong> are Next.js 16 auto-generated boilerplate, not hand-written project docs — don't mistake them for authoritative project documentation; the real build history is in <code>docs/PROGRESS.md</code> (gitignored, local-only).</li>
-        <li><strong>No <code>supabase gen types</code> yet</strong> for apps/learning — <code>src/lib/types.ts</code> is hand-written and can drift from the actual schema as migrations are added.</li>
-        <li><strong>apps/learning's most recent feature (student-based scheduling, migration 0023)</strong> is explicitly documented as not independently end-to-end tested.</li>
-        <li><strong>No automated tests</strong> exist for either Next.js app (learning, quran) — all verification today is manual or via CI's structural checks (lint/typecheck/build) only.</li>
+        <li><strong>Root <code>CLAUDE.md</code>:</strong> <em>corrected 2026-10-05</em> (Cloudflare Workers, no Capacitor, Duas data flow). It previously described Vercel hosting and Multi-Zones <code>rewrites()</code>, apps/quran as having Capacitor + <code>cap:sync</code>/<code>cap:open:android</code> + a <code>ci-quran-mobile.yml</code> workflow, and apps/landing/<code>ci-landing.yml</code>. None of that exists on <code>main</code> today (§2, §7, §16). Treat apps/mobile/android as the real native Android app and apps/site as the domain root. (Historical Vercel mentions below are deliberate.)</li>
+        <li><strong>Root <code>DEPLOYMENT.md</code>:</strong> now correctly describes Cloudflare (architecture, CI, DNS cutover runbook, costs). Its token recipe doesn't list Zone → Zone → Read, which is the likely reason CI deploys fail; and its "deploys are CI-only" rule is aspirational while CI is broken.</li>
+        <li><strong><code>apps/site/wrangler.jsonc</code> (a comment), <code>apps/site/worker/index.js</code> (a header comment) and <code>apps/site/ADMIN.md</code> §5</strong> still say the www → apex redirect is a Cloudflare <em>Redirect Rule</em>. That was tried and looped; it is now the <code>iqraspace-www-redirect</code> Worker (<code>apps/site/www-redirect</code>).</li>
+        <li><strong>Root <code>package.json</code> vs. older <code>DEPLOYMENT.md</code> text:</strong> only <code>quran:typecheck</code> is proxied, not a bare <code>typecheck</code> for apps/learning; there are no root proxies for <code>build:cf</code> or the other apps.</li>
+        <li><strong><code>Iqra-space-architecture.md</code>:</strong> a pre-monorepo, apps/learning-only planning document — its "Deployment Instructions" (Vercel) and "Folder/Project Structure" sections predate apps/quran, apps/mobile/android and apps/site entirely. Good for original product/DB rationale only. It now carries a "historical document" banner listing its deviations (Cloudflare Workers static export instead of Pages/Vercel, R2 file storage, username auth, admin roles, Duas admin).</li>
+        <li><strong>apps/quran's own docs</strong> (<code>PROJECT-STATUS.md</code>, <code>PRODUCT-ROADMAP.md</code>, <code>ARCHITECTURE.md</code>, <code>COST.md</code>, <code>QURAN-CONTENT.md</code>, apps/quran <code>DEPLOYMENT.md</code>): dated 2026-08-31 or earlier, still call apps/learning by its old name <code>apps/web</code>, describe Juz Mode and Supplications as built (both removed), mention Vercel Hobby, and don't cover PDF Mode, Reader Modes, Tajweed, search or i18n.</li>
+        <li><strong>apps/mobile/android <code>CLAUDE.md</code> vs. the <code>iqs-deploy</code> skill:</strong> CLAUDE.md may still say releases go to "internal testing (never closed testing or production)"; the skill and <code>DEPLOYMENT.md</code> §9 say Closed testing (<code>alpha</code> track). Verify before relying on it.</li>
+        <li><strong>The R2 audio bucket "one deliberate exception" framing:</strong> root CLAUDE.md attributes this exception to apps/mobile/android alone. In current code, apps/quran's Listening Mode also consumes the same bucket directly (§2 callout). Separately, apps/mobile/android now has a second backend dependency: the Learning Supabase project's two public Duas RPCs (§27).</li>
+        <li><strong><code>apps/learning/README.md</code> and <code>AGENTS.md</code>:</strong> are Next.js 16 auto-generated boilerplate, not hand-written project docs; the real build history is in <code>docs/PROGRESS.md</code>.</li>
+        <li><strong>No <code>supabase gen types</code> yet</strong> for apps/learning — <code>src/lib/types.ts</code> is hand-written and can drift from the schema.</li>
+        <li><strong>Known gaps to schedule:</strong> fix CI token + re-enable deploys; Turnstile site key + secret (and optional Resend); delete the three Vercel projects and Vercel GitHub secrets; delete apps/quran's unused Supabase project and the leftover <code>apps/landing</code> folder; Learning has no CSP; Learning users must re-register; deploy the Google Drive Edge Functions (needs Google credentials); supply a verified Urdu source and Arabic for the 95 Duas drafts; verify the Istikhara English/transliteration; exercise the Duas admin CRUD live; check Play Console processing of 0.3.0+19; flutter-side docs (<code>apps/mobile/android/CLAUDE.md</code>) refresh.</li>
+        <li><strong>No UI/E2E tests</strong> for either Next.js app — apps/quran has none at all; apps/learning has only the 17 + 8 unit tests.</li>
       </ol>
     </section>
 
@@ -963,15 +1079,17 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
             <li>UI copy, styling, new components within an existing feature</li>
             <li>New read-only pages/routes that don't touch auth or RLS</li>
             <li>Additive DB migrations that follow the existing RLS-helper-function pattern</li>
-            <li>New Supplications categories (content-only edits, keep both apps' copies in sync manually)</li>
+            <li>New or edited Duas via the admin UI (draft → review → published; unverified text stays draft)</li>
           </ul>
         </div>
         <div class="card">
           <strong>Change with extra caution — verify against this doc's §22 first</strong>
           <ul>
             <li>Anything touching RLS policies, especially on <code>classes</code>/<code>class_members</code> (recursion risk)</li>
-            <li>The Vercel <code>rewrites()</code> in <code>apps/landing/vercel.json</code> or any app's <code>basePath</code>/<code>NEXT_BASE_PATH</code> wiring</li>
-            <li>The CI deploy strategy for apps/quran/apps/landing (<code>vercel deploy --prod</code> directly) — don't revert to the prebuilt flow without re-testing the lambda-tracing issue upstream</li>
+            <li>The <code>routes</code>/<code>run_worker_first</code> in any <code>wrangler.jsonc</code>, the DNS records (<code>@</code>/<code>www</code> proxied to <code>192.0.2.1</code>), or any app's <code>basePath</code>/<code>NEXT_BASE_PATH</code> wiring — and the dynamic-route Worker (§25)</li>
+            <li>Static Assets limits (25 MiB/file, 20,000 files) when adding PDFs or pages to apps/quran</li>
+            <li>Anything that makes a Worker run for static requests (every Worker invocation counts against the free 100k/day)</li>
+            <li>Duas migrations/RLS and the two public RPCs — the app depends on their exact shape</li>
             <li>Anything introducing auth or a Supabase client into apps/quran — this is a deliberate product/cost decision, not an oversight</li>
             <li>The R2 bucket's key layout/domain — two apps now depend on it</li>
             <li>apps/mobile/android's <code>pubspec.yaml</code> version — bump only the build number unless a real release is intended</li>
@@ -980,25 +1098,263 @@ cd apps/mobile/android && flutter run -d chrome   # or a connected Android devic
       </div>
     </section>
 
-    <!-- 24. APPENDIX -->
+    <!-- 24. LOCAL DEV -->
+    <section id="localdev">
+      <h2><span class="num">24</span>Local Development &amp; Build (per app)</h2>
+      <p class="section-sub">What to run, what environment it needs, and how to preview the exact Cloudflare output locally.</p>
+
+      <table>
+        <tr><th>App</th><th>Dev server</th><th>Production-shaped build</th><th>Local preview of the Worker output</th></tr>
+        <tr><td><code>apps/site</code></td><td>open the HTML, or any static server</td><td><code>npm run build:cf</code> (allow-list → <code>dist/</code> + <code>_headers</code>)</td><td><code>npm run build:cf</code>, <code>npx wrangler d1 migrations apply DB --local</code>, <code>npx wrangler dev --local</code> → <code>http://localhost:8787</code> (or <code>npm run dev:cf</code>)</td></tr>
+        <tr><td><code>apps/quran</code></td><td><code>npm run dev</code> → <code>localhost:3001</code></td><td><code>npm run build:cf</code> (runs <code>generate-search-index</code> + <code>next build</code> with <code>NEXT_BASE_PATH=/quran</code>, then assembles <code>dist/quran/**</code> + <code>_headers</code>)</td><td><code>npx wrangler dev --local</code> from <code>apps/quran</code></td></tr>
+        <tr><td><code>apps/learning</code></td><td><code>npm run dev</code> → <code>localhost:3000</code> (needs <code>.env.local</code>)</td><td><code>npm run build:cf</code> (copy pdf.js assets → <code>next build</code> with <code>NEXT_BASE_PATH=/learning</code> → <code>prepare-cf.mjs</code> packages <code>out/</code> into <code>dist/learning/**</code> + <code>_headers</code>)</td><td><code>npx wrangler dev --local</code> from <code>apps/learning</code> (exercises the dynamic-route Worker too)</td></tr>
+        <tr><td><code>apps/mobile/android</code></td><td><code>flutter run -d chrome</code> / device</td><td><code>flutter build apk --debug</code> / release (§27 for Duas defines)</td><td>—</td></tr>
+      </table>
+
+      <h3>Build-time environment</h3>
+      <ul>
+        <li><code>NEXT_BASE_PATH</code> is set <strong>by <code>build:cf</code></strong> (<code>/learning</code>, <code>/quran</code>) — don't export it yourself. <code>NEXT_PUBLIC_BASE_PATH</code> is exposed to client code from it through <code>next.config</code> <code>env</code>, so it can never be forgotten again.</li>
+        <li>apps/learning needs <code>NEXT_PUBLIC_SUPABASE_URL</code> and <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code> in the environment (or <code>.env.local</code>) <em>when it builds</em> — the output is a static export, there's no runtime env. Point them at the <code>iqraspace-learning</code> project.</li>
+        <li>apps/quran and apps/site need no secrets to build. The Quran content sync (<code>npm run sync:content</code>) needs the <code>QURAN_FOUNDATION_*</code> credentials and is only for content refreshes.</li>
+      </ul>
+
+      <div class="callout warn"><strong>Wrangler + <code>.env.local</code> trap</strong>
+      Wrangler auto-loads <code>.env</code>/<code>.env.local</code> from the current directory. If that file contains <code>CLOUDFLARE_API_TOKEN</code> (as <code>apps/learning/.env.local</code> may), the token silently <strong>overrides <code>wrangler login</code></strong> and you may deploy/inspect the wrong account or get auth errors. Run wrangler from a directory without such a file (e.g. copy/clone the project to a scratch folder, or temporarily move the file), and check with <code>npx wrangler whoami</code>. <code>wrangler dev --local</code> doesn't need Cloudflare auth at all.</div>
+
+      <h3>Checks before a change</h3>
+<pre><code># Next apps
+npx next typegen          # fresh checkout only
+npm run lint
+npm run typecheck
+npm run build:cf          # the build CI will run
+
+# apps/learning
+npm run test:duas         # 17 tests (Duas validation)
+npm run test:worker       # or: node --test worker/*.test.mjs  (8 tests)
+
+# apps/site
+npm test                  # node --test worker/*.test.mjs  (13 tests)
+
+# Duas pipeline
+cd apps/site/supabase/duas &amp;&amp; npm install &amp;&amp; npm test   # 23 PGlite tests
+
+# Flutter
+cd apps/mobile/android &amp;&amp; flutter analyze &amp;&amp; flutter test   # 136 pass + 1 skipped</code></pre>
+    </section>
+
+    <!-- 25. DEPLOYING -->
+    <section id="deploying">
+      <h2><span class="num">25</span>Deploying (Cloudflare Workers)</h2>
+      <p class="section-sub">CI is the intended path but is <strong>currently failing</strong> (§16); production was deployed by hand. Both are documented here. Secret/variable <em>names</em> only — never values.</p>
+
+      <h3>Via CI (when it works)</h3>
+      <p>Push to <code>main</code> with the repo variable <code>CF_DEPLOY_ENABLED = true</code>: each app's workflow validates, runs <code>build:cf</code>, deploys with <code>cloudflare/wrangler-action@v3</code> (<code>workingDirectory: apps/&lt;app&gt;</code>) and health-checks <code>CF_HEALTHCHECK_BASE</code>. Required secrets: <code>CLOUDFLARE_API_TOKEN</code>, <code>CLOUDFLARE_ACCOUNT_ID</code>, <code>NEXT_PUBLIC_SUPABASE_URL</code>, <code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code>. Token permissions: Workers Scripts:Edit, D1:Edit, Zone → Workers Routes:Edit (zone <code>iqraspace.org</code>), Account Settings:Read — <strong>plus Zone → Zone → Read</strong> (the likely missing one). With the variable unset, workflows only validate. Worker runtime secrets (Turnstile, Resend) are never in CI.</p>
+
+      <h3>Manual deploy runbook</h3>
+<pre><code># one-time: authenticate (OAuth) - run from a folder WITHOUT a .env.local holding CLOUDFLARE_API_TOKEN
+npx wrangler login
+npx wrangler whoami
+
+# apps/site  (Worker + D1)
+cd apps/site
+npm install
+npm run build:cf
+npx wrangler deploy                 # route iqraspace.org/*
+
+# apps/quran  (assets only)
+cd apps/quran
+npm install
+npm run build:cf
+npx wrangler deploy                 # route iqraspace.org/quran*
+
+# apps/learning  (assets + dynamic-route Worker)
+cd apps/learning
+npm install
+# NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY must be in the environment or .env.local
+npm run build:cf
+npx wrangler deploy                 # route iqraspace.org/learning*
+
+# www -> apex redirect Worker (deployed by hand; rarely changes, CI does not deploy it)
+cd apps/site/www-redirect
+npx wrangler deploy                 # route www.iqraspace.org/*</code></pre>
+      <p>Order doesn't matter between apps (each owns a distinct route). Deploy the site last if you changed route patterns, since <code>iqraspace.org/*</code> is the catch-all.</p>
+
+      <h4>apps/site: D1 and secrets (first-time setup, owner only)</h4>
+<pre><code>cd apps/site
+npx wrangler d1 create iqraspace-site
+# copy the printed database_id into wrangler.jsonc (already bound in the repo)
+npx wrangler d1 migrations apply DB --remote       # applies d1/migrations/0001_contact_messages.sql
+npx wrangler secret put TURNSTILE_SECRET_KEY       # recommended; skipped when unset
+npx wrangler secret put RESEND_API_KEY             # optional email alert
+npx wrangler secret put CONTACT_FROM_EMAIL
+npx wrangler secret put CONTACT_ALERT_EMAIL
+# reading messages (apps/site/ADMIN.md has the full list)
+npx wrangler d1 execute DB --remote --command "SELECT id, created_at, status, name, email, subject FROM contact_messages ORDER BY created_at DESC LIMIT 20"</code></pre>
+      <p>The Turnstile <em>site</em> key is public and must replace the <code>YOUR_TURNSTILE_SITE_KEY</code> placeholder in <code>contact.html</code> (open owner TODO).</p>
+
+      <h3>DNS runbook &amp; rollback</h3>
+      <ol>
+        <li>Records <code>@</code> and <code>www</code>: type A → <code>192.0.2.1</code> (reserved test address, never contacted), <strong>Proxied</strong> (orange cloud). Worker routes only fire for proxied records. <code>audio.iqraspace.org</code> (R2 custom domain) is separate and untouched.</li>
+        <li>After a first deploy of each Worker, routes are applied from its <code>wrangler.jsonc</code>; if a Worker was deployed before the zone was ready, redeploy it.</li>
+        <li><strong>Rollback to the pre-migration state:</strong> set both A records back to <code>76.76.21.21</code>, <strong>DNS-only</strong>. This only helps if the old hosting still exists — Vercel no longer serves anything and the projects are slated for deletion, so treat rollback as "restore the old origin first". Prefer rolling back a single Worker with <code>npx wrangler rollback</code> (or redeploying the previous commit) over touching DNS.</li>
+      </ol>
+
+      <h3>The Learning dynamic-route Worker — and adding a route safely</h3>
+      <p>Why it exists: a static export can't contain pages for ids that don't exist at build time. <code>apps/learning/worker/index.js</code> + <code>routes.js</code> map four URL families to one placeholder shell each (<code>/learning/share/&lt;id&gt;</code>, <code>/learning/teach/&lt;id&gt;</code>, <code>/learning/admin/duas/&lt;id&gt;</code>, <code>/learning/admin/duas/categories/&lt;slug&gt;</code>), rewriting <strong>internally</strong> (no redirect) so existing links keep working; the browser still shows the real URL and the client reads the id from <code>window.location</code>. Why <code>run_worker_first</code> is limited to those patterns: the Workers Free plan allows 100,000 Worker requests/day, while static-asset requests are free and unlimited — so the Worker must <em>not</em> run for ordinary pages, JS, images or PDFs. Fixed sub-pages (<code>new</code>, <code>list</code>, <code>activity</code>, <code>categories</code>, <code>categories/new</code>) are excluded with <code>!</code> patterns.</p>
+      <p><strong>To add a new dynamic route (e.g. <code>/learning/foo/&lt;id&gt;</code>):</strong></p>
+      <ol>
+        <li>Create the page at <code>src/app/(...)/foo/[id]/page.tsx</code> with <code>generateStaticParams()</code> returning only the placeholder <code>[{ id: "_" }]</code> (look at an existing one such as <code>share/[lessonId]</code>).</li>
+        <li>In the client component, read the id with <code>src/lib/routeParam.ts</code> / <code>RouteEntry</code> (from <code>window.location</code>) — never from Next's params.</li>
+        <li>Add the pattern to <code>worker/routes.js</code> (<code>matchDynamicRoute</code>) <strong>and</strong> a test in <code>worker/routes.test.mjs</code>; list any fixed sibling pages in the static-segment sets.</li>
+        <li>Add <code>/learning/foo/*</code> (plus <code>!</code> exclusions for fixed siblings) to <code>assets.run_worker_first</code> in <code>apps/learning/wrangler.jsonc</code>. Missing this makes the URL 404 from static assets.</li>
+        <li>Add a health-check path in <code>ci.yml</code> if it matters, run <code>npm run test:worker</code> and <code>npm run build:cf</code>, preview with <code>npx wrangler dev --local</code> using a real-looking id, then deploy.</li>
+      </ol>
+
+      <h3>Static Assets limits &amp; free-tier guard rails</h3>
+      <ul>
+        <li><strong>25 MiB per file, 20,000 files</strong> per Worker's assets. <code>dist/quran</code>: 4,534 files, 375.8 MiB, largest PDF 14.8 MiB — plenty of file-count headroom, watch single big PDFs.</li>
+        <li>Free plan: 100k Worker requests/day and 10 ms CPU per request — the reason Learning auth stays on Supabase and the Worker does nothing but path matching. D1 free: 5 GB, 5M rows read/day, 100k written/day. R2 free: 10 GB, free egress. Limits as understood at the time of the feasibility study — re-check before relying on them.</li>
+        <li>Headers live in generated <code>_headers</code> files (site: security headers + CSP; quran: security headers + CSP allowing <code>cdn.islamic.network</code>/<code>audio.iqraspace.org</code> media and <code>api.alquran.cloud</code>, plus CORS <code>*</code> on <code>/quran/pdf/*</code>; learning: nosniff, Referrer-Policy, SAMEORIGIN, Permissions-Policy and <em>no</em> CSP). Edit them in each app's build script (<code>scripts/build.mjs</code>, <code>prepare-cf.mjs</code>), not by hand in <code>dist/</code>.</li>
+      </ul>
+    </section>
+
+    <!-- 26. SUPABASE OPS -->
+    <section id="supabase-ops">
+      <h2><span class="num">26</span>Supabase Operations (Learning project)</h2>
+      <p class="section-sub">The Learning backend is a <strong>new project</strong> (<code>iqraspace-learning</code>, region ap-southeast-2, created by the owner on 2026-10-03; the old project became inaccessible and was abandoned — fresh start, no data migrated). The Duas tables live in it too.</p>
+
+      <h3>Apply schema, config and functions</h3>
+<pre><code># from the repo ROOT (supabase/ lives there, not in apps/learning)
+npx supabase login
+npx supabase link --project-ref &lt;project-ref&gt;      # the project is "linked"; db push targets it
+npx supabase migration list                         # compare local vs remote
+npx supabase db push                                # applies supabase/migrations/0001-0026 (new ones only)
+
+npx supabase config push                            # applies the auth config from supabase/config.toml
+                                                    # (sign-up on, email confirmation OFF, site_url https://iqraspace.org/learning,
+                                                    #  redirect URLs, jwt_expiry 86400, TOTP MFA off)
+
+npx supabase functions deploy admin-user-management --use-api
+npx supabase functions deploy lesson-materials-r2 --use-api
+npx supabase secrets set LESSON_MATERIALS_R2_ACCOUNT_ID=... LESSON_MATERIALS_R2_BUCKET=... \
+     LESSON_MATERIALS_R2_ACCESS_KEY_ID=... LESSON_MATERIALS_R2_SECRET_ACCESS_KEY=...   # use your real values; never commit them</code></pre>
+      <ul>
+        <li><strong>CI never applies migrations or deploys functions.</strong> Whenever a change adds a file under <code>supabase/migrations/</code>, the owner must run <code>supabase db push</code> — otherwise the deployed app hits errors such as "Could not find the table 'public.duas'" (§19).</li>
+        <li><code>--use-api</code> deploys without needing Docker locally. Functions use <code>verify_jwt = true</code>. <code>google-oauth-exchange</code> and <code>drive-file-proxy</code> are <strong>not deployed</strong> (they need Google credentials).</li>
+        <li>Secrets (names only): <code>LESSON_MATERIALS_R2_ACCOUNT_ID</code>, <code>LESSON_MATERIALS_R2_BUCKET</code>, <code>LESSON_MATERIALS_R2_ACCESS_KEY_ID</code>, <code>LESSON_MATERIALS_R2_SECRET_ACCESS_KEY</code> (private R2 bucket; scoped token). The Supabase <em>service_role</em> key is only ever used by local scripts and Edge Functions.</li>
+        <li>Storage-analytics config was not pushed; the sign-up emails use Supabase's shared SMTP unless <code>[auth.email.smtp]</code> is configured.</li>
+      </ul>
+
+      <h3>Seeding admin accounts &amp; logging in</h3>
+<pre><code>cd apps/learning
+# .env.local needs NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY and
+# ADMIN_EMAIL/ADMIN_PASSWORD, SUPER_ADMIN_EMAIL/SUPER_ADMIN_PASSWORD (quote values containing # or $)
+npm run seed:admins</code></pre>
+      <p>The script creates/updates two accounts with fixed usernames: <strong><code>admin</code></strong> (role <code>admin</code>) and <strong><code>superadmin</code></strong> (role <code>super_admin</code>). <strong>Log in with the username</strong>, not the email — the form calls <code>get_auth_email_for_username</code> then <code>signInWithPassword</code>. Verified on the live project: both log in and read all 197 Duas through RLS; an anonymous direct table read returns 401. Everyone else (tutors, students) registers through the app — the previous users must re-register.</p>
+      <div class="callout info"><strong>Other Supabase projects</strong>
+      apps/quran's project is unused and can be deleted; apps/site's old contact-form project is superseded by D1 (<code>apps/site/supabase/migrations/0001</code> is kept only as history). The Flutter app talks to <em>this</em> project only through two anonymous read-only RPCs.</div>
+    </section>
+
+    <!-- 27. DUAS -->
+    <section id="duas">
+      <h2><span class="num">27</span>Duas System (content, admin, app)</h2>
+      <p class="section-sub">Remotely managed supplications content. Source of truth: the Learning Supabase project. Edited in the Learning admin UI. Consumed by the Flutter app with a cache and a bundled fallback. Dated 2026-10-03; deployed and live.</p>
+
+      <h3>Data flow</h3>
+<pre><code>Learning admin (/learning/admin/duas) ──► Supabase tables ──► get_dua_content() / dua_content_version()  (anon, published only)
+                                                                      │
+        Flutter: SupplicationsRepository ◄── RemoteDataSource (dio) ── LocalCache (Hive) ── bundled assets/supplications.json</code></pre>
+
+      <h3>Content pipeline (<code>apps/site/supabase/duas/</code>)</h3>
+      <table>
+        <tr><th>Script</th><th>What it does</th></tr>
+        <tr><td><code>fetch_sources.mjs</code></td><td>Downloads the verified source texts (Bukhari 1166 Arabic; Quran Arabic/English/transliteration used for corrections) into <code>data/verified_sources.json</code>. Needs network.</td></tr>
+        <tr><td><code>build_canonical.mjs [--write-bundled]</code></td><td>Legacy JSON (<code>data/legacy_supplications.json</code>, the 106 original entries) + verified sources + Wa Iyyaka staging + optional Urdu → canonical dataset (<code>data/canonical_duas.json</code>), the seed SQL, reports, and — with <code>--write-bundled</code> — the Flutter bundled snapshot <code>assets/supplications.json</code>.</td></tr>
+        <tr><td><code>wyn_stage.mjs</code></td><td>Wa Iyyaka reconciliation (reports under <code>reports/</code>): new categories, mappings and draft stubs.</td></tr>
+        <tr><td><code>make_learning_migrations.mjs</code></td><td>Generates <code>supabase/migrations/0025_duas_schema.sql</code> and <code>0026_duas_seed.sql</code> from <code>sql/0002_duas_schema.sql</code> + the canonical data.</td></tr>
+        <tr><td><code>import_urdu.mjs</code></td><td>Imports a filled Urdu CSV into <code>data/urdu_translations.json</code> (see below).</td></tr>
+        <tr><td><code>dev_backend.mjs</code>, <code>e2e_publish_flow.mjs</code></td><td>Local stand-in for Supabase (the real migrations on in-process Postgres, serving the two RPCs as <code>anon</code>) and the end-to-end proof "admin edit → app shows it".</td></tr>
+        <tr><td><code>tests/</code></td><td>PGlite tests: <code>npm install &amp;&amp; npm test</code> in that folder (23 tests).</td></tr>
+      </table>
+<pre><code>cd apps/site/supabase/duas
+npm install
+node fetch_sources.mjs                 # optional refresh (network)
+node build_canonical.mjs --write-bundled
+node make_learning_migrations.mjs      # only if the SCHEMA/SEED changed -> new migration for supabase db push
+npm test
+node e2e_publish_flow.mjs              # edit/publish through real migrations -> real app repository</code></pre>
+
+      <h3>How to add or change content</h3>
+      <ul>
+        <li><strong>Day to day: use the admin UI</strong> (<code>/learning/admin/duas</code>, admin/super_admin login). Edit, preview, move through <code>draft → review → published</code>, unpublish/archive; every change is audited with field diffs and can be restored. The app picks up published changes without a release (next version check, ≤ hourly or on pull-to-refresh).</li>
+        <li><strong>Bulk/structural changes use the pipeline</strong> (new categories in bulk, re-import of verified texts, schema changes). Pipeline changes only reach production through a new migration applied with <code>supabase db push</code> — and only reach installed apps' <em>fallback</em> data through a new release (<code>--write-bundled</code>).</li>
+        <li><strong>Rules:</strong> a published Dua needs Arabic (Arabic script) and an English translation; <code>repeat_count</code> is an integer (1–1000), never free text; <code>hadith_number</code> only where verified; unverified material stays <code>draft</code>/<code>needs_review</code>. The 95 Wa Iyyaka draft stubs have <em>no Arabic</em> on purpose (the book is copyrighted) — an admin must supply verified Arabic. Don't paste the book's text.</li>
+      </ul>
+
+      <h3>Importing Urdu translations</h3>
+      <p>Only populated where a verified source exists: today the Qur'an's <code>ur.maududi</code> edition for Duas that are exactly a whole ayah range (Ayat al-Kursi, the Three Quls, plus 8 draft stubs). Hadith Duas are empty — nothing is machine-translated. Path: fill <code>reports/urdu_translation_template.csv</code> (186 rows) → <code>node import_urdu.mjs filled.csv --source "&lt;citation&gt;"</code> → writes <code>data/urdu_translations.json</code> → <code>node build_canonical.mjs</code>. The importer is strict: it rejects text that isn't Urdu, text that merely repeats the Arabic, and a missing <code>--source</code>. The owner has not supplied a source yet.</p>
+
+      <h3>Data model &amp; RLS summary</h3>
+      <ul>
+        <li><code>duas</code> — <code>slug</code> (unique), <code>title</code>/<code>title_ur</code>, <code>arabic</code> (+ generated <code>arabic_normalized</code>), <code>transliteration_latin/telugu/urdu</code>, <code>translation_en/ur</code>, <code>description</code>, <code>repeat_count</code>, <code>source_type</code> (<code>quran|hadith|mixed|other</code>), <code>source_collection</code>, <code>source_reference</code>, <code>hadith_number</code>, <code>hadith_grade</code>, <code>quran_refs</code> (jsonb), <code>audio_url</code> (https only), <code>status</code> (<code>draft|review|published|archived</code>), <code>verification_status</code> (<code>verified|unchecked|needs_review</code>), <code>review_notes</code>, <code>origin</code>, <code>wyn_ids</code>, <code>sort_order</code>, timestamps and <code>created_by/updated_by</code>.</li>
+        <li><code>dua_categories</code>; <code>dua_category_map</code> (one canonical Dua shown under several categories, with per-category overrides <code>context_title</code>, <code>context_title_ur</code>, <code>context_note</code>, <code>context_reference</code>, <code>context_repeat_count</code>; deleting a mapped category is RESTRICTed); <code>dua_audit_log</code> (append-only, written by triggers for all three tables).</li>
+        <li><strong>RLS/privileges:</strong> <code>anon</code> has <em>no</em> table privileges — only the SECURITY DEFINER RPCs <code>get_dua_content()</code> (consistent snapshot of published Duas in active categories) and <code>dua_content_version()</code> (md5 freshness check). Writes need a signed-in Learning user whose <code>public.users.role</code> is <code>admin</code> or <code>super_admin</code> (helpers <code>dua_role</code>, <code>is_dua_admin</code>, <code>is_dua_staff</code>). Triggers stamp created/updated/published_at and enforce the workflow; no API role can alter the audit log.</li>
+        <li>Counts today: 41 categories, 197 Duas (102 published + 95 drafts), 213 mappings; public snapshot = 30 categories (empty ones omitted) and 102 distinct Duas.</li>
+      </ul>
+
+      <h3>Admin UI map (apps/learning)</h3>
+      <table>
+        <tr><th>Where</th><th>What</th></tr>
+        <tr><td><code>src/app/(app)/admin/duas/</code></td><td>Routes: <code>page.tsx</code> (dashboard), <code>list</code>, <code>new</code> (<code>?from=</code> duplicates), <code>[id]</code> (editor + History tab), <code>categories</code>, <code>categories/new</code>, <code>categories/[slug]</code>, <code>activity</code>, shared <code>layout.tsx</code>.</td></tr>
+        <tr><td><code>src/components/admin/duas/</code></td><td><code>DashboardView</code>, <code>ListView</code> (search/filters/50 per page), <code>DuaEditor</code> + <code>DuaFormFields</code> + <code>DuaPreview</code> ("show as in category"), <code>History</code> (diffs, restore), <code>CategoriesListView</code>, <code>CategoryDetailView</code>, <code>ActivityView</code>, <code>DuasShell</code>/<code>DuasUi</code>/<code>bits</code>.</td></tr>
+        <tr><td><code>src/lib/duas/</code></td><td><code>api.ts</code> (Supabase calls), <code>form.ts</code>, <code>types.ts</code>, <code>validate.ts</code> (+ <code>validate.test.ts</code>, 17 tests). Features: duplicate detection, optimistic concurrency, delete-by-typing-slug.</td></tr>
+      </table>
+
+      <h3>Flutter side</h3>
+      <ul>
+        <li>Code: <code>apps/mobile/android/lib/features/supplications/</code> — <code>data/datasources/{supplications_remote_datasource, supplications_content_cache, supplications_local_datasource, dua_favorites_local_datasource}.dart</code>, <code>data/repositories/supplications_repository_impl.dart</code>, <code>presentation/providers/</code>, screens and the reading-settings sheet.</li>
+        <li>Resolution: validated remote → last good cache → bundled asset; hourly freshness check; invalid/failed refresh keeps the cache. Cache: Hive box <code>duas_content_cache</code> (key <code>snapshot</code>, <code>schema_version</code> 1). Favourites: box <code>duas_favorites</code>, keyed <code>slug:&lt;slug&gt;</code>; legacy <code>{category}_{index}</code> favourites migrate through the bundled <code>sort_order</code>; unresolved ones show "No longer available".</li>
+        <li>Settings persisted in <code>reader_settings</code>: <code>supplicationsTranslationLanguage</code> (English/Urdu; default Urdu only when the app language is Urdu; missing Urdu → English + note) and <code>supplicationsTransliterationEnabled</code> (default on). Display order Arabic → transliteration → translation.</li>
+      </ul>
+
+      <h3>Building a release with remote Duas</h3>
+<pre><code>cd apps/mobile/android
+# 1. bump ONLY the +N build number in pubspec.yaml's version: line (Play rejects a reused versionCode)
+# 2. build with the two PUBLIC defines for the iqraspace-learning project (URL + anon key)
+flutter build appbundle --release \
+  --dart-define=DUAS_SUPABASE_URL=https://&lt;project-ref&gt;.supabase.co \
+  --dart-define=DUAS_SUPABASE_ANON_KEY=&lt;anon key&gt;</code></pre>
+      <p>Without both defines the remote datasource is disabled and the app runs purely offline on the bundled snapshot. Only the public anon key goes in; never the service_role key. Release 0.3.0+19 was built this way (checked inside the binary: new project URL present, old project ref absent) and uploaded to the closed-testing track as versionCode 19 via the <code>iqs-deploy</code> skill; Play processing and the pre-launch report were not yet checked.</p>
+
+      <h3>Content caveats (read before trusting the data)</h3>
+      <ul>
+        <li><span class="badge warn">NEEDS MANUAL VERIFICATION</span> The English continuation and Latin transliteration of Istikhara were drafted by Claude, not taken from a verified source.</li>
+        <li>Istikhara Arabic (completed from Sahih al-Bukhari 1166), Ayat al-Kursi (full 2:255) and the Three Quls (112–114) were corrected from verified sources; English is Saheeh International; Telugu transliteration of those three was dropped (app falls back to Latin); the legacy "Urdu transliteration" (just the Arabic again) was not carried over.</li>
+        <li>3 Duas with per-part repeat counts (salah#9, sickness#1, faith#1) keep the counts in text and are flagged; hajj#2/#3 are identical and kept separate; no revised-edition-specific Wa Iyyaka entry could be verified.</li>
+      </ul>
+    </section>
+
+    <!-- 28. APPENDIX -->
     <section id="appendix">
-      <h2><span class="num">24</span>Appendix: Where to Read More</h2>
+      <h2><span class="num">28</span>Appendix: Where to Read More</h2>
       <p>This document is the entry point; these are the deeper, per-app references it draws from (verify dates/claims against code per §22 before trusting them in isolation):</p>
       <ul class="toc-mini">
-        <li><code>Iqra-space-architecture.md</code> — original apps/learning product/DB design rationale</li>
-        <li><code>DEPLOYMENT.md</code> (root) — apps/learning pilot deployment notes (has stale points, §22)</li>
-        <li><code>docs/PROGRESS.md</code> (gitignored, local) — apps/learning's real build log</li>
-        <li><code>apps/quran/ARCHITECTURE.md</code>, <code>COST.md</code>, <code>DEPLOYMENT.md</code>, <code>PDF-CONTENT.md</code>, <code>PRODUCT-ROADMAP.md</code>, <code>PROJECT-STATUS.md</code>, <code>QURAN-CONTENT.md</code>, <code>SETUP.md</code></li>
+        <li><code>Iqra-space-architecture.md</code> — original apps/learning product/DB design rationale (pre-monorepo, pre-Cloudflare)</li>
+        <li><code>DEPLOYMENT.md</code> (root) — Cloudflare architecture, CI/CD, DNS cutover runbook, costs</li>
+        <li><code>apps/site/ADMIN.md</code> (D1, secrets, Turnstile; §5 on www is stale), <code>apps/site/www-redirect/README.md</code></li>
+        <li><code>apps/site/supabase/duas/README.md</code> — Duas schema, pipeline and migration details</li>
+        <li><code>docs/PROGRESS.md</code> (local, gitignored) — running build log, newest entries at the end</li>
+        <li><code>apps/quran/ARCHITECTURE.md</code>, <code>COST.md</code>, <code>PDF-CONTENT.md</code>, <code>PRODUCT-ROADMAP.md</code>, <code>PROJECT-STATUS.md</code>, <code>QURAN-CONTENT.md</code>, <code>SETUP.md</code> (several stale — §22)</li>
         <li><code>apps/mobile/android/AUDIO.md</code>, <code>DEPLOYMENT.md</code>, <code>TESTING.md</code>, <code>CLAUDE.md</code></li>
-        <li><code>.claude/skills/{iqs-debug,iqs-deploy,iqs-git}/SKILL.md</code> — the AI-assisted dev workflows used on this repo</li>
-        <li>Root <code>CLAUDE.md</code> — repo-wide guidance for AI coding agents (cross-check against §22 before relying on any specific claim)</li>
+        <li><code>.claude/skills/{iqs-debug,iqs-deploy,iqs-git}/SKILL.md</code> — the AI-assisted dev workflows (<code>iqs-deploy</code> now has Website, Learning and Android halves and deploys via GitHub Actions + wrangler)</li>
+        <li>Root <code>CLAUDE.md</code> — repo-wide guidance for AI agents (partly stale: cross-check against §22)</li>
       </ul>
     </section>
 
     </div>
 
     <footer>
-      IqraSpace Developer Guide — generated from a direct review of the repository as of 2026-09-20. Where this document and an older doc disagree, this document reflects the code; see §22 for the specific discrepancies found.
+      IqraSpace Developer Guide — updated 2026-10-03 for the Cloudflare Workers hosting, the new Learning Supabase project and the remote Duas system, from a direct review of the repository and the verified change brief. Where this document and an older doc disagree, this document reflects the code; see §22 for the specific discrepancies found.
     </footer>
   </main>
 </div>

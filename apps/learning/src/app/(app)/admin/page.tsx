@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { RequireAuth } from "@/components/RequireAuth";
 import { useAuth } from "@/lib/authContext";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import { ADMIN_ROLES } from "@/lib/roles";
 import { Card, Eyebrow, SectionHead } from "@/components/ui/Card";
 import { StatCard } from "@/components/ui/ProgressBar";
@@ -11,11 +11,10 @@ import { LinkButton } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 
 // Platform-wide oversight. Access is gated two ways: this
-// <RequireAuth allow={ADMIN_ROLES}> (UX only) and, for real, the
-// "*_all_as_admin" RLS policies (0018_admin_full_access.sql, building on
-// 0017's original read-only versions) that these queries depend on — a
+// <RequireAuth allow={ADMIN_ROLES}> (UX only) and, for real, the admin
+// rules in worker/api/policies.js that these queries depend on — a
 // tutor/student hitting this page would just get empty results back from
-// Supabase, not a client-side illusion of data.
+// the Learning API, not a client-side illusion of data.
 export default function AdminDashboardPage() {
   return (
     <RequireAuth allow={ADMIN_ROLES}>
@@ -35,9 +34,9 @@ function AdminDashboard() {
     let active = true;
     async function load() {
       const [users, classes, lessons] = await Promise.all([
-        supabase.from("users").select("role"),
-        supabase.from("classes").select("id", { count: "exact", head: true }),
-        supabase.from("lessons").select("id", { count: "exact", head: true }),
+        db.from("users").select("role"),
+        db.from("classes").select("id", { count: "exact", head: true }),
+        db.from("lessons").select("id", { count: "exact", head: true }),
       ]);
       if (!active) return;
       const roles = (users.data ?? []) as { role: string }[];

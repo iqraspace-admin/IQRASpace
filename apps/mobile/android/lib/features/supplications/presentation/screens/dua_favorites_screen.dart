@@ -21,7 +21,9 @@ class DuaFavoritesScreen extends ConsumerWidget {
     final themeMode = ref.watch(readerThemeModeProvider);
     final colors = ReaderColors.forMode(themeMode);
     final favorites = ref.watch(duaFavoritesProvider);
-    final categories = ref.watch(supplicationsContentProvider).valueOrNull?.categories;
+    final fontScale = ref.watch(duaFontScaleProvider);
+    final categories =
+        ref.watch(supplicationsContentProvider).valueOrNull?.categories;
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
@@ -38,15 +40,19 @@ class DuaFavoritesScreen extends ConsumerWidget {
                     final confirmed = await showDialog<bool>(
                       context: context,
                       builder: (dialogContext) => AlertDialog(
-                        title: Text(l10n.supplicationsFavoritesClearConfirmTitle),
-                        content: Text(l10n.supplicationsFavoritesClearConfirmBody),
+                        title:
+                            Text(l10n.supplicationsFavoritesClearConfirmTitle),
+                        content:
+                            Text(l10n.supplicationsFavoritesClearConfirmBody),
                         actions: [
                           TextButton(
-                            onPressed: () => Navigator.of(dialogContext).pop(false),
+                            onPressed: () =>
+                                Navigator.of(dialogContext).pop(false),
                             child: Text(l10n.commonCancel),
                           ),
                           TextButton(
-                            onPressed: () => Navigator.of(dialogContext).pop(true),
+                            onPressed: () =>
+                                Navigator.of(dialogContext).pop(true),
                             child: Text(l10n.supplicationsFavoritesClearAll),
                           ),
                         ],
@@ -68,32 +74,41 @@ class DuaFavoritesScreen extends ConsumerWidget {
                 final favorite = favorites[index];
                 final style = DuaCategoryStyles.forId(favorite.categoryId);
                 // Content still loading: leave it tappable-less, not 'removed'.
-                final location = categories == null ? null : resolveFavorite(favorite, categories);
+                final location = categories == null
+                    ? null
+                    : resolveFavorite(favorite, categories);
                 final unavailable = categories != null && location == null;
-                return Row(
-                  children: [
-                    Container(width: 5, height: 56, color: style.accent),
-                    Expanded(
-                      child: ListTile(
-                        title: Text(favorite.snippet, maxLines: 2, overflow: TextOverflow.ellipsis),
-                        subtitle: Text(
-                          unavailable
-                              ? '${favorite.categoryLabel} · ${l10n.supplicationsFavoriteUnavailable}'
-                              : favorite.categoryLabel,
-                        ),
-                        onTap: location == null
-                            ? null
-                            : () => Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) => DuaReadingScreen(
-                                      categoryId: location.categoryId,
-                                      initialIndex: location.index,
+                return IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Container(width: 5, color: style.accent),
+                      Expanded(
+                        child: ListTile(
+                          title: Text(favorite.snippet,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 16 * fontScale)),
+                          subtitle: Text(
+                            unavailable
+                                ? '${favorite.categoryLabel} · ${l10n.supplicationsFavoriteUnavailable}'
+                                : favorite.categoryLabel,
+                            style: TextStyle(fontSize: 14 * fontScale),
+                          ),
+                          onTap: location == null
+                              ? null
+                              : () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => DuaReadingScreen(
+                                        categoryId: location.categoryId,
+                                        initialIndex: location.index,
+                                      ),
                                     ),
                                   ),
-                                ),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 );
               },
             ),

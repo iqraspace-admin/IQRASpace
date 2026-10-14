@@ -1,4 +1,4 @@
-import { supabase } from "./supabaseClient";
+import { db } from "@/lib/db";
 import { getStudentClassCurriculum } from "./curriculum";
 import type { Lesson, RecurringSessionRule } from "./types";
 
@@ -37,7 +37,7 @@ export async function generateSessionsForRule(
   }
   if (candidateDates.length === 0) return { created: 0, error: null };
 
-  const { data: existingRows } = await supabase
+  const { data: existingRows } = await db
     .from("lessons")
     .select("lesson_date")
     .eq("student_id", rule.student_id)
@@ -67,6 +67,6 @@ export async function generateSessionsForRule(
     recurring_rule_id: rule.id,
   }));
 
-  const { error } = await supabase.from("lessons").insert(rows);
+  const { error } = await db.from("lessons").insert(rows);
   return { created: error ? 0 : rows.length, error };
 }

@@ -1,9 +1,12 @@
 // End-to-end: admin edit -> backend -> the app's real remote data source +
 // repository -> updated Dua shows up, with no app release.
 //
-// Needs the local dev backend (it runs the real Supabase migrations):
-//   node apps/site/supabase/duas/e2e_publish_flow.mjs
-// which starts it, sets DUAS_E2E_URL and runs this file. Skipped otherwise.
+// Needs the Learning API running locally with Duas data (apps/learning:
+// `npm run db:migrate:local`, load content, `npm run seed:admins`,
+// `npm run dev:api`), then from apps/mobile/android:
+//   DUAS_E2E_URL=http://localhost:8787/learning/api //   DUAS_E2E_ADMIN_USER=admin DUAS_E2E_ADMIN_PASSWORD=<ADMIN_PASSWORD> //   flutter test test/e2e/remote_publish_flow_test.dart
+// The admin edits go through the real API (auth, access policies, hooks).
+// Skipped when DUAS_E2E_URL is not set.
 import 'dart:convert';
 import 'dart:io';
 
@@ -15,13 +18,35 @@ import 'package:quran_flutter/features/supplications/data/repositories/supplicat
 import 'package:quran_flutter/features/supplications/domain/entities/dua.dart';
 import 'package:quran_flutter/features/supplications/domain/repositories/supplications_repository.dart';
 
+String? _adminToken;
+
+/// Signs in as the admin (once) and updates the Dua with `slug` through the
+/// Learning API's query endpoint, returning the updated row.
 Future<Map<String, dynamic>?> adminUpdate(String base, Map<String, Object?> body) async {
-  final r = await Dio().post<String>(
-    '$base/__dev/admin-update',
-    data: jsonEncode(body),
-    options: Options(headers: {'Content-Type': 'application/json'}, responseType: ResponseType.plain),
-  );
-  return jsonDecode(r.data!) as Map<String, dynamic>?;
+  final dio = Dio(BaseOptions(headers: {'Content-Type': 'application/json'}, responseType: ResponseType.plain));
+  if (_adminToken == null) {
+    final login = await dio.post<String>('$base/auth/login',
+        data: jsonEncode({
+          'username': Platform.environment['DUAS_E2E_ADMIN_USER'] ?? 'admin',
+          'password': Platform.environment['DUAS_E2E_ADMIN_PASSWORD'],
+        }));
+    _adminToken = (jsonDecode(login.data!) as Map<String, dynamic>)['token'] as String;
+  }
+  final slug = body['slug'];
+  final values = Map.of(body)..remove('slug');
+  final r = await dio.post<String>('$base/db',
+      data: jsonEncode({
+        'table': 'duas',
+        'action': 'update',
+        'values': values,
+        'filters': [
+          {'type': 'filter', 'column': 'slug', 'op': 'eq', 'value': slug}
+        ],
+        'select': '*',
+      }),
+      options: Options(headers: {'Authorization': 'Bearer $_adminToken'}));
+  final rows = (jsonDecode(r.data!) as Map<String, dynamic>)['data'] as List<dynamic>;
+  return rows.isEmpty ? null : rows.first as Map<String, dynamic>;
 }
 
 Dua? findDua(SupplicationsContent c, String slug) {
@@ -38,7 +63,7 @@ void main() {
 
   test('an admin edit reaches the app without a release; unpublish removes it', () async {
     final remote = SupplicationsRemoteDataSource.create(
-      DuasRemoteConfig(url: base!, anonKey: 'public-anon-key-for-test'),
+      DuasRemoteConfig(url: base!),
     );
     final repo = SupplicationsRepositoryImpl(
       bundled: SupplicationsLocalDataSource(
@@ -80,5 +105,5 @@ void main() {
     expect(findDua(latest!, slug), isNull);
 
     await sub.cancel();
-  }, skip: base == null ? 'DUAS_E2E_URL not set (run apps/site/supabase/duas/e2e_publish_flow.mjs)' : false);
+  }, skip: base == null ? 'DUAS_E2E_URL not set (see the header comment)' : false);
 }

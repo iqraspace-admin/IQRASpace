@@ -15,9 +15,10 @@
   // /quran* and /learning* are bound to their own Workers (more specific
   // routes win). www -> apex is the separate iqraspace-www-redirect Worker (apps/site/www-redirect; see ADMIN.md).
   "routes": [{ "pattern": "iqraspace.org/*", "zone_name": "iqraspace.org" }],
-  // Public (not secret): the Learning Supabase project that holds the published Duas.
-  // DUAS_SUPABASE_ANON_KEY (the public anon key) is set as a Worker secret - see ADMIN.md.
-  "vars": { "DUAS_SUPABASE_URL": "https://exuulbucpcggevjxewno.supabase.co" },
+  // /api/duas reads Learning's published Duas feed through this service binding
+  // (Worker-to-Worker, free). DUAS_SOURCE_URL is only the fallback if it's absent.
+  "services": [{ "binding": "LEARNING", "service": "iqraspace-learning" }],
+  "vars": { "DUAS_SOURCE_URL": "https://iqraspace.org/learning/api/duas/content" },
   "d1_databases": [
     {
       "binding": "DB",

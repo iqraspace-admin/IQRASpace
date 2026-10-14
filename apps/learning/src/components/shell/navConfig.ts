@@ -22,7 +22,7 @@ export const NAV_ITEMS: NavItem[] = [
 
 // Shown instead of NAV_ITEMS for role: admin/super_admin (src/lib/roles.ts).
 // Admin/super_admin now have full CRUD access across every table (see
-// 0018_admin_full_access.sql), so they get the two admin-only screens
+// worker/api/policies.js), so they get the two admin-only screens
 // prepended to the SAME full tutor nav below, rather than a separate
 // curated list — every one of those routes is now a genuine, working
 // platform-wide (all-tutors) view once its page-level `canManage` check

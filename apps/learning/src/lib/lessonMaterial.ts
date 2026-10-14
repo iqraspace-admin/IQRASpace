@@ -1,7 +1,7 @@
 import { getSignedMaterialUrl } from "./storage";
 import { quranSurahPdfUrl } from "./quranLink";
 
-/** Marker prefix for `material_storage_path` meaning "not a Supabase
+/** Marker prefix for `material_storage_path` meaning "not an R2
  * Storage object key — Surah N's whole-PDF file, served directly by
  * apps/quran" (the "Full Qur'an (Surah by Surah)" lesson plan, seeded by
  * scripts/seed-surah-lessons.mjs). Keeps the existing TEXT column doing
@@ -16,7 +16,7 @@ export function isQuranSurahMaterialPath(path: string): boolean {
 /** The one place every material-viewing call site resolves a
  * `material_storage_path` (or `lesson_materials.storage_path`) into an
  * actual URL for the PDF Viewer — instead of each assuming every path is a
- * Supabase Storage bucket key. Bucket paths behave exactly as
+ * R2 storage path. Bucket paths behave exactly as
  * `getSignedMaterialUrl` already did; only the Quran-Surah marker above
  * takes a different, signing-free path. */
 export async function resolveMaterialUrl(path: string): Promise<{ url: string | null; error: string | null }> {
@@ -27,7 +27,7 @@ export async function resolveMaterialUrl(path: string): Promise<{ url: string | 
       : { url: null, error: "Invalid Surah reference" };
   }
   // Normalized to a plain string here (getSignedMaterialUrl's own `error` is
-  // a Supabase StorageError) so every call site handles one consistent
+  // a storage error) so every call site handles one consistent
   // shape regardless of which branch above actually ran.
   const { url, error } = await getSignedMaterialUrl(path);
   return { url, error: error?.message ?? null };

@@ -6,7 +6,7 @@
  * covering a handful of surahs instead of one.
  *
  * A lesson opts into live highlighting by setting `quran_surah_key`
- * (supabase/migrations/0005_lesson_scheduling_and_quran.sql) to one of the
+ * (d1/migrations/0001_init.sql) to one of the
  * keys below. `page` groups ayahs for the Teach screen's page thumbnails.
  */
 

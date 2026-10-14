@@ -346,6 +346,66 @@ abstract class AppLocalizations {
   /// **'This removes every dua you\'ve favorited. This can\'t be undone.'**
   String get supplicationsFavoritesClearConfirmBody;
 
+  /// No description provided for @supplicationsFontSizeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Text size'**
+  String get supplicationsFontSizeLabel;
+
+  /// No description provided for @supplicationsFontSizePreviewHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview — applies to duas and category names'**
+  String get supplicationsFontSizePreviewHint;
+
+  /// No description provided for @supplicationsFontSizeReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get supplicationsFontSizeReset;
+
+  /// No description provided for @supplicationsFontSizeDecrease.
+  ///
+  /// In en, this message translates to:
+  /// **'Smaller text'**
+  String get supplicationsFontSizeDecrease;
+
+  /// No description provided for @supplicationsFontSizeIncrease.
+  ///
+  /// In en, this message translates to:
+  /// **'Larger text'**
+  String get supplicationsFontSizeIncrease;
+
+  /// No description provided for @supplicationsFontSizeTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Text size'**
+  String get supplicationsFontSizeTooltip;
+
+  /// No description provided for @supplicationsFontSizePreviewArabic.
+  ///
+  /// In en, this message translates to:
+  /// **'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ'**
+  String get supplicationsFontSizePreviewArabic;
+
+  /// No description provided for @supplicationsFontSizePreviewTranslit.
+  ///
+  /// In en, this message translates to:
+  /// **'Alhamdu lillahi rabbil-alamin'**
+  String get supplicationsFontSizePreviewTranslit;
+
+  /// No description provided for @supplicationsFontSizePreviewTranslation.
+  ///
+  /// In en, this message translates to:
+  /// **'All praise is due to Allah, Lord of the worlds.'**
+  String get supplicationsFontSizePreviewTranslation;
+
+  /// No description provided for @supplicationsFontSizePreviewCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning & Evening'**
+  String get supplicationsFontSizePreviewCategory;
+
   /// No description provided for @supplicationsReadingSettingsTitle.
   ///
   /// In en, this message translates to:

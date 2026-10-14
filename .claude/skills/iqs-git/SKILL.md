@@ -78,8 +78,8 @@ before anything gets staged or committed:
 - **Generated / build artifacts** — reject: `node_modules/`, `.next/`,
   `dist/`, `build/`, `apps/mobile/android/.dart_tool/`,
   `apps/mobile/android/android/.gradle`, `*.apk`, `*.aab`, `.dart_tool/`,
-  Supabase local artifacts already covered by `.gitignore`
-  (`supabase/.branches`, `supabase/.temp`, etc).
+  wrangler local state (`.wrangler/`, incl. the local D1/R2 data), and
+  `apps/learning/.migration/` (one-time data-export output containing personal data).
 - **Unrelated changes** — anything in the diff that has nothing to do
   with the work being pushed (leftover debug prints, commented-out
   code, IDE config, stray formatting-only churn in untouched files).
@@ -102,7 +102,8 @@ don't skip an app's checks because "it's probably fine":
   `node_modules` missing) → `npx next typegen` (fresh-checkout caveat
   per root `CLAUDE.md`) → `npm run --prefix apps/learning lint` →
   `npm run --prefix apps/learning typecheck` → `npm run --prefix
-  apps/learning build`
+  apps/learning test:duas` → `npm run --prefix apps/learning test:worker`
+  → `npm run --prefix apps/learning build:cf`
 - **apps/quran**: same pattern from `apps/quran` — `npm install` (if
   needed) → `npm run typecheck` caveat (same `next typegen` step) →
   `npm run lint` → `npm run typecheck` → `npm run build`

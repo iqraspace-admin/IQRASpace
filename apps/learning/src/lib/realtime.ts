@@ -1,7 +1,7 @@
-import { supabase } from "./supabaseClient";
+import { db } from "@/lib/db";
 
 /**
- * Highlight/page-sync state broadcast over a per-lesson Supabase Realtime
+ * Highlight/page-sync state broadcast over a per-lesson realtime
  * channel. Shape matches docs/architecture.md §7.2.
  *
  * Wired up fully in the Highlighting + Realtime phase — this file just
@@ -27,5 +27,5 @@ export function lessonChannelName(lessonId: string) {
 }
 
 export function getLessonChannel(lessonId: string) {
-  return supabase.channel(lessonChannelName(lessonId));
+  return db.channel(lessonChannelName(lessonId));
 }

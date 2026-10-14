@@ -1,4 +1,4 @@
-import { supabase } from "./supabaseClient";
+import { db } from "@/lib/db";
 import type { ClassLessonPlan, ClassMember, ClassRow, LessonPlan, LessonPlanItem, StudentLessonProgress } from "./types";
 
 /**
@@ -20,15 +20,15 @@ export type CurriculumRow = {
  * only ones that should ever surface on their curriculum screens. A
  * `student_lesson_progress` row can outlive a class's plan being reassigned
  * or the student leaving the class, so callers must filter through this
- * rather than trusting `student_lesson_progress` alone (0022_student_progress_gaps.sql
+ * rather than trusting `student_lesson_progress` alone (worker/api/hooks.js
  * seeds rows correctly going forward, but doesn't retroactively clean up
  * stale rows from before a class was reassigned). */
 async function getCurrentlyAssignedPlanIds(studentId: string): Promise<Set<string>> {
-  const { data: memberRows } = await supabase.from("class_members").select("*").eq("student_id", studentId);
+  const { data: memberRows } = await db.from("class_members").select("*").eq("student_id", studentId);
   const classIds = ((memberRows ?? []) as ClassMember[]).map((m) => m.class_id);
   if (classIds.length === 0) return new Set();
 
-  const { data: assignRows } = await supabase
+  const { data: assignRows } = await db
     .from("class_lesson_plans")
     .select("class_id, lesson_plan_id")
     .in("class_id", classIds);
@@ -37,7 +37,7 @@ async function getCurrentlyAssignedPlanIds(studentId: string): Promise<Set<strin
 
 export async function getStudentCurriculumProgress(studentId: string): Promise<CurriculumRow[]> {
   const [{ data: planProgressRows }, validPlanIds] = await Promise.all([
-    supabase.from("student_lesson_progress").select("*").eq("student_id", studentId),
+    db.from("student_lesson_progress").select("*").eq("student_id", studentId),
     getCurrentlyAssignedPlanIds(studentId),
   ]);
   const planProgress = ((planProgressRows ?? []) as StudentLessonProgress[]).filter((p) =>
@@ -47,9 +47,9 @@ export async function getStudentCurriculumProgress(studentId: string): Promise<C
 
   const planIds = Array.from(new Set(planProgress.map((p) => p.lesson_plan_id)));
   const [{ data: planRows }, { data: itemRows }, { data: completionRows }] = await Promise.all([
-    supabase.from("lesson_plans").select("*").in("id", planIds),
-    supabase.from("lesson_plan_items").select("*").in("lesson_plan_id", planIds),
-    supabase.from("student_lesson_completions").select("lesson_plan_item_id").eq("student_id", studentId),
+    db.from("lesson_plans").select("*").in("id", planIds),
+    db.from("lesson_plan_items").select("*").in("lesson_plan_id", planIds),
+    db.from("student_lesson_completions").select("lesson_plan_item_id").eq("student_id", studentId),
   ]);
   const plans = (planRows ?? []) as LessonPlan[];
   const items = (itemRows ?? []) as LessonPlanItem[];
@@ -87,14 +87,14 @@ export type StudentClassCurriculum = {
 };
 
 export async function getStudentClassCurriculum(studentId: string): Promise<StudentClassCurriculum[]> {
-  const { data: memberRows } = await supabase.from("class_members").select("*").eq("student_id", studentId);
+  const { data: memberRows } = await db.from("class_members").select("*").eq("student_id", studentId);
   const classIds = ((memberRows ?? []) as ClassMember[]).map((m) => m.class_id);
   if (classIds.length === 0) return [];
 
   const [{ data: classRows }, { data: assignRows }, { data: completionRows }] = await Promise.all([
-    supabase.from("classes").select("*").in("id", classIds),
-    supabase.from("class_lesson_plans").select("*").in("class_id", classIds),
-    supabase.from("student_lesson_completions").select("lesson_plan_item_id").eq("student_id", studentId),
+    db.from("classes").select("*").in("id", classIds),
+    db.from("class_lesson_plans").select("*").in("class_id", classIds),
+    db.from("student_lesson_completions").select("lesson_plan_item_id").eq("student_id", studentId),
   ]);
   const classes = (classRows ?? []) as ClassRow[];
   const assignments = (assignRows ?? []) as ClassLessonPlan[];
@@ -105,13 +105,13 @@ export async function getStudentClassCurriculum(studentId: string): Promise<Stud
   const planIds = Array.from(new Set(assignments.map((a) => a.lesson_plan_id)));
   const [{ data: planRows }, { data: itemRows }, { data: progressRows }] = await Promise.all([
     planIds.length > 0
-      ? supabase.from("lesson_plans").select("*").in("id", planIds)
+      ? db.from("lesson_plans").select("*").in("id", planIds)
       : Promise.resolve({ data: [] as LessonPlan[] }),
     planIds.length > 0
-      ? supabase.from("lesson_plan_items").select("*").in("lesson_plan_id", planIds).eq("active", true).order("sequence")
+      ? db.from("lesson_plan_items").select("*").in("lesson_plan_id", planIds).eq("active", true).order("sequence")
       : Promise.resolve({ data: [] as LessonPlanItem[] }),
     planIds.length > 0
-      ? supabase.from("student_lesson_progress").select("*").eq("student_id", studentId).in("lesson_plan_id", planIds)
+      ? db.from("student_lesson_progress").select("*").eq("student_id", studentId).in("lesson_plan_id", planIds)
       : Promise.resolve({ data: [] as StudentLessonProgress[] }),
   ]);
   const plans = (planRows ?? []) as LessonPlan[];
@@ -144,19 +144,19 @@ export async function getBulkCurrentLessonItems(studentIds: string[]): Promise<M
   const result = new Map<string, CurrentLessonInfo>();
   if (studentIds.length === 0) return result;
 
-  const { data: memberRows } = await supabase.from("class_members").select("*").in("student_id", studentIds);
+  const { data: memberRows } = await db.from("class_members").select("*").in("student_id", studentIds);
   const members = (memberRows ?? []) as ClassMember[];
   const classIds = Array.from(new Set(members.map((m) => m.class_id)));
   if (classIds.length === 0) return result;
 
-  const { data: assignRows } = await supabase.from("class_lesson_plans").select("*").in("class_id", classIds);
+  const { data: assignRows } = await db.from("class_lesson_plans").select("*").in("class_id", classIds);
   const assignments = (assignRows ?? []) as ClassLessonPlan[];
   const planIds = Array.from(new Set(assignments.map((a) => a.lesson_plan_id)));
   if (planIds.length === 0) return result;
 
   const [{ data: planRows }, { data: progressRows }] = await Promise.all([
-    supabase.from("lesson_plans").select("*").in("id", planIds),
-    supabase.from("student_lesson_progress").select("*").in("student_id", studentIds).in("lesson_plan_id", planIds),
+    db.from("lesson_plans").select("*").in("id", planIds),
+    db.from("student_lesson_progress").select("*").in("student_id", studentIds).in("lesson_plan_id", planIds),
   ]);
   const plans = new Map(((planRows ?? []) as LessonPlan[]).map((p) => [p.id, p]));
   const progressRowsList = (progressRows ?? []) as StudentLessonProgress[];
@@ -164,7 +164,7 @@ export async function getBulkCurrentLessonItems(studentIds: string[]): Promise<M
   const currentItemIds = Array.from(new Set(progressRowsList.map((p) => p.current_item_id).filter((id): id is string => !!id)));
   const { data: itemRows } =
     currentItemIds.length > 0
-      ? await supabase.from("lesson_plan_items").select("*").in("id", currentItemIds)
+      ? await db.from("lesson_plan_items").select("*").in("id", currentItemIds)
       : { data: [] as LessonPlanItem[] };
   const itemsById = new Map(((itemRows ?? []) as LessonPlanItem[]).map((i) => [i.id, i]));
 
@@ -194,7 +194,7 @@ export async function setStudentCurrentItem(
   itemId: string,
   status: StudentLessonProgress["status"] = "in_progress"
 ) {
-  return supabase.from("student_lesson_progress").upsert(
+  return db.from("student_lesson_progress").upsert(
     {
       student_id: studentId,
       lesson_plan_id: lessonPlanId,
@@ -207,7 +207,7 @@ export async function setStudentCurrentItem(
 }
 
 export async function updateStudentProgressNotes(studentId: string, lessonPlanId: string, notes: string) {
-  return supabase
+  return db
     .from("student_lesson_progress")
     .update({ notes: notes || null, updated_at: new Date().toISOString() })
     .eq("student_id", studentId)
@@ -216,7 +216,7 @@ export async function updateStudentProgressNotes(studentId: string, lessonPlanId
 
 /** Seeds a starting-point progress row (Lesson 1, not started) for a student
  * whose class already has a plan assigned but who has no progress row yet —
- * covers legacy data from before 0022_student_progress_gaps.sql's triggers. */
+ * covers legacy data from before worker/api/hooks.js's triggers. */
 export async function assignStudentStartingLesson(studentId: string, lessonPlanId: string, items: LessonPlanItem[]) {
   const firstItem = items.slice().sort((a, b) => a.sequence - b.sequence)[0];
   if (!firstItem) return { error: new Error("This plan has no active lessons yet.") };
@@ -234,7 +234,7 @@ export async function confirmStudentLessonCompleted(
   item: LessonPlanItem,
   opts?: { lessonId?: string | null; notes?: string | null }
 ): Promise<{ error: Error | null; nextItem: { id: string; title: string } | null }> {
-  const { data: nextItem } = await supabase
+  const { data: nextItem } = await db
     .from("lesson_plan_items")
     .select("id, title")
     .eq("lesson_plan_id", item.lesson_plan_id)
@@ -244,7 +244,7 @@ export async function confirmStudentLessonCompleted(
     .limit(1)
     .maybeSingle();
 
-  const progressUpdate = await supabase.from("student_lesson_progress").upsert(
+  const progressUpdate = await db.from("student_lesson_progress").upsert(
     {
       student_id: studentId,
       lesson_plan_id: item.lesson_plan_id,
@@ -259,7 +259,7 @@ export async function confirmStudentLessonCompleted(
   );
   if (progressUpdate.error) return { error: progressUpdate.error, nextItem: nextItem ?? null };
 
-  const completionInsert = await supabase.from("student_lesson_completions").upsert(
+  const completionInsert = await db.from("student_lesson_completions").upsert(
     {
       student_id: studentId,
       lesson_plan_item_id: item.id,

@@ -1,5 +1,7 @@
 # MASTER PROMPT — Build IqraSpace Quran Platform
 
+> **Historical brief.** This is the original prompt the project started from; it is not kept in sync with the code. Where it differs from what was built, the code and the other docs win. Notable differences: hosting is Cloudflare Workers Static Assets (a static export at `iqraspace.org/quran`); there is no backend/database/auth/API layer (anonymous-first, user data in `localStorage`); no Capacitor/Android shell (the Flutter app is separate); the Supplications/Duas feature was removed from this app and lives in `apps/site` (`/duas`). See `ARCHITECTURE.md`, `DEPLOYMENT.md`, `COST.md`.
+
 You are the lead product architect, UX designer, senior full-stack engineer, DevOps engineer, accessibility specialist, and technical reviewer for a new project called **IqraSpace Quran**.
 
 We are starting this project in a **new Claude Code session**, so do not assume any previous conversation, codebase, architecture, or decisions exist.
@@ -121,12 +123,12 @@ Preferred stack:
 
 ### Backend / Data
 
-* Supabase PostgreSQL where application persistence is required
+* A minimal managed database only where application persistence is genuinely required
 * Server-side API routes/services where appropriate
 
 ### Hosting
 
-* Vercel
+* Cloudflare
 
 ### Source Control
 
@@ -735,7 +737,7 @@ Implement:
 * XSS protection
 * CSRF considerations
 * Database Row Level Security
-* Proper Supabase policies
+* Proper database access policies
 * Dependency auditing
 
 Run security checks before production.
@@ -892,7 +894,7 @@ Preferred environment naming:
 
 Do not use confusing environment names such as "pilot" for the production deployment environment.
 
-If Vercel is used, integrate GitHub → Vercel deployment cleanly.
+Integrate GitHub → hosting deployment cleanly (via GitHub Actions).
 
 ---
 
@@ -1195,14 +1197,14 @@ GitHub
 GitHub Actions
 │
 ▼
-Vercel
+Cloudflare
 │
 ├───────────────┐
 ▼               ▼
 Next.js        API Layer
 │               │
 │               ▼
-│           Supabase
+│           Database
 │
 ▼
 CDN / Cache

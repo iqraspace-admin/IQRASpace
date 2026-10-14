@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/lib/authContext";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import type { AppUser, AttendanceRecord, ClassMember, ClassRow, Lesson, LessonNote } from "@/lib/types";
 import { formatDate, formatTime, todayISO } from "@/lib/format";
 import { isAdminRole } from "@/lib/roles";
@@ -41,8 +41,8 @@ export default function DashboardPage() {
 
     async function load() {
       const [{ data: classRows }, { data: lessonRows }] = await Promise.all([
-        supabase.from("classes").select("*"),
-        supabase.from("lessons").select("*").order("lesson_date", { ascending: true }),
+        db.from("classes").select("*"),
+        db.from("lessons").select("*").order("lesson_date", { ascending: true }),
       ]);
       if (!active) return;
       const classList = classRows ?? [];
@@ -51,7 +51,7 @@ export default function DashboardPage() {
       setLessons(lessonList);
 
       if (canManage && classList.length > 0) {
-        const { data: memberRows } = await supabase
+        const { data: memberRows } = await db
           .from("class_members")
           .select("student_id")
           .in(
@@ -64,7 +64,7 @@ export default function DashboardPage() {
 
       const todayStudentIds = Array.from(new Set(lessonList.filter((l) => l.lesson_date === todayISO()).map((l) => l.student_id)));
       if (todayStudentIds.length > 0) {
-        const { data: userRows } = await supabase.from("users").select("*").in("id", todayStudentIds);
+        const { data: userRows } = await db.from("users").select("*").in("id", todayStudentIds);
         if (active) setStudentsById(new Map(((userRows ?? []) as AppUser[]).map((u) => [u.id, u])));
       }
 
@@ -72,7 +72,7 @@ export default function DashboardPage() {
       if (lessonIds.length > 0) {
         const weekAgo = new Date();
         weekAgo.setDate(weekAgo.getDate() - 7);
-        const { data: attRows } = await supabase
+        const { data: attRows } = await db
           .from("attendance")
           .select("*")
           .in("lesson_id", lessonIds)
@@ -83,7 +83,7 @@ export default function DashboardPage() {
           setAttendancePct(Math.round((present / records.length) * 100));
         }
 
-        const { data: noteRows } = await supabase
+        const { data: noteRows } = await db
           .from("lesson_notes")
           .select("*")
           .in("lesson_id", lessonIds)

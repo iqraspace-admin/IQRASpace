@@ -97,6 +97,7 @@ class _DuaReadingScreenState extends ConsumerState<DuaReadingScreen> {
     final transliterationEnabled = ref.watch(duaTransliterationEnabledProvider);
     final favorites = ref.watch(duaFavoritesProvider);
     final tasbeehEnabled = ref.watch(duaTasbeehEnabledProvider);
+    final fontScale = ref.watch(duaFontScaleProvider);
     final l10n = AppLocalizations.of(context)!;
 
     if (category == null || category.duas.isEmpty) return Scaffold(appBar: AppBar(), body: const SizedBox.shrink());
@@ -176,11 +177,11 @@ class _DuaReadingScreenState extends ConsumerState<DuaReadingScreen> {
                 Text(
                   dua.occasionFor(appLanguage),
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 13, color: colors.textColor.withValues(alpha: 0.6)),
+                  style: TextStyle(fontSize: 13 * fontScale, color: colors.textColor.withValues(alpha: 0.6)),
                 ),
                 if (dua.repeatCount != null) ...[
                   const SizedBox(height: 8),
-                  _RepeatChip(l10n.supplicationsRepeatCount(dua.repeatCount!), style.accent),
+                  _RepeatChip(l10n.supplicationsRepeatCount(dua.repeatCount!), style.accent, fontScale),
                 ],
                 const SizedBox(height: 10),
                 // Order: Arabic -> Transliteration -> Translation, compact
@@ -189,16 +190,16 @@ class _DuaReadingScreenState extends ConsumerState<DuaReadingScreen> {
                   dua.arabic,
                   textAlign: TextAlign.center,
                   textDirection: TextDirection.rtl,
-                  style: TextStyle(fontFamily: 'NotoNaskhArabic', fontSize: 24, height: 1.8, color: colors.textColor),
+                  style: TextStyle(fontFamily: 'NotoNaskhArabic', fontSize: 24 * fontScale, height: 1.8, color: colors.textColor),
                 ),
                 const SizedBox(height: 10),
                 if (transliterationEnabled && dua.transliterationFor(script).isNotEmpty) ...[
-                _SectionHeader(l10n.supplicationsTransliterationHeading, style.accent),
+                _SectionHeader(l10n.supplicationsTransliterationHeading, style.accent, fontScale),
                 Text(
                   dua.transliterationFor(script),
                   textAlign: TextAlign.center,
                   textDirection: script.textDirection,
-                  style: TextStyle(fontFamily: script.fontFamily, fontSize: 14.5, height: 1.4, color: colors.textColor),
+                  style: TextStyle(fontFamily: script.fontFamily, fontSize: 14.5 * fontScale, height: 1.4, color: colors.textColor),
                 ),
                 const SizedBox(height: 10),
                 ],
@@ -209,7 +210,7 @@ class _DuaReadingScreenState extends ConsumerState<DuaReadingScreen> {
                     textDirection: dua.usesUrduTranslation(translationLanguage) ? TextDirection.rtl : TextDirection.ltr,
                     style: TextStyle(
                       fontFamily: dua.usesUrduTranslation(translationLanguage) ? 'NotoNastaliqUrdu' : null,
-                      fontSize: 15,
+                      fontSize: 15 * fontScale,
                       height: dua.usesUrduTranslation(translationLanguage) ? 1.8 : 1.35,
                       color: colors.textColor.withValues(alpha: 0.75),
                     ),
@@ -220,7 +221,7 @@ class _DuaReadingScreenState extends ConsumerState<DuaReadingScreen> {
                       l10n.supplicationsUrduTranslationUnavailable,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 12 * fontScale,
                         fontStyle: FontStyle.italic,
                         color: colors.textColor.withValues(alpha: 0.5),
                       ),
@@ -233,7 +234,7 @@ class _DuaReadingScreenState extends ConsumerState<DuaReadingScreen> {
                     dua.description!,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 13,
+                      fontSize: 13 * fontScale,
                       height: 1.4,
                       fontStyle: FontStyle.italic,
                       color: colors.textColor.withValues(alpha: 0.55),
@@ -242,11 +243,11 @@ class _DuaReadingScreenState extends ConsumerState<DuaReadingScreen> {
                   const SizedBox(height: 10),
                 ],
                 if (dua.displayReference.isNotEmpty) ...[
-                  _SectionHeader(l10n.supplicationsReferenceHeading, style.accent),
+                  _SectionHeader(l10n.supplicationsReferenceHeading, style.accent, fontScale),
                   Text(
                     dua.displayReference,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 13.5, color: colors.textColor.withValues(alpha: 0.65)),
+                    style: TextStyle(fontSize: 13.5 * fontScale, color: colors.textColor.withValues(alpha: 0.65)),
                   ),
                 ],
               ],
@@ -306,14 +307,15 @@ class _DuaReadingScreenState extends ConsumerState<DuaReadingScreen> {
 class _SectionHeader extends StatelessWidget {
   final String label;
   final Color color;
+  final double fontScale;
 
-  const _SectionHeader(this.label, this.color);
+  const _SectionHeader(this.label, this.color, this.fontScale);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
-      child: Text(label, style: TextStyle(fontSize: 14.5, fontWeight: FontWeight.w700, color: color)),
+      child: Text(label, style: TextStyle(fontSize: 14.5 * fontScale, fontWeight: FontWeight.w700, color: color)),
     );
   }
 }
@@ -335,8 +337,9 @@ String _shareText(Dua dua, DuaTranslationLanguage language, AppLocalizations l10
 class _RepeatChip extends StatelessWidget {
   final String label;
   final Color color;
+  final double fontScale;
 
-  const _RepeatChip(this.label, this.color);
+  const _RepeatChip(this.label, this.color, this.fontScale);
 
   @override
   Widget build(BuildContext context) {
@@ -347,7 +350,7 @@ class _RepeatChip extends StatelessWidget {
         color: color.withValues(alpha: 0.14),
         border: Border.all(color: color.withValues(alpha: 0.4)),
       ),
-      child: Text(label, style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600, color: color)),
+      child: Text(label, style: TextStyle(fontSize: 12.5 * fontScale, fontWeight: FontWeight.w600, color: color)),
     );
   }
 }
