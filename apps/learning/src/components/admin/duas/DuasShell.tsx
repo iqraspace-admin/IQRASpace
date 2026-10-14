@@ -21,8 +21,8 @@ const LINKS = [
 
 /**
  * Gate + chrome for every /admin/duas/* route. Only admin / super_admin may see
- * the Duas admin. This is a UX gate; the real enforcement is RLS on the duas*
- * tables (0025_duas_schema.sql), which returns nothing / 42501 to anyone else.
+ * the Duas admin. This is a UX gate; the real enforcement is the Worker's access policies on the duas*
+ * tables (worker/api/policies.js), which returns nothing / 42501 to anyone else.
  */
 export function DuasShell({ children }: { children: ReactNode }) {
   const { profile, loading } = useAuth();

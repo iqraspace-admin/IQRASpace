@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/lib/authContext";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import { getLessonChannel, type HighlightState } from "@/lib/realtime";
 import { getLatestHighlight } from "@/lib/sharing";
 import { getSurah, type SurahContent } from "@/lib/quranContent";
@@ -34,15 +34,15 @@ export function ShareClient({ lessonId }: { lessonId: string }) {
 
   useEffect(() => {
     async function load() {
-      const { data: lessonRow } = await supabase.from("lessons").select("*").eq("id", lessonId).single();
+      const { data: lessonRow } = await db.from("lessons").select("*").eq("id", lessonId).single();
       const loadedLesson = (lessonRow as Lesson) ?? null;
       setLesson(loadedLesson);
-      const { data: meetingRow } = await supabase.from("meetings").select("*").eq("lesson_id", lessonId).maybeSingle();
+      const { data: meetingRow } = await db.from("meetings").select("*").eq("lesson_id", lessonId).maybeSingle();
       setMeeting((meetingRow as Meeting) ?? null);
 
       let loadedPlanItem: LessonPlanItem | null = null;
       if (loadedLesson?.lesson_plan_item_id) {
-        const { data: itemRow } = await supabase
+        const { data: itemRow } = await db
           .from("lesson_plan_items")
           .select("*")
           .eq("id", loadedLesson.lesson_plan_item_id)
@@ -102,7 +102,7 @@ export function ShareClient({ lessonId }: { lessonId: string }) {
     });
 
     return () => {
-      supabase.removeChannel(channel);
+      db.removeChannel(channel);
     };
   }, [lessonId, profile]);
 

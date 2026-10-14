@@ -17,7 +17,7 @@ cpSync("out", `dist/${BASE}`, { recursive: true });
 
 // No CSP on purpose: Google Drive picker/OAuth (apis.google.com,
 // accounts.google.com, *.googleusercontent.com, docs.google.com), Google Meet,
-// Supabase (https/wss) and the pdf.js worker/wasm make a safe CSP something to
+// the realtime WebSocket and the pdf.js worker/wasm make a safe CSP something to
 // design and test in a browser first. Only low-risk headers here.
 const headers = `/${BASE}/*
   X-Content-Type-Options: nosniff

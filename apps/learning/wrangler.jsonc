@@ -9,9 +9,10 @@
     "binding": "ASSETS",
     "html_handling": "drop-trailing-slash",
     "not_found_handling": "404-page",
-    // Only the dynamic-route URLs invoke the Worker; every other request is
-    // served straight from static assets (free, no Worker invocation).
+    // Only the API and the dynamic-route URLs invoke the Worker; every other
+    // request is served straight from static assets (free, no Worker invocation).
     "run_worker_first": [
+      "/learning/api/*",
       "/learning/share/*",
       "/learning/teach/*",
       "/learning/admin/duas/*",
@@ -22,5 +23,26 @@
       "!/learning/admin/duas/categories/new"
     ]
   },
-  "routes": [{ "pattern": "iqraspace.org/learning*", "zone_name": "iqraspace.org" }]
+  "routes": [{ "pattern": "iqraspace.org/learning*", "zone_name": "iqraspace.org" }],
+
+  // All app data. Schema: d1/migrations, applied with
+  // `npx wrangler d1 migrations apply iqraspace-learning --remote` (never by CI).
+  // database_id comes from `npx wrangler d1 create iqraspace-learning` — see BACKEND.md.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "iqraspace-learning",
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "migrations_dir": "d1/migrations"
+    }
+  ],
+
+  // Lesson PDFs (private bucket).
+  "r2_buckets": [{ "binding": "MATERIALS", "bucket_name": "iqraspace-learning" }],
+
+  // Live Teach -> Share sync, one room per lesson.
+  "durable_objects": {
+    "bindings": [{ "name": "LESSON_ROOMS", "class_name": "LessonRoom" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["LessonRoom"] }]
 }

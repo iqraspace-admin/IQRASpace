@@ -2,12 +2,10 @@
 /**
  * Uploads Listening Mode's whole-Surah audio (Al-Afasy recitation + Urdu
  * translation, from `Resources/` at the repo root) to a **dedicated**
- * Cloudflare R2 bucket — deliberately not apps/quran's Supabase project
- * (or any Supabase project at all); see apps/mobile/android/AUDIO.md for why
+ * Cloudflare R2 bucket, separate from every web app; see apps/mobile/android/AUDIO.md for why
  * (apps/quran's own COST.md/ARCHITECTURE.md explicitly reject
  * self-hosting audio there, and R2's lack of a per-object size cap plus
- * egress-free bandwidth fit this ~600MB+ whole-Surah use case better than
- * Supabase Storage's free tier did).
+ * egress-free bandwidth fit this ~600MB+ whole-Surah use case).
  *
  * No transcoding step: `Resources/Urdu Audio (Surah-wise)` turned out to
  * already be mono/16kHz/24kbps (confirmed via `ffprobe` on the largest
@@ -15,9 +13,8 @@
  * target, so transcoding it only made files bigger (~2.7x, matching the
  * 24kbps -> 64kbps ratio exactly) and was dropped. Uploaded as-is.
  *
- * Uses `@aws-sdk/client-s3` against R2's S3-compatible API — unlike the
- * old Supabase version of this script, a hand-rolled `fetch()` isn't
- * practical here since R2 uploads need SigV4 request signing, which the
+ * Uses `@aws-sdk/client-s3` against R2's S3-compatible API — a hand-rolled
+ * `fetch()` isn't practical here since R2 uploads need SigV4 request signing, which the
  * SDK already implements correctly.
  *
  * Usage (from apps/mobile/android/scripts):
@@ -32,8 +29,7 @@
  * The bucket itself, its public custom domain, and the API token are all
  * created once, manually, in the Cloudflare dashboard — see
  * apps/mobile/android/AUDIO.md's "Cloudflare R2 setup" section. This script
- * intentionally does not auto-create the bucket (unlike the old Supabase
- * version): a bucket created via API here would still be missing its
+ * intentionally does not auto-create the bucket: a bucket created via API here would still be missing its
  * custom-domain binding, which can only be done in the dashboard anyway.
  *
  * Safe to re-run — lists what's already in the bucket first and skips
@@ -54,7 +50,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ARABIC_SOURCE_DIR = path.join(__dirname, "..", "..", "..", "Resources", "Al-Afasy Recitation");
 const URDU_SOURCE_DIR = path.join(__dirname, "..", "..", "..", "Resources", "Urdu Audio (Surah-wise)");
 // Written by split-large-audio.mjs for the 5 Surahs whose whole file
-// exceeded Supabase Storage's old 50MiB limit — see that script's
+// exceeded an earlier storage backend's 50MiB limit — see that script's
 // header. R2 has no such limit, so this is purely historical: these
 // Surahs stay split (re-merging already-verified audio would be
 // unnecessary rework), but no *new* Surah needs splitting going forward.

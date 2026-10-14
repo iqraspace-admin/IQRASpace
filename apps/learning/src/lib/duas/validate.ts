@@ -1,8 +1,9 @@
 // Pure Duas logic: validation rules, the Arabic normaliser (mirrors SQL
 // public.normalize_arabic), and applyContext (mirrors get_dua_content()).
-// No React / browser / Supabase imports and only erasable TypeScript syntax,
+// No React / browser / API imports and only erasable TypeScript syntax,
 // so `node --test` can run it directly (see the "test:duas" npm script).
-// Rules mirror the constraints in supabase/migrations/0025_duas_schema.sql.
+// Rules mirror the constraints in d1/migrations/0001_init.sql and worker/api/hooks.js
+// (which also imports normalizeArabic/hasArabic from here).
 
 /** Form-ish input: values may be strings (from inputs) or numbers/null. */
 export type Loose = Record<string, unknown>;

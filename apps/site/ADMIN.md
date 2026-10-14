@@ -2,9 +2,12 @@
 
 `apps/site` is a Cloudflare Worker with Static Assets (the HTML pages, built
 into `dist/` by `npm run build:cf`) plus a small Worker (`worker/`) that
-handles `POST /api/contact` and stores messages in a **D1** database.
-`/quran*` and `/learning*` are separate Workers bound to their own path
-routes; this Worker does not proxy them.
+handles `POST /api/contact` (stores messages in a **D1** database) and
+`GET /api/duas` (read-only feed of the published Duas, see 4b). Only
+`/api/*` invokes the Worker (`run_worker_first`); all pages are served
+straight from static assets. `/quran*` and `/learning*` are separate Workers
+bound to their own path routes; this Worker does not proxy them. Hosting is
+Cloudflare only.
 
 ## What "admin area" means here
 
@@ -27,11 +30,6 @@ npx wrangler d1 execute DB --remote --command "DELETE FROM contact_messages WHER
 There is no public access path to the table; only the Worker's `DB` binding
 and your Cloudflare account can reach it. Reply from your own email client.
 
-> The old Supabase table (`supabase/migrations/0001_contact_messages.sql`) is
-> **superseded by D1** and kept only as history. The Supabase project for the
-> contact form is no longer used and can be exported/deleted once you have
-> copied over anything you want to keep.
-
 ## One-time setup (owner only)
 
 All commands run from `apps/site`. `npm install` first (installs Wrangler).
@@ -40,7 +38,7 @@ All commands run from `apps/site`. `npm install` first (installs Wrangler).
 ```bash
 npx wrangler login
 npx wrangler d1 create iqraspace-site
-# copy the printed database_id into wrangler.jsonc (replace REPLACE_AFTER_d1_create)
+# copy the printed database_id into wrangler.jsonc (d1_databases[0].database_id; already set for the live DB)
 npx wrangler d1 migrations apply DB --remote     # applies d1/migrations/0001_contact_messages.sql
 ```
 
@@ -72,14 +70,29 @@ npx wrangler secret put CONTACT_ALERT_EMAIL     # optional; defaults to iqraspac
 ```
 
 ### 4. Deploy and routes
+Production deploys are done by CI (`.github/workflows/ci-site.yml`: tests, `npm run build:cf`,
+`wrangler deploy`, health check; only on push to `main` and when repo variable
+`CF_DEPLOY_ENABLED == 'true'`). Manual equivalent, for the owner only:
 ```bash
 npm run build:cf
 npx wrangler deploy
 ```
+`build:cf` (`scripts/build.mjs`) copies only allow-listed top-level public files
+(`.html`, `.css`, `.js`, `.png`, `.txt`, `.xml`) into `dist/` and fails on anything unexpected.
 `wrangler.jsonc` binds the route `iqraspace.org/*` (zone `iqraspace.org`).
 `/quran*` and `/learning*` routes belong to their own Workers and win because
-they are more specific. The Gmail/Supabase/Vercel env vars from the old setup
-are no longer used.
+they are more specific.
+
+### 4b. Duas feed (`/duas`)
+`/duas` (`duas.html` + `duas.js`) contains no Dua text. It loads `GET /api/duas`,
+served by `worker/duas.js`, which calls the Learning Worker's public feed
+(`/learning/api/duas/content`, published Duas in active categories only) through the
+`LEARNING` service binding declared in `wrangler.jsonc` (`DUAS_SOURCE_URL` is only a
+fallback var) and caches it at the edge for 60 s. Content is edited and published in
+Learning (`/learning/admin/duas`) and stored in Learning's D1 database; see `DUAS.md`.
+No secret is needed. Deploy order: the Learning Worker must be live before a site
+deploy that relies on the binding. If the feed is unreachable, `/api/duas` returns an
+error and the page shows its error/retry state (or a cached copy).
 
 ### 5. www -> apex redirect
 Handled by a tiny dedicated Worker, `iqraspace-www-redirect` (source in
@@ -99,8 +112,8 @@ re-create it alongside this Worker.)
 | `TURNSTILE_SECRET_KEY` | secret | recommended (skipped if unset) |
 | `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` | secrets | only for email alerts |
 | `CONTACT_ALERT_EMAIL` | secret/var | optional |
-| `DUAS_SUPABASE_URL` | var (wrangler.jsonc, public) | yes, for `/duas` |
-| `DUAS_SUPABASE_ANON_KEY` | secret (`npx wrangler secret put DUAS_SUPABASE_ANON_KEY`; the Learning project's public anon key) | yes, for `/duas` |
+| `LEARNING` | service binding to `iqraspace-learning` (wrangler.jsonc) | yes, for `/duas` |
+| `DUAS_SOURCE_URL` | var (wrangler.jsonc, public) | fallback only, used if the binding is absent |
 
 ## Local development
 ```bash
@@ -109,7 +122,8 @@ npx wrangler d1 migrations apply DB --local
 npx wrangler dev --local      # http://localhost:8787
 ```
 Local secrets go in `apps/site/.dev.vars` (gitignored; see
-`.env.local.example` for the names). Tests: `npm test`.
+`.env.local.example` for the contact-form names; locally `/duas` uses the
+`DUAS_SOURCE_URL` fallback unless the Learning Worker is also running). Tests: `npm test` (`node --test worker/*.test.mjs`).
 
 ## How it works at a glance
 

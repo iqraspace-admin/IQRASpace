@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * Splits any `Resources/Al-Afasy Recitation` Surah file over Supabase
- * Storage's 50MiB free-tier object limit into sequential parts, each
+ * Splits any `Resources/Al-Afasy Recitation` Surah file over an earlier
+ * storage backend's 50MiB object limit into sequential parts, each
  * comfortably under that limit — a storage workaround only, not a
  * change to the verified Surah audio itself (see
  * `upload-audio-to-r2.mjs`'s header and apps/mobile/android/AUDIO.md).

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/authContext";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import type { TutorProfile } from "@/lib/types";
 import { getStoredTheme, setTheme, type ThemeChoice } from "@/lib/theme";
 import { Card, Eyebrow, SectionHead } from "@/components/ui/Card";
@@ -35,7 +35,7 @@ export default function SettingsPage() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setThemeState(getStoredTheme());
     if (!profile || !isTutor) return;
-    supabase
+    db
       .from("tutors")
       .select(TUTOR_COLUMNS)
       .eq("id", profile.id)
@@ -46,7 +46,7 @@ export default function SettingsPage() {
   async function handleSaveProfile() {
     if (!profile) return;
     setSavingProfile(true);
-    const { error } = await supabase.from("users").update({ full_name: fullName }).eq("id", profile.id);
+    const { error } = await db.from("users").update({ full_name: fullName }).eq("id", profile.id);
     setSavingProfile(false);
     showToast(error ? error.message : "Profile updated");
   }
@@ -54,7 +54,7 @@ export default function SettingsPage() {
   async function handleSaveTutorSettings() {
     if (!profile || !tutor) return;
     setSavingSettings(true);
-    const { error } = await supabase
+    const { error } = await db
       .from("tutors")
       .update({
         default_lesson_duration_minutes: tutor.default_lesson_duration_minutes,

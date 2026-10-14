@@ -11,7 +11,7 @@ import type { Role } from "@/lib/types";
  *
  * Note: this is a client-side check only — good enough for the MVP's UX
  * ("don't show a tutor's management screens to a logged-out visitor") but
- * every actual data access is still enforced server-side by RLS regardless
+ * every actual data access is still enforced server-side by the Worker API's access policies regardless
  * of what this component does, so there's no security reliance on it.
  */
 export function RequireAuth({

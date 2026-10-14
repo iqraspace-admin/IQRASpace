@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/lib/authContext";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import { isAdminRole } from "@/lib/roles";
 import { PLATFORM } from "@/lib/platformLinks";
 import { Sidebar } from "./Sidebar";
@@ -27,7 +27,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const showHeading = !pathname.startsWith("/teach");
 
   async function handleLogout() {
-    await supabase.auth.signOut();
+    await db.auth.signOut();
     router.push("/login");
   }
 

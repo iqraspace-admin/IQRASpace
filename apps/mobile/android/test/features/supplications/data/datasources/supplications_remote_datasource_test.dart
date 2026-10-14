@@ -30,20 +30,20 @@ class _RecordingAdapter implements HttpClientAdapter {
 }
 
 void main() {
-  const config = DuasRemoteConfig(url: 'https://abc.supabase.co/', anonKey: 'anon-key');
+  const config = DuasRemoteConfig(url: 'https://iqraspace.org/learning/api/');
 
-  test('config is disabled unless both URL and key are set', () {
-    expect(const DuasRemoteConfig(url: '', anonKey: 'k').isEnabled, isFalse);
-    expect(const DuasRemoteConfig(url: 'https://x', anonKey: ' ').isEnabled, isFalse);
+  test('config is disabled unless the URL is set', () {
+    expect(const DuasRemoteConfig(url: '').isEnabled, isFalse);
+    expect(const DuasRemoteConfig(url: '  ').isEnabled, isFalse);
     expect(config.isEnabled, isTrue);
     // No --dart-define in `flutter test`: remote is off by default.
     expect(DuasRemoteConfig.fromEnvironment.isEnabled, isFalse);
   });
 
-  test('posts {} to the RPC endpoints with the anon-key headers and short timeouts', () async {
+  test('GETs the feed endpoints with short timeouts', () async {
     final adapter = _RecordingAdapter({
-      'dua_content_version': jsonEncode('abc123'),
-      'get_dua_content': jsonEncode({'version': 'abc123', 'categories': []}),
+      'version': jsonEncode('abc123'),
+      'content': jsonEncode({'version': 'abc123', 'categories': []}),
     });
     final remote = SupplicationsRemoteDataSource.create(config, adapter: adapter);
 
@@ -51,17 +51,15 @@ void main() {
     expect((await remote.fetchContent())['version'], 'abc123');
 
     final req = adapter.requests.first;
-    expect(req.method, 'POST');
-    expect(req.uri.toString(), 'https://abc.supabase.co/rest/v1/rpc/dua_content_version');
-    expect(req.headers['apikey'], 'anon-key');
-    expect(req.headers['Authorization'], 'Bearer anon-key');
-    expect(req.data, '{}');
+    expect(req.method, 'GET');
+    expect(req.uri.toString(), 'https://iqraspace.org/learning/api/duas/version');
+    expect(req.headers.containsKey('Authorization'), isFalse);
     expect(req.connectTimeout, const Duration(seconds: 8));
     expect(req.receiveTimeout, const Duration(seconds: 15));
   });
 
   test('HTTP errors and unexpected payloads throw', () async {
-    final adapter = _RecordingAdapter({'dua_content_version': '123', 'get_dua_content': '[]'});
+    final adapter = _RecordingAdapter({'version': '123', 'content': '[]'});
     final remote = SupplicationsRemoteDataSource.create(config, adapter: adapter);
 
     await expectLater(remote.fetchVersion(), throwsA(anything)); // number, not a string

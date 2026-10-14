@@ -25,7 +25,7 @@ const nextConfig: NextConfig = {
   // self-referencing *generated* route like app/icon.tsx — confirmed
   // live in production, 404s — even though it happens to work for a
   // *static* public/ asset). Using next.config.ts's `env` field (not a
-  // second Vercel dashboard env var) means this can never drift out of
+  // separately-configured env var) means this can never drift out of
   // sync with NEXT_BASE_PATH above — one source of truth either way.
   env: {
     NEXT_PUBLIC_BASE_PATH: process.env.NEXT_BASE_PATH || "",

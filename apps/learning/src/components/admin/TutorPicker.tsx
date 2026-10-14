@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import { Field, Select } from "@/components/ui/Field";
 
 type TutorOption = { id: string; full_name: string };
@@ -12,7 +12,7 @@ type TutorOption = { id: string; full_name: string };
  * lesson plan), an admin has to say *whose* it is instead. Rendered only
  * when the caller isn't a tutor themselves (see each call site's
  * `!isTutor && canManage` gate) — `users_all_as_admin`
- * (0018_admin_full_access.sql) is what makes this query return every
+ * (worker/api/policies.js) is what makes this query return every
  * tutor, not just the caller's own row.
  */
 export function TutorPicker({
@@ -29,7 +29,7 @@ export function TutorPicker({
 
   useEffect(() => {
     let active = true;
-    supabase
+    db
       .from("users")
       .select("id, full_name")
       .eq("role", "tutor")

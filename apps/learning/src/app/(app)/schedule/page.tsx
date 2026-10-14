@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/lib/authContext";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import type { AppUser, Lesson, LessonStatus, RecurringSessionRule } from "@/lib/types";
 import { getBulkCurrentLessonItems, type CurrentLessonInfo } from "@/lib/curriculum";
 import { generateSessionsForRule } from "@/lib/recurringSessions";
@@ -45,9 +45,9 @@ export default function SchedulePage() {
   const today = todayISO();
 
   const load = useCallback(async () => {
-    const rulesQuery = supabase.from("recurring_session_rules").select("*").eq("active", true);
+    const rulesQuery = db.from("recurring_session_rules").select("*").eq("active", true);
     const [{ data: lessonRows }, { data: ruleRows }] = await Promise.all([
-      supabase.from("lessons").select("*").gte("lesson_date", dates[0]).lte("lesson_date", dates[6]),
+      db.from("lessons").select("*").gte("lesson_date", dates[0]).lte("lesson_date", dates[6]),
       isTutor ? rulesQuery.eq("tutor_id", profile?.id ?? "") : rulesQuery,
     ]);
     const rows = (lessonRows ?? []) as Lesson[];
@@ -58,7 +58,7 @@ export default function SchedulePage() {
     const studentIds = Array.from(new Set([...rows.map((l) => l.student_id), ...ruleList.map((r) => r.student_id)]));
     if (studentIds.length > 0) {
       const [{ data: userRows }, currentMap] = await Promise.all([
-        supabase.from("users").select("*").in("id", studentIds),
+        db.from("users").select("*").in("id", studentIds),
         getBulkCurrentLessonItems(studentIds),
       ]);
       setStudentsById(new Map(((userRows ?? []) as AppUser[]).map((u) => [u.id, u])));
@@ -89,7 +89,7 @@ export default function SchedulePage() {
   }
 
   async function toggleRuleActive(rule: RecurringSessionRule) {
-    const { error } = await supabase.from("recurring_session_rules").update({ active: !rule.active }).eq("id", rule.id);
+    const { error } = await db.from("recurring_session_rules").update({ active: !rule.active }).eq("id", rule.id);
     if (error) showToast(error.message);
     else load();
   }

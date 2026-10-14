@@ -1,5 +1,4 @@
 -- IqraSpace Site - contact form message storage (Cloudflare D1).
--- Replaces supabase/migrations/0001_contact_messages.sql (kept as history).
 -- Written only by worker/index.js through the DB binding; there is no
 -- public access path. Read it with `wrangler d1 execute` or the dashboard.
 CREATE TABLE contact_messages (

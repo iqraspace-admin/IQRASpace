@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import type { AppUser, Lesson, Meeting } from "@/lib/types";
 import { formatDate, formatTime, todayISO } from "@/lib/format";
 import { Card, Eyebrow, SectionHead } from "@/components/ui/Card";
@@ -21,7 +21,7 @@ export default function MeetPage() {
   useEffect(() => {
     async function load() {
       const today = todayISO();
-      const { data: lessonRows } = await supabase
+      const { data: lessonRows } = await db
         .from("lessons")
         .select("*")
         .gte("lesson_date", today)
@@ -32,8 +32,8 @@ export default function MeetPage() {
         return;
       }
       const [{ data: meetingRows }, { data: userRows }] = await Promise.all([
-        supabase.from("meetings").select("*").in("lesson_id", lessons.map((l) => l.id)),
-        supabase.from("users").select("*").in("id", Array.from(new Set(lessons.map((l) => l.student_id)))),
+        db.from("meetings").select("*").in("lesson_id", lessons.map((l) => l.id)),
+        db.from("users").select("*").in("id", Array.from(new Set(lessons.map((l) => l.student_id)))),
       ]);
       setStudentsById(new Map(((userRows ?? []) as AppUser[]).map((u) => [u.id, u])));
       const meetings = (meetingRows ?? []) as Meeting[];

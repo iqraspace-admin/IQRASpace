@@ -2,8 +2,7 @@
 /// every Surah is exactly one part (a whole-Surah audio file). A
 /// handful were split into several sequential parts as a one-time
 /// workaround for a since-migrated storage backend's 50MiB per-object
-/// limit (originally Supabase Storage; audio now lives on Cloudflare R2,
-/// which has no such limit) — see
+/// limit (audio now lives on Cloudflare R2, which has no such limit) — see
 /// `apps/mobile/android/scripts/split-large-audio.mjs` and
 /// `apps/mobile/android/AUDIO.md`. The already-split files are kept as-is
 /// rather than re-merged now that the limit is gone, since re-splitting/
@@ -31,7 +30,7 @@ const String _r2AudioBaseUrl = 'https://audio.iqraspace.org';
 
 /// Surahs split into sequential parts by
 /// `apps/mobile/android/scripts/split-large-audio.mjs` because the whole
-/// recitation file exceeded Supabase Storage's old 50MiB free-tier
+/// recitation file exceeded an earlier storage backend's 50MiB
 /// object limit (historical — audio is now hosted on Cloudflare R2,
 /// which has no per-object size limit) — object names
 /// `arabic/{NNN}_part{i}.mp3` (i = 1-based), and durations are exact

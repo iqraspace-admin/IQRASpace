@@ -1,6 +1,6 @@
 # IqraSpace Quran — Production Deployment
 
-Status: **migrating from Vercel to Cloudflare Workers Static Assets** (branch `cloudflare-migration`). The app is now a fully static export (`output: "export"`) served by an assets-only Cloudflare Worker routed at `iqraspace.org/quran*`. Items below marked **[manual]** are owner-only steps that were NOT performed by the migration work (no Cloudflare login/deploy has happened from the repo yet). CI/CD for this app is owned by `.github/workflows/ci-quran.yml` and is updated separately from this document.
+Status: **live on Cloudflare Workers Static Assets**. The app is a fully static export (`output: "export"`) served by an assets-only Cloudflare Worker routed at `iqraspace.org/quran*`. CI/CD is `.github/workflows/ci-quran.yml` (lint, typecheck, `npm run build:cf`; on push to `main` and only when repository variable `CF_DEPLOY_ENABLED == 'true'`, `wrangler deploy` plus a health check of `/quran`, `/quran/surah`, `/quran/sitemap.xml`). Repo-wide cutover/rollback runbook and secrets: root `DEPLOYMENT.md`.
 
 ## Architecture
 
@@ -19,7 +19,7 @@ https://iqraspace.org/learning/* → apps/learning (separate product, separate d
 | Build command | `npm run build:cf` → `scripts/build-cf.mjs` (sets `NEXT_BASE_PATH=/quran`, runs `npm run build`, then `scripts/prepare-cf.mjs`) |
 | Output | `dist/` — `dist/quran/**` (the export, so `/quran/_next/...` maps 1:1 to `dist/quran/_next/...`), `dist/_headers`, `dist/404.html` |
 | Worker config | `wrangler.jsonc` — name `iqraspace-quran`, `assets.directory: ./dist`, `html_handling: drop-trailing-slash`, `not_found_handling: 404-page`, route `iqraspace.org/quran*` (zone `iqraspace.org`), `workers_dev: true` |
-| Deploy | `npx wrangler deploy` from `apps/quran` after `npm run build:cf` **[manual / CI]** |
+| Deploy | CI (`ci-quran.yml`, `cloudflare/wrangler-action`); manual fallback is `npx wrangler deploy` from `apps/quran` after `npm run build:cf` (owner only) |
 | Lint / Typecheck | `npm run lint` / `npx next typegen && npm run typecheck` |
 
 `npm run dev` (port 3001) is unchanged and uses no base path. `next start` no longer applies (static export) — to preview the production build locally run `npm run build:cf` and then `npx wrangler dev` (works without logging in; uses local workerd).
@@ -51,7 +51,7 @@ Cloudflare applies every matching `_headers` rule, so each path gets `Cache-Cont
 | `/quran/surah/200`, `/quran/page/700`, `/quran/anything-else` | 404 with the branded not-found page (`dist/quran/404.html`; a copy at `dist/404.html` too) |
 | `/quran/sitemap.xml`, `/quran/manifest.webmanifest`, `/quran/search-index.json`, `/quran/pdf/surah/1.pdf` | 200 |
 
-Differences vs. the Vercel/Next server: the trailing-slash redirect is 307 (Next used 308); out-of-range Surah/page numbers are a host-level 404 (`dynamicParams = false`) rather than a server-rendered `notFound()`; the route pattern `iqraspace.org/quran*` also captures paths like `/quranfoo` (they 404).
+Notes vs. a Next.js server deployment: the trailing-slash redirect is 307 (a Next server uses 308); out-of-range Surah/page numbers are a host-level 404 (`dynamicParams = false`) rather than a server-rendered `notFound()`; the route pattern `iqraspace.org/quran*` also captures paths like `/quranfoo` (they 404).
 
 ### Asset limits (checked at build time by `prepare-cf.mjs`)
 
@@ -71,13 +71,12 @@ Build-time only; nothing is read at runtime (there is no runtime). Full detail i
 |---|---|
 | `NEXT_BASE_PATH` | `/quran` — set by `scripts/build-cf.mjs`; do not set it for local dev. Also exposed to client code as `NEXT_PUBLIC_BASE_PATH` via `next.config.ts`. |
 | `QURAN_FOUNDATION_*` | Only used by `npm run sync:content` (a manual local step), never by the build or the deployed site. |
-| `NEXT_PUBLIC_SUPABASE_URL` / `_ANON_KEY` | Not used by any current feature. |
 
 **Content sync is deliberately not part of the build** — a deploy never re-fetches content from a third-party API. `npm run sync:content` is run manually, its output (`src/content/generated/`) reviewed and committed. The licence requires re-syncing at least weekly; see `QURAN-CONTENT.md` (currently a manual obligation).
 
 ## DNS and routing **[manual]**
 
-`iqraspace.org` DNS is on Cloudflare. A Worker route (`iqraspace.org/quran*`) only fires for **proxied** (orange-cloud) DNS records, so the apex record must be proxied for the route to take effect. The earlier "DNS only" requirement existed purely for Vercel and no longer applies to this app. The root site (`apps/site`) and `/learning` are handled by their own deployments/routes; the old Multi-Zones `vercel.json` rewrite to this app must be removed/replaced by whoever owns `apps/site` — otherwise it will still point at the Vercel deployment.
+`iqraspace.org` DNS is on Cloudflare. A Worker route (`iqraspace.org/quran*`) only fires for **proxied** (orange-cloud) DNS records, so the apex record must be proxied for the route to take effect. The root site (`apps/site`, Worker `iqraspace-site`, route `iqraspace.org/*`) and `/learning` are handled by their own Workers; the more specific `/quran*` route wins. There is no proxy or rewrite between them. Cross-app header links (`/duas`, `/learning`) are plain `<a>` navigations.
 
 ## Rollback
 

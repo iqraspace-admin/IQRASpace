@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState, type SubmitEvent } from "react";
 import { RequireAuth } from "@/components/RequireAuth";
 import { useAuth } from "@/lib/authContext";
-import { supabase } from "@/lib/supabaseClient";
+import { db, apiFetch } from "@/lib/db";
 import type { AppUser, Role } from "@/lib/types";
 import { ADMIN_ROLES, isAdminRole } from "@/lib/roles";
 import { friendlyAuthError } from "@/lib/username";
@@ -18,8 +18,7 @@ import { useToast } from "@/components/ui/Toast";
 const ALL_ROLES: Role[] = ["tutor", "student", "guardian", "admin", "super_admin"];
 // Roles creatable from this page's "Create user" form — must match
 // admin-user-management's CREATABLE_ROLES exactly. admin/super_admin stay
-// exclusively on `npm run seed:admins` (see that Edge Function's header
-// comment and 0017_admin_super_admin_roles.sql).
+// exclusively on `npm run seed:admins` (see worker/api/adminUsers.js).
 const CREATABLE_ROLES: Role[] = ["tutor", "student", "guardian"];
 
 const ROLE_TONE: Record<Role, BadgeTone> = {
@@ -30,49 +29,33 @@ const ROLE_TONE: Record<Role, BadgeTone> = {
   super_admin: "red",
 };
 
-/** Calls the admin-user-management Edge Function — the only place in this
- * app that can create/deactivate/delete an Auth user, reset a password, or
- * read real ban status, since those all need the service_role key (never
- * exposed to the browser). `supabase.functions.invoke` attaches the
- * caller's own session token automatically; the function re-checks admin
- * access server-side. */
+/** Calls the Learning API's admin user endpoint (worker/api/adminUsers.js) —
+ * the only place that can create/deactivate/delete an account, reset a
+ * password, or read deactivation status. The Worker re-checks admin access
+ * from the caller's own session. */
 async function callAdmin(
   action: string,
   params: Record<string, unknown> = {}
 ): Promise<{ ok: boolean; error?: string; data?: { id?: string; banned?: boolean } }> {
-  const { data, error } = await supabase.functions.invoke("admin-user-management", {
-    body: { action, ...params },
-  });
-  if (error) {
-    // A non-2xx response surfaces as a generic error with the real JSON
-    // body attached to `context` — unwrap it for a useful message.
-    const context = (error as { context?: Response }).context;
-    if (context) {
-      try {
-        const body = await context.json();
-        return { ok: false, error: friendlyAuthError(body.error ?? error.message) };
-      } catch {
-        // fall through to the generic message below
-      }
-    }
-    return { ok: false, error: friendlyAuthError(error.message) };
+  try {
+    const res = await apiFetch("/admin/users", { method: "POST", body: JSON.stringify({ action, ...params }) });
+    const body = (await res.json()) as { ok: boolean; error?: string; data?: { id?: string; banned?: boolean } };
+    return body.ok ? body : { ...body, error: friendlyAuthError(body.error ?? `Request failed (HTTP ${res.status})`) };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "No response from server." };
   }
-  return (data as { ok: boolean; error?: string; data?: { id?: string; banned?: boolean } }) ?? {
-    ok: false,
-    error: "No response from server.",
-  };
 }
 
 // Every account on the platform. Populated only for admin/super_admin —
-// "users_all_as_admin" (0018_admin_full_access.sql) is what actually makes
+// "users_all_as_admin" (worker/api/policies.js) is what actually makes
 // this query return more than the caller's own row; a tutor/student opening
 // this URL directly would just see themselves (and whatever
 // users_select_as_tutor_of_student already grants).
 //
 // Role changes go through public.set_user_role(), which re-checks
 // is_admin() server-side. Create/reset-password/deactivate/delete/status go
-// through the admin-user-management Edge Function, which re-checks the
-// same thing against a service_role client — the UI hiding a control is
+// through the Learning API's /admin/users endpoint, which re-checks the
+// same thing from the caller's session — the UI hiding a control is
 // convenience, not the actual boundary in either case.
 export default function AdminUsersPage() {
   return (
@@ -102,7 +85,7 @@ function AdminUsers() {
   const [creating, setCreating] = useState(false);
 
   const load = useCallback(async () => {
-    const { data, error } = await supabase.from("users").select("*").order("full_name", { ascending: true });
+    const { data, error } = await db.from("users").select("*").order("full_name", { ascending: true });
     if (error) {
       showToast(error.message);
     } else {
@@ -112,7 +95,7 @@ function AdminUsers() {
   }, [showToast]);
 
   useEffect(() => {
-    // Fetch-on-mount via the browser Supabase client — same accepted MVP
+    // Fetch-on-mount via the browser API client (lib/db.ts) — same accepted MVP
     // pattern as classes/page.tsx (see docs/PROGRESS.md Phase 1 notes).
     // eslint-disable-next-line react-hooks/set-state-in-effect
     load();
@@ -332,11 +315,11 @@ function EditUserForm({
 
   async function handleSave() {
     setSaving(true);
-    // Profile fields go straight through PostgREST — users_all_as_admin
-    // (0018_admin_full_access.sql) already permits this. Role changes are
+    // Profile fields go straight through the query API — the users policy
+    // in worker/api/policies.js lets admins update any profile. Role changes are
     // deliberately NOT included here — they go through set_user_role()
     // below, which re-checks admin access and guards the self-lockout case.
-    const { error } = await supabase
+    const { error } = await db
       .from("users")
       .update({ username, full_name: fullName, email: email || null, phone: phone || null })
       .eq("id", user.id);
@@ -346,7 +329,7 @@ function EditUserForm({
       return;
     }
     if (role !== user.role) {
-      const { error: roleError } = await supabase.rpc("set_user_role", { p_user_id: user.id, p_new_role: role });
+      const { error: roleError } = await db.rpc("set_user_role", { p_user_id: user.id, p_new_role: role });
       if (roleError) {
         setSaving(false);
         showToast(roleError.message);

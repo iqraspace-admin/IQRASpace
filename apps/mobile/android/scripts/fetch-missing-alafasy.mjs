@@ -3,7 +3,7 @@
  * Fills gaps in `Resources/Al-Afasy Recitation` (repo root, gitignored —
  * local working material, never committed) from quranicaudio.com's
  * Mishary Al-Afasy mirror. That folder is the source Listening Mode's
- * local/cached playback uploads to Supabase Storage from (see
+ * local/cached playback uploads to Cloudflare R2 from (see
  * `upload-audio-to-r2.mjs`) — this script is what keeps it at all
  * 114 Surahs rather than hand-downloading the rest one at a time.
  *

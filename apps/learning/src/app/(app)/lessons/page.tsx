@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "@/lib/authContext";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import { resolveMaterialUrl } from "@/lib/lessonMaterial";
 import { getSurah } from "@/lib/quranContent";
 import { quranSurahUrl } from "@/lib/quranLink";
@@ -21,7 +21,7 @@ import { PdfViewer } from "@/components/pdf/PdfViewer";
 
 /**
  * Lesson Library — the Universal Lesson Plan (curriculum) manager. A plan is
- * NOT owned by any one tutor (0021_universal_lesson_plans.sql) — it's a
+ * NOT owned by any one tutor (worker/api/policies.js) — it's a
  * shared catalog any number of tutors can browse and assign to their own
  * classes. This screen defines *what* should be taught and in what order;
  * it deliberately carries no date/time/duration/tutor-or-student-assignment
@@ -54,10 +54,10 @@ export default function LessonsPage() {
   const [materialModal, setMaterialModal] = useState<{ url: string; page: number } | null>(null);
 
   const loadPlans = useCallback(async () => {
-    // Unfiltered for everyone — RLS decides who sees what: every tutor/admin
+    // Unfiltered for everyone — the API's access policies decide who sees what: every tutor/admin
     // sees the whole shared catalog, a student sees only their assigned
-    // plan (0021_universal_lesson_plans.sql).
-    const { data } = await supabase.from("lesson_plans").select("*").order("created_at");
+    // plan (worker/api/policies.js).
+    const { data } = await db.from("lesson_plans").select("*").order("created_at");
     const rows = (data ?? []) as LessonPlan[];
     setPlans(rows);
     setSelectedPlanId((prev) => prev || rows[0]?.id || "");
@@ -66,10 +66,10 @@ export default function LessonsPage() {
 
   const loadClasses = useCallback(async () => {
     if (!profile || !canAssignClasses) return;
-    const classesQuery = supabase.from("classes").select("*");
+    const classesQuery = db.from("classes").select("*");
     const [{ data: classRows }, { data: assignRows }] = await Promise.all([
       isTutor ? classesQuery.eq("tutor_id", profile.id) : classesQuery,
-      supabase.from("class_lesson_plans").select("class_id, lesson_plan_id"),
+      db.from("class_lesson_plans").select("class_id, lesson_plan_id"),
     ]);
     setClasses((classRows ?? []) as ClassRow[]);
     const map: Record<string, string> = {};
@@ -90,7 +90,7 @@ export default function LessonsPage() {
       setItems([]);
       return;
     }
-    const { data } = await supabase
+    const { data } = await db
       .from("lesson_plan_items")
       .select("*")
       .eq("lesson_plan_id", selectedPlanId)
@@ -113,9 +113,9 @@ export default function LessonsPage() {
     const existingPlanId = classPlanByClassId[classId];
     if (existingPlanId === selectedPlanId) return;
     if (existingPlanId) {
-      await supabase.from("class_lesson_plans").delete().eq("class_id", classId);
+      await db.from("class_lesson_plans").delete().eq("class_id", classId);
     }
-    const { error } = await supabase
+    const { error } = await db
       .from("class_lesson_plans")
       .insert({ class_id: classId, lesson_plan_id: selectedPlanId });
     if (error) {
@@ -125,19 +125,19 @@ export default function LessonsPage() {
 
     // Every already-enrolled student gets a starting-point progress row
     // ("not started at Lesson 1") automatically — seed_progress_on_plan_assigned
-    // trigger (0022_student_progress_gaps.sql), not client-side, so it also
+    // trigger (worker/api/hooks.js), not client-side, so it also
     // covers a student added to the class later (seed_progress_on_member_added).
     showToast("Class assigned to this plan");
     loadClasses();
   }
 
   async function unassignClass(classId: string) {
-    await supabase.from("class_lesson_plans").delete().eq("class_id", classId).eq("lesson_plan_id", selectedPlanId);
+    await db.from("class_lesson_plans").delete().eq("class_id", classId).eq("lesson_plan_id", selectedPlanId);
     loadClasses();
   }
 
   async function toggleActive(item: LessonPlanItem) {
-    const { error } = await supabase.from("lesson_plan_items").update({ active: !item.active }).eq("id", item.id);
+    const { error } = await db.from("lesson_plan_items").update({ active: !item.active }).eq("id", item.id);
     if (error) showToast(error.message);
     else loadItems();
   }
@@ -148,8 +148,8 @@ export default function LessonsPage() {
     const swapWith = sorted[idx + direction];
     if (!swapWith) return;
     await Promise.all([
-      supabase.from("lesson_plan_items").update({ sequence: swapWith.sequence }).eq("id", item.id),
-      supabase.from("lesson_plan_items").update({ sequence: item.sequence }).eq("id", swapWith.id),
+      db.from("lesson_plan_items").update({ sequence: swapWith.sequence }).eq("id", item.id),
+      db.from("lesson_plan_items").update({ sequence: item.sequence }).eq("id", swapWith.id),
     ]);
     loadItems();
   }

@@ -1,14 +1,15 @@
 name: CI/CD (Learning)
 
-# (Deploy requires a CLOUDFLARE_API_TOKEN with Workers Scripts, D1, Workers Routes and Zone Read - see DEPLOYMENT.md.)
+# (Deploy requires a CLOUDFLARE_API_TOKEN with Workers Scripts, D1, Workers R2 Storage, Workers Routes and Zone Read - see DEPLOYMENT.md.)
 # apps/learning -> Cloudflare Worker `iqraspace-learning` (route
 # iqraspace.org/learning*). `validate` runs on every PR / push to main that
 # touches this app; `deploy` runs only for a push to main AND only when the
 # repository variable CF_DEPLOY_ENABLED == 'true' (so merging before the
 # Cloudflare token exists cannot break CI). See DEPLOYMENT.md.
 #
-# Database migrations (supabase/migrations/**) are deliberately NOT a
-# trigger and never applied by CI — run `npx supabase db push` manually.
+# Database migrations (apps/learning/d1/migrations) are never applied by CI —
+# run `npx wrangler d1 migrations apply iqraspace-learning --remote` manually
+# BEFORE merging a change that needs them (see apps/learning/BACKEND.md).
 
 on:
   push:
@@ -67,19 +68,13 @@ jobs:
       - name: Run Duas unit tests (if present)
         run: npm run test:duas --if-present
 
-      - name: Run Worker tests (if present)
-        run: |
-          if ls worker/*.test.mjs >/dev/null 2>&1; then
-            node --test worker/*.test.mjs
-          else
-            echo "No worker tests found - skipping"
-          fi
+      # Routing + the Learning API (query compiler, access policies, auth,
+      # RPCs, Duas feed) against real SQLite with the D1 migrations applied.
+      - name: Run Worker + API tests
+        run: npm run test:worker
 
       - name: Build for Cloudflare
         run: npm run build:cf
-        env:
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
   deploy:
     name: Deploy to Cloudflare Workers
@@ -105,9 +100,6 @@ jobs:
 
       - name: Build for Cloudflare
         run: npm run build:cf
-        env:
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
       - name: Cloudflare credential preflight
         working-directory: .
@@ -141,7 +133,7 @@ jobs:
         run: |
           set -u
           fail=0
-          for path in /learning/login /learning/share/00000000-0000-0000-0000-000000000000; do
+          for path in /learning/login /learning/share/00000000-0000-0000-0000-000000000000 /learning/api/duas/version; do
             ok=0
             for attempt in 1 2 3 4 5 6 7 8; do
               code=$(curl -s -o /dev/null -w "%{http_code}" -L "$BASE$path" || echo 000)

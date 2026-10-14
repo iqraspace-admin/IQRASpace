@@ -5,53 +5,28 @@
 // "reuse the existing Quran Reading App PDF resources" requirement.
 //
 // How the link works: `lesson_plan_items.material_storage_path` normally
-// holds a Supabase Storage object key (see lib/storage.ts), but every
-// material-viewing call site now resolves it through
-// lib/lessonMaterial.ts's resolveMaterialUrl(), which recognizes the
-// "quran-surah:{N}" marker this script writes and builds a direct URL to
-// apps/quran's PDF instead of signing a (nonexistent) bucket object.
-// `quran_surah_key` is deliberately left null — setting it to anything
-// would short-circuit TeachClient.tsx's PDF-loading branch entirely (see
-// that file's `effectiveSurahKey` check).
+// holds an R2 object path (see lib/storage.ts), but every material-viewing
+// call site resolves it through lib/lessonMaterial.ts's resolveMaterialUrl(),
+// which recognizes the "quran-surah:{N}" marker this script writes and builds
+// a direct URL to apps/quran's PDF instead of signing a storage object.
 //
 // Usage (from apps/learning):
-//   npm run seed:surah-lessons
-// (runs `node --env-file=.env.local scripts/seed-surah-lessons.mjs` —
-// requires SUPABASE_SERVICE_ROLE_KEY in .env.local, same as seed:admins.)
-//
-// Idempotent: re-running it only inserts Surahs not already present under
-// the "Full Qur'an (Surah by Surah)" plan — safe to run again.
+//   npm run seed:surah-lessons             local dev database
+//   npm run seed:surah-lessons -- --remote production database
+// Idempotent: the plan is matched by name and items by (plan, sequence), so
+// re-running only fills in what's missing.
 
-import { createClient } from "@supabase/supabase-js";
 import { readFileSync } from "node:fs";
-
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+import { executeSql, sqlString } from "./d1.mjs";
 
 function fail(message) {
   console.error(`\n✗ ${message}\n`);
   process.exit(1);
 }
 
-if (!SUPABASE_URL) fail("Missing NEXT_PUBLIC_SUPABASE_URL in .env.local.");
-if (!SERVICE_ROLE_KEY) {
-  fail(
-    "Missing SUPABASE_SERVICE_ROLE_KEY in .env.local.\n" +
-      "  Find it under Supabase Dashboard -> Project Settings -> API (the\n" +
-      "  'service_role' secret key) and set it locally — never commit it."
-  );
-}
-
-// Read once at script-run-time from the sibling app's own generated content
-// — not bundled/duplicated into apps/learning, just used here to source
-// each Surah's display name.
 let chapters;
 try {
-  const raw = readFileSync(
-    new URL("../../quran/src/content/generated/chapters.json", import.meta.url),
-    "utf8"
-  );
-  chapters = JSON.parse(raw).chapters;
+  chapters = JSON.parse(readFileSync(new URL("../../quran/src/content/generated/chapters.json", import.meta.url), "utf8")).chapters;
 } catch (err) {
   fail(`Could not read apps/quran/src/content/generated/chapters.json: ${err.message}`);
 }
@@ -59,70 +34,22 @@ if (!Array.isArray(chapters) || chapters.length !== 114) {
   fail(`Expected 114 Surahs in chapters.json, found ${chapters?.length ?? 0}.`);
 }
 
-const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
-  auth: { autoRefreshToken: false, persistSession: false },
-});
-
 const PLAN_NAME = "Full Qur'an (Surah by Surah)";
-
-async function main() {
-  let { data: plan, error: planLookupError } = await supabase
-    .from("lesson_plans")
-    .select("*")
-    .eq("name", PLAN_NAME)
-    .maybeSingle();
-  if (planLookupError) throw planLookupError;
-
-  if (!plan) {
-    const { data, error } = await supabase
-      .from("lesson_plans")
-      .insert({
-        name: PLAN_NAME,
-        description:
-          "Every Surah as its own lesson, each linked directly to that Surah's PDF " +
-          "from the Quran Reading App — no separate upload.",
-        active: true,
-      })
-      .select()
-      .single();
-    if (error) throw error;
-    plan = data;
-    console.log(`Created lesson plan "${PLAN_NAME}" (${plan.id}).`);
-  } else {
-    console.log(`Using existing lesson plan "${PLAN_NAME}" (${plan.id}).`);
-  }
-
-  const { data: existingItems, error: itemsError } = await supabase
-    .from("lesson_plan_items")
-    .select("sequence")
-    .eq("lesson_plan_id", plan.id);
-  if (itemsError) throw itemsError;
-  const existingSequences = new Set((existingItems ?? []).map((i) => i.sequence));
-
-  const rows = chapters
-    .filter((c) => !existingSequences.has(c.id))
-    .map((c) => ({
-      lesson_plan_id: plan.id,
-      sequence: c.id,
-      title: `Surah ${c.id} — ${c.name_simple}`,
-      objective: `${c.translated_name.name} · ${c.verses_count} verses`,
-      quran_surah_key: null,
-      material_storage_path: `quran-surah:${c.id}`,
-      material_type: "pdf",
-      material_page_start: null,
-      material_page_end: null,
-      active: true,
-    }));
-
-  if (rows.length === 0) {
-    console.log("All 114 Surah lessons already exist — nothing to do.");
-    return;
-  }
-
-  const { error: insertError } = await supabase.from("lesson_plan_items").insert(rows);
-  if (insertError) throw insertError;
-  console.log(`Inserted ${rows.length} Surah lesson(s) into "${PLAN_NAME}".`);
+const plan = sqlString(PLAN_NAME);
+const statements = [
+  `INSERT INTO lesson_plans (id, name, description, active)
+     SELECT ${sqlString(crypto.randomUUID())}, ${plan},
+            ${sqlString("Every Surah as its own lesson, each linked directly to that Surah's PDF from the Quran Reading App — no separate upload.")}, 1
+     WHERE NOT EXISTS (SELECT 1 FROM lesson_plans WHERE name = ${plan});`,
+];
+for (const c of chapters) {
+  statements.push(
+    `INSERT INTO lesson_plan_items (id, lesson_plan_id, sequence, title, objective, material_storage_path, material_type, active)
+       SELECT ${sqlString(crypto.randomUUID())}, p.id, ${Number(c.id)}, ${sqlString(`Surah ${c.id} — ${c.name_simple}`)},
+              ${sqlString(`${c.translated_name.name} · ${c.verses_count} verses`)}, ${sqlString(`quran-surah:${c.id}`)}, 'pdf', 1
+       FROM lesson_plans p WHERE p.name = ${plan}
+       ON CONFLICT (lesson_plan_id, sequence) DO NOTHING;`
+  );
 }
-
-await main();
-console.log("\nDone. Find the new plan in the Lessons Library (/lessons).\n");
+executeSql(statements.join("\n"));
+console.log(`\nDone. "${PLAN_NAME}" has all 114 Surah lessons — see the Lessons Library (/lessons).\n`);

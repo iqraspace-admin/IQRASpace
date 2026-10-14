@@ -15,8 +15,8 @@
 
 const R2_AUDIO_BASE_URL = "https://audio.iqraspace.org";
 
-/** Surahs split into sequential parts as a historical Supabase-Storage
-    50MiB-object-limit workaround (R2 itself has no such limit, so the
+/** Surahs split into sequential parts as a historical 50MiB-object-limit
+    workaround from earlier storage (R2 itself has no such limit, so the
     already-split files were kept as-is rather than re-merged — see
     AUDIO.md). Object names `arabic/{NNN}_part{i}.mp3`, i = 1-based.
     Every other Surah is a single `arabic/{NNN}.mp3` file. */

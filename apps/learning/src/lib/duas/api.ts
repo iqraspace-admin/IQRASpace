@@ -1,9 +1,9 @@
-// All Supabase calls for the Duas admin. Uses the Learning app's shared browser
+// All data calls for the Duas admin. Uses the Learning app's shared browser
 // client, i.e. the signed-in user's own session + anon key; the duas* tables'
-// RLS (0025_duas_schema.sql) is what actually restricts this to admin /
+// the API access policies (worker/api/policies.js) is what actually restricts this to admin /
 // super_admin. The service_role key is never involved.
 
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import type { AuditRow, CategoryRow, DuaListRow, DuaRow, MappingRow } from "./types";
 import type { MapForm } from "./form";
 import { mapToRow } from "./form";
@@ -54,7 +54,7 @@ export function friendlyMessage(err: unknown): string {
 
 export const errText = (e: unknown): string => (e instanceof ApiError ? e.message : friendlyMessage(e));
 
-/** Throw a friendly ApiError when a supabase-js response carries an error. */
+/** Throw a friendly ApiError when an API response carries an error. */
 function unwrap<T>(res: Res<T>): { data: T; count: number | null } {
   if (res.error) throw new ApiError(friendlyMessage(res.error), res.error);
   return { data: res.data as T, count: res.count ?? null };
@@ -62,7 +62,7 @@ function unwrap<T>(res: Res<T>): { data: T; count: number | null } {
 
 type Rangeable<T> = { range(from: number, to: number): PromiseLike<Res<T[]>> };
 
-/** Fetch every row of a query in pages (PostgREST caps responses at ~1000 rows). */
+/** Fetch every row of a query in pages (the API caps responses at 1000 rows). */
 async function fetchAll<T>(build: () => Rangeable<T>, pageSize = 1000): Promise<T[]> {
   const out: T[] = [];
   for (let from = 0; ; from += pageSize) {
@@ -73,7 +73,7 @@ async function fetchAll<T>(build: () => Rangeable<T>, pageSize = 1000): Promise<
   return out;
 }
 
-/** Quote a value for a PostgREST or=() filter. */
+/** Quote a value for an or() filter (PostgREST syntax, parsed by worker/api/query.js). */
 const pgQuote = (v: string) => '"' + v.replace(/\\/g, "\\\\").replace(/"/g, '\\"') + '"';
 const escapeLike = (v: string) => v.replace(/[\\%_]/g, (c) => "\\" + c);
 
@@ -83,27 +83,27 @@ const LIST_COLS =
 // ------------------------------------------------------------------ categories
 export async function loadCategories(): Promise<CategoryRow[]> {
   return unwrap(
-    (await supabase.from("dua_categories").select("*").order("sort_order").order("slug")) as unknown as Res<CategoryRow[]>
+    (await db.from("dua_categories").select("*").order("sort_order").order("slug")) as unknown as Res<CategoryRow[]>
   ).data;
 }
 
 export async function categoryNameMap(): Promise<Map<string, string>> {
-  const { data } = unwrap((await supabase.from("dua_categories").select("id,name")) as unknown as Res<{ id: string; name: string }[]>);
+  const { data } = unwrap((await db.from("dua_categories").select("id,name")) as unknown as Res<{ id: string; name: string }[]>);
   return new Map(data.map((c) => [c.id, c.name]));
 }
 
 export async function getCategoryBySlug(slug: string): Promise<CategoryRow | null> {
-  return unwrap((await supabase.from("dua_categories").select("*").eq("slug", slug).maybeSingle()) as unknown as Res<CategoryRow>).data;
+  return unwrap((await db.from("dua_categories").select("*").eq("slug", slug).maybeSingle()) as unknown as Res<CategoryRow>).data;
 }
 
 export type CategoryStats = Map<string, { total: number; published: number }>;
 
 export async function categoryListWithStats(): Promise<{ cats: CategoryRow[]; stats: CategoryStats }> {
   const [cats, maps] = await Promise.all([
-    fetchAll<CategoryRow>(() => supabase.from("dua_categories").select("*").order("sort_order").order("slug") as unknown as Rangeable<CategoryRow>),
+    fetchAll<CategoryRow>(() => db.from("dua_categories").select("*").order("sort_order").order("slug") as unknown as Rangeable<CategoryRow>),
     fetchAll<{ category_id: string; dua_id: string; duas: { status: string } | null }>(
       () =>
-        supabase.from("dua_category_map").select("category_id,dua_id,duas(status)").order("category_id").order("dua_id") as unknown as Rangeable<{
+        db.from("dua_category_map").select("category_id,dua_id,duas(status)").order("category_id").order("dua_id") as unknown as Rangeable<{
           category_id: string;
           dua_id: string;
           duas: { status: string } | null;
@@ -121,33 +121,33 @@ export async function categoryListWithStats(): Promise<{ cats: CategoryRow[]; st
 }
 
 export async function insertCategory(data: Record<string, unknown>): Promise<void> {
-  unwrap((await supabase.from("dua_categories").insert(data)) as unknown as Res<null>);
+  unwrap((await db.from("dua_categories").insert(data)) as unknown as Res<null>);
 }
 
 /** Optimistic-concurrency update. Returns false when the row changed/vanished. */
 export async function updateCategory(id: string, loadedUpdatedAt: string, data: Record<string, unknown>): Promise<boolean> {
   const { data: row } = unwrap(
-    (await supabase.from("dua_categories").update(data).eq("id", id).eq("updated_at", loadedUpdatedAt).select("id").maybeSingle()) as unknown as Res<{ id: string }>
+    (await db.from("dua_categories").update(data).eq("id", id).eq("updated_at", loadedUpdatedAt).select("id").maybeSingle()) as unknown as Res<{ id: string }>
   );
   return !!row;
 }
 
 export async function deleteCategory(id: string): Promise<void> {
-  unwrap((await supabase.from("dua_categories").delete().eq("id", id)) as unknown as Res<null>);
+  unwrap((await db.from("dua_categories").delete().eq("id", id)) as unknown as Res<null>);
 }
 
 /** Swap items i and j, then rewrite sort_order in steps of 10 for rows whose value changes. */
 export async function reorderCategories(list: CategoryRow[], i: number, j: number): Promise<void> {
   const next = reorderedSortOrders(list, i, j);
   for (const { row, so } of next)
-    unwrap((await supabase.from("dua_categories").update({ sort_order: so }).eq("id", row.id)) as unknown as Res<null>);
+    unwrap((await db.from("dua_categories").update({ sort_order: so }).eq("id", row.id)) as unknown as Res<null>);
 }
 
 export async function reorderMappings(list: CategoryDuaRow[], i: number, j: number): Promise<void> {
   const next = reorderedSortOrders(list, i, j);
   for (const { row, so } of next)
     unwrap(
-      (await supabase.from("dua_category_map").update({ sort_order: so }).eq("dua_id", row.dua_id).eq("category_id", row.category_id)) as unknown as Res<null>
+      (await db.from("dua_category_map").update({ sort_order: so }).eq("dua_id", row.dua_id).eq("category_id", row.category_id)) as unknown as Res<null>
     );
 }
 
@@ -170,7 +170,7 @@ export type CategoryDuaRow = Pick<MappingRow, "dua_id" | "category_id" | "sort_o
 export async function categoryDuas(categoryId: string): Promise<CategoryDuaRow[]> {
   return fetchAll<CategoryDuaRow>(
     () =>
-      supabase
+      db
         .from("dua_category_map")
         .select("dua_id,category_id,sort_order,context_title,duas(id,slug,title,status)")
         .eq("category_id", categoryId)
@@ -180,11 +180,11 @@ export async function categoryDuas(categoryId: string): Promise<CategoryDuaRow[]
 }
 
 export async function removeFromCategory(duaId: string, categoryId: string): Promise<void> {
-  unwrap((await supabase.from("dua_category_map").delete().eq("dua_id", duaId).eq("category_id", categoryId)) as unknown as Res<null>);
+  unwrap((await db.from("dua_category_map").delete().eq("dua_id", duaId).eq("category_id", categoryId)) as unknown as Res<null>);
 }
 
 export async function addToCategory(duaId: string, categoryId: string, sortOrder: number): Promise<void> {
-  unwrap((await supabase.from("dua_category_map").insert({ dua_id: duaId, category_id: categoryId, sort_order: sortOrder })) as unknown as Res<null>);
+  unwrap((await db.from("dua_category_map").insert({ dua_id: duaId, category_id: categoryId, sort_order: sortOrder })) as unknown as Res<null>);
 }
 
 export type DuaPick = { id: string; slug: string; title: string; status: string };
@@ -192,7 +192,7 @@ export type DuaPick = { id: string; slug: string; title: string; status: string 
 export async function searchDuasByTitleOrSlug(term: string): Promise<DuaPick[]> {
   const like = pgQuote(`%${escapeLike(term.trim())}%`);
   return unwrap(
-    (await supabase.from("duas").select("id,slug,title,status").or(`title.ilike.${like},slug.ilike.${like}`).order("title").limit(20)) as unknown as Res<DuaPick[]>
+    (await db.from("duas").select("id,slug,title,status").or(`title.ilike.${like},slug.ilike.${like}`).order("title").limit(20)) as unknown as Res<DuaPick[]>
   ).data;
 }
 
@@ -215,19 +215,19 @@ export async function listDuas(p: ListParams): Promise<{ rows: DuaListRow[]; tot
   const asc = p.dir === "asc";
   if (p.uncategorised) {
     const [ids, mapped] = await Promise.all([
-      fetchAll<{ id: string }>(() => supabase.from("duas").select("id").order("id") as unknown as Rangeable<{ id: string }>),
-      fetchAll<{ dua_id: string }>(() => supabase.from("dua_category_map").select("dua_id").order("dua_id") as unknown as Rangeable<{ dua_id: string }>),
+      fetchAll<{ id: string }>(() => db.from("duas").select("id").order("id") as unknown as Rangeable<{ id: string }>),
+      fetchAll<{ dua_id: string }>(() => db.from("dua_category_map").select("dua_id").order("dua_id") as unknown as Rangeable<{ dua_id: string }>),
     ]);
     const m = new Set(mapped.map((r) => r.dua_id));
     const un = ids.map((r) => r.id).filter((id) => !m.has(id));
     const slice = un.slice((p.page - 1) * PAGE_SIZE, p.page * PAGE_SIZE);
     const rows = slice.length
-      ? unwrap((await supabase.from("duas").select(LIST_COLS).in("id", slice).order(p.sort, { ascending: asc })) as unknown as Res<DuaListRow[]>).data
+      ? unwrap((await db.from("duas").select(LIST_COLS).in("id", slice).order(p.sort, { ascending: asc })) as unknown as Res<DuaListRow[]>).data
       : [];
     return { rows, total: un.length };
   }
   const embed = p.category ? ",dua_category_map!inner(category_id)" : "";
-  let q = supabase.from("duas").select(LIST_COLS + embed, { count: "exact" });
+  let q = db.from("duas").select(LIST_COLS + embed, { count: "exact" });
   if (p.category) q = q.eq("dua_category_map.category_id", p.category);
   if (p.status) q = q.eq("status", p.status);
   if (p.verification) q = q.eq("verification_status", p.verification);
@@ -252,11 +252,11 @@ export async function listDuas(p: ListParams): Promise<{ rows: DuaListRow[]; tot
 }
 
 export async function getDua(id: string): Promise<DuaRow | null> {
-  return unwrap((await supabase.from("duas").select("*").eq("id", id).maybeSingle()) as unknown as Res<DuaRow>).data;
+  return unwrap((await db.from("duas").select("*").eq("id", id).maybeSingle()) as unknown as Res<DuaRow>).data;
 }
 
 export async function getDuaMappings(duaId: string): Promise<MappingRow[]> {
-  return unwrap((await supabase.from("dua_category_map").select("*").eq("dua_id", duaId)) as unknown as Res<MappingRow[]>).data;
+  return unwrap((await db.from("dua_category_map").select("*").eq("dua_id", duaId)) as unknown as Res<MappingRow[]>).data;
 }
 
 export type DupMatch = { id: string; slug: string; title: string; status: string; source_reference: string | null; why: string };
@@ -267,12 +267,12 @@ export async function findDuplicates(data: { arabic: string; title: string; sour
     rows.forEach((r) => found.set(r.id, { ...r, why: found.has(r.id) ? `${found.get(r.id)!.why}; ${why}` : why }));
   const n = normalizeArabic(data.arabic);
   if (n) {
-    let q = supabase.from("duas").select("id,slug,title,status,source_reference").eq("arabic_normalized", n);
+    let q = db.from("duas").select("id,slug,title,status,source_reference").eq("arabic_normalized", n);
     if (selfId) q = q.neq("id", selfId);
     add(unwrap((await q) as unknown as Res<Omit<DupMatch, "why">[]>).data, "same Arabic text");
   }
   if (data.source_reference && data.title) {
-    let q = supabase.from("duas").select("id,slug,title,status,source_reference").eq("source_reference", data.source_reference).eq("title", data.title);
+    let q = db.from("duas").select("id,slug,title,status,source_reference").eq("source_reference", data.source_reference).eq("title", data.title);
     if (selfId) q = q.neq("id", selfId);
     add(unwrap((await q) as unknown as Res<Omit<DupMatch, "why">[]>).data, "same title and source reference");
   }
@@ -280,19 +280,19 @@ export async function findDuplicates(data: { arabic: string; title: string; sour
 }
 
 export async function insertDua(data: Record<string, unknown>): Promise<string> {
-  return unwrap((await supabase.from("duas").insert(data).select("id").single()) as unknown as Res<{ id: string }>).data.id;
+  return unwrap((await db.from("duas").insert(data).select("id").single()) as unknown as Res<{ id: string }>).data.id;
 }
 
 /** Optimistic-concurrency update. Returns false when the row changed/vanished since it was loaded. */
 export async function updateDua(id: string, loadedUpdatedAt: string, data: Record<string, unknown>): Promise<boolean> {
   const { data: row } = unwrap(
-    (await supabase.from("duas").update(data).eq("id", id).eq("updated_at", loadedUpdatedAt).select("id").maybeSingle()) as unknown as Res<{ id: string }>
+    (await db.from("duas").update(data).eq("id", id).eq("updated_at", loadedUpdatedAt).select("id").maybeSingle()) as unknown as Res<{ id: string }>
   );
   return !!row;
 }
 
 export async function deleteDua(id: string): Promise<void> {
-  unwrap((await supabase.from("duas").delete().eq("id", id)) as unknown as Res<null>);
+  unwrap((await db.from("duas").delete().eq("id", id)) as unknown as Res<null>);
 }
 
 /** Apply category assignment changes; returns per-category failure messages. */
@@ -307,9 +307,9 @@ export async function reconcileMappings(
     const row = mapToRow(m);
     const init = initial.get(cid);
     try {
-      if (!init) unwrap((await supabase.from("dua_category_map").insert({ dua_id: duaId, category_id: cid, ...row })) as unknown as Res<null>);
+      if (!init) unwrap((await db.from("dua_category_map").insert({ dua_id: duaId, category_id: cid, ...row })) as unknown as Res<null>);
       else if (JSON.stringify(mapToRow(init)) !== JSON.stringify(row)) {
-        unwrap((await supabase.from("dua_category_map").update(row).eq("dua_id", duaId).eq("category_id", cid)) as unknown as Res<null>);
+        unwrap((await db.from("dua_category_map").update(row).eq("dua_id", duaId).eq("category_id", cid)) as unknown as Res<null>);
       }
     } catch (e) {
       failures.push(`${labelOf(cid)}: ${errText(e)}`);
@@ -346,7 +346,7 @@ export async function loadDashboard(): Promise<DashboardData> {
     const res = (await (apply(base()) as PromiseLike<Res<null>>)) as Res<null>;
     return unwrap(res).count ?? 0;
   };
-  const base = () => supabase.from("duas").select("id", { count: "exact", head: true });
+  const base = () => db.from("duas").select("id", { count: "exact", head: true });
   const cols = "id,slug,title,status,verification_status,updated_at,created_at";
   const [total, draft, review, published, archived, noArabic, cats, updated, added, attention, mapRows, idRows] = await Promise.all([
     count((q) => q),
@@ -355,17 +355,17 @@ export async function loadDashboard(): Promise<DashboardData> {
     count((q) => q.eq("status", "published")),
     count((q) => q.eq("status", "archived")),
     count((q) => q.eq("arabic", "")),
-    supabase.from("dua_categories").select("id,is_active") as unknown as Promise<Res<{ id: string; is_active: boolean }[]>>,
-    supabase.from("duas").select(cols).order("updated_at", { ascending: false }).limit(10) as unknown as Promise<Res<DuaListRow[]>>,
-    supabase.from("duas").select(cols).order("created_at", { ascending: false }).limit(10) as unknown as Promise<Res<DuaListRow[]>>,
-    supabase
+    db.from("dua_categories").select("id,is_active") as unknown as Promise<Res<{ id: string; is_active: boolean }[]>>,
+    db.from("duas").select(cols).order("updated_at", { ascending: false }).limit(10) as unknown as Promise<Res<DuaListRow[]>>,
+    db.from("duas").select(cols).order("created_at", { ascending: false }).limit(10) as unknown as Promise<Res<DuaListRow[]>>,
+    db
       .from("duas")
       .select(cols)
       .or("status.eq.review,verification_status.eq.needs_review")
       .order("updated_at", { ascending: false })
       .limit(50) as unknown as Promise<Res<DuaListRow[]>>,
-    fetchAll<{ dua_id: string }>(() => supabase.from("dua_category_map").select("dua_id").order("dua_id") as unknown as Rangeable<{ dua_id: string }>),
-    fetchAll<{ id: string }>(() => supabase.from("duas").select("id").order("id") as unknown as Rangeable<{ id: string }>),
+    fetchAll<{ dua_id: string }>(() => db.from("dua_category_map").select("dua_id").order("dua_id") as unknown as Rangeable<{ dua_id: string }>),
+    fetchAll<{ id: string }>(() => db.from("duas").select("id").order("id") as unknown as Rangeable<{ id: string }>),
   ]);
   const catRows = unwrap(cats).data;
   const mapped = new Set(mapRows.map((r) => r.dua_id));
@@ -382,7 +382,7 @@ export async function loadDashboard(): Promise<DashboardData> {
 // ------------------------------------------------------------------ history
 export async function fetchHistory(opts: { entity?: "dua" | "category"; entityId?: string; limit?: number }): Promise<AuditRow[]> {
   const { entity, entityId, limit = 100 } = opts;
-  let q = supabase.from("dua_audit_log").select("*").order("changed_at", { ascending: false }).order("id", { ascending: false }).limit(limit);
+  let q = db.from("dua_audit_log").select("*").order("changed_at", { ascending: false }).order("id", { ascending: false }).limit(limit);
   if (entity === "dua") {
     q = q.or(`and(entity.eq.dua,entity_id.eq.${entityId}),and(entity.eq.mapping,entity_id.like.${entityId}:*)`);
   } else if (entity === "category") {
@@ -396,16 +396,16 @@ export async function restoreFromAudit(entry: AuditRow, fields: Record<string, u
   const entity = entry.entity;
   const table = entity === "dua" ? "duas" : entity === "mapping" ? "dua_category_map" : "dua_categories";
   if (entry.action === "delete") {
-    unwrap((await supabase.from(table).insert(fields)) as unknown as Res<null>);
+    unwrap((await db.from(table).insert(fields)) as unknown as Res<null>);
     return;
   }
   if (entity === "mapping") {
     const { data } = unwrap(
-      (await supabase.from(table).update(fields).eq("dua_id", fields.dua_id as string).eq("category_id", fields.category_id as string).select("dua_id")) as unknown as Res<unknown[]>
+      (await db.from(table).update(fields).eq("dua_id", fields.dua_id as string).eq("category_id", fields.category_id as string).select("dua_id")) as unknown as Res<unknown[]>
     );
     if (!data.length) throw new Error('That assignment no longer exists; restore its "Deleted" entry instead.');
     return;
   }
-  const { data } = unwrap((await supabase.from(table).update(fields).eq("id", entry.entity_id).select("id")) as unknown as Res<unknown[]>);
+  const { data } = unwrap((await db.from(table).update(fields).eq("id", entry.entity_id).select("id")) as unknown as Res<unknown[]>);
   if (!data.length) throw new Error('That item no longer exists; restore its "Deleted" history entry instead.');
 }

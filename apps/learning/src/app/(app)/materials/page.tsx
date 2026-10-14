@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type ChangeEvent } from "react";
 import { useAuth } from "@/lib/authContext";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import {
   deleteLessonMaterial,
   formatFileSize,
@@ -33,8 +33,7 @@ export default function MaterialsPage() {
   const { showToast } = useToast();
   const isTutor = profile?.role === "tutor";
   // Admin/super_admin can manage every tutor's materials, not just their own
-  // (0018_admin_full_access.sql for the write side; storage read/list is
-  // already open to any authenticated user per 0011).
+  // (enforced in worker/api/policies.js and worker/api/storage.js).
   const canManage = isTutor || isAdminRole(profile?.role);
 
   const [tab, setTab] = useState<"mine" | "drive">("mine");
@@ -52,14 +51,14 @@ export default function MaterialsPage() {
     if (!profile) return;
     const [stored, { data: lessonRows }] = await Promise.all([
       canManage && !isTutor ? listAllLessonMaterials() : listLessonMaterials(profile.id),
-      supabase.from("lessons").select("*").order("lesson_date", { ascending: false }),
+      db.from("lessons").select("*").order("lesson_date", { ascending: false }),
     ]);
     setFiles(stored);
     const lessonList = (lessonRows ?? []) as Lesson[];
     setLessons(lessonList);
     const studentIds = Array.from(new Set(lessonList.map((l) => l.student_id)));
     if (studentIds.length > 0) {
-      const { data: userRows } = await supabase.from("users").select("*").in("id", studentIds);
+      const { data: userRows } = await db.from("users").select("*").in("id", studentIds);
       setStudentsById(new Map(((userRows ?? []) as AppUser[]).map((u) => [u.id, u])));
     }
     setLoading(false);
@@ -103,7 +102,7 @@ export default function MaterialsPage() {
 
   async function handleAttach() {
     if (!attachTarget || !attachLessonId) return;
-    const { error } = await supabase.from("lesson_materials").insert({
+    const { error } = await db.from("lesson_materials").insert({
       lesson_id: attachLessonId,
       storage_path: attachTarget.path,
       material_type: "pdf",

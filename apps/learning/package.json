@@ -15,19 +15,21 @@
     "test:duas": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test src/lib/duas/*.test.ts",
     "seed:admins": "node --env-file=.env.local scripts/seed-admin-accounts.mjs",
     "seed:surah-lessons": "node --env-file=.env.local scripts/seed-surah-lessons.mjs",
-    "migrate:storage-to-r2": "node --env-file=.env.local scripts/migrate-storage-to-r2.mjs",
     "build:cf": "node scripts/build-cf.mjs",
-    "test:worker": "node --test worker/*.test.mjs"
+    "test:worker": "node --test worker/*.test.mjs worker/api/*.test.mjs",
+    "dev:api": "node scripts/ensure-dist.mjs && wrangler dev --port 8787",
+    "db:migrate:local": "wrangler d1 migrations apply iqraspace-learning --local",
+    "migrate:check": "node --env-file=.env.local scripts/migrate-from-supabase.mjs check",
+    "migrate:export": "node --env-file=.env.local scripts/migrate-from-supabase.mjs export",
+    "migrate:sql": "node --env-file=.env.local scripts/migrate-from-supabase.mjs sql"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.112.4",
     "next": "16.3.3",
     "pdfjs-dist": "^6.3.289",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "^3.700.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -35,6 +37,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.3",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.151.0"
   }
 }

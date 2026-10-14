@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/lib/authContext";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import type { AppUser, ClassMember, ClassRow, Lesson, LessonProgress } from "@/lib/types";
 import { isAdminRole } from "@/lib/roles";
 import { Card, Eyebrow, SectionHead } from "@/components/ui/Card";
@@ -21,7 +21,7 @@ export default function ProgressPage() {
   const { showToast } = useToast();
   const isTutor = profile?.role === "tutor";
   // Admin/super_admin see and manage every tutor's students, not just their
-  // own — see the classesQuery branch below (0018_admin_full_access.sql).
+  // own — see the classesQuery branch below (worker/api/policies.js).
   const canManage = isTutor || isAdminRole(profile?.role);
 
   const [students, setStudents] = useState<AppUser[]>([]);
@@ -41,7 +41,7 @@ export default function ProgressPage() {
       return;
     }
 
-    const classesQuery = supabase.from("classes").select("*");
+    const classesQuery = db.from("classes").select("*");
     const { data: classRows } = await (isTutor ? classesQuery.eq("tutor_id", profile.id) : classesQuery);
     const classes = (classRows ?? []) as ClassRow[];
     if (classes.length === 0) {
@@ -50,8 +50,8 @@ export default function ProgressPage() {
     }
     const classIds = classes.map((c) => c.id);
     const [{ data: memberRows }, { data: lessonRows }] = await Promise.all([
-      supabase.from("class_members").select("*").in("class_id", classIds),
-      supabase.from("lessons").select("*").in("class_id", classIds),
+      db.from("class_members").select("*").in("class_id", classIds),
+      db.from("lessons").select("*").in("class_id", classIds),
     ]);
     setLessons((lessonRows ?? []) as Lesson[]);
     const members = (memberRows ?? []) as ClassMember[];
@@ -61,7 +61,7 @@ export default function ProgressPage() {
       setLoading(false);
       return;
     }
-    const { data: userRows } = await supabase.from("users").select("*").in("id", studentIds);
+    const { data: userRows } = await db.from("users").select("*").in("id", studentIds);
     const rows = (userRows ?? []) as AppUser[];
     setStudents(rows);
     setSelected((prev) => prev || rows[0]?.id || "");
@@ -75,7 +75,7 @@ export default function ProgressPage() {
 
   useEffect(() => {
     if (!selected) return;
-    supabase
+    db
       .from("lesson_progress")
       .select("*")
       .eq("student_id", selected)
@@ -203,7 +203,7 @@ export default function ProgressPage() {
               onSaved={() => {
                 showToast("Progress saved");
                 load();
-                supabase
+                db
                   .from("lesson_progress")
                   .select("*")
                   .eq("student_id", selected)
@@ -238,7 +238,7 @@ function AddProgressForm({
   async function handleSave() {
     if (!lessonId) return;
     setSaving(true);
-    const { error } = await supabase.from("lesson_progress").insert({
+    const { error } = await db.from("lesson_progress").insert({
       lesson_id: lessonId,
       student_id: studentId,
       recitation_score: recitation,

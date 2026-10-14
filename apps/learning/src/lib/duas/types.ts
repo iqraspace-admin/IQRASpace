@@ -1,4 +1,4 @@
-// Row shapes for the Duas tables (supabase/migrations/0025_duas_schema.sql).
+// Row shapes for the Duas tables (d1/migrations/0001_init.sql).
 // Erasable TypeScript only — this file is imported by node-test-run modules.
 
 export const STATUSES = ["draft", "review", "published", "archived"] as const;

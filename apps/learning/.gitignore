@@ -53,3 +53,8 @@ next-env.d.ts
 # cloudflare
 /dist/
 .wrangler/
+
+# Supabase -> D1 data migration output (personal data; never commit)
+/.migration/
+# wrangler local state
+/.wrangler/

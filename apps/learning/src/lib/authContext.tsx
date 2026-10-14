@@ -7,14 +7,13 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import type { Session } from "@supabase/supabase-js";
-import { supabase } from "./supabaseClient";
+import { db, type Session } from "./db";
 import type { AppUser } from "./types";
 
 type AuthState = {
   session: Session | null;
   profile: AppUser | null;
-  /** true until the initial session check + profile fetch resolve */
+  /** true until the initial session check resolves */
   loading: boolean;
 };
 
@@ -26,54 +25,25 @@ const AuthContext = createContext<AuthState>({
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
-  const [profile, setProfile] = useState<AppUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let active = true;
 
-    async function loadProfile(userId: string) {
-      const { data } = await supabase
-        .from("users")
-        .select("*")
-        .eq("id", userId)
-        .single();
-      if (active) setProfile((data as AppUser) ?? null);
-    }
-
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
+    // Validates the stored token against the server (GET /auth/session)
+    // rather than trusting localStorage — a revoked session (password reset,
+    // account deactivated, signed out elsewhere) comes back as null here.
+    // The same call returns the profile row, so there's no second fetch.
+    db.auth.getSession().then((s) => {
       if (!active) return;
-      if (!session) {
-        setLoading(false);
-        return;
-      }
-      // Validate the stored session against the server rather than just
-      // trusting whatever's sitting in localStorage — closes the window
-      // where a revoked session (password changed, admin-forced sign-out)
-      // would otherwise still "look" authenticated purely from a
-      // locally-cached, not-yet-expired access token.
-      const { data: userData, error: userError } = await supabase.auth.getUser();
-      if (!active) return;
-      if (userError || !userData.user) {
-        await supabase.auth.signOut();
-        if (active) setLoading(false);
-        return;
-      }
-      setSession(session);
-      await loadProfile(session.user.id);
-      if (active) setLoading(false);
+      setSession(s);
+      setLoading(false);
     });
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!active) return;
-      setSession(session);
-      if (session?.user) {
-        loadProfile(session.user.id);
-      } else {
-        setProfile(null);
-      }
+    } = db.auth.onAuthStateChange((_event, s) => {
+      if (active) setSession(s);
     });
 
     return () => {
@@ -81,6 +51,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       subscription.unsubscribe();
     };
   }, []);
+
+  const profile = (session?.user as AppUser | undefined) ?? null;
 
   return (
     <AuthContext.Provider value={{ session, profile, loading }}>

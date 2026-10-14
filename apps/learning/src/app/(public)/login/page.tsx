@@ -3,7 +3,7 @@
 import { useEffect, useState, type SubmitEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import { landingPathForRole } from "@/lib/roles";
 import { useAuth } from "@/lib/authContext";
 import { Button } from "@/components/ui/Button";
@@ -33,42 +33,29 @@ export default function LoginPage() {
     setError(null);
     setSubmitting(true);
 
-    // Username-based login (0019_username_auth.sql): resolve the username to
-    // whatever email Supabase Auth actually has on file for that account
-    // (real, or a synthetic one if none was given at signup) via a narrow,
-    // anon-callable RPC that only ever returns that one technical value —
-    // then sign in with it exactly like before. A generic "invalid" message
-    // covers both "no such username" and "wrong password", same as any
-    // normal login form, so this doesn't leak which usernames exist.
-    const { data: authEmail, error: lookupError } = await supabase.rpc("get_auth_email_for_username", {
-      p_username: username,
-    });
-    if (lookupError || !authEmail) {
-      setSubmitting(false);
-      setError("Invalid username or password.");
-      return;
-    }
-
-    const { data, error } = await supabase.auth.signInWithPassword({ email: authEmail, password });
-    if (error) {
-      setSubmitting(false);
-      setError("Invalid username or password.");
+    // Username + password straight to the Learning API (worker/api/auth.js).
+    // A generic "invalid" message covers both "no such username" and "wrong
+    // password", same as any normal login form, so this doesn't leak which
+    // usernames exist. Deactivated accounts are refused too.
+    const { session: newSession, error } = await db.auth.signIn(username.trim(), password);
+    setSubmitting(false);
+    if (error || !newSession) {
+      setError(
+        error?.code === "user_banned"
+          ? "This account has been deactivated."
+          : error?.code === "over_request_rate_limit"
+            ? error.message
+            : "Invalid username or password."
+      );
       return;
     }
 
     // Role-based redirect (architecture §5 step "Tutor Login -> Dashboard").
     // Tutor/student/guardian land on /dashboard, which renders different
-    // content per role internally. admin/super_admin (0017_admin_super_admin_
-    // roles.sql) land on /admin instead, purely as a landing-page default —
-    // every other route is fully reachable and functional for them too
-    // (0018_admin_full_access.sql), so nothing else redirects them away.
-    const { data: profileRow } = await supabase
-      .from("users")
-      .select("role")
-      .eq("id", data.user!.id)
-      .single();
-    setSubmitting(false);
-    router.push(landingPathForRole(profileRow?.role));
+    // content per role internally. admin/super_admin land on /admin instead,
+    // purely as a landing-page default — every other route is fully reachable
+    // and functional for them too, so nothing else redirects them away.
+    router.push(landingPathForRole(newSession.user.role));
   }
 
   return (

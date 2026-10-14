@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState, type SubmitEvent } from "react";
 import { useAuth } from "@/lib/authContext";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import type { AppUser, ClassMember, ClassRow } from "@/lib/types";
 import { isAdminRole } from "@/lib/roles";
 import { Card, Eyebrow } from "@/components/ui/Card";
@@ -16,7 +16,7 @@ import { TutorPicker } from "@/components/admin/TutorPicker";
 export default function ClassesPage() {
   const { profile } = useAuth();
   const isTutor = profile?.role === "tutor";
-  // Admin/super_admin can manage every tutor's classes (0018_admin_full_access.sql).
+  // Admin/super_admin can manage every tutor's classes (worker/api/policies.js).
   const canManage = isTutor || isAdminRole(profile?.role);
 
   const [classes, setClasses] = useState<ClassRow[]>([]);
@@ -33,7 +33,7 @@ export default function ClassesPage() {
   const [addStudentError, setAddStudentError] = useState<Record<string, string>>({});
 
   const load = useCallback(async () => {
-    const { data: classRows, error: classError } = await supabase
+    const { data: classRows, error: classError } = await db
       .from("classes")
       .select("*")
       .order("created_at", { ascending: false });
@@ -48,13 +48,13 @@ export default function ClassesPage() {
 
     if (classRows && classRows.length > 0) {
       const classIds = classRows.map((c) => c.id);
-      const { data: memberRows } = await supabase.from("class_members").select("*").in("class_id", classIds);
+      const { data: memberRows } = await db.from("class_members").select("*").in("class_id", classIds);
 
       const studentIds = Array.from(new Set((memberRows ?? []).map((m: ClassMember) => m.student_id)));
 
       let studentUsers: AppUser[] = [];
       if (studentIds.length > 0) {
-        const { data: userRows } = await supabase.from("users").select("*").in("id", studentIds);
+        const { data: userRows } = await db.from("users").select("*").in("id", studentIds);
         studentUsers = userRows ?? [];
       }
 
@@ -73,7 +73,7 @@ export default function ClassesPage() {
   }, []);
 
   useEffect(() => {
-    // Fetch-on-mount via the browser Supabase client — the accepted MVP
+    // Fetch-on-mount via the browser API client (lib/db.ts) — the accepted MVP
     // pattern here (see docs/PROGRESS.md Phase 1 notes); revisit with
     // Server Components or a fetching library if this grows past Phase 1.
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -89,7 +89,7 @@ export default function ClassesPage() {
       return;
     }
     setCreating(true);
-    const { error } = await supabase.from("classes").insert({ tutor_id: tutorId, name: newClassName });
+    const { error } = await db.from("classes").insert({ tutor_id: tutorId, name: newClassName });
     setCreating(false);
     if (error) {
       setError(error.message);
@@ -101,7 +101,7 @@ export default function ClassesPage() {
 
   async function handleDeleteClass(classId: string) {
     if (!confirm("Delete this class? This also removes its lessons and roster.")) return;
-    const { error } = await supabase.from("classes").delete().eq("id", classId);
+    const { error } = await db.from("classes").delete().eq("id", classId);
     if (error) {
       setError(error.message);
       return;
@@ -114,9 +114,9 @@ export default function ClassesPage() {
     const username = addStudentUsername[classId]?.trim();
     if (!username) return;
     setAddStudentError((prev) => ({ ...prev, [classId]: "" }));
-    // Username, not email (0019_username_auth.sql) — a student may have no
+    // Username, not email (worker/api/auth.js) — a student may have no
     // email at all.
-    const { error } = await supabase.rpc("add_student_to_class", {
+    const { error } = await db.rpc("add_student_to_class", {
       p_class_id: classId,
       p_student_username: username,
     });
@@ -129,7 +129,7 @@ export default function ClassesPage() {
   }
 
   async function handleRemoveStudent(classId: string, studentId: string) {
-    const { error } = await supabase.from("class_members").delete().eq("class_id", classId).eq("student_id", studentId);
+    const { error } = await db.from("class_members").delete().eq("class_id", classId).eq("student_id", studentId);
     if (error) {
       setError(error.message);
       return;

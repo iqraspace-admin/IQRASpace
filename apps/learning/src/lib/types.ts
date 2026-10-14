@@ -1,22 +1,18 @@
-// Domain types mirroring supabase/migrations/*.sql (architecture §13 + the
-// expanded Phase 1 migrations 0005-0011, see docs/PROGRESS.md).
-// Kept hand-written rather than generated (`supabase gen types`) for Phase 1 —
-// worth switching to generated types once the schema stabilizes past Phase 1.
+// Domain types mirroring d1/migrations/*.sql (architecture §13 + later
+// additions). Kept hand-written; worker/api/schema.js is the API-side mirror.
 
-// 'admin'/'super_admin' added in 0017_admin_super_admin_roles.sql — never
-// grantable via public signup (see that migration's handle_new_user() fix);
+// 'admin'/'super_admin' are changed only via worker/api/rpc.js (set_user_role) —
+// never grantable via public signup (worker/api/auth.js);
 // provisioned only via `npm run seed:admins` (scripts/seed-admin-accounts.mjs).
 // See src/lib/roles.ts for the permission split between the two.
 export type Role = "tutor" | "student" | "guardian" | "admin" | "super_admin";
 
 export type AppUser = {
   id: string;
-  /** Login identifier (0019_username_auth.sql) — required, unique. */
+  /** Login identifier — required, unique. */
   username: string;
-  /** Optional contact email — unrelated to how the account authenticates.
-   * Never `select("*")` this into a login flow; see lib/username.ts's
-   * `auth_email` note for the technical (real-or-synthetic) Auth identifier,
-   * which never leaves the server except via get_auth_email_for_username(). */
+  /** Optional contact email — unrelated to how the account authenticates
+   * (login is username + password). */
   email: string | null;
   phone: string | null;
   full_name: string;
@@ -63,9 +59,9 @@ export type LessonStatus = "scheduled" | "active" | "completed" | "cancelled";
 
 export type Lesson = {
   id: string;
-  /** The one student this one-to-one session is with (0023_student_based_scheduling.sql)
+  /** The one student this one-to-one session is with (d1/migrations/0001_init.sql)
    * — the schedule's primary shape. `class_id`/`tutor_id` are auto-derived
-   * from this student, kept only so existing RLS/attendance/materials keep
+   * from this student, kept only so existing access-policy/attendance/materials keep
    * working unchanged — never chosen independently in the UI. */
   student_id: string;
   class_id: string;
@@ -89,7 +85,7 @@ export type Lesson = {
  * materialized into concrete `Lesson` rows up front by
  * lib/recurringSessions.ts's generateSessionsForRule(), not by a
  * cron/background job. `class_id` is carried for the same reason as on
- * `Lesson` — reuse of existing class-scoped RLS, never chosen independently. */
+ * `Lesson` — reuse of existing class-scoped access policies, never chosen independently. */
 export type RecurringSessionRule = {
   id: string;
   tutor_id: string;
@@ -191,9 +187,9 @@ export type HighlightedContent = {
 
 /**
  * Universal Lesson Plan (curriculum), separate from class/session scheduling
- * (see supabase/migrations/0013-0016, 0021 and the Lesson Library redesign).
+ * (see d1/migrations/0001_init.sql and the Lesson Library redesign).
  * A plan is a reusable, ordered sequence of lessons — NOT owned by any one
- * tutor (0021_universal_lesson_plans.sql removed `tutor_id`) — that any
+ * tutor (worker/api/policies.js removed `tutor_id`) — that any
  * number of classes (each still owned by its own tutor) can be assigned to
  * via ClassLessonPlan. Curriculum editing (create/edit/reorder/delete) is
  * admin/super_admin only; any tutor can read the whole catalog.

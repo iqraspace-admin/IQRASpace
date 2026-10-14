@@ -3,7 +3,19 @@
 
 > **Freshness note:** Free-tier limits and OAuth policies for Google, Supabase, Vercel, Netlify, Cloudflare, and Firebase change fairly often. The figures in this document reflect my knowledge as of early 2026. Before you commit to a platform, re-check its current pricing/limits page — I've flagged the numbers most likely to drift, and the ToS clauses (e.g. Vercel's Hobby-plan restriction) that matter most for a paid tutoring service.
 
-> **Historical note (2026):** this document is the original architecture study. Hosting has since moved from Vercel to Cloudflare Workers (one Worker per app on the `iqraspace.org` zone); the Vercel/Netlify comparison below is kept for history only. See `DEPLOYMENT.md` for the current setup.
+> **HISTORICAL DOCUMENT — not the current architecture.** This is the original planning study for `apps/learning` (written before the monorepo existed). The implementation is the source of truth; see [`apps/learning/BACKEND.md`](apps/learning/BACKEND.md) (backend), `DEPLOYMENT.md` (hosting/CI), `README.md` (Learning setup) and `docs/PROGRESS.md` (build log).
+>
+> **The backend has since moved off Supabase entirely, to Cloudflare.** Everything below that describes Supabase (Postgres + RLS, Auth, Realtime, Storage, Edge Functions, the Supabase CLI and the `supabase/` folder) is the original plan, not how the app runs today. Known deviations (updated 2026-10-14):
+>
+> - **Hosting:** the recommended Cloudflare Pages/Netlify option and the Next.js API-routes option were not used as written. Production is **Cloudflare Workers Static Assets** (Worker `iqraspace-learning`, route `iqraspace.org/learning*`). The UI is a Next.js **static export** with `basePath` `/learning` — no Next.js server, API routes or middleware. It lives in `apps/learning`, not the repo root.
+> - **Backend:** the same Worker serves the API at `/learning/api/*` (`worker/api/`): **Cloudflare D1** for data (schema in `apps/learning/d1/migrations`, applied manually with `npx wrangler d1 migrations apply iqraspace-learning --remote`), a **Durable Object** (`LessonRoom`) for the live Teach → Share sync instead of a realtime channel, and Worker endpoints instead of Edge Functions (e.g. `/admin/users`). There is no row-level security: access rules (§16) are enforced by the Worker (`worker/api/policies.js`, with `schema.js`, `query.js`, `hooks.js`). The browser client is `src/lib/db.ts`.
+> - **Auth:** **username + password** (PBKDF2) with bearer-token sessions stored in D1 — no Google sign-in. Roles include `admin` and `super_admin` (§4 lists only tutor/student/guardian).
+> - **File storage:** lesson PDFs are in a private **Cloudflare R2** bucket (Worker binding `MATERIALS`). The Drive/Calendar integration (§8) is not active (no Google OAuth client; its server-side token exchange would need to be built in the Worker), and Meet uses manual links.
+> - **Router:** App Router (`app/…/page.tsx`), not the Pages Router files shown in §19.
+> - **Added scope not in this document:** the Duas admin (`/admin/duas`) that publishes supplications to the website and the Flutter app (public feed `GET /learning/api/duas/content`), and the Admin dashboard / user management screens.
+> - **Phasing:** Phases 1–5 were collapsed into one pass (see `docs/PROGRESS.md`); §19 (repo layout), §20 and §21 (deployment steps) are superseded by `README.md`, `apps/learning/BACKEND.md` and `DEPLOYMENT.md`.
+>
+> The platform comparison and cost tables below are kept for history only.
 
 ---
 
@@ -426,6 +438,8 @@ erDiagram
 
 ## 13. Database Schema (PostgreSQL DDL)
 
+> **Historical:** the live schema is SQLite on Cloudflare D1, in `apps/learning/d1/migrations/`.
+
 ```sql
 -- Core identity
 CREATE TABLE users (
@@ -562,6 +576,8 @@ Row Level Security (RLS) policies (Supabase/Postgres) should be layered on top o
 
 ## 14. Recommended Technology Stack
 
+> **Note:** this table is as planned. Actual hosting is Cloudflare Workers Static Assets, and the backend/realtime/auth rows are now the Worker API on Cloudflare D1, R2 and a Durable Object (see the banner at the top).
+
 | Layer | Choice | Why |
 |---|---|---|
 | Frontend framework | **React (Next.js or Vite SPA)** | Best PDF.js community support, huge hiring pool, works cleanly with Supabase JS client |
@@ -594,6 +610,8 @@ Row Level Security (RLS) policies (Supabase/Postgres) should be layered on top o
 ---
 
 ## 16. Security & Privacy Model
+
+> **Historical:** D1 has no row-level security; the access rules described here are enforced by the Learning Worker (`apps/learning/worker/api/policies.js`). See `apps/learning/BACKEND.md`.
 
 - **Row Level Security (RLS)** on every Supabase table — students can only `SELECT` rows for classes they're members of; tutors are scoped to their own classes/lessons.
 - **OAuth tokens never touch the browser.** Google access/refresh tokens are exchanged and stored server-side (Edge Function + encrypted column), never exposed to client JS.
@@ -672,6 +690,8 @@ Students get almost no controls by design — the point is that the tutor drives
 
 ## 19. Folder / Project Structure
 
+> **Historical:** the actual layout is in `README.md` ("Project structure"); there is no `supabase/` folder or `supabaseClient.ts`.
+
 ```
 quranic-teacher/
 ├─ apps/
@@ -718,6 +738,8 @@ quranic-teacher/
 ---
 
 ## 21. Deployment Instructions (outline)
+
+> **Superseded — do not follow.** The steps below describe the originally planned Cloudflare Pages/Netlify + Supabase setup, none of which is used today. Current deployment (Cloudflare Workers, CI, rollback) is in `DEPLOYMENT.md`; database setup and migrations (Cloudflare D1) are in `apps/learning/BACKEND.md`.
 
 1. Create a Supabase project (free tier) → run the migrations from §13 → enable Row Level Security and write policies per §16.
 2. In Supabase Auth settings, enable Email and Google providers; for Google, create OAuth credentials in Google Cloud Console (no Workspace needed) and add the redirect URI Supabase gives you.

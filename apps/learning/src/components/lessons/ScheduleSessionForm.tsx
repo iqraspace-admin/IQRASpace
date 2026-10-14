@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type SubmitEvent } from "react";
 import { useAuth } from "@/lib/authContext";
-import { supabase } from "@/lib/supabaseClient";
+import { db } from "@/lib/db";
 import { getManagedStudentRoster, type ManagedStudent } from "@/lib/roster";
 import { getStudentClassCurriculum } from "@/lib/curriculum";
 import { generateSessionsForRule } from "@/lib/recurringSessions";
@@ -62,7 +62,7 @@ export function ScheduleSessionForm({
       }
     });
     if (profile.role === "tutor") {
-      supabase
+      db
         .from("tutors")
         .select("default_lesson_duration_minutes")
         .eq("id", profile.id)
@@ -124,7 +124,7 @@ export function ScheduleSessionForm({
         showToast("Pick at least one day");
         return;
       }
-      const { data: rule, error } = await supabase
+      const { data: rule, error } = await db
         .from("recurring_session_rules")
         .insert({
           tutor_id: tutorId,
@@ -156,7 +156,7 @@ export function ScheduleSessionForm({
       return;
     }
 
-    const { data: lesson, error } = await supabase
+    const { data: lesson, error } = await db
       .from("lessons")
       .insert({
         student_id: studentId,
@@ -177,14 +177,14 @@ export function ScheduleSessionForm({
     }
 
     if (meetUrl.trim()) {
-      await supabase.from("meetings").insert({
+      await db.from("meetings").insert({
         lesson_id: lesson.id,
         meet_url: meetUrl.trim(),
         scheduled_start: startTime ? `${lessonDate}T${startTime}:00` : null,
       });
     }
     if (notes.trim()) {
-      await supabase.from("lesson_notes").insert({ lesson_id: lesson.id, note: notes.trim() });
+      await db.from("lesson_notes").insert({ lesson_id: lesson.id, note: notes.trim() });
     }
 
     await notifyUser({
