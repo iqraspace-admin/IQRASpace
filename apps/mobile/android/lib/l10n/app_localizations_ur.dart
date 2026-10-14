@@ -147,6 +147,39 @@ class AppLocalizationsUr extends AppLocalizations {
       'یہ آپ کی پسند کی گئی ہر دعا کو ہٹا دے گا۔ اسے واپس نہیں کیا جا سکتا۔';
 
   @override
+  String get supplicationsFontSizeLabel => 'متن کا سائز';
+
+  @override
+  String get supplicationsFontSizePreviewHint =>
+      'پیش منظر — دعاؤں اور زمروں کے ناموں پر لاگو ہوتا ہے';
+
+  @override
+  String get supplicationsFontSizeReset => 'ری سیٹ';
+
+  @override
+  String get supplicationsFontSizeDecrease => 'چھوٹا متن';
+
+  @override
+  String get supplicationsFontSizeIncrease => 'بڑا متن';
+
+  @override
+  String get supplicationsFontSizeTooltip => 'متن کا سائز';
+
+  @override
+  String get supplicationsFontSizePreviewArabic =>
+      'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ';
+
+  @override
+  String get supplicationsFontSizePreviewTranslit => 'الحمدللہ رب العالمین';
+
+  @override
+  String get supplicationsFontSizePreviewTranslation =>
+      'تمام تعریفیں اللہ کے لیے ہیں جو تمام جہانوں کا پالنے والا ہے۔';
+
+  @override
+  String get supplicationsFontSizePreviewCategory => 'صبح و شام';
+
+  @override
   String get supplicationsReadingSettingsTitle => 'پڑھنے کی ترتیبات';
 
   @override

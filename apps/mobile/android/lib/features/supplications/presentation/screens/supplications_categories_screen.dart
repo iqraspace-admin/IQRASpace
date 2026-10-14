@@ -1,3 +1,5 @@
+import 'dart:math' show max;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:quran_flutter/core/theme/app_theme.dart';
@@ -9,6 +11,7 @@ import 'package:quran_flutter/features/supplications/presentation/screens/dua_fa
 import 'package:quran_flutter/features/supplications/presentation/screens/dua_reading_screen.dart';
 import 'package:quran_flutter/features/supplications/presentation/widgets/dua_category_grid_tile.dart';
 import 'package:quran_flutter/features/supplications/presentation/widgets/dua_category_list_row.dart';
+import 'package:quran_flutter/features/supplications/presentation/widgets/dua_font_size_control.dart';
 import 'package:quran_flutter/features/supplications/presentation/widgets/supplications_info_sheet.dart';
 import 'package:quran_flutter/l10n/app_localizations.dart';
 
@@ -29,6 +32,7 @@ class SupplicationsCategoriesScreen extends ConsumerWidget {
     final content = ref.watch(supplicationsContentProvider);
     final viewMode = ref.watch(duaCategoryViewModeProvider);
     final appLanguage = ref.watch(appLanguageProvider);
+    final fontScale = ref.watch(duaFontScaleProvider);
     final l10n = AppLocalizations.of(context)!;
     final isGrid = viewMode == DuaCategoryViewMode.grid;
 
@@ -45,6 +49,11 @@ class SupplicationsCategoriesScreen extends ConsumerWidget {
           ],
         ),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.text_fields),
+            tooltip: l10n.supplicationsFontSizeTooltip,
+            onPressed: () => showDuaFontSizeSheet(context),
+          ),
           IconButton(
             icon: Icon(isGrid ? Icons.view_list_outlined : Icons.grid_view_outlined),
             tooltip: isGrid ? l10n.supplicationsListViewTooltip : l10n.supplicationsGridViewTooltip,
@@ -99,11 +108,15 @@ class SupplicationsCategoriesScreen extends ConsumerWidget {
                 ? GridView.builder(
                     physics: const AlwaysScrollableScrollPhysics(),
                     padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
-                      childAspectRatio: 1.05,
+                      mainAxisExtent: max(
+                        DuaCategoryGridTile.extentFor(context, fontScale),
+                        // never shorter than the original 1.05 aspect-ratio cell
+                        (MediaQuery.sizeOf(context).width - 42) / 2 / 1.05,
+                      ),
                     ),
                     itemCount: content.categories.length,
                     itemBuilder: (context, index) {
@@ -112,6 +125,7 @@ class SupplicationsCategoriesScreen extends ConsumerWidget {
                         category: category,
                         colors: colors,
                         appLanguage: appLanguage,
+                        fontScale: fontScale,
                         onTap: () => openCategory(category.id),
                       );
                     },
@@ -127,6 +141,7 @@ class SupplicationsCategoriesScreen extends ConsumerWidget {
                         category: category,
                         colors: colors,
                         appLanguage: appLanguage,
+                        fontScale: fontScale,
                         onTap: () => openCategory(category.id),
                       );
                     },

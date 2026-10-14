@@ -148,6 +148,40 @@ class AppLocalizationsTe extends AppLocalizations {
       'మీరు ఇష్టపడిన ప్రతి దుఆను ఇది తొలగిస్తుంది. దీన్ని వెనక్కి తీసుకోలేరు.';
 
   @override
+  String get supplicationsFontSizeLabel => 'అక్షరాల పరిమాణం';
+
+  @override
+  String get supplicationsFontSizePreviewHint =>
+      'ప్రివ్యూ — దుఆలు మరియు వర్గాల పేర్లకు వర్తిస్తుంది';
+
+  @override
+  String get supplicationsFontSizeReset => 'రీసెట్';
+
+  @override
+  String get supplicationsFontSizeDecrease => 'చిన్న అక్షరాలు';
+
+  @override
+  String get supplicationsFontSizeIncrease => 'పెద్ద అక్షరాలు';
+
+  @override
+  String get supplicationsFontSizeTooltip => 'అక్షరాల పరిమాణం';
+
+  @override
+  String get supplicationsFontSizePreviewArabic =>
+      'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ';
+
+  @override
+  String get supplicationsFontSizePreviewTranslit =>
+      'అల్హందులిల్లాహి రబ్బిల్ ఆలమీన్';
+
+  @override
+  String get supplicationsFontSizePreviewTranslation =>
+      'సర్వస్తోత్రాలు సర్వలోకాల ప్రభువైన అల్లాహ్‌కే.';
+
+  @override
+  String get supplicationsFontSizePreviewCategory => 'ఉదయం & సాయంత్రం';
+
+  @override
   String get supplicationsReadingSettingsTitle => 'పఠన సెట్టింగ్‌లు';
 
   @override

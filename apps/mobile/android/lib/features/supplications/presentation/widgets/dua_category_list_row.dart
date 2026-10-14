@@ -12,12 +12,14 @@ class DuaCategoryListRow extends StatelessWidget {
   final SupplicationCategory category;
   final ReaderColors colors;
   final AppLanguage appLanguage;
+  final double fontScale;
   final VoidCallback onTap;
 
   const DuaCategoryListRow({
     required this.category,
     required this.colors,
     required this.appLanguage,
+    required this.fontScale,
     required this.onTap,
     super.key,
   });
@@ -28,39 +30,56 @@ class DuaCategoryListRow extends StatelessWidget {
 
     return InkWell(
       onTap: onTap,
-      child: Row(
-        children: [
-          Container(width: 5, height: 64, color: style.accent),
-          const SizedBox(width: 12),
-          Container(
-            width: 32,
-            height: 32,
-            decoration: BoxDecoration(color: style.accent.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(10)),
-            alignment: Alignment.center,
-            child: Icon(style.icon, color: style.accent, size: 17),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(category.labelFor(appLanguage), style: const TextStyle(fontSize: 14.5, fontWeight: FontWeight.w700)),
-                  const SizedBox(height: 2),
-                  Text(
-                    category.descriptionFor(appLanguage),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 12, color: colors.textColor.withValues(alpha: 0.65)),
-                  ),
-                ],
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 64),
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(width: 5, color: style.accent),
+              const SizedBox(width: 12),
+              Center(
+                child: Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                      color: style.accent.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(10)),
+                  alignment: Alignment.center,
+                  child: Icon(style.icon, color: style.accent, size: 17),
+                ),
               ),
-            ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(category.labelFor(appLanguage),
+                          style: TextStyle(
+                              fontSize: 14.5 * fontScale,
+                              fontWeight: FontWeight.w700)),
+                      const SizedBox(height: 2),
+                      Text(
+                        category.descriptionFor(appLanguage),
+                        maxLines: fontScale > 1.3 ? 2 : 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 12 * fontScale,
+                            color: colors.textColor.withValues(alpha: 0.65)),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Center(
+                  child: Icon(Icons.chevron_right,
+                      color: colors.textColor.withValues(alpha: 0.4))),
+              const SizedBox(width: 8),
+            ],
           ),
-          Icon(Icons.chevron_right, color: colors.textColor.withValues(alpha: 0.4)),
-          const SizedBox(width: 8),
-        ],
+        ),
       ),
     );
   }

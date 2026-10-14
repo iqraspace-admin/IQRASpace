@@ -196,7 +196,10 @@ void main() {
     await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.byType(SegmentedButton<DuaTranslationLanguage>), findsOneWidget);
-    expect(find.text('English'), findsOneWidget);
+    expect(
+      find.descendant(of: find.byType(SegmentedButton<DuaTranslationLanguage>), matching: find.text('English')),
+      findsOneWidget,
+    );
     expect(find.text('اردو'), findsOneWidget);
     expect(find.widgetWithText(SwitchListTile, 'Transliteration'), findsOneWidget);
   });

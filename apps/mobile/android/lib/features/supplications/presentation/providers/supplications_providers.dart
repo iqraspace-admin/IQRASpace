@@ -14,8 +14,8 @@ import 'package:quran_flutter/features/supplications/domain/entities/supplicatio
 import 'package:quran_flutter/features/supplications/domain/repositories/supplications_repository.dart';
 
 /// UI -> repository -> (remote | Hive cache | bundled asset). Remote is
-/// only wired up when both DUAS_SUPABASE_URL and DUAS_SUPABASE_ANON_KEY
-/// were supplied via --dart-define; otherwise the app is purely offline.
+/// only wired up when DUAS_API_URL was supplied via --dart-define;
+/// otherwise the app is purely offline.
 final supplicationsRepositoryProvider = Provider<SupplicationsRepository>((ref) {
   const config = DuasRemoteConfig.fromEnvironment;
   final cacheBoxOpen = Hive.isBoxOpen(HiveBoxes.duasContentCacheBoxName);
@@ -125,6 +125,31 @@ final duaTranslationLanguageProvider =
     appLanguage == AppLanguage.urdu ? DuaTranslationLanguage.urdu : DuaTranslationLanguage.english,
   );
 });
+
+/// One text-size multiplier for everything Duas: the reading screen's
+/// Arabic/transliteration/translation/meta text AND the category labels
+/// (grid tile + list row), so the categories screen stays readable at the
+/// size the reader picked. Persisted; 1.0 = the original design sizes.
+class DuaFontScaleNotifier extends StateNotifier<double> {
+  static const _key = 'supplicationsFontScale';
+  static const double min = 0.8;
+  static const double max = 1.8;
+  static const double step = 0.1;
+  static const double defaultScale = 1.0;
+
+  DuaFontScaleNotifier() : super(_clamp((HiveBoxes.settingsBox.get(_key) as num?)?.toDouble() ?? defaultScale));
+
+  static double _clamp(double v) => (v.clamp(min, max) * 10).round() / 10;
+
+  void setScale(double scale) {
+    state = _clamp(scale);
+    HiveBoxes.settingsBox.put(_key, state);
+  }
+}
+
+final duaFontScaleProvider = StateNotifierProvider<DuaFontScaleNotifier, double>(
+  (ref) => DuaFontScaleNotifier(),
+);
 
 /// Show/hide the transliteration line on every Dua. Persisted; default on.
 class DuaTransliterationEnabledNotifier extends StateNotifier<bool> {
