@@ -55,6 +55,12 @@ Passwords: PBKDF2-SHA256, 100k iterations (the Workers maximum), per-user salt. 
 `policies.js` rule for a new table). `worker/api/api.test.mjs` fails if `schema.js` and the migration
 disagree. Apply migrations manually (below) *before* merging code that needs them.
 
+**Bulk Duas content** (not schema) goes through a reviewed catalog + generated SQL, never a
+migration: `content/duas-wyn/` mirrors the Wa Iyyaka Nastaeen app's categories and Duas
+(`npm run duas:wyn -- check | plan | sql`). New rows land in `review`, published rows are untouched
+unless a guarded correction is opted into, and every change is audited — see
+`content/duas-wyn/README.md`.
+
 ## Local development
 
 ```bash

@@ -27,3 +27,9 @@ talks to this site's own `/api/duas` (CSP `connect-src 'self'`).
 
 Deploy order: the Learning Worker (which serves the feed) must be deployed before a site deploy
 that relies on the `LEARNING` binding.
+
+**Wa Iyyaka Nastaeen content.** The site's first 23 Duas categories mirror the Wa Iyyaka Nastaeen app
+(same categories, order and counts). That content enters Learning's D1 through a reviewed catalog
+and an approval step (new Duas are `review` until an admin publishes them) — see
+`apps/learning/content/duas-wyn/README.md`. The site needs no change for it: categories and Duas
+appear here as soon as they are published.
