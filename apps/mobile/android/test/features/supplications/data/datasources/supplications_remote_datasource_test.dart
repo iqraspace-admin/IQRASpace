@@ -32,12 +32,19 @@ class _RecordingAdapter implements HttpClientAdapter {
 void main() {
   const config = DuasRemoteConfig(url: 'https://iqraspace.org/learning/api/');
 
-  test('config is disabled unless the URL is set', () {
+  test('config is disabled only for an empty URL', () {
     expect(const DuasRemoteConfig(url: '').isEnabled, isFalse);
     expect(const DuasRemoteConfig(url: '  ').isEnabled, isFalse);
     expect(config.isEnabled, isTrue);
-    // No --dart-define in `flutter test`: remote is off by default.
-    expect(DuasRemoteConfig.fromEnvironment.isEnabled, isFalse);
+  });
+
+  test('a build without --dart-define uses the production feed', () {
+    // `flutter test` passes no --dart-define, exactly like a plain
+    // `flutter build appbundle` / `flutter run`. Those builds used to ship
+    // with the remote disabled, so published Duas never reached the app.
+    expect(DuasRemoteConfig.fromEnvironment.isEnabled, isTrue);
+    expect(DuasRemoteConfig.fromEnvironment.url, DuasRemoteConfig.productionUrl);
+    expect(DuasRemoteConfig.productionUrl, 'https://iqraspace.org/learning/api');
   });
 
   test('GETs the feed endpoints with short timeouts', () async {

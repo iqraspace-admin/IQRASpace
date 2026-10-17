@@ -117,9 +117,8 @@ App Bundle). Bump `pubspec.yaml`'s `version:` (currently `0.3.0+19`) —
 the `+N` build number must increase on every upload, the `x.y.z` part is
 the user-visible version.
 
-To ship live Duas content, add the two `--dart-define` flags from "Remote Duas
-content" at the end of this file. Without them the build is offline-only for
-Duas (cache/bundled asset).
+Live Duas content needs no build flag: every build reads the production feed by
+default (see "Remote Duas content" at the end of this file).
 
 ## 5. Privacy Policy
 
@@ -259,19 +258,21 @@ skipping it.
 
 Duas are stored in the Learning app's Cloudflare D1 database (managed at /learning/admin/duas), served
 published-only by the Learning API's public feed, and cached on device (see `apps/site/DUAS.md`).
-Release builds must pass the feed's base URL (one define, no key):
+Every build reads the production feed by default (`DuasRemoteConfig.productionUrl`,
+`https://iqraspace.org/learning/api`, no key). Override it only to test against another
+Worker, or pass an empty value to build an offline-only app:
 
 ```bash
-flutter build appbundle --release \
-  --dart-define=DUAS_API_URL=https://iqraspace.org/learning/api
+flutter run --dart-define=DUAS_API_URL=http://localhost:8787/learning/api   # local Worker
+flutter build apk --dart-define=DUAS_API_URL=                                 # offline-only
 ```
 
-Without this define the app still works from its cache/bundled `assets/supplications.json`.
+Offline (or before the first fetch) the app uses its cache/bundled `assets/supplications.json`.
 Before a release, refresh that bundled fallback from the live feed (keeps the file's `meta` block):
 `node scripts/refresh-bundled-duas.mjs` (optionally `--source <api base> --out <file>`).
-Note: the `iqs-deploy` skill's build step (`flutter build appbundle --release`) does not
-pass this flag by itself — supply it (e.g. via the build command or
-local config) when a release must use live Duas content.
+Until Oct 2026 the URL had no default, so builds made without the flag — including the
+`iqs-deploy` skill's `flutter build appbundle --release` — shipped with remote Duas disabled
+and never showed newly published Duas; users on such builds need the next release.
 The app reads it with `String.fromEnvironment` in
 `supplications_remote_datasource.dart` (`DuasRemoteConfig`) and GETs
 `{DUAS_API_URL}/duas/version` and `/duas/content`; the remote is

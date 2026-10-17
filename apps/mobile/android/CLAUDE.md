@@ -25,8 +25,8 @@ for a version bump or the changes are a genuine user-visible release
 (new feature set, etc.).
 
 See [DEPLOYMENT.md](DEPLOYMENT.md) for the rest of the release checklist
-(signing, Play Console setup, Privacy Policy requirement, and the
-`--dart-define` flags that enable remote Duas content in release builds).
+(signing, Play Console setup, Privacy Policy requirement, and the optional
+`DUAS_API_URL` override for remote Duas content).
 
 ## The `iqs-deploy` skill
 
@@ -40,8 +40,8 @@ will work.
 ## Duas (supplications) feature — things to keep in mind
 
 - Content resolution is remote (the Learning API's public feed,
-  `{DUAS_API_URL}/duas/version` + `/duas/content`, only if `DUAS_API_URL`
-  was `--dart-define`d) → Hive cache
+  `{DUAS_API_URL}/duas/version` + `/duas/content`; `DUAS_API_URL` defaults to
+  production `https://iqraspace.org/learning/api`, an empty define disables it) → Hive cache
   (`duas_content_cache`) → bundled `assets/supplications.json`. The feed
   needs no key; never put any admin credential in the app. See `lib/features/supplications`.
 - Persisted Duas settings live in the `reader_settings` Hive box, keys

@@ -91,9 +91,9 @@ exist.
     hourly) refreshes them in place. Remote is the published Learning
     Dua data via the Learning API's public read-only feed
     (`GET {DUAS_API_URL}/duas/version` and `/duas/content`, plain `dio`,
-    no key); it is only enabled when the build passes
-    `--dart-define=DUAS_API_URL` (see [DEPLOYMENT.md](DEPLOYMENT.md)),
-    otherwise the app is purely offline.
+    no key); production by default, overridable with
+    `--dart-define=DUAS_API_URL` (an empty value makes the app purely
+    offline; see [DEPLOYMENT.md](DEPLOYMENT.md)).
   - *Screens*: categories screen (grid or list, persisted), reading
     screen (swipe between duas, jump sheet, share, repeat-count chip,
     hadith reference/grade), favorites screen (positional keys in the
@@ -149,8 +149,8 @@ flutter test                 # unit + widget tests (test/)
 flutter run -d chrome        # run on web, for local iteration
 flutter build web            # production web build
 flutter build apk --debug    # debug APK
-# Optional: enable remote Duas content (public feed, no key)
-flutter run --dart-define=DUAS_API_URL=https://iqraspace.org/learning/api
+# Optional: point Duas at a local Learning Worker (default is production)
+flutter run --dart-define=DUAS_API_URL=http://localhost:8787/learning/api
 ```
 
 Release builds: see [DEPLOYMENT.md](DEPLOYMENT.md) (bump the `+N` build

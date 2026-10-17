@@ -3,17 +3,23 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 
 /// Where the public Duas content lives: the IqraSpace Learning API's
-/// published-only feed (Cloudflare Worker + D1). Supplied at build time with
-/// `--dart-define=DUAS_API_URL=https://iqraspace.org/learning/api`. The feed
-/// is public and read-only — no key involved. If the URL is empty the remote
-/// layer is disabled and the app is purely offline (cache/bundled).
+/// published-only feed (Cloudflare Worker + D1). The feed is public and
+/// read-only — no key involved — so every build uses production by default;
+/// `--dart-define=DUAS_API_URL=<url>` points it elsewhere (e.g. a local
+/// Worker), and an explicit empty `--dart-define=DUAS_API_URL=` disables the
+/// remote layer, leaving the app purely offline (cache/bundled).
+///
+/// The default matters: builds made without the flag used to ship with the
+/// remote disabled, so published Duas never reached the app.
 class DuasRemoteConfig {
+  static const productionUrl = 'https://iqraspace.org/learning/api';
+
   final String url;
 
   const DuasRemoteConfig({required this.url});
 
   static const fromEnvironment = DuasRemoteConfig(
-    url: String.fromEnvironment('DUAS_API_URL'),
+    url: String.fromEnvironment('DUAS_API_URL', defaultValue: productionUrl),
   );
 
   bool get isEnabled => url.trim().isNotEmpty;

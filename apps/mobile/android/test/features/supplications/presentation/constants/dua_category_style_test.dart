@@ -8,7 +8,7 @@ void main() {
 
   test('known category slugs resolve to an explicit style', () async {
     final fallbackIcon = DuaCategoryStyles.forId('__unmapped_probe__').icon.codePoint;
-    for (final id in ['waking', 'morning']) {
+    for (final id in ['waking', 'morning', 'protection-and-safety', 'evil-whisperings', 'shifa-collection', 'sakeenah']) {
       expect(DuaCategoryStyles.forId(id).icon.codePoint, isNot(fallbackIcon), reason: id);
     }
   });

@@ -13,9 +13,9 @@ import 'package:quran_flutter/features/supplications/data/repositories/supplicat
 import 'package:quran_flutter/features/supplications/domain/entities/supplication_category.dart';
 import 'package:quran_flutter/features/supplications/domain/repositories/supplications_repository.dart';
 
-/// UI -> repository -> (remote | Hive cache | bundled asset). Remote is
-/// only wired up when DUAS_API_URL was supplied via --dart-define;
-/// otherwise the app is purely offline.
+/// UI -> repository -> (remote | Hive cache | bundled asset). Remote uses
+/// the production feed unless DUAS_API_URL is overridden with --dart-define (an empty
+/// value disables it, leaving the app purely offline).
 final supplicationsRepositoryProvider = Provider<SupplicationsRepository>((ref) {
   const config = DuasRemoteConfig.fromEnvironment;
   final cacheBoxOpen = Hive.isBoxOpen(HiveBoxes.duasContentCacheBoxName);
